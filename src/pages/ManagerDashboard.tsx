@@ -1,10 +1,13 @@
+import { useState, useEffect } from "react";
 import { EmployeeOverview } from "@/components/manager/EmployeeOverview";
 import { InsightTools } from "@/components/manager/InsightTools";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
 
 import { Button } from "@/components/ui/button";
-import { BookOpen, Menu, Lightbulb, BarChart3, Plus, Users, LogOut } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { BookOpen, Menu, Lightbulb, BarChart3, Plus, Users, LogOut, Sun } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -13,6 +16,20 @@ import jarvisLogo from "@/assets/jarvis-logo.svg";
 const ManagerDashboard = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    const isDarkMode = savedTheme === "dark" || document.documentElement.classList.contains("dark");
+    setIsDark(isDarkMode);
+  }, []);
+
+  const toggleTheme = () => {
+    const newIsDark = !isDark;
+    setIsDark(newIsDark);
+    document.documentElement.classList.toggle("dark", newIsDark);
+    localStorage.setItem("theme", newIsDark ? "dark" : "light");
+  };
 
   const handleLogout = () => {
     logout();
@@ -61,6 +78,20 @@ const ManagerDashboard = () => {
                         Signals
                       </a>
                     </nav>
+
+                    <Separator className="my-6" />
+
+                    {/* Appearance Toggle */}
+                    <div className="px-3 py-2 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Sun className="h-5 w-5 text-foreground" />
+                        <span className="font-medium text-foreground">Appearance</span>
+                      </div>
+                      <Switch 
+                        checked={isDark} 
+                        onCheckedChange={toggleTheme}
+                      />
+                    </div>
                   </div>
                   <div className="absolute bottom-6 left-6 right-6">
                     <div className="flex items-center gap-3 p-3 rounded-lg bg-accent/30 mb-3">
