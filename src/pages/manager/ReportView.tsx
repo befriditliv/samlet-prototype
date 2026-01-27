@@ -455,82 +455,39 @@ const ReportView = () => {
           <span className="text-sm font-medium">Tilbage til dashboard</span>
         </button>
 
-        {/* Stats Row */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-foreground">1.247</div>
-                <div className="text-sm text-muted-foreground mt-1">Møder i perioden</div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-foreground">687 <span className="text-lg font-normal text-muted-foreground">(55%)</span></div>
-                <div className="text-sm text-muted-foreground mt-1">Debriefs i perioden</div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">{totalDebriefs}</div>
-                <div className="text-sm text-muted-foreground mt-1">Relevante debriefs</div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Period Info Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                Periode
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-sm font-medium">
-                {format(data.dateRange.from, "d. MMMM yyyy", { locale: da })} - {format(data.dateRange.to, "d. MMMM yyyy", { locale: da })}
-              </div>
-            </CardContent>
-          </Card>
-          
-          {data.compareEnabled && data.compareDateRange && (
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4" />
-                  Sammenligningsperiode
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm font-medium">
-                  {format(data.compareDateRange.from, "d. MMMM yyyy", { locale: da })} - {format(data.compareDateRange.to, "d. MMMM yyyy", { locale: da })}
+        {/* Compact Stats & Metadata */}
+        <Card className="mb-8">
+          <CardContent className="py-4">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              {/* Key stats */}
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl font-bold text-primary">{totalDebriefs}</span>
+                  <span className="text-sm text-muted-foreground">relevante debriefs</span>
                 </div>
-              </CardContent>
-            </Card>
-          )}
-          
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                Brugere
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-1">
-                {salesReps.map((user) => (
-                  <Badge key={user} variant="secondary" className="text-xs">{user}</Badge>
-                ))}
+                <div className="h-8 w-px bg-border" />
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">af</span>
+                  <span className="text-lg font-semibold text-foreground">687</span>
+                  <span className="text-sm text-muted-foreground">debriefs total</span>
+                </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+              
+              {/* Metadata */}
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="h-4 w-4" />
+                  {format(data.dateRange.from, "d. MMM", { locale: da })} - {format(data.dateRange.to, "d. MMM yyyy", { locale: da })}
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Users className="h-4 w-4" />
+                  {data.employee === 'all' ? 'Alle' : data.employee}
+                </div>
+                <Badge variant="secondary">{data.product}</Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Main Content */}
         <div className="space-y-6">
