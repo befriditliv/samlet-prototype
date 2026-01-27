@@ -11,6 +11,7 @@ import HcoDetail from "./pages/HcoDetail";
 import HcpDetail from "./pages/HcpDetail";
 import Kundeoversigt from "./pages/Kundeoversigt";
 import Traeningsplatform from "./pages/Traeningsplatform";
+import ManagerDashboard from "./pages/ManagerDashboard";
 import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/manager" element={<ProtectedRoute><ManagerDashboard /></ProtectedRoute>} />
             <Route path="/kundeoversigt" element={<ProtectedRoute><Kundeoversigt /></ProtectedRoute>} />
             <Route path="/traeningsplatform" element={<ProtectedRoute><Traeningsplatform /></ProtectedRoute>} />
             <Route path="/hco/:id" element={<ProtectedRoute><HcoDetail /></ProtectedRoute>} />
