@@ -32,7 +32,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
 
 // Quality dimensions
 interface QualityDimension {
@@ -124,15 +123,6 @@ const qualityDimensions: QualityDimension[] = [
   }
 ];
 
-// Quality trend data
-const qualityTrendData = [
-  { month: "Aug", structure: 7, depth: 4, actionability: 5, hcpInsight: 5 },
-  { month: "Sep", structure: 7, depth: 5, actionability: 5, hcpInsight: 5 },
-  { month: "Okt", structure: 8, depth: 5, actionability: 4, hcpInsight: 6 },
-  { month: "Nov", structure: 8, depth: 5, actionability: 4, hcpInsight: 6 },
-  { month: "Dec", structure: 8, depth: 5, actionability: 4, hcpInsight: 6 }
-];
-
 // Employee breakdown
 interface EmployeeQuality {
   name: string;
@@ -217,13 +207,6 @@ const debriefExcerpts: DebriefExcerpt[] = [
     feedback: 'Forbedringspotentiale: Mangler beskrivelse af hvilket materiale, ingen HCP reaktioner dokumenteret, ingen næste skridt.'
   }
 ];
-
-const chartConfig = {
-  structure: { label: "Struktur", color: "hsl(var(--primary))" },
-  depth: { label: "Dybde", color: "hsl(var(--chart-2))" },
-  actionability: { label: "Actionability", color: "hsl(var(--chart-3))" },
-  hcpInsight: { label: "HCP Indsigt", color: "hsl(var(--chart-4))" },
-};
 
 const DebriefQualityReportView = () => {
   const navigate = useNavigate();
@@ -412,61 +395,6 @@ const DebriefQualityReportView = () => {
               </Collapsible>
             ))}
           </div>
-        </section>
-
-        {/* Quality Trend */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-foreground mb-4">Kvalitetsudvikling over tid</h2>
-          <Card className="border-0 bg-card">
-            <CardContent className="pt-6">
-              <ChartContainer config={chartConfig} className="h-64 w-full">
-                <AreaChart data={qualityTrendData}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-border/50" />
-                  <XAxis dataKey="month" className="text-xs" />
-                  <YAxis domain={[0, 10]} className="text-xs" />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Area 
-                    type="monotone" 
-                    dataKey="structure" 
-                    stackId="1"
-                    stroke="hsl(var(--primary))" 
-                    fill="hsl(var(--primary))" 
-                    fillOpacity={0.3}
-                  />
-                  <Area 
-                    type="monotone" 
-                    dataKey="depth" 
-                    stackId="2"
-                    stroke="hsl(var(--chart-2))" 
-                    fill="hsl(var(--chart-2))" 
-                    fillOpacity={0.3}
-                  />
-                  <Area 
-                    type="monotone" 
-                    dataKey="actionability" 
-                    stackId="3"
-                    stroke="hsl(var(--chart-3))" 
-                    fill="hsl(var(--chart-3))" 
-                    fillOpacity={0.3}
-                  />
-                </AreaChart>
-              </ChartContainer>
-              <div className="flex justify-center gap-6 mt-4 text-xs">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded bg-primary" />
-                  <span>Struktur</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: 'hsl(var(--chart-2))' }} />
-                  <span>Dybde</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: 'hsl(var(--chart-3))' }} />
-                  <span>Actionability</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </section>
 
         {/* Employee Breakdown */}
