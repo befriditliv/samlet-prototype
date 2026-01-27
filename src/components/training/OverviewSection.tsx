@@ -18,6 +18,62 @@ const mockHistory: HistoryItem[] = [
   { id: "5", name: "Basal Insulin Optimization", score: 4 },
 ];
 
+// Metrics for Results tab
+const resultsMetrics = {
+  completedSimulations: 5,
+  averageScore: 4,
+  companyKnowledge: 88,
+  productKnowledge: 89,
+  objectionHandling: 85,
+  communicationSkills: 87,
+};
+
+const CircularProgress = ({ value, label, size = "lg" }: { value: number; label: string; size?: "sm" | "lg" }) => {
+  const isPercentage = value > 10;
+  const radius = size === "lg" ? 45 : 35;
+  const strokeWidth = size === "lg" ? 6 : 5;
+  const circumference = 2 * Math.PI * radius;
+  const progress = isPercentage ? (value / 100) * circumference : (value / 5) * circumference;
+  const dashOffset = circumference - progress;
+  const svgSize = size === "lg" ? 120 : 90;
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <span className="text-xs text-muted-foreground text-center">{label}</span>
+      <div className="relative" style={{ width: svgSize, height: svgSize }}>
+        <svg width={svgSize} height={svgSize} className="transform -rotate-90">
+          <circle
+            cx={svgSize / 2}
+            cy={svgSize / 2}
+            r={radius}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={strokeWidth}
+            className="text-muted/20"
+          />
+          <circle
+            cx={svgSize / 2}
+            cy={svgSize / 2}
+            r={radius}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={dashOffset}
+            strokeLinecap="round"
+            className={isPercentage ? "text-foreground" : "text-warning"}
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className={`font-bold ${size === "lg" ? "text-2xl" : "text-xl"} ${isPercentage ? "text-foreground" : "text-warning"}`}>
+            {value}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const renderStars = (rating: number) => {
   return (
     <div className="flex gap-0.5">
@@ -62,8 +118,24 @@ export const OverviewSection = () => {
           </div>
           
           <CardContent className="p-0">
-            <TabsContent value="results" className="m-0 p-4">
-              <p className="text-muted-foreground text-sm">No recent results available.</p>
+            <TabsContent value="results" className="m-0 p-6">
+              <div className="space-y-6">
+                {/* Top row - main metrics */}
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="flex flex-col items-center gap-2 py-4">
+                    <span className="text-xs text-muted-foreground">Completed simulations</span>
+                    <span className="text-3xl font-bold text-foreground">{resultsMetrics.completedSimulations}</span>
+                  </div>
+                  <CircularProgress value={resultsMetrics.averageScore} label="Average score" />
+                  <CircularProgress value={resultsMetrics.companyKnowledge} label="Company knowledge" />
+                </div>
+                {/* Bottom row - skill metrics */}
+                <div className="grid grid-cols-3 gap-4">
+                  <CircularProgress value={resultsMetrics.productKnowledge} label="Product knowledge" />
+                  <CircularProgress value={resultsMetrics.objectionHandling} label="Objection handling" />
+                  <CircularProgress value={resultsMetrics.communicationSkills} label="Communication skills" />
+                </div>
+              </div>
             </TabsContent>
             
             <TabsContent value="history" className="m-0">
