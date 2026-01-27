@@ -532,8 +532,8 @@ const ReportView = () => {
           </Card>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="space-y-6 max-w-4xl">
+        {/* Main Content */}
+        <div className="space-y-6">
           {/* Main Analysis Content */}
           <div className="space-y-6">
             {/* Kort oversigt */}
