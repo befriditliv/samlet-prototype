@@ -316,16 +316,7 @@ const Traeningsplatform = () => {
               </Card>
             </div>
 
-            {/* Overview Section with History Table */}
-            <OverviewSection />
-
-            {/* Scenarios Section with Table */}
-            <ScenariosSection onStartScenario={() => {
-              // For now, start custom wizard
-              handleStartCustomScenario();
-            }} />
-
-            {/* Training Type Cards - More Compact */}
+            {/* Training Type Cards - MOVED UP */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-foreground">Choose your training type</h3>
               
@@ -369,6 +360,15 @@ const Traeningsplatform = () => {
                 </Card>
               </div>
             </div>
+
+            {/* Overview Section with History Table */}
+            <OverviewSection />
+
+            {/* Scenarios Section with Table */}
+            <ScenariosSection onStartScenario={() => {
+              // For now, start custom wizard
+              handleStartCustomScenario();
+            }} />
 
             {/* Tips Section - Compact */}
             <Card className="border bg-gradient-to-r from-primary/5 to-accent/20">
