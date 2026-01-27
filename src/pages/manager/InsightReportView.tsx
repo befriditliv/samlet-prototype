@@ -98,7 +98,6 @@ const InsightReportView = () => {
   const location = useLocation();
   const reportData = location.state as InsightReportData | null;
   const [openCategories, setOpenCategories] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showStatements, setShowStatements] = useState(false);
 
   const data: InsightReportData = reportData || {
@@ -113,12 +112,18 @@ const InsightReportView = () => {
     setOpenCategories(prev => 
       prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
     );
-    setSelectedCategory(id);
   };
 
-  const displayedStatements = selectedCategory 
-    ? statementsByCategory[selectedCategory] || []
-    : allStatements;
+  // Show all statements when no themes are expanded, otherwise show statements for expanded themes
+  const displayedStatements = openCategories.length === 0
+    ? allStatements
+    : openCategories.flatMap(id => statementsByCategory[id] || []);
+
+  const activeTheme = openCategories.length === 1 
+    ? insightCategories.find(c => c.id === openCategories[0])?.title 
+    : openCategories.length > 1 
+      ? `${openCategories.length} temaer` 
+      : null;
 
   const totalStatements = insightCategories.reduce((sum, cat) => sum + cat.count, 0);
 
@@ -236,9 +241,9 @@ const InsightReportView = () => {
                   <MessageSquareQuote className="h-4 w-4" />
                   <span className="text-sm font-medium">
                     Supporting Statements
-                    {selectedCategory && (
+                    {activeTheme && (
                       <span className="ml-1 text-primary">
-                        — {insightCategories.find(c => c.id === selectedCategory)?.title}
+                        — {activeTheme}
                       </span>
                     )}
                   </span>
@@ -251,16 +256,6 @@ const InsightReportView = () => {
             </CollapsibleTrigger>
             <CollapsibleContent>
               <div className="mt-3 space-y-3">
-                {selectedCategory && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => setSelectedCategory(null)}
-                    className="text-xs text-muted-foreground"
-                  >
-                    Vis alle statements
-                  </Button>
-                )}
                 {displayedStatements.map((statement) => (
                   <div key={statement.id} className="p-3 rounded-lg bg-muted/30 border border-border/50">
                     <div className="flex items-center gap-2 mb-2">
