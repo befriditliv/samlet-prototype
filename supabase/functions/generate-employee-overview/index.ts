@@ -27,11 +27,11 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: "You are a Key Account Manager assistant. Generate concise, strategic summaries of client engagement across HCPs and HCOs. Focus on digital channel adoption, engagement metrics, and account performance. Keep the overview professional and actionable."
+            content: "You are a Sales Manager assistant. Generate concise, professional prose overviews of your sales team's performance and coaching opportunities. Keep the overview engaging and informative, focusing on key metrics and insights."
           },
           {
             role: "user",
-            content: "Generate a brief key account manager summary (max 5-6 bullet points). Focus on: total client engagements achieved this period, digital channel usage (newsletter opens, material downloads, content views), HCP vs HCO engagement breakdown, top performing accounts by tier (A/B/C), channel mix (in-person vs digital), and opportunities for deeper engagement. Keep each point to ONE line. Make it strategic and data-focused."
+            content: "Generate a very brief TLDR team performance summary (max 5-6 bullet points). Focus on high-level insights only: field visit stats (planned vs completed, just totals), digital engagement trend (rep activity up/down with %), team characteristics (top performers %), key coaching needs (like Ozempic initiation training), and overall team sentiment. Keep each bullet to ONE line max. Make it punchy and scannable. No sub-bullets, no detailed breakdowns, just the essential numbers and trends."
           }
         ],
       }),
