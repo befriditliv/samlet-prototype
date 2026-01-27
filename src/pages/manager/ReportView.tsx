@@ -815,19 +815,22 @@ const ReportView = () => {
               </CardContent>
             </Card>
 
-            {/* Actions - At bottom */}
-            <Card>
-              <CardContent className="pt-6 space-y-3">
-                <Button className="w-full gap-2" variant="outline">
+            {/* Footer Actions */}
+            <div className="flex items-center justify-between py-4">
+              <span className="text-sm text-muted-foreground">
+                Genereret: {format(new Date(), "d. MMMM yyyy", { locale: da })}
+              </span>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="gap-2 bg-background">
                   <Download className="h-4 w-4" />
-                  Download rapport
+                  Download PDF
                 </Button>
-                <Button className="w-full gap-2" variant="outline">
+                <Button variant="outline" size="sm" className="gap-2 bg-background">
                   <Share2 className="h-4 w-4" />
-                  Del rapport
+                  Del
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
       </main>
