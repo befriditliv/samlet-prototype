@@ -294,7 +294,7 @@ const Traeningsplatform = () => {
               </p>
             </div>
 
-            {/* Stats Cards - Compact Row */}
+            {/* Stats Cards - 6 metrics in 2 rows */}
             <div className="grid grid-cols-3 gap-4">
               <Card className="border shadow-sm">
                 <CardContent className="p-4 text-center">
@@ -312,6 +312,24 @@ const Traeningsplatform = () => {
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-primary">87.6</div>
                   <div className="text-xs text-muted-foreground">Company knowledge</div>
+                </CardContent>
+              </Card>
+              <Card className="border shadow-sm">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-primary">89</div>
+                  <div className="text-xs text-muted-foreground">Product knowledge</div>
+                </CardContent>
+              </Card>
+              <Card className="border shadow-sm">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-primary">85</div>
+                  <div className="text-xs text-muted-foreground">Objection handling</div>
+                </CardContent>
+              </Card>
+              <Card className="border shadow-sm">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-primary">87</div>
+                  <div className="text-xs text-muted-foreground">Communication skills</div>
                 </CardContent>
               </Card>
             </div>
