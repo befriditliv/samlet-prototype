@@ -353,26 +353,22 @@ const InsightReportView = () => {
           </Collapsible>
         </section>
 
-        {/* Actions - like Debrief Report */}
-        <Card className="border-0 shadow-sm bg-muted/30">
-          <CardContent className="py-4">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">
-                Genereret: {format(new Date(), "d. MMMM yyyy", { locale: da })}
-              </span>
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Download className="h-4 w-4" />
-                  Download PDF
-                </Button>
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Share2 className="h-4 w-4" />
-                  Del
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Footer Actions */}
+        <div className="flex items-center justify-between py-4">
+          <span className="text-sm text-muted-foreground">
+            Genereret: {format(new Date(), "d. MMMM yyyy", { locale: da })}
+          </span>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="gap-2 bg-background">
+              <Download className="h-4 w-4" />
+              Download PDF
+            </Button>
+            <Button variant="outline" size="sm" className="gap-2 bg-background">
+              <Share2 className="h-4 w-4" />
+              Del
+            </Button>
+          </div>
+        </div>
       </main>
     </div>
   );
