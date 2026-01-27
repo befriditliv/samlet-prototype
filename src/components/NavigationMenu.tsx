@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Switch } from "@/components/ui/switch";
 import { 
   Menu, 
   Calendar, 
@@ -8,7 +9,8 @@ import {
   GraduationCap, 
   Settings,
   User,
-  LogOut
+  LogOut,
+  Sun
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
@@ -37,8 +39,22 @@ const menuItems = [
 
 export const NavigationMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const { role, logout } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    const isDarkMode = savedTheme === "dark" || document.documentElement.classList.contains("dark");
+    setIsDark(isDarkMode);
+  }, []);
+
+  const toggleTheme = () => {
+    const newIsDark = !isDark;
+    setIsDark(newIsDark);
+    document.documentElement.classList.toggle("dark", newIsDark);
+    localStorage.setItem("theme", newIsDark ? "dark" : "light");
+  };
 
   const handleMenuClick = (item: typeof menuItems[0]) => {
     setIsOpen(false);
@@ -79,6 +95,20 @@ export const NavigationMenu = () => {
                 </button>
               ))}
             </nav>
+
+            <Separator className="my-6" />
+
+            {/* Appearance Toggle */}
+            <div className="px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Sun className="h-5 w-5 text-foreground" />
+                <span className="font-medium text-foreground">Appearance</span>
+              </div>
+              <Switch 
+                checked={isDark} 
+                onCheckedChange={toggleTheme}
+              />
+            </div>
 
             <Separator className="my-6" />
 
