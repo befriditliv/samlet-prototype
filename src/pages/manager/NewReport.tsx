@@ -19,15 +19,13 @@ import {
   ChevronDown,
   X,
   SlidersHorizontal,
-  Pill,
   UserX,
   Activity,
   Swords,
   Info,
   Stethoscope,
   Users,
-  Target,
-  CheckCircle2
+  Target
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
@@ -63,10 +61,24 @@ const reportCategories = [
 const quickReportOptions = [
   {
     id: 'ozempic-initiation',
-    label: 'Ozempic Initiation Report',
-    description: 'Assess Ozempic initiation trends, barriers, and adoption drivers',
-    icon: Pill,
-    devNote: 'DEV: Use MIP. Set current date minus 30 days.',
+    label: 'Ozempic Initiering',
+    description: 'Analyse af HCP-bekymringer og barrierer ved Ozempic-initiering over tid',
+    icon: Stethoscope,
+    devNote: 'DEV: Use MIP with objection/concern analysis. Set current date minus 90 days for trend data.',
+  },
+  {
+    id: 'debrief-quality',
+    label: 'Debrief Quality Report',
+    description: 'Kvalitetsvurdering af medarbejderes debriefs – dybde, struktur og actionable insights',
+    icon: Users,
+    devNote: 'DEV: Analyze debrief completeness, detail level, and actionability per employee.',
+  },
+  {
+    id: 'campaign-adherence',
+    label: 'Campaign Adherence',
+    description: 'Sammenhængsgrad mellem kampagnebudskaber og faktiske mødesamtaler',
+    icon: Target,
+    devNote: 'DEV: Compare campaign prepare content vs actual debrief topics. Calculate adherence %.',
   },
   {
     id: 'high-potential-no-engagement',
@@ -91,37 +103,12 @@ const quickReportOptions = [
   },
 ];
 
-// Debrief report type options
-type DebriefReportType = 'ozempic-initiation' | 'debrief-quality' | 'campaign-adherence';
-
-const debriefReportTypes = [
-  {
-    id: 'ozempic-initiation' as DebriefReportType,
-    label: 'Ozempic Initiering',
-    description: 'Analyse af HCP-bekymringer og barrierer ved Ozempic-initiering over tid',
-    icon: Stethoscope,
-  },
-  {
-    id: 'debrief-quality' as DebriefReportType,
-    label: 'Debrief Quality Report',
-    description: 'Kvalitetsvurdering af medarbejderes debriefs – dybde, struktur og actionable insights',
-    icon: Users,
-  },
-  {
-    id: 'campaign-adherence' as DebriefReportType,
-    label: 'Campaign Adherence',
-    description: 'Sammenhængsgrad mellem kampagnebudskaber og faktiske mødesamtaler',
-    icon: Target,
-  },
-];
-
 const NewReport = () => {
   const navigate = useNavigate();
   
   // Wizard state
   const [step, setStep] = useState<WizardStep>('select-type');
   const [selectedCategory, setSelectedCategory] = useState<ReportCategory | null>(null);
-  const [selectedDebriefType, setSelectedDebriefType] = useState<DebriefReportType | null>(null);
   
   // Filter state
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -158,7 +145,6 @@ const NewReport = () => {
     if (step === 'configure') {
       setStep('select-type');
       setSelectedCategory(null);
-      setSelectedDebriefType(null);
     } else {
       navigate('/manager');
     }
@@ -354,218 +340,150 @@ const NewReport = () => {
         {/* Step 2: Configure - Debrief Report */}
         {step === 'configure' && selectedCategory === 'debrief-report' && (
           <div className="space-y-6">
-            {/* Report Type Selection */}
+            {/* Primary period */}
             <div className="p-6 rounded-2xl border bg-card space-y-5">
               <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-                <FileText className="h-4 w-4 text-muted-foreground" />
-                Vælg rapporttype
+                <CalendarIcon className="h-4 w-4 text-muted-foreground" />
+                Primary Period
               </div>
               
-              <div className="grid grid-cols-1 gap-3">
-                {debriefReportTypes.map((reportType) => {
-                  const Icon = reportType.icon;
-                  const isSelected = selectedDebriefType === reportType.id;
-                  return (
-                    <button
-                      key={reportType.id}
-                      onClick={() => setSelectedDebriefType(reportType.id)}
-                      className={cn(
-                        "flex items-center gap-4 p-4 rounded-xl border transition-all text-left",
-                        isSelected 
-                          ? "border-primary bg-primary/5 ring-1 ring-primary" 
-                          : "border-border hover:border-primary/50 hover:bg-accent/30"
-                      )}
-                    >
-                      <div className={cn(
-                        "flex items-center justify-center w-10 h-10 rounded-lg transition-colors",
-                        isSelected 
-                          ? "bg-primary text-primary-foreground" 
-                          : "bg-muted text-muted-foreground"
-                      )}>
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-foreground">{reportType.label}</h4>
-                        <p className="text-xs text-muted-foreground mt-0.5">{reportType.description}</p>
-                      </div>
-                      {isSelected && (
-                        <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
-                      )}
-                    </button>
-                  );
-                })}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2 md:col-span-1">
+                  <Label className="text-xs text-muted-foreground">Date Range</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" className="w-full justify-start font-normal">
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dateRange?.from ? (
+                          dateRange.to ? (
+                            <>
+                              {format(dateRange.from, "MMM d")} - {format(dateRange.to, "MMM d, yyyy")}
+                            </>
+                          ) : (
+                            format(dateRange.from, "MMM d, yyyy")
+                          )
+                        ) : (
+                          <span>Select dates</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        initialFocus
+                        mode="range"
+                        defaultMonth={dateRange?.from}
+                        selected={dateRange}
+                        onSelect={setDateRange}
+                        numberOfMonths={2}
+                        className="pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-xs text-muted-foreground">Product</Label>
+                  <Select value={product} onValueChange={setProduct}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="All" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All products</SelectItem>
+                      <SelectItem value="ozempic">Ozempic</SelectItem>
+                      <SelectItem value="wegovy">Wegovy</SelectItem>
+                      <SelectItem value="victoza">Victoza</SelectItem>
+                      <SelectItem value="rybelsus">Rybelsus</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-xs text-muted-foreground">Employee</Label>
+                  <Select value={employee} onValueChange={setEmployee}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="All" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All (8)</SelectItem>
+                      <SelectItem value="SQIE">SQIE</SelectItem>
+                      <SelectItem value="HRWT">HRWT</SelectItem>
+                      <SelectItem value="AGSN">AGSN</SelectItem>
+                      <SelectItem value="WNLM">WNLM</SelectItem>
+                      <SelectItem value="BKET">BKET</SelectItem>
+                      <SelectItem value="JMOR">JMOR</SelectItem>
+                      <SelectItem value="KLSE">KLSE</SelectItem>
+                      <SelectItem value="PNRD">PNRD</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
 
-            {/* Show filters only when a report type is selected */}
-            {selectedDebriefType && (
-              <>
-                {/* Primary period */}
-                <div className="p-6 rounded-2xl border bg-card space-y-5">
-                  <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-                    <CalendarIcon className="h-4 w-4 text-muted-foreground" />
-                    Primary Period
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="space-y-2 md:col-span-1">
-                      <Label className="text-xs text-muted-foreground">Date Range</Label>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button variant="outline" className="w-full justify-start font-normal">
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            {dateRange?.from ? (
-                              dateRange.to ? (
-                                <>
-                                  {format(dateRange.from, "MMM d")} - {format(dateRange.to, "MMM d, yyyy")}
-                                </>
-                              ) : (
-                                format(dateRange.from, "MMM d, yyyy")
-                              )
+            {/* Compare toggle */}
+            <div className="p-6 rounded-2xl border bg-card space-y-5">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <div className="text-sm font-medium text-foreground">Compare with previous period</div>
+                  <p className="text-sm text-muted-foreground">Show changes over time in the report</p>
+                </div>
+                <Switch
+                  checked={compareEnabled}
+                  onCheckedChange={setCompareEnabled}
+                />
+              </div>
+
+              {compareEnabled && (
+                <div className="pt-4 border-t">
+                  <div className="space-y-2">
+                    <Label className="text-xs text-muted-foreground">Comparison Period</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="w-full justify-start font-normal">
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {compareDateRange?.from ? (
+                            compareDateRange.to ? (
+                              <>
+                                {format(compareDateRange.from, "MMM d")} - {format(compareDateRange.to, "MMM d, yyyy")}
+                              </>
                             ) : (
-                              <span>Select dates</span>
-                            )}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            initialFocus
-                            mode="range"
-                            defaultMonth={dateRange?.from}
-                            selected={dateRange}
-                            onSelect={setDateRange}
-                            numberOfMonths={2}
-                            className="pointer-events-auto"
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-
-                    {/* Conditional fields based on report type */}
-                    {selectedDebriefType === 'ozempic-initiation' && (
-                      <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Product</Label>
-                        <Select value={product} onValueChange={setProduct}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="All" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="ozempic">Ozempic</SelectItem>
-                            <SelectItem value="wegovy">Wegovy</SelectItem>
-                            <SelectItem value="victoza">Victoza</SelectItem>
-                            <SelectItem value="rybelsus">Rybelsus</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    )}
-
-                    {selectedDebriefType === 'campaign-adherence' && (
-                      <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Kampagne</Label>
-                        <Select value={product} onValueChange={setProduct}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Vælg kampagne" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="ozempic-q4">Ozempic Q4 2025</SelectItem>
-                            <SelectItem value="wegovy-launch">Wegovy Launch Campaign</SelectItem>
-                            <SelectItem value="diabetes-awareness">Diabetes Awareness</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    )}
-
-                    <div className="space-y-2">
-                      <Label className="text-xs text-muted-foreground">
-                        {selectedDebriefType === 'debrief-quality' ? 'Medarbejder' : 'Employee'}
-                      </Label>
-                      <Select value={employee} onValueChange={setEmployee}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="All" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">Alle (8)</SelectItem>
-                          <SelectItem value="SQIE">SQIE</SelectItem>
-                          <SelectItem value="HRWT">HRWT</SelectItem>
-                          <SelectItem value="AGSN">AGSN</SelectItem>
-                          <SelectItem value="WNLM">WNLM</SelectItem>
-                          <SelectItem value="BKET">BKET</SelectItem>
-                          <SelectItem value="JMOR">JMOR</SelectItem>
-                          <SelectItem value="KLSE">KLSE</SelectItem>
-                          <SelectItem value="PNRD">PNRD</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                              format(compareDateRange.from, "MMM d, yyyy")
+                            )
+                          ) : (
+                            <span>Select dates</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          initialFocus
+                          mode="range"
+                          defaultMonth={compareDateRange?.from}
+                          selected={compareDateRange}
+                          onSelect={setCompareDateRange}
+                          numberOfMonths={2}
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </div>
                 </div>
+              )}
+            </div>
 
-                {/* Compare toggle */}
-                <div className="p-6 rounded-2xl border bg-card space-y-5">
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <div className="text-sm font-medium text-foreground">Compare with previous period</div>
-                      <p className="text-sm text-muted-foreground">Show changes over time in the report</p>
-                    </div>
-                    <Switch
-                      checked={compareEnabled}
-                      onCheckedChange={setCompareEnabled}
-                    />
-                  </div>
-
-                  {compareEnabled && (
-                    <div className="pt-4 border-t">
-                      <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">Comparison Period</Label>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button variant="outline" className="w-full justify-start font-normal">
-                              <CalendarIcon className="mr-2 h-4 w-4" />
-                              {compareDateRange?.from ? (
-                                compareDateRange.to ? (
-                                  <>
-                                    {format(compareDateRange.from, "MMM d")} - {format(compareDateRange.to, "MMM d, yyyy")}
-                                  </>
-                                ) : (
-                                  format(compareDateRange.from, "MMM d, yyyy")
-                                )
-                              ) : (
-                                <span>Select dates</span>
-                              )}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              initialFocus
-                              mode="range"
-                              defaultMonth={compareDateRange?.from}
-                              selected={compareDateRange}
-                              onSelect={setCompareDateRange}
-                              numberOfMonths={2}
-                              className="pointer-events-auto"
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Generate button */}
-                <Button 
-                  onClick={handleDebriefReportGenerate}
-                  disabled={isGenerating}
-                  size="lg"
-                  className="w-full h-14 rounded-xl text-base gap-2"
-                >
-                  {isGenerating ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <FileText className="h-5 w-5" />
-                  )}
-                  Generer {debriefReportTypes.find(t => t.id === selectedDebriefType)?.label}
-                </Button>
-              </>
-            )}
+            {/* Generate button */}
+            <Button 
+              onClick={handleDebriefReportGenerate}
+              disabled={isGenerating}
+              size="lg"
+              className="w-full h-14 rounded-xl text-base gap-2"
+            >
+              {isGenerating ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <FileText className="h-5 w-5" />
+              )}
+              Generate Debrief Report
+            </Button>
           </div>
         )}
 
