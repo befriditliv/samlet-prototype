@@ -289,7 +289,7 @@ const InsightReportView = () => {
         <div className="flex items-center justify-between mb-8">
           <Button 
             variant="ghost" 
-            onClick={() => navigate('/manager')}
+            onClick={() => navigate(-1)}
             className="gap-2 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
