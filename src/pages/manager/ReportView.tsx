@@ -517,20 +517,6 @@ const ReportView = () => {
 
           {/* Right Column - Sidebar */}
           <div className="space-y-6">
-            {/* Actions */}
-            <Card>
-              <CardContent className="pt-6 space-y-3">
-                <Button className="w-full gap-2" variant="outline">
-                  <Download className="h-4 w-4" />
-                  Download rapport
-                </Button>
-                <Button className="w-full gap-2" variant="outline">
-                  <Share2 className="h-4 w-4" />
-                  Del rapport
-                </Button>
-              </CardContent>
-            </Card>
-
             {/* Emner - Topics Summary with Chart */}
             <Card>
               <CardHeader className="pb-2">
@@ -600,6 +586,20 @@ const ReportView = () => {
                 <div className="text-center text-sm text-muted-foreground">
                   Ingen emner i den valgte periode
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Actions - Moved to bottom */}
+            <Card>
+              <CardContent className="pt-6 space-y-3">
+                <Button className="w-full gap-2" variant="outline">
+                  <Download className="h-4 w-4" />
+                  Download rapport
+                </Button>
+                <Button className="w-full gap-2" variant="outline">
+                  <Share2 className="h-4 w-4" />
+                  Del rapport
+                </Button>
               </CardContent>
             </Card>
           </div>
