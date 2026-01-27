@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { MessageCircle, HelpCircle, Calendar, BookOpen, LayoutDashboard, Send, X } from "lucide-react";
+import { MessageCircle, HelpCircle, Calendar, BookOpen, Send, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 const quickSuggestions = [
@@ -20,12 +20,6 @@ const quickSuggestions = [
   {
     icon: BookOpen,
     text: "Start Training",
-    color: "text-blue-500",
-    bg: "bg-blue-50 dark:bg-blue-950/30"
-  },
-  {
-    icon: LayoutDashboard,
-    text: "Go to Daily Overview",
     color: "text-blue-500",
     bg: "bg-blue-50 dark:bg-blue-950/30"
   }
