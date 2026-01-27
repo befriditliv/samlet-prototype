@@ -178,7 +178,7 @@ const NewReport = () => {
     setIsGenerating(false);
     toast.success(`${reportLabel} generated successfully`);
     
-    // Route to InsightReportView for specific quick reports
+    // Route to specific report views based on report type
     if (reportId === 'ozempic-initiation') {
       navigate('/manager/insight-report', {
         state: {
@@ -201,6 +201,10 @@ const NewReport = () => {
           employee: 'all'
         }
       });
+    } else if (reportId === 'debrief-quality') {
+      navigate('/manager/debrief-quality-report');
+    } else if (reportId === 'campaign-adherence') {
+      navigate('/manager/campaign-adherence-report');
     } else {
       navigate('/manager');
     }
