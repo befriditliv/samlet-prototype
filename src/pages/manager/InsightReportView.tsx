@@ -5,21 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { 
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { 
   ArrowLeft,
   Calendar,
   Users,
   Download,
   Share2,
   FileText,
-  ChevronDown
+  ChevronDown,
+  ChevronUp,
+  MessageSquareQuote
 } from "lucide-react";
 import { format } from "date-fns";
 import { da } from "date-fns/locale";
@@ -48,95 +42,64 @@ const insightCategories: InsightCategory[] = [
     id: '1', 
     title: 'Ingen indvendinger ved opstart af Ozempic', 
     count: 111,
-    description: 'En stor del af HCP\'erne har ikke rapporteret nogen indvendinger ved opstart af Ozempic-patienter. Mange HCP\'er har nævnt, at der ikke er nogen specifikke indvendinger eller bekymringer vedrørende igangsættelse af Ozempic, og nogle har endda udtrykt positiv interesse for behandlingen. Der er også HCP\'er, der har nævnt, at mange patienter er genstartet på Ozempic, hvilket indikerer en generel accept af behandlingen.'
+    description: 'En stor del af HCP\'erne har ikke rapporteret nogen indvendinger ved opstart af Ozempic-patienter. Mange HCP\'er har nævnt, at der ikke er nogen specifikke indvendinger eller bekymringer vedrørende igangsættelse af Ozempic, og nogle har endda udtrykt positiv interesse for behandlingen.'
   },
   { 
     id: '2', 
-    title: 'Interesse for opfølgning og yderligere information om Ozempic', 
+    title: 'Interesse for opfølgning og yderligere information', 
     count: 39,
-    description: 'Der er en generel interesse blandt HCP\'erne for opfølgning og yderligere information om Ozempic. Nogle HCP\'er har udtrykt interesse for opfølgende aftaler om forløbsplaner i relation til Ozempic, og der er også interesse for materiale om hypoglykæmi og organbeskyttelse. HCP\'erne er opmærksomme på opfølgning af patienter, hvor Ozempic er seponeret, og der er interesse for mere viden om Score2 diabetes. Der er også interesse for dialog om kommende behandlingsalgoritmer for Type 2 Diabetes.'
+    description: 'Der er en generel interesse blandt HCP\'erne for opfølgning og yderligere information om Ozempic. Nogle HCP\'er har udtrykt interesse for opfølgende aftaler om forløbsplaner, og der er også interesse for materiale om hypoglykæmi og organbeskyttelse.'
   },
   { 
     id: '3', 
-    title: 'Spørgsmål og behov for afklaring vedrørende Ozempic', 
+    title: 'Spørgsmål og behov for afklaring', 
     count: 35,
-    description: 'Flere HCP\'er har stillet spørgsmål og udtrykt behov for afklaring vedrørende Ozempic. Der er mange spørgsmål til algoritmen for dosering af Ozempic, herunder brug af 8 doser og 2 mg. HCP\'er har også spurgt ind til krav om afprøvning af antidiabetika før Ozempic, og der er behov for yderligere information om tilskud til Ozempic. Der er også interesse for at kunne skelne mellem patienter med høj og lav risiko, og hvem der har mest gavn af vægttabsbehandling med Ozempic.'
+    description: 'Flere HCP\'er har stillet spørgsmål og udtrykt behov for afklaring vedrørende Ozempic. Der er mange spørgsmål til algoritmen for dosering, herunder brug af 8 doser og 2 mg.'
   },
   { 
     id: '4', 
-    title: 'Bekymringer og indvendinger ved opstart af Ozempic', 
+    title: 'Bekymringer og indvendinger ved opstart', 
     count: 20,
-    description: 'Der er flere HCP\'er, der har udtrykt bekymringer og indvendinger ved opstart af Ozempic. Nogle af bekymringerne skyldes regionale krav om først at afprøve DPP-4-hæmmere, mens andre HCP\'er har rejst bekymringer omkring patienters compliance med medicinindtag. Der er også bekymringer om, at mange patienter allerede er i mål med SGLT-2 og DPP4 hæmmede, uden GLP-1, hvilket kan påvirke beslutningen om at starte Ozempic. Der er også indvendinger omkring regionens klausul fortolkning og udfordringen ved at skifte velbehandlede insulinpatienter til Ozempic.'
+    description: 'Der er flere HCP\'er, der har udtrykt bekymringer og indvendinger ved opstart af Ozempic. Nogle af bekymringerne skyldes regionale krav om først at afprøve DPP-4-hæmmere.'
   },
 ];
 
-const statements = [
-  {
-    id: '1',
-    role: 'Physician',
-    date: 'okt. 02, 2025',
-    quote: 'Der blev rejst indvendinger omkring regionens klausul fortolkning i forbindelse med opstart af en Ozempic-patient.',
-    source: 'Interaction: Aftab Rehmat - 2025-10-02',
-  },
-  {
-    id: '2',
-    role: 'Physician, Nurse',
-    date: 'nov. 19, 2025',
-    quote: 'Der blev ikke nævnt nogen indvendinger eller spørgsmål fra HCP\'erne vedrørende opstart af Ozempic-patienter.',
-    source: 'Interaction: Team meeting - 2025-11-19',
-  },
-  {
-    id: '3',
-    role: 'Nurse',
-    date: 'nov. 18, 2025',
-    quote: 'HCP\'en havde ingen indvendinger eller bekymringer omkring opstart af Ozempic.',
-    source: 'Interaction: Amaal Muuse, Marie Gaarde-Nissen Arnoldus - 2025-11-18',
-  },
-  {
-    id: '4',
-    role: 'Physician',
-    date: 'sep. 26, 2025',
-    quote: 'Der er interesse for mere viden om Score2 diabetes og hypoglykaemi, hvilket kan være relevant for patienternes behandling med Ozempic.',
-    source: 'Interaction: Stine Vedel Andersen, Nina Lone Thyman - 2025-09-26',
-  },
-  {
-    id: '5',
-    role: 'Nurse',
-    date: 'nov. 05, 2025',
-    quote: 'Patienter udtrykker bekymring over doseringsalgoritmer, herunder brugen af 8 doser og 2 mg.',
-    source: 'Interaction: Mia Dam Lekke, Mai Brit Pedersen - 2025-11-05',
-  },
-  {
-    id: '6',
-    role: 'Physician',
-    date: 'okt. 15, 2025',
-    quote: 'Der er behov for mere information om hvornår man skal skifte fra insulin til Ozempic.',
-    source: 'Interaction: Lars Hansen - 2025-10-15',
-  },
-  {
-    id: '7',
-    role: 'Nurse',
-    date: 'nov. 22, 2025',
-    quote: 'Patienterne er generelt positive overfor Ozempic-behandlingen.',
-    source: 'Interaction: Karen Nielsen - 2025-11-22',
-  },
-  {
-    id: '8',
-    role: 'Physician',
-    date: 'dec. 01, 2025',
-    quote: 'Vi ser gode resultater med Ozempic hos patienter med høj kardiovaskulær risiko.',
-    source: 'Interaction: Peter Madsen - 2025-12-01',
-  },
-];
+interface Statement {
+  id: string;
+  role: string;
+  date: string;
+  quote: string;
+  source: string;
+}
 
-const ITEMS_PER_PAGE = 4;
+const statementsByCategory: Record<string, Statement[]> = {
+  '1': [
+    { id: '1', role: 'Physician', date: 'nov. 19, 2025', quote: 'Der blev ikke nævnt nogen indvendinger fra HCP\'erne vedrørende opstart af Ozempic-patienter.', source: 'Team meeting - 2025-11-19' },
+    { id: '2', role: 'Nurse', date: 'nov. 18, 2025', quote: 'HCP\'en havde ingen indvendinger eller bekymringer omkring opstart af Ozempic.', source: 'Amaal Muuse - 2025-11-18' },
+  ],
+  '2': [
+    { id: '3', role: 'Physician', date: 'sep. 26, 2025', quote: 'Der er interesse for mere viden om Score2 diabetes og hypoglykaemi.', source: 'Stine Vedel Andersen - 2025-09-26' },
+    { id: '4', role: 'Nurse', date: 'okt. 15, 2025', quote: 'Ønsker materiale om organbeskyttelse ved Ozempic.', source: 'Karen Nielsen - 2025-10-15' },
+  ],
+  '3': [
+    { id: '5', role: 'Nurse', date: 'nov. 05, 2025', quote: 'Patienter udtrykker bekymring over doseringsalgoritmer, herunder brugen af 8 doser og 2 mg.', source: 'Mia Dam Lekke - 2025-11-05' },
+    { id: '6', role: 'Physician', date: 'okt. 22, 2025', quote: 'Spørgsmål om krav til afprøvning af antidiabetika før Ozempic.', source: 'Lars Hansen - 2025-10-22' },
+  ],
+  '4': [
+    { id: '7', role: 'Physician', date: 'okt. 02, 2025', quote: 'Der blev rejst indvendinger omkring regionens klausul fortolkning i forbindelse med opstart.', source: 'Aftab Rehmat - 2025-10-02' },
+    { id: '8', role: 'Nurse', date: 'sep. 15, 2025', quote: 'Bekymring over at skifte velbehandlede insulinpatienter til Ozempic.', source: 'Peter Madsen - 2025-09-15' },
+  ],
+};
+
+const allStatements = Object.values(statementsByCategory).flat();
 
 const InsightReportView = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const reportData = location.state as InsightReportData | null;
-  const [openCategories, setOpenCategories] = useState<string[]>(['1']);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [openCategories, setOpenCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showStatements, setShowStatements] = useState(false);
 
   const data: InsightReportData = reportData || {
     title: "Ozempic Initiation Insights",
@@ -150,13 +113,14 @@ const InsightReportView = () => {
     setOpenCategories(prev => 
       prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
     );
+    setSelectedCategory(id);
   };
 
-  const totalPages = Math.ceil(statements.length / ITEMS_PER_PAGE);
-  const paginatedStatements = statements.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
+  const displayedStatements = selectedCategory 
+    ? statementsByCategory[selectedCategory] || []
+    : allStatements;
+
+  const totalStatements = insightCategories.reduce((sum, cat) => sum + cat.count, 0);
 
   return (
     <div className="min-h-screen bg-background">
@@ -180,7 +144,7 @@ const InsightReportView = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-6 py-8">
+      <main className="container mx-auto px-6 py-8 max-w-4xl">
         {/* Back button and metadata */}
         <div className="flex items-center justify-between mb-8">
           <Button 
@@ -189,30 +153,48 @@ const InsightReportView = () => {
             className="gap-2 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Dashboard
+            Tilbage
           </Button>
           
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1.5">
               <Calendar className="h-4 w-4" />
-              <span>
-                {format(data.dateRange.from, "d. MMM", { locale: da })} - {format(data.dateRange.to, "d. MMM yyyy", { locale: da })}
-              </span>
+              {format(data.dateRange.from, "d. MMM", { locale: da })} - {format(data.dateRange.to, "d. MMM yyyy", { locale: da })}
             </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1.5">
               <Users className="h-4 w-4" />
-              <span>{data.employee === 'all' ? 'Alle medarbejdere' : data.employee}</span>
+              {data.employee === 'all' ? 'Alle' : data.employee}
             </div>
-            <Badge variant="outline">{data.product}</Badge>
+            <Badge variant="secondary">{data.product}</Badge>
           </div>
         </div>
 
-        {/* Two column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left column - Insights */}
-          <div className="lg:col-span-1 space-y-3">
-            <h2 className="text-lg font-semibold text-foreground mb-4">Insights</h2>
-            
+        {/* Query */}
+        <div className="text-center mb-8">
+          <p className="text-lg text-muted-foreground italic">"{data.query}"</p>
+        </div>
+
+        {/* Executive Summary */}
+        <section className="mb-10">
+          <h2 className="text-2xl font-bold text-foreground mb-4">Executive Summary</h2>
+          <div className="text-foreground/90 space-y-4 leading-relaxed">
+            <p>
+              I perioden fra slutningen af august til december 2025 har der været en række debatter og observationer omkring igangsættelse af Ozempic-patienter blandt HCP'erne, primært inden for almen praksis. Generelt er der en overvægt af rapporter, der indikerer, at der ikke er mødt indvendinger vedrørende opstart af Ozempic-patienter. Dette er blevet nævnt gentagne gange af både sygeplejersker og læger, hvilket tyder på en generel accept af produktet.
+            </p>
+            <p>
+              Der er dog også blevet rejst bekymringer og indvendinger i visse tilfælde. Nogle HCP'er har udtrykt bekymring over at skifte velbehandlede insulinpatienter til Ozempic, især når deres HbA1c-niveauer er tilfredsstillende. Der er også blevet nævnt pres fra regionerne og frygt for at komplicere behandlingerne, samt frustration over tilskudsklausulen.
+            </p>
+          </div>
+        </section>
+
+        {/* Insights/Themes */}
+        <section className="mb-10">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold text-foreground">Temaer</h2>
+            <span className="text-sm text-muted-foreground">{totalStatements} observationer</span>
+          </div>
+          
+          <div className="space-y-2">
             {insightCategories.map((category) => (
               <Collapsible
                 key={category.id}
@@ -220,12 +202,16 @@ const InsightReportView = () => {
                 onOpenChange={() => toggleCategory(category.id)}
               >
                 <CollapsibleTrigger className="w-full">
-                  <div className="flex items-center justify-between p-3 rounded-lg border-2 border-primary bg-primary/5 hover:bg-primary/10 transition-colors text-left">
-                    <span className="text-sm font-medium text-primary leading-snug pr-2">
-                      {category.title} ({category.count})
+                  <div className={`flex items-center justify-between p-3 rounded-lg border transition-colors text-left ${
+                    openCategories.includes(category.id) 
+                      ? 'border-primary bg-primary/5' 
+                      : 'border-border hover:border-primary/50 hover:bg-muted/50'
+                  }`}>
+                    <span className="text-sm font-medium text-foreground">
+                      {category.title} <span className="text-muted-foreground">({category.count})</span>
                     </span>
                     <ChevronDown 
-                      className={`h-4 w-4 text-primary shrink-0 transition-transform ${
+                      className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform ${
                         openCategories.includes(category.id) ? 'rotate-180' : ''
                       }`} 
                     />
@@ -239,91 +225,68 @@ const InsightReportView = () => {
               </Collapsible>
             ))}
           </div>
+        </section>
 
-          {/* Right column - Executive Summary */}
-          <div className="lg:col-span-2 space-y-8">
-            <div>
-              <h2 className="text-2xl font-bold text-foreground mb-2">Executive Summary</h2>
-              <p className="text-muted-foreground mb-6">{data.query}</p>
-              
-              <div className="prose prose-sm max-w-none text-foreground/90 space-y-4">
-                <p>
-                  I perioden fra slutningen af august til december 2025 har der været en række debatter og observationer omkring igangsættelse af Ozempic-patienter blandt HCP'erne, primært inden for almen praksis. Generelt er der en overvægt af rapporter, der indikerer, at der ikke er mødt indvendinger vedrørende opstart af Ozempic-patienter. Dette er blevet nævnt gentagne gange af både sygeplejersker og læger, hvilket tyder på en generel accept af produktet.
-                </p>
-                <p>
-                  Der er dog også blevet rejst bekymringer og indvendinger i visse tilfælde. Nogle HCP'er har udtrykt bekymring over at skifte velbehandlede insulinpatienter til Ozempic, især når deres HbA1c-niveauer er tilfredsstillende. Der er også blevet nævnt pres fra regionerne og frygt for at komplicere behandlingerne, samt frustration over tilskudsklausulen, som kan forhindre nogle patienter i at få adgang til Ozempic.
-                </p>
-                <p>
-                  Der har været diskussioner om doseringsalgoritmer, herunder brugen af 8 doser og 2 mg, hvilket indikerer en interesse for at optimere behandlingen. HCP'erne har også udtrykt interesse for mere viden om Score2 diabetes og hypoglykæmi, hvilket kan være relevant for patienternes behandling med Ozempic.
-                </p>
-              </div>
-            </div>
-
-            {/* Statement Overview */}
-            <Card className="border shadow-sm">
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg font-semibold">Statement Overview</CardTitle>
-                  <span className="text-sm text-muted-foreground">
-                    {statements.length} statements
+        {/* Supporting Statements - Collapsible */}
+        <section className="mb-10">
+          <Collapsible open={showStatements} onOpenChange={setShowStatements}>
+            <CollapsibleTrigger className="w-full">
+              <div className="flex items-center justify-between p-4 rounded-lg border border-dashed hover:border-primary/50 hover:bg-muted/30 transition-colors">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <MessageSquareQuote className="h-4 w-4" />
+                  <span className="text-sm font-medium">
+                    Supporting Statements
+                    {selectedCategory && (
+                      <span className="ml-1 text-primary">
+                        — {insightCategories.find(c => c.id === selectedCategory)?.title}
+                      </span>
+                    )}
                   </span>
                 </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {paginatedStatements.map((statement) => (
-                  <div key={statement.id} className="p-4 rounded-lg border bg-muted/20">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <span>{displayedStatements.length} kilder</span>
+                  {showStatements ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                </div>
+              </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="mt-3 space-y-3">
+                {selectedCategory && (
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={() => setSelectedCategory(null)}
+                    className="text-xs text-muted-foreground"
+                  >
+                    Vis alle statements
+                  </Button>
+                )}
+                {displayedStatements.map((statement) => (
+                  <div key={statement.id} className="p-3 rounded-lg bg-muted/30 border border-border/50">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge variant="outline" className="text-xs">{statement.role}</Badge>
                       <span className="text-xs text-muted-foreground">{statement.date}</span>
                     </div>
-                    <blockquote className="text-sm text-foreground italic mb-3 pl-3 border-l-2 border-primary/30">
-                      "{statement.quote}"
-                    </blockquote>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <p className="text-sm text-foreground/90 italic mb-2">"{statement.quote}"</p>
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                       <FileText className="h-3 w-3" />
-                      <span>{statement.source}</span>
+                      {statement.source}
                     </div>
                   </div>
                 ))}
-
-                {totalPages > 1 && (
-                  <Pagination className="mt-6">
-                    <PaginationContent>
-                      <PaginationItem>
-                        <PaginationPrevious 
-                          onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                          className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-                        />
-                      </PaginationItem>
-                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                        <PaginationItem key={page}>
-                          <PaginationLink
-                            onClick={() => setCurrentPage(page)}
-                            isActive={currentPage === page}
-                            className="cursor-pointer"
-                          >
-                            {page}
-                          </PaginationLink>
-                        </PaginationItem>
-                      ))}
-                      <PaginationItem>
-                        <PaginationNext 
-                          onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                          className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-                        />
-                      </PaginationItem>
-                    </PaginationContent>
-                  </Pagination>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Actions */}
-            <div className="flex items-center justify-between pt-4 border-t">
-              <div className="text-sm text-muted-foreground">
-                Rapport genereret: {format(new Date(), "d. MMMM yyyy 'kl.' HH:mm", { locale: da })}
               </div>
-              <div className="flex items-center gap-3">
+            </CollapsibleContent>
+          </Collapsible>
+        </section>
+
+        {/* Actions - like Debrief Report */}
+        <Card className="border-0 shadow-sm bg-muted/30">
+          <CardContent className="py-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">
+                Genereret: {format(new Date(), "d. MMMM yyyy", { locale: da })}
+              </span>
+              <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" className="gap-2">
                   <Download className="h-4 w-4" />
                   Download PDF
@@ -334,8 +297,8 @@ const InsightReportView = () => {
                 </Button>
               </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </main>
     </div>
   );
