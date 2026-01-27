@@ -92,14 +92,16 @@ export const NavigationMenu = () => {
             <Separator className="my-6" />
 
             <div className="space-y-2">
-              <a
-                href="#"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent/50 transition-colors text-foreground"
-                onClick={() => setIsOpen(false)}
+              <button
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent/50 transition-colors text-foreground text-left"
+                onClick={() => {
+                  setIsOpen(false);
+                  navigate("/settings");
+                }}
               >
                 <Settings className="h-5 w-5" />
                 <span className="font-medium">Indstillinger</span>
-              </a>
+              </button>
             </div>
           </div>
 

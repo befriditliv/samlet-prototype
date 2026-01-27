@@ -13,6 +13,7 @@ import Kundeoversigt from "./pages/Kundeoversigt";
 import Traeningsplatform from "./pages/Traeningsplatform";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import NewReport from "./pages/manager/NewReport";
+import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/traeningsplatform" element={<ProtectedRoute><Traeningsplatform /></ProtectedRoute>} />
             <Route path="/hco/:id" element={<ProtectedRoute><HcoDetail /></ProtectedRoute>} />
             <Route path="/hcp/:id" element={<ProtectedRoute><HcpDetail /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
