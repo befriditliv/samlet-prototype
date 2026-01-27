@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useInViewOnce } from "@/hooks/use-in-view";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
@@ -81,9 +81,24 @@ export const InsightTools = () => {
     rootMargin: "0px 0px -10% 0px",
   });
 
+  const navigate = useNavigate();
+
   const deleteReport = (id: string) => {
     setReports(prev => prev.filter(r => r.id !== id));
     toast.success('Report deleted');
+  };
+
+  const viewReport = (report: SavedReport) => {
+    navigate('/manager/report', {
+      state: {
+        reportType: report.title,
+        dateRange: report.dateRange,
+        compareDateRange: { from: subDays(report.dateRange.from, 30), to: subDays(report.dateRange.from, 1) },
+        product: report.product,
+        employee: report.employee,
+        compareEnabled: true
+      }
+    });
   };
 
   const totalPages = Math.ceil(reports.length / reportsPerPage);
@@ -220,6 +235,7 @@ export const InsightTools = () => {
                           variant="ghost"
                           size="icon"
                           className="h-9 w-9 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+                          onClick={() => viewReport(report)}
                         >
                           <Eye className="h-4 w-4" />
                         </Button>
