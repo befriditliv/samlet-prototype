@@ -27,12 +27,14 @@ import {
   Users,
   Target
 } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import { format, subDays } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
+import { NavigationMenu } from "@/components/NavigationMenu";
+import { AskJarvisManager } from "@/components/manager/AskJarvis";
+import { HcpSearch } from "@/components/HcpSearch";
 
 type WizardStep = 'select-type' | 'configure';
 type ReportCategory = 'quick-reports' | 'debrief-report' | 'insights';
@@ -205,6 +207,13 @@ const NewReport = () => {
       navigate('/manager/debrief-quality-report');
     } else if (reportId === 'campaign-adherence') {
       navigate('/manager/campaign-adherence-report');
+    } else if (reportId === 'high-potential-no-engagement') {
+      navigate('/kundeoversigt', {
+        state: {
+          filter: 'high-potential-no-engagement',
+          title: 'High Potential Clients without Recent Engagement'
+        }
+      });
     } else {
       navigate('/manager');
     }
@@ -245,8 +254,15 @@ const NewReport = () => {
           <div className="flex items-center gap-6">
             <img src={jarvisLogo} alt="Jarvis Logo" className="h-14 w-14" />
             <div className="flex-1">
-              <h1 className="text-2xl font-bold text-foreground">Report Generator</h1>
+              <h1 className="text-2xl font-bold text-foreground">Jarvis Reports</h1>
               <p className="text-sm text-muted-foreground">Create insights, track trends, and uncover opportunities</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-full max-w-md">
+                <HcpSearch />
+              </div>
+              <AskJarvisManager />
+              <NavigationMenu />
             </div>
           </div>
         </div>
