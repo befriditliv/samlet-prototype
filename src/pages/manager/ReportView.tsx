@@ -317,9 +317,9 @@ const ReportView = () => {
               {/* Trend indicator */}
               <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
                 {selectedCategory.trend === 'up' ? (
-                  <ArrowUpRight className="h-5 w-5 text-destructive" />
+                  <ArrowUpRight className="h-5 w-5 text-green-500" />
                 ) : selectedCategory.trend === 'down' ? (
-                  <ArrowDownRight className="h-5 w-5 text-green-500" />
+                  <ArrowDownRight className="h-5 w-5 text-destructive" />
                 ) : null}
                 <span className="text-sm">
                   {selectedCategory.trend === 'up' ? 'Stigende' : selectedCategory.trend === 'down' ? 'Faldende' : 'Stabil'} trend: {selectedCategory.trendPercent}% ændring siden periode start
@@ -559,15 +559,15 @@ const ReportView = () => {
                   <p className="text-sm text-muted-foreground mb-3">Udvikling baseret på {totalDebriefs} kategoriserede debriefs</p>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <TrendingDown className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
+                      <TrendingDown className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
                       <span><span className="font-medium text-foreground">Tilskudsbekymringer faldet 35%</span> – fra 18 debriefs i august til kun 2 i december. Regionale afklaringer og bedre dokumentation har reduceret usikkerheden.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <TrendingUp className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
+                      <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
                       <span><span className="font-medium text-foreground">Kombinationsbehandling steget 62%</span> – HCP'er søger nu aktivt vejledning om Ozempic sammen med SGLT2i, insulin og andre antidiabetika.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <TrendingUp className="h-4 w-4 text-blue-500 mt-0.5 shrink-0" />
+                      <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
                       <span><span className="font-medium text-foreground">Patientudvælgelse steget 180%</span> – Nye spørgsmål om prioritering, særlige patientgrupper og praktisk opstartshåndtering dominerer nu.</span>
                     </li>
                   </ul>
@@ -659,11 +659,11 @@ const ReportView = () => {
                       </p>
                       <div className="flex items-center gap-1 text-xs">
                         {category.trend === 'up' ? (
-                          <ArrowUpRight className="h-3.5 w-3.5 text-amber-500" />
+                          <ArrowUpRight className="h-3.5 w-3.5 text-green-500" />
                         ) : category.trend === 'down' ? (
-                          <ArrowDownRight className="h-3.5 w-3.5 text-green-500" />
+                          <ArrowDownRight className="h-3.5 w-3.5 text-destructive" />
                         ) : null}
-                        <span className={category.trend === 'up' ? 'text-amber-500' : category.trend === 'down' ? 'text-green-500' : 'text-muted-foreground'}>
+                        <span className={category.trend === 'up' ? 'text-green-500' : category.trend === 'down' ? 'text-destructive' : 'text-muted-foreground'}>
                           {category.trend === 'up' ? '+' : category.trend === 'down' ? '-' : ''}{category.trendPercent}%
                         </span>
                         <span className="text-muted-foreground">siden periode start</span>
@@ -770,11 +770,11 @@ const ReportView = () => {
                       </div>
                       <div className="flex items-center gap-1">
                         {cat.trend === 'up' ? (
-                          <ArrowUpRight className="h-3 w-3 text-amber-500" />
+                          <ArrowUpRight className="h-3 w-3 text-green-500" />
                         ) : cat.trend === 'down' ? (
-                          <ArrowDownRight className="h-3 w-3 text-green-500" />
+                          <ArrowDownRight className="h-3 w-3 text-destructive" />
                         ) : null}
-                        <span className={cat.trend === 'up' ? 'text-amber-500' : cat.trend === 'down' ? 'text-green-500' : 'text-muted-foreground'}>
+                        <span className={cat.trend === 'up' ? 'text-green-500' : cat.trend === 'down' ? 'text-destructive' : 'text-muted-foreground'}>
                           {cat.count}
                         </span>
                       </div>
