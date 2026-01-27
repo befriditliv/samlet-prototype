@@ -182,8 +182,8 @@ export const ActionCenter = () => {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Activity Hub</h2>
-          <p className="text-sm text-muted-foreground">Signals requiring attention</p>
+          <h2 className="text-lg font-semibold text-foreground">Signals</h2>
+          <p className="text-sm text-muted-foreground">Key metrics and alerts to help you prioritize your outreach</p>
         </div>
         <button 
           onClick={() => navigate('/kundeoversigt')}
