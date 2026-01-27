@@ -1,8 +1,17 @@
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { 
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { 
   ArrowLeft,
   Calendar,
@@ -10,15 +19,10 @@ import {
   Download,
   Share2,
   FileText,
-  TrendingUp,
-  TrendingDown,
-  Minus,
-  ExternalLink,
-  BarChart3
+  ChevronDown
 } from "lucide-react";
 import { format } from "date-fns";
 import { da } from "date-fns/locale";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, BarChart, Bar } from "recharts";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
@@ -32,40 +36,40 @@ interface InsightReportData {
   employee: string;
 }
 
-// Mock insight categories from the PDF structure
 interface InsightCategory {
   id: string;
   title: string;
   count: number;
-  sentiment: 'positive' | 'neutral' | 'negative';
+  description: string;
 }
 
 const insightCategories: InsightCategory[] = [
-  { id: '1', title: 'Ingen indvendinger ved opstart af Ozempic', count: 111, sentiment: 'positive' },
-  { id: '2', title: 'Interesse for opfølgning og yderligere information om Ozempic', count: 39, sentiment: 'neutral' },
-  { id: '3', title: 'Spørgsmål og behov for afklaring vedrørende Ozempic', count: 35, sentiment: 'negative' },
+  { 
+    id: '1', 
+    title: 'Ingen indvendinger ved opstart af Ozempic', 
+    count: 111,
+    description: 'En stor del af HCP\'erne har ikke rapporteret nogen indvendinger ved opstart af Ozempic-patienter. Mange HCP\'er har nævnt, at der ikke er nogen specifikke indvendinger eller bekymringer vedrørende igangsættelse af Ozempic, og nogle har endda udtrykt positiv interesse for behandlingen. Der er også HCP\'er, der har nævnt, at mange patienter er genstartet på Ozempic, hvilket indikerer en generel accept af behandlingen.'
+  },
+  { 
+    id: '2', 
+    title: 'Interesse for opfølgning og yderligere information om Ozempic', 
+    count: 39,
+    description: 'Der er en generel interesse blandt HCP\'erne for opfølgning og yderligere information om Ozempic. Nogle HCP\'er har udtrykt interesse for opfølgende aftaler om forløbsplaner i relation til Ozempic, og der er også interesse for materiale om hypoglykæmi og organbeskyttelse. HCP\'erne er opmærksomme på opfølgning af patienter, hvor Ozempic er seponeret, og der er interesse for mere viden om Score2 diabetes. Der er også interesse for dialog om kommende behandlingsalgoritmer for Type 2 Diabetes.'
+  },
+  { 
+    id: '3', 
+    title: 'Spørgsmål og behov for afklaring vedrørende Ozempic', 
+    count: 35,
+    description: 'Flere HCP\'er har stillet spørgsmål og udtrykt behov for afklaring vedrørende Ozempic. Der er mange spørgsmål til algoritmen for dosering af Ozempic, herunder brug af 8 doser og 2 mg. HCP\'er har også spurgt ind til krav om afprøvning af antidiabetika før Ozempic, og der er behov for yderligere information om tilskud til Ozempic. Der er også interesse for at kunne skelne mellem patienter med høj og lav risiko, og hvem der har mest gavn af vægttabsbehandling med Ozempic.'
+  },
+  { 
+    id: '4', 
+    title: 'Bekymringer og indvendinger ved opstart af Ozempic', 
+    count: 20,
+    description: 'Der er flere HCP\'er, der har udtrykt bekymringer og indvendinger ved opstart af Ozempic. Nogle af bekymringerne skyldes regionale krav om først at afprøve DPP-4-hæmmere, mens andre HCP\'er har rejst bekymringer omkring patienters compliance med medicinindtag. Der er også bekymringer om, at mange patienter allerede er i mål med SGLT-2 og DPP4 hæmmede, uden GLP-1, hvilket kan påvirke beslutningen om at starte Ozempic. Der er også indvendinger omkring regionens klausul fortolkning og udfordringen ved at skifte velbehandlede insulinpatienter til Ozempic.'
+  },
 ];
 
-// Sentiment trend data
-const sentimentTrendData = [
-  { month: 'Jul', positive: 65, neutral: 25, negative: 10 },
-  { month: 'Aug', positive: 58, neutral: 28, negative: 14 },
-  { month: 'Sep', positive: 62, neutral: 24, negative: 14 },
-  { month: 'Okt', positive: 70, neutral: 20, negative: 10 },
-  { month: 'Nov', positive: 72, neutral: 18, negative: 10 },
-  { month: 'Dec', positive: 75, neutral: 17, negative: 8 },
-];
-
-// Activity types data
-const activityTypesData = [
-  { name: 'Molecules', value: 10 },
-  { name: 'Brands', value: 20 },
-  { name: 'Competition', value: 10 },
-  { name: 'Market Access', value: 10 },
-  { name: 'Other', value: 10 },
-];
-
-// Mock statements from the report
 const statements = [
   {
     id: '1',
@@ -102,51 +106,62 @@ const statements = [
     quote: 'Patienter udtrykker bekymring over doseringsalgoritmer, herunder brugen af 8 doser og 2 mg.',
     source: 'Interaction: Mia Dam Lekke, Mai Brit Pedersen - 2025-11-05',
   },
+  {
+    id: '6',
+    role: 'Physician',
+    date: 'okt. 15, 2025',
+    quote: 'Der er behov for mere information om hvornår man skal skifte fra insulin til Ozempic.',
+    source: 'Interaction: Lars Hansen - 2025-10-15',
+  },
+  {
+    id: '7',
+    role: 'Nurse',
+    date: 'nov. 22, 2025',
+    quote: 'Patienterne er generelt positive overfor Ozempic-behandlingen.',
+    source: 'Interaction: Karen Nielsen - 2025-11-22',
+  },
+  {
+    id: '8',
+    role: 'Physician',
+    date: 'dec. 01, 2025',
+    quote: 'Vi ser gode resultater med Ozempic hos patienter med høj kardiovaskulær risiko.',
+    source: 'Interaction: Peter Madsen - 2025-12-01',
+  },
 ];
 
-// Robustness sources
-const robustnessSources = [
-  { source: 'Interaction: Lene Petersen, Henrik Pals - 2025-09-04', count: 2 },
-  { source: 'Interaction: Stine Vedel Andersen, Nina Lone Thyman - 2025-09-26', count: 1 },
-  { source: 'Interaction: Jensen, Lise Hejberg Øhlenschlaeger - 2025-11-18', count: 1 },
-  { source: 'Interaction: Anne Sofie Vedel - 2025-10-27', count: 1 },
-  { source: 'Interaction: Mia Dam Lekke, Mai Brit Pedersen - 2025-11-05', count: 1 },
-];
+const ITEMS_PER_PAGE = 4;
 
 const InsightReportView = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const reportData = location.state as InsightReportData | null;
+  const [openCategories, setOpenCategories] = useState<string[]>(['1']);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Fallback data
   const data: InsightReportData = reportData || {
     title: "Ozempic Initiation Insights",
-    query: "What are the main barriers to Ozempic initiation?",
+    query: "hvad siger hcperne ift. ozempic initiering",
     dateRange: { from: new Date(2025, 6, 1), to: new Date(2025, 11, 31) },
     product: "Ozempic",
     employee: "all"
   };
 
-  const getSentimentColor = (sentiment: 'positive' | 'neutral' | 'negative') => {
-    switch (sentiment) {
-      case 'positive': return 'bg-green-100 text-green-700 border-green-200';
-      case 'neutral': return 'bg-blue-100 text-blue-700 border-blue-200';
-      case 'negative': return 'bg-orange-100 text-orange-700 border-orange-200';
-    }
+  const toggleCategory = (id: string) => {
+    setOpenCategories(prev => 
+      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
+    );
   };
 
-  const getSentimentIcon = (sentiment: 'positive' | 'neutral' | 'negative') => {
-    switch (sentiment) {
-      case 'positive': return <TrendingUp className="h-4 w-4" />;
-      case 'neutral': return <Minus className="h-4 w-4" />;
-      case 'negative': return <TrendingDown className="h-4 w-4" />;
-    }
-  };
+  const totalPages = Math.ceil(statements.length / ITEMS_PER_PAGE);
+  const paginatedStatements = statements.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-background">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-10 shadow-sm">
+      <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-10">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center gap-6">
             <img src={jarvisLogo} alt="Jarvis Logo" className="h-12 w-12" />
@@ -165,9 +180,9 @@ const InsightReportView = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-6 py-8 space-y-8">
+      <main className="container mx-auto px-6 py-8">
         {/* Back button and metadata */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-8">
           <Button 
             variant="ghost" 
             onClick={() => navigate('/manager')}
@@ -186,207 +201,141 @@ const InsightReportView = () => {
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Users className="h-4 w-4" />
-              <span>{data.employee === 'all' ? 'All employees' : data.employee}</span>
+              <span>{data.employee === 'all' ? 'Alle medarbejdere' : data.employee}</span>
             </div>
             <Badge variant="outline">{data.product}</Badge>
           </div>
         </div>
 
-        {/* Executive Summary */}
-        <Card className="border-0 shadow-sm bg-gradient-to-br from-card to-card/80">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-2xl font-bold">Executive Summary</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Insight Categories */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {insightCategories.map((category) => (
-                <div 
-                  key={category.id}
-                  className={`p-4 rounded-xl border ${getSentimentColor(category.sentiment)} transition-all hover:shadow-md cursor-pointer`}
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <span className="text-2xl font-bold">({category.count})</span>
-                    {getSentimentIcon(category.sentiment)}
+        {/* Two column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left column - Insights */}
+          <div className="lg:col-span-1 space-y-3">
+            <h2 className="text-lg font-semibold text-foreground mb-4">Insights</h2>
+            
+            {insightCategories.map((category) => (
+              <Collapsible
+                key={category.id}
+                open={openCategories.includes(category.id)}
+                onOpenChange={() => toggleCategory(category.id)}
+              >
+                <CollapsibleTrigger className="w-full">
+                  <div className="flex items-center justify-between p-3 rounded-lg border-2 border-primary bg-primary/5 hover:bg-primary/10 transition-colors text-left">
+                    <span className="text-sm font-medium text-primary leading-snug pr-2">
+                      {category.title} ({category.count})
+                    </span>
+                    <ChevronDown 
+                      className={`h-4 w-4 text-primary shrink-0 transition-transform ${
+                        openCategories.includes(category.id) ? 'rotate-180' : ''
+                      }`} 
+                    />
                   </div>
-                  <p className="text-sm font-medium leading-snug">{category.title}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Summary Text */}
-            <div className="prose prose-sm max-w-none text-foreground/90">
-              <p>
-                I perioden fra slutningen af august til december 2025 har der været en række debatter og observationer omkring igangsættelse af Ozempic-patienter blandt HCP'erne, primært inden for almen praksis. Generelt er der en overvægt af rapporter, der indikerer, at der ikke er mødt indvendinger vedrørende opstart af Ozempic-patienter. Dette er blevet nævnt gentagne gange af både sygeplejersker og læger, hvilket tyder på en generel accept af produktet.
-              </p>
-              <p>
-                Der er dog også blevet rejst bekymringer og indvendinger i visse tilfælde. Nogle HCP'er har udtrykt bekymring over at skifte velbehandlede insulinpatienter til Ozempic, især når deres HbA1c-niveauer er tilfredsstillende. Der er også blevet nævnt pres fra regionerne og frygt for at komplicere behandlingerne, samt frustration over tilskudsklausulen, som kan forhindre nogle patienter i at få adgang til Ozempic.
-              </p>
-              <p>
-                Samlet set viser dataene, at der er en positiv tendens mod at igangsætte Ozempic-patienter, men der er stadig nogle bekymringer og spørgsmål, der skal adresseres for at sikre en glat implementering og optimal patientpleje.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Data for all discovered insights header */}
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-lg bg-primary/10">
-            <BarChart3 className="h-5 w-5 text-primary" />
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="px-3 py-3 text-sm text-muted-foreground leading-relaxed">
+                    {category.description}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            ))}
           </div>
-          <h2 className="text-xl font-bold text-foreground">Data for all discovered insights</h2>
-        </div>
 
-        {/* Sentiment Analysis Chart */}
-        <Card className="border-0 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold">Sentiment Analysis</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={sentimentTrendData}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-border/50" />
-                  <XAxis dataKey="month" className="text-xs" tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-                  <YAxis className="text-xs" tick={{ fill: 'hsl(var(--muted-foreground))' }} domain={[0, 100]} />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'hsl(var(--card))', 
-                      border: '1px solid hsl(var(--border))',
-                      borderRadius: '8px'
-                    }} 
-                  />
-                  <Legend />
-                  <Area 
-                    type="monotone" 
-                    dataKey="positive" 
-                    stackId="1" 
-                    stroke="#22c55e" 
-                    fill="#22c55e" 
-                    fillOpacity={0.6}
-                    name="Positive"
-                  />
-                  <Area 
-                    type="monotone" 
-                    dataKey="neutral" 
-                    stackId="1" 
-                    stroke="#3b82f6" 
-                    fill="#3b82f6" 
-                    fillOpacity={0.6}
-                    name="Neutral"
-                  />
-                  <Area 
-                    type="monotone" 
-                    dataKey="negative" 
-                    stackId="1" 
-                    stroke="#f97316" 
-                    fill="#f97316" 
-                    fillOpacity={0.6}
-                    name="Negative"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+          {/* Right column - Executive Summary */}
+          <div className="lg:col-span-2 space-y-8">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground mb-2">Executive Summary</h2>
+              <p className="text-muted-foreground mb-6">{data.query}</p>
+              
+              <div className="prose prose-sm max-w-none text-foreground/90 space-y-4">
+                <p>
+                  I perioden fra slutningen af august til december 2025 har der været en række debatter og observationer omkring igangsættelse af Ozempic-patienter blandt HCP'erne, primært inden for almen praksis. Generelt er der en overvægt af rapporter, der indikerer, at der ikke er mødt indvendinger vedrørende opstart af Ozempic-patienter. Dette er blevet nævnt gentagne gange af både sygeplejersker og læger, hvilket tyder på en generel accept af produktet.
+                </p>
+                <p>
+                  Der er dog også blevet rejst bekymringer og indvendinger i visse tilfælde. Nogle HCP'er har udtrykt bekymring over at skifte velbehandlede insulinpatienter til Ozempic, især når deres HbA1c-niveauer er tilfredsstillende. Der er også blevet nævnt pres fra regionerne og frygt for at komplicere behandlingerne, samt frustration over tilskudsklausulen, som kan forhindre nogle patienter i at få adgang til Ozempic.
+                </p>
+                <p>
+                  Der har været diskussioner om doseringsalgoritmer, herunder brugen af 8 doser og 2 mg, hvilket indikerer en interesse for at optimere behandlingen. HCP'erne har også udtrykt interesse for mere viden om Score2 diabetes og hypoglykæmi, hvilket kan være relevant for patienternes behandling med Ozempic.
+                </p>
+              </div>
             </div>
-          </CardContent>
-        </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Robustness Indicators */}
-          <Card className="border-0 shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold">Robustness Indicators</CardTitle>
-              <p className="text-sm text-muted-foreground">Used Sources</p>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {robustnessSources.map((source, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
-                    <span className="text-sm text-foreground truncate flex-1 mr-4">{source.source}</span>
-                    <Badge variant="secondary" className="shrink-0">({source.count})</Badge>
+            {/* Statement Overview */}
+            <Card className="border shadow-sm">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-semibold">Statement Overview</CardTitle>
+                  <span className="text-sm text-muted-foreground">
+                    {statements.length} statements
+                  </span>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {paginatedStatements.map((statement) => (
+                  <div key={statement.id} className="p-4 rounded-lg border bg-muted/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge variant="outline" className="text-xs">{statement.role}</Badge>
+                      <span className="text-xs text-muted-foreground">{statement.date}</span>
+                    </div>
+                    <blockquote className="text-sm text-foreground italic mb-3 pl-3 border-l-2 border-primary/30">
+                      "{statement.quote}"
+                    </blockquote>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <FileText className="h-3 w-3" />
+                      <span>{statement.source}</span>
+                    </div>
                   </div>
                 ))}
-              </div>
-            </CardContent>
-          </Card>
 
-          {/* Activity Types */}
-          <Card className="border-0 shadow-sm">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold">Activity Types</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-[200px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={activityTypesData} layout="vertical">
-                    <CartesianGrid strokeDasharray="3 3" className="stroke-border/50" horizontal={false} />
-                    <XAxis type="number" tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-                    <YAxis type="category" dataKey="name" tick={{ fill: 'hsl(var(--muted-foreground))' }} width={100} />
-                    <Tooltip 
-                      contentStyle={{ 
-                        backgroundColor: 'hsl(var(--card))', 
-                        border: '1px solid hsl(var(--border))',
-                        borderRadius: '8px'
-                      }} 
-                    />
-                    <Bar dataKey="value" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+                {totalPages > 1 && (
+                  <Pagination className="mt-6">
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious 
+                          onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                          className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                        />
+                      </PaginationItem>
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                        <PaginationItem key={page}>
+                          <PaginationLink
+                            onClick={() => setCurrentPage(page)}
+                            isActive={currentPage === page}
+                            className="cursor-pointer"
+                          >
+                            {page}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+                      <PaginationItem>
+                        <PaginationNext 
+                          onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                          className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                        />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
+                )}
+              </CardContent>
+            </Card>
 
-        {/* Statement Overview */}
-        <Card className="border-0 shadow-sm">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-lg font-semibold">Statement Overview</CardTitle>
-                <p className="text-sm text-muted-foreground mt-1">({statements.length * 40}) statements from HCPs</p>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {statements.map((statement) => (
-                <div key={statement.id} className="p-4 rounded-xl border border-border/50 bg-muted/20 hover:bg-muted/30 transition-colors">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="outline" className="text-xs">{statement.role}</Badge>
-                    <span className="text-xs text-muted-foreground">{statement.date}</span>
-                  </div>
-                  <blockquote className="text-sm text-foreground italic mb-3 pl-3 border-l-2 border-primary/30">
-                    "{statement.quote}"
-                  </blockquote>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <FileText className="h-3 w-3" />
-                    <span>{statement.source}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Actions */}
-        <Card className="border-0 shadow-sm">
-          <CardContent className="py-6">
-            <div className="flex items-center justify-between">
+            {/* Actions */}
+            <div className="flex items-center justify-between pt-4 border-t">
               <div className="text-sm text-muted-foreground">
-                Report generated: {format(new Date(), "d. MMMM yyyy 'kl.' HH:mm", { locale: da })}
+                Rapport genereret: {format(new Date(), "d. MMMM yyyy 'kl.' HH:mm", { locale: da })}
               </div>
               <div className="flex items-center gap-3">
-                <Button variant="outline" className="gap-2">
+                <Button variant="outline" size="sm" className="gap-2">
                   <Download className="h-4 w-4" />
                   Download PDF
                 </Button>
-                <Button variant="outline" className="gap-2">
+                <Button variant="outline" size="sm" className="gap-2">
                   <Share2 className="h-4 w-4" />
-                  Share
+                  Del
                 </Button>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </main>
     </div>
   );
