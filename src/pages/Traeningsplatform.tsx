@@ -12,6 +12,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvis } from "@/components/AskJarvis";
 import { NavigationMenu } from "@/components/NavigationMenu";
+import { OverviewSection } from "@/components/training/OverviewSection";
+import { ScenariosSection } from "@/components/training/ScenariosSection";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { ArrowLeft, ArrowRight, Sparkles, User, Send, Star, CheckCircle2, AlertCircle, ChevronDown, Check, Target, MessageSquare, Zap, BookOpen, TrendingUp, Users, Building2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -274,107 +276,111 @@ const Traeningsplatform = () => {
 
       <main className="container mx-auto px-6 py-12">
         {/* ==================== LANDING VIEW ==================== */}
-        {viewState === "landing" && <div className="max-w-5xl mx-auto space-y-12">
-            {/* Hero Section */}
-            <div className="text-center space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+        {viewState === "landing" && <div className="max-w-4xl mx-auto space-y-8">
+            {/* Hero Section - More Compact */}
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
                 <Sparkles className="h-4 w-4" />
                 AI-drevet træning
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+              <h2 className="text-3xl font-bold leading-tight">
                 <span className="text-foreground">Jarvis</span>
-                <br />
+                {" "}
                 <span className="text-primary">Træningsplatform</span>
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-muted-foreground max-w-xl mx-auto">
                 Træn HCP-samtaler, håndter indvendinger og styrk din produktviden – 
                 alt sammen i et sikkert miljø med øjeblikkelig feedback.
               </p>
             </div>
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-3 gap-6">
-              <Card className="border-0 shadow-sm bg-card">
-                <CardContent className="p-6 text-center">
-                  <div className="text-3xl font-bold text-primary mb-1">24</div>
-                  <div className="text-sm text-muted-foreground">Gennemførte simuleringer</div>
+            {/* Stats Cards - Compact Row */}
+            <div className="grid grid-cols-3 gap-4">
+              <Card className="border shadow-sm">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-primary">5</div>
+                  <div className="text-xs text-muted-foreground">Completed simulations</div>
                 </CardContent>
               </Card>
-              <Card className="border-0 shadow-sm bg-card">
-                <CardContent className="p-6 text-center">
-                  <div className="text-3xl font-bold text-success mb-1">4.3</div>
-                  <div className="text-sm text-muted-foreground">Din gennemsnitlige score</div>
+              <Card className="border shadow-sm">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-success">4.2</div>
+                  <div className="text-xs text-muted-foreground">Average score</div>
                 </CardContent>
               </Card>
-              <Card className="border-0 shadow-sm bg-card">
-                <CardContent className="p-6 text-center">
-                  <div className="text-3xl font-bold text-primary mb-1">3.8</div>
-                  <div className="text-sm text-muted-foreground">Company average</div>
+              <Card className="border shadow-sm">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-primary">87.6</div>
+                  <div className="text-xs text-muted-foreground">Company knowledge</div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Scenario Cards */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-foreground text-center">Vælg din træningstype</h3>
+            {/* Overview Section with History Table */}
+            <OverviewSection />
+
+            {/* Scenarios Section with Table */}
+            <ScenariosSection onStartScenario={() => {
+              // For now, start custom wizard
+              handleStartCustomScenario();
+            }} />
+
+            {/* Training Type Cards - More Compact */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-foreground">Choose your training type</h3>
               
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="grid md:grid-cols-2 gap-4">
                 {/* Custom Scenario Card */}
-                <Card className="group relative overflow-hidden border-2 border-transparent hover:border-primary/20 cursor-pointer transition-all duration-300 hover:shadow-xl bg-card" onClick={handleStartCustomScenario}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <CardContent className="p-8 space-y-6 relative">
-                    <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                      <Target className="h-7 w-7 text-primary" />
+                <Card className="group border hover:border-primary/30 cursor-pointer transition-all hover:shadow-md" onClick={handleStartCustomScenario}>
+                  <CardContent className="p-5 space-y-3">
+                    <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                      <Target className="h-5 w-5 text-primary" />
                     </div>
-                    <div className="space-y-3">
-                      <h4 className="text-xl font-semibold text-foreground">Tilpasset scenarie</h4>
-                      <p className="text-muted-foreground leading-relaxed">
-                        Opret et skræddersyet scenarie ved at vælge produkt, adoptionsstige og 
-                        relevante indvendinger. Perfekt til at øve specifikke situationer.
+                    <div className="space-y-1.5">
+                      <h4 className="font-semibold text-foreground">Custom Scenario</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        Create a tailored scenario by selecting persona, objective, adoption ladder step, and hand-picking relevant objections.
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">
-                      <span>Start tilpasset træning</span>
-                      <ArrowRight className="h-4 w-4" />
+                    <div className="flex items-center gap-1.5 text-primary text-sm font-medium">
+                      <span>Start custom training</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* HCP Scenario Card */}
-                <Card className="group relative overflow-hidden border-2 border-transparent hover:border-primary/20 cursor-pointer transition-all duration-300 hover:shadow-xl bg-card" onClick={handleStartHcpScenario}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <CardContent className="p-8 space-y-6 relative">
-                    <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                      <User className="h-7 w-7 text-primary" />
+                <Card className="group border hover:border-primary/30 cursor-pointer transition-all hover:shadow-md" onClick={handleStartHcpScenario}>
+                  <CardContent className="p-5 space-y-3">
+                    <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                      <User className="h-5 w-5 text-primary" />
                     </div>
-                    <div className="space-y-3">
-                      <h4 className="text-xl font-semibold text-foreground">HCP-specifik træning</h4>
-                      <p className="text-muted-foreground leading-relaxed">
-                        Træn med en simulation bygget op omkring en specifik HCP fra din portefølje, 
-                        baseret på tidligere interaktioner og faktisk feedback.
+                    <div className="space-y-1.5">
+                      <h4 className="font-semibold text-foreground">HCP-Specific Training</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        Train with a simulation built around a specific HCP, using a persona based on past interactions and objections drawn from actual feedback.
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">
-                      <span>Vælg en HCP</span>
-                      <ArrowRight className="h-4 w-4" />
+                    <div className="flex items-center gap-1.5 text-primary text-sm font-medium">
+                      <span>Select an HCP</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
                     </div>
                   </CardContent>
                 </Card>
               </div>
             </div>
 
-            {/* Tips Section */}
-            <Card className="border-0 shadow-sm bg-gradient-to-r from-primary/5 to-accent/30">
-              <CardContent className="p-8">
-                <div className="flex items-start gap-6">
-                  <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                    <Zap className="h-6 w-6 text-primary" />
+            {/* Tips Section - Compact */}
+            <Card className="border bg-gradient-to-r from-primary/5 to-accent/20">
+              <CardContent className="p-5">
+                <div className="flex items-start gap-4">
+                  <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <Zap className="h-5 w-5 text-primary" />
                   </div>
-                  <div className="space-y-2">
-                    <h4 className="text-lg font-semibold text-foreground">Tip: Forbered dig før dit næste møde</h4>
-                    <p className="text-muted-foreground">
-                      Har du et møde med en HCP i morgen? Brug HCP-specifik træning til at forberede dig 
-                      på potentielle indvendinger og få konstruktiv feedback før det rigtige møde.
+                  <div className="space-y-1">
+                    <h4 className="font-semibold text-foreground">Tip: Prepare before your next meeting</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Have a meeting with an HCP tomorrow? Use HCP-specific training to prepare for potential objections and get constructive feedback before the real meeting.
                     </p>
                   </div>
                 </div>
