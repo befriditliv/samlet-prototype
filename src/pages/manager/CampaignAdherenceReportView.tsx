@@ -32,7 +32,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 
 // Active campaigns
 interface Campaign {
@@ -187,21 +186,6 @@ const debriefExamples: DebriefExample[] = [
     analysis: 'Aligned: Fokus på fastholdelse, motivation og konkrete strategier matcher kampagnens mål.'
   }
 ];
-
-// Trend data for adherence over time
-const adherenceTrendData = [
-  { week: "Uge 48", ozempic: 65, cv: 50, compliance: 40, weight: 25 },
-  { week: "Uge 49", ozempic: 70, cv: 55, compliance: 42, weight: 28 },
-  { week: "Uge 50", ozempic: 72, cv: 58, compliance: 45, weight: 30 },
-  { week: "Uge 51", ozempic: 75, cv: 60, compliance: 48, weight: 32 }
-];
-
-const chartConfig = {
-  ozempic: { label: "Ozempic Initiering", color: "hsl(var(--primary))" },
-  cv: { label: "CV Outcomes", color: "hsl(var(--chart-2))" },
-  compliance: { label: "Patient Compliance", color: "hsl(var(--chart-3))" },
-  weight: { label: "Vægtstyring", color: "hsl(var(--chart-4))" },
-};
 
 const CampaignAdherenceReportView = () => {
   const navigate = useNavigate();
@@ -389,45 +373,6 @@ const CampaignAdherenceReportView = () => {
               </Collapsible>
             ))}
           </div>
-        </section>
-
-        {/* Adherence Trend */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-foreground mb-4">Adherence Udvikling</h2>
-          <Card className="border-0 bg-card">
-            <CardContent className="pt-6">
-              <ChartContainer config={chartConfig} className="h-64 w-full">
-                <BarChart data={adherenceTrendData}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-border/50" />
-                  <XAxis dataKey="week" className="text-xs" />
-                  <YAxis domain={[0, 100]} className="text-xs" />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="ozempic" fill="hsl(var(--primary))" radius={[2, 2, 0, 0]} />
-                  <Bar dataKey="cv" fill="hsl(var(--chart-2))" radius={[2, 2, 0, 0]} />
-                  <Bar dataKey="compliance" fill="hsl(var(--chart-3))" radius={[2, 2, 0, 0]} />
-                  <Bar dataKey="weight" fill="hsl(var(--chart-4))" radius={[2, 2, 0, 0]} />
-                </BarChart>
-              </ChartContainer>
-              <div className="flex justify-center gap-4 mt-4 text-xs flex-wrap">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded bg-primary" />
-                  <span>Ozempic Initiering</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: 'hsl(var(--chart-2))' }} />
-                  <span>CV Outcomes</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: 'hsl(var(--chart-3))' }} />
-                  <span>Patient Compliance</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: 'hsl(var(--chart-4))' }} />
-                  <span>Vægtstyring</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </section>
 
         {/* Employee Breakdown */}
