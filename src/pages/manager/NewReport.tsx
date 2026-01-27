@@ -134,25 +134,39 @@ const NewReport = () => {
     }
   };
 
-  const generateReport = async (reportName: string) => {
+  const generateReport = async (reportName: string, navigateToReport: boolean = false) => {
     setIsGenerating(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsGenerating(false);
     toast.success(`${reportName} generated successfully`);
-    navigate('/manager');
+    
+    if (navigateToReport) {
+      navigate('/manager/report', {
+        state: {
+          reportType: reportName,
+          dateRange: dateRange,
+          compareDateRange: compareDateRange,
+          product: product,
+          employee: employee,
+          compareEnabled: compareEnabled
+        }
+      });
+    } else {
+      navigate('/manager');
+    }
   };
 
   const handleQuickReport = (reportId: string, reportLabel: string) => {
-    generateReport(reportLabel);
+    generateReport(reportLabel, false);
   };
 
   const handleDebriefReportGenerate = () => {
-    generateReport('Debrief Report');
+    generateReport('Debrief Report', true);
   };
 
   const handleInsightsSearch = () => {
     if (!customQuery.trim()) return;
-    generateReport('Insights Report');
+    generateReport('Insights Report', false);
   };
 
   const getCategoryTitle = () => {
