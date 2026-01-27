@@ -34,7 +34,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-type ReportType = 'general' | 'market-concerns' | 'general-themes' | 'initiation-barriers' | 'competitor-insights' | 'custom';
+type ReportType = 'general' | 'market-concerns' | 'general-themes' | 'initiation-barriers' | 'competitor-insights' | 'custom' | 'insight';
 
 interface SavedReport {
   id: string;
@@ -49,6 +49,16 @@ interface SavedReport {
 
 // Mock data for saved reports
 const mockReports: SavedReport[] = [
+  {
+    id: "0",
+    title: "Ozempic Initiation Insights",
+    createdAt: new Date("2025-12-20T10:15:00"),
+    dateRange: { from: new Date("2025-07-01"), to: new Date("2025-12-31") },
+    employee: "all",
+    product: "ozempic",
+    type: "insight",
+    summary: "Generelt er der en overvægt af rapporter, der indikerer, at der ikke er mødt indvendinger vedrørende opstart af Ozempic-patienter.",
+  },
   {
     id: "1",
     title: "Ozempic Initiation Barriers",
@@ -89,16 +99,28 @@ export const InsightTools = () => {
   };
 
   const viewReport = (report: SavedReport) => {
-    navigate('/manager/report', {
-      state: {
-        reportType: report.title,
-        dateRange: report.dateRange,
-        compareDateRange: { from: subDays(report.dateRange.from, 30), to: subDays(report.dateRange.from, 1) },
-        product: report.product,
-        employee: report.employee,
-        compareEnabled: true
-      }
-    });
+    if (report.type === 'insight') {
+      navigate('/manager/insight-report', {
+        state: {
+          title: report.title,
+          query: "What are the main barriers to Ozempic initiation?",
+          dateRange: report.dateRange,
+          product: report.product,
+          employee: report.employee,
+        }
+      });
+    } else {
+      navigate('/manager/report', {
+        state: {
+          reportType: report.title,
+          dateRange: report.dateRange,
+          compareDateRange: { from: subDays(report.dateRange.from, 30), to: subDays(report.dateRange.from, 1) },
+          product: report.product,
+          employee: report.employee,
+          compareEnabled: true
+        }
+      });
+    }
   };
 
   const totalPages = Math.ceil(reports.length / reportsPerPage);
@@ -114,6 +136,7 @@ export const InsightTools = () => {
       case 'general-themes': return 'General Themes';
       case 'initiation-barriers': return 'Initiation Barriers';
       case 'competitor-insights': return 'Competitor Insights';
+      case 'insight': return 'Insight Report';
       case 'custom': return 'Custom';
     }
   };

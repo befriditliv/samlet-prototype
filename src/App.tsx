@@ -14,6 +14,7 @@ import Traeningsplatform from "./pages/Traeningsplatform";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import NewReport from "./pages/manager/NewReport";
 import ReportView from "./pages/manager/ReportView";
+import InsightReportView from "./pages/manager/InsightReportView";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/manager" element={<ProtectedRoute><ManagerDashboard /></ProtectedRoute>} />
             <Route path="/manager/new-report" element={<ProtectedRoute><NewReport /></ProtectedRoute>} />
             <Route path="/manager/report" element={<ProtectedRoute><ReportView /></ProtectedRoute>} />
+            <Route path="/manager/insight-report" element={<ProtectedRoute><InsightReportView /></ProtectedRoute>} />
             <Route path="/kundeoversigt" element={<ProtectedRoute><Kundeoversigt /></ProtectedRoute>} />
             <Route path="/traeningsplatform" element={<ProtectedRoute><Traeningsplatform /></ProtectedRoute>} />
             <Route path="/hco/:id" element={<ProtectedRoute><HcoDetail /></ProtectedRoute>} />
