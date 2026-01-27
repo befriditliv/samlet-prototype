@@ -1,5 +1,5 @@
-import { ArrowLeft, ChevronDown } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, ChevronDown, User, Mail, Shield, Globe, Bell, Download } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -7,12 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvis } from "@/components/AskJarvis";
 import { NavigationMenu } from "@/components/NavigationMenu";
-import jarvisLogo from "@/assets/jarvis-logo.svg";
 
 const Settings = () => {
   const { role } = useAuth();
@@ -20,16 +21,22 @@ const Settings = () => {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("da");
   const [advancedOpen, setAdvancedOpen] = useState(false);
+  const [emailNotifications, setEmailNotifications] = useState(true);
+  const [pushNotifications, setPushNotifications] = useState(false);
 
   const getRoleDisplayName = () => {
     switch (role) {
       case "key_account_manager":
-        return "KEY ACCOUNT MANAGER";
+        return "Key Account Manager";
       case "manager":
-        return "MANAGER";
+        return "Manager";
       default:
-        return "BRUGER";
+        return "Bruger";
     }
+  };
+
+  const getInitials = () => {
+    return role === "manager" ? "M" : "KAM";
   };
 
   const handleSave = () => {
@@ -72,82 +79,154 @@ const Settings = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-12">
-        <div className="max-w-xl mx-auto space-y-6">
+        <div className="max-w-2xl mx-auto space-y-8">
+          
+          {/* Profile Header Card */}
+          <Card className="p-8 bg-gradient-to-r from-primary/5 via-primary/10 to-accent/10 border-primary/20">
+            <div className="flex items-center gap-6">
+              <div className="relative">
+                <div className="h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg">
+                  <span className="text-2xl font-bold text-primary-foreground">{getInitials()}</span>
+                </div>
+                <div className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full bg-success border-2 border-card flex items-center justify-center">
+                  <div className="h-2 w-2 rounded-full bg-success-foreground" />
+                </div>
+              </div>
+              <div className="flex-1">
+                <h2 className="text-2xl font-bold text-foreground">{getRoleDisplayName()}</h2>
+                <p className="text-muted-foreground">bruger@example.com</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                    Aktiv
+                  </span>
+                  <span className="text-xs text-muted-foreground">• Medlem siden 2024</span>
+                </div>
+              </div>
+            </div>
+          </Card>
+
           {/* Profile Settings Card */}
-          <Card className="p-8">
-            <div className="space-y-6">
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">Profilindstillinger</h2>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Opdater dine profilindstillinger her. Nogle indstillinger skal muligvis opdateres af din administrator.
-                </p>
+          <Card className="overflow-hidden">
+            <div className="p-6 border-b bg-muted/30">
+              <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <User className="h-5 w-5 text-primary" />
+                Profiloplysninger
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Opdater dine profilindstillinger. Nogle felter administreres af din organisation.
+              </p>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              {/* Name Field */}
+              <div className="grid gap-2">
+                <Label htmlFor="name" className="flex items-center gap-2">
+                  <User className="h-4 w-4 text-muted-foreground" />
+                  Navn
+                </Label>
+                <Input
+                  id="name"
+                  value="Bruger"
+                  disabled
+                  className="bg-muted/50 border-dashed"
+                />
+                <p className="text-xs text-muted-foreground">Administreret af din organisation</p>
               </div>
 
-              <div className="space-y-4">
-                {/* Name Field */}
-                <div className="space-y-2">
-                  <Label htmlFor="name">
-                    Navn <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="name"
-                    value="Bruger"
-                    disabled
-                    className="bg-muted/50"
-                  />
-                </div>
+              {/* Email Field */}
+              <div className="grid gap-2">
+                <Label htmlFor="email" className="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-muted-foreground" />
+                  Email
+                </Label>
+                <Input
+                  id="email"
+                  value="bruger@example.com"
+                  disabled
+                  className="bg-muted/50 border-dashed"
+                />
+                <p className="text-xs text-muted-foreground">Administreret af din organisation</p>
+              </div>
 
-                {/* Email Field */}
-                <div className="space-y-2">
-                  <Label htmlFor="email">
-                    Email <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="email"
-                    value="bruger@example.com"
-                    disabled
-                    className="bg-muted/50"
-                  />
-                </div>
+              {/* Role Field */}
+              <div className="grid gap-2">
+                <Label htmlFor="role" className="flex items-center gap-2">
+                  <Shield className="h-4 w-4 text-muted-foreground" />
+                  Rolle
+                </Label>
+                <Input
+                  id="role"
+                  value={getRoleDisplayName()}
+                  disabled
+                  className="bg-muted/50 border-dashed"
+                />
+                <p className="text-xs text-muted-foreground">Administreret af din organisation</p>
+              </div>
 
-                {/* Role Field */}
-                <div className="space-y-2">
-                  <Label htmlFor="role">
-                    Rolle <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="role"
-                    value={getRoleDisplayName()}
-                    disabled
-                    className="bg-muted/50"
-                  />
-                </div>
+              <Separator />
 
-                {/* Language Field */}
-                <div className="space-y-2">
-                  <Label htmlFor="language">
-                    Sprog (Locale) <span className="text-destructive">*</span>
-                  </Label>
-                  <Select value={language} onValueChange={setLanguage}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Vælg sprog" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="da">Dansk (Danish)</SelectItem>
-                      <SelectItem value="en">English</SelectItem>
-                      <SelectItem value="de">Deutsch (German)</SelectItem>
-                      <SelectItem value="sv">Svenska (Swedish)</SelectItem>
-                      <SelectItem value="no">Norsk (Norwegian)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              {/* Language Field */}
+              <div className="grid gap-2">
+                <Label htmlFor="language" className="flex items-center gap-2">
+                  <Globe className="h-4 w-4 text-muted-foreground" />
+                  Sprog (Locale)
+                </Label>
+                <Select value={language} onValueChange={setLanguage}>
+                  <SelectTrigger className="bg-background">
+                    <SelectValue placeholder="Vælg sprog" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="da">🇩🇰 Dansk</SelectItem>
+                    <SelectItem value="en">🇬🇧 English</SelectItem>
+                    <SelectItem value="de">🇩🇪 Deutsch</SelectItem>
+                    <SelectItem value="sv">🇸🇪 Svenska</SelectItem>
+                    <SelectItem value="no">🇳🇴 Norsk</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Save Button */}
-              <div className="flex justify-center pt-4">
+              <div className="flex justify-end pt-4">
                 <Button onClick={handleSave} className="px-8">
-                  Opdater profilindstillinger
+                  Gem ændringer
                 </Button>
+              </div>
+            </div>
+          </Card>
+
+          {/* Notifications Card */}
+          <Card className="overflow-hidden">
+            <div className="p-6 border-b bg-muted/30">
+              <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <Bell className="h-5 w-5 text-primary" />
+                Notifikationer
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Administrer hvordan du modtager notifikationer.
+              </p>
+            </div>
+            
+            <div className="p-6 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label className="text-base">Email notifikationer</Label>
+                  <p className="text-sm text-muted-foreground">Modtag opdateringer via email</p>
+                </div>
+                <Switch 
+                  checked={emailNotifications} 
+                  onCheckedChange={setEmailNotifications}
+                />
+              </div>
+              <Separator />
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <Label className="text-base">Push notifikationer</Label>
+                  <p className="text-sm text-muted-foreground">Modtag notifikationer i browseren</p>
+                </div>
+                <Switch 
+                  checked={pushNotifications} 
+                  onCheckedChange={setPushNotifications}
+                />
               </div>
             </div>
           </Card>
@@ -155,33 +234,40 @@ const Settings = () => {
           {/* Advanced Settings */}
           <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
             <Card className="overflow-hidden">
-              <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-accent/5 transition-colors">
-                <span className="font-medium text-foreground">Advancerede indstillinger</span>
-                <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform ${advancedOpen ? "rotate-180" : ""}`} />
+              <CollapsibleTrigger className="w-full p-6 flex items-center justify-between hover:bg-muted/30 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center">
+                    <Download className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <div className="text-left">
+                    <span className="font-semibold text-foreground block">Avancerede indstillinger</span>
+                    <span className="text-sm text-muted-foreground">Data eksport og mere</span>
+                  </div>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${advancedOpen ? "rotate-180" : ""}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <div className="p-4 pt-0 border-t">
-                  <div className="space-y-4 pt-4">
-                    <p className="text-sm text-muted-foreground">
-                      Avancerede indstillinger er tilgængelige for administratorer.
+                <div className="px-6 pb-6 border-t">
+                  <div className="space-y-4 pt-6">
+                    <div className="p-4 rounded-lg bg-muted/30 border border-dashed">
+                      <h4 className="font-medium text-foreground mb-1">Data eksport</h4>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Download en kopi af dine data.
+                      </p>
+                      <Button variant="outline" size="sm" disabled>
+                        <Download className="h-4 w-4 mr-2" />
+                        Eksporter data
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground text-center">
+                      Kontakt din administrator for yderligere avancerede indstillinger.
                     </p>
-                    <div className="space-y-2">
-                      <Label>Notifikationer</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Kontakt din administrator for at ændre notifikationsindstillinger.
-                      </p>
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Data eksport</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Kontakt din administrator for at eksportere dine data.
-                      </p>
-                    </div>
                   </div>
                 </div>
               </CollapsibleContent>
             </Card>
           </Collapsible>
+
         </div>
       </main>
     </div>
