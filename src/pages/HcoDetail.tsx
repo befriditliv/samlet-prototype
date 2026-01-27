@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { ArrowLeft, MapPin, Phone, ExternalLink, ChevronDown, Users, Phone as PhoneIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
@@ -47,6 +48,8 @@ interface Interaction {
 export default function HcoDetail() {
   const { id } = useParams<{ id: string }>();
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const { role } = useAuth();
   const [hco, setHco] = useState<HCO | null>(null);
   const [hcps, setHcps] = useState<HCP[]>([]);
   const [interactions, setInteractions] = useState<Interaction[]>([]);
@@ -116,12 +119,10 @@ export default function HcoDetail() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <p className="text-muted-foreground mb-4">HCO ikke fundet</p>
-          <Link to="/">
-            <Button variant="outline">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Tilbage
-            </Button>
-          </Link>
+          <Button variant="outline" onClick={() => navigate(role === 'manager' ? '/manager' : '/')}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Tilbage
+          </Button>
         </div>
       </div>
     );
@@ -132,11 +133,9 @@ export default function HcoDetail() {
       <div className="max-w-6xl mx-auto p-6 space-y-6">
         {/* Back button and title */}
         <div className="flex items-center gap-4 mb-6">
-          <Link to="/">
-            <Button variant="ghost" size="icon">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          </Link>
+          <Button variant="ghost" size="icon" onClick={() => navigate(role === 'manager' ? '/manager' : '/')}>
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
           <h1 className="text-2xl font-bold text-foreground">{hco.name}</h1>
         </div>
 

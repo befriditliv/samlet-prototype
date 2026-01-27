@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { ArrowLeft, Building2, Calendar, FileText, ChevronDown, ExternalLink, User, MapPin, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -48,6 +49,7 @@ interface Interaction {
 
 export default function HcpDetail() {
   const { id } = useParams();
+  const { role } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [hcp, setHcp] = useState<HCP | null>(null);
@@ -134,7 +136,7 @@ export default function HcpDetail() {
         {/* Back Button */}
         <Button
           variant="ghost"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(role === 'manager' ? '/manager' : '/')}
           className="mb-4"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
