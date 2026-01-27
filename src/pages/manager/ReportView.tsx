@@ -766,7 +766,7 @@ const ReportView = () => {
                     <div key={cat.id} className="flex items-center justify-between text-xs">
                       <div className="flex items-center gap-2">
                         <div className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: cat.color }} />
-                        <span className="text-muted-foreground truncate max-w-[140px]">{cat.title.split(' ').slice(0, 3).join(' ')}...</span>
+                        <span className="text-muted-foreground">{cat.title}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         {cat.trend === 'up' ? (
