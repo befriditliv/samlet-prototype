@@ -533,9 +533,9 @@ const ReportView = () => {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Main Analysis Content */}
-          <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 max-w-4xl">
+          {/* Main Analysis Content */}
+          <div className="space-y-6">
             {/* Kort oversigt */}
             <Card>
               <CardHeader>
@@ -695,11 +695,8 @@ const ReportView = () => {
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* Right Column - Sidebar */}
-          <div className="space-y-6">
-            {/* Emner - Topics Summary with Area Chart */}
+            {/* Emneudvikling over tid - Full width chart section */}
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-base">Emneudvikling over tid</CardTitle>
