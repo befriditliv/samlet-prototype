@@ -25,6 +25,7 @@ import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { HcpSearch } from "@/components/HcpSearch";
 
 interface InsightReportData {
+  reportType?: string;
   title: string;
   query: string;
   dateRange: { from: Date; to: Date };
@@ -40,7 +41,8 @@ interface InsightCategory {
   impact: 'positive' | 'neutral' | 'negative';
 }
 
-const insightCategories: InsightCategory[] = [
+// Ozempic Initiation categories
+const ozempicCategories: InsightCategory[] = [
   { 
     id: '1', 
     title: 'Ingen indvendinger ved opstart af Ozempic', 
@@ -93,7 +95,80 @@ const generateStatements = (categoryId: string, count: number, quotes: string[])
   }));
 };
 
-const statementsByCategory: Record<string, Statement[]> = {
+// Sentiment & Market Trends categories
+const sentimentCategories: InsightCategory[] = [
+  { 
+    id: 's1', 
+    title: 'Generelt positiv stemning over for Novo Nordisk produkter', 
+    count: 87,
+    impact: 'positive',
+    description: 'Flertallet af HCP\'er udtrykker tilfredshed med Novo Nordisk\'s produktportefølje og support. Der nævnes særligt god erfaring med GLP-1 produkter og værdien af det kliniske supportmateriale.'
+  },
+  { 
+    id: 's2', 
+    title: 'Stigende interesse for vægttabsbehandling', 
+    count: 64,
+    impact: 'positive',
+    description: 'Markant øget fokus på vægttabsbehandling blandt HCP\'er. Flere efterspørger information om Wegovy og diskuterer patientgrupper der kunne have gavn af behandlingen.'
+  },
+  { 
+    id: 's3', 
+    title: 'Bekymring om tilgængelighed og leveringssikkerhed', 
+    count: 42,
+    impact: 'negative',
+    description: 'Flere HCP\'er og HCO\'er udtrykker frustration over leveringsudfordringer. Dette påvirker deres villighed til at initiere nye patienter på visse produkter.'
+  },
+  { 
+    id: 's4', 
+    title: 'Ønske om mere digital kommunikation', 
+    count: 31,
+    impact: 'neutral',
+    description: 'HCP\'er efterspørger flere digitale kontaktmuligheder og online ressourcer. Der er interesse for webinarer, digitale opdateringer og selvbetjeningsløsninger.'
+  },
+  { 
+    id: 's5', 
+    title: 'Konkurrencepres fra biosimilars', 
+    count: 18,
+    impact: 'negative',
+    description: 'Enkelte HCO\'er nævner prispres fra biosimilars og generiske alternativer. Dette påvirker primært insulinmarkedet og kræver tydelig værdikommunikation.'
+  },
+];
+
+// Statements for sentiment report
+const sentimentStatementsByCategory: Record<string, Statement[]> = {
+  's1': generateStatements('s1', 87, [
+    'Meget tilfreds med Novo Nordisk\'s produkter og den support vi får.',
+    'GLP-1 behandlingen har ændret vores tilgang til type 2 diabetes.',
+    'Godt klinisk materiale der er let at bruge i hverdagen.',
+    'Patienterne responderer godt på behandlingen.',
+    'Værdsætter den personlige kontakt med KAM\'en.',
+  ]),
+  's2': generateStatements('s2', 64, [
+    'Ser stor interesse fra patienter omkring vægttabsbehandling.',
+    'Ønsker mere viden om Wegovy og indikationer.',
+    'Vægttab er blevet et centralt samtaleemne i konsultationer.',
+    'Efterspørger guidelines for patientudvælgelse til vægttabsbehandling.',
+  ]),
+  's3': generateStatements('s3', 42, [
+    'Leveringsusikkerhed gør det svært at starte nye patienter.',
+    'Patienter er frustrerede over manglende tilgængelighed.',
+    'Vi har måttet udskyde opstart på grund af leveringsproblemer.',
+    'Ønsker bedre kommunikation om forventet leveringstid.',
+  ]),
+  's4': generateStatements('s4', 31, [
+    'Kunne godt tænke os flere online ressourcer.',
+    'Webinarer ville være en effektiv måde at holde os opdateret.',
+    'Digital adgang til produktinformation ville spare tid.',
+  ]),
+  's5': generateStatements('s5', 18, [
+    'Vi ser prispres fra biosimilars på insulinområdet.',
+    'Regionen presser på for billigere alternativer.',
+    'Behov for tydelig kommunikation af merværdi.',
+  ]),
+};
+
+// Statements for ozempic report
+const ozempicStatementsByCategory: Record<string, Statement[]> = {
   '1': generateStatements('1', 111, [
     'Der blev ikke nævnt nogen indvendinger fra HCP\'erne vedrørende opstart af Ozempic-patienter.',
     'HCP\'en havde ingen indvendinger eller bekymringer omkring opstart af Ozempic.',
@@ -125,8 +200,6 @@ const statementsByCategory: Record<string, Statement[]> = {
   ]),
 };
 
-const allStatements = Object.values(statementsByCategory).flat();
-
 const InsightReportView = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -135,12 +208,19 @@ const InsightReportView = () => {
   const [showStatements, setShowStatements] = useState(false);
 
   const data: InsightReportData = reportData || {
+    reportType: 'ozempic-initiation',
     title: "Ozempic Initiation Insights",
     query: "hvad siger hcperne ift. ozempic initiering",
     dateRange: { from: new Date(2025, 6, 1), to: new Date(2025, 11, 31) },
     product: "Ozempic",
     employee: "all"
   };
+
+  // Select data based on report type
+  const isSentimentReport = data.reportType === 'sentiment-trends';
+  const insightCategories = isSentimentReport ? sentimentCategories : ozempicCategories;
+  const statementsByCategory = isSentimentReport ? sentimentStatementsByCategory : ozempicStatementsByCategory;
+  const allStatements = Object.values(statementsByCategory).flat();
 
   const toggleCategory = (id: string) => {
     setOpenCategories(prev => 
@@ -238,12 +318,25 @@ const InsightReportView = () => {
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-foreground mb-4">Executive Summary</h2>
           <div className="text-foreground/90 space-y-4 leading-relaxed">
-            <p>
-              I perioden fra slutningen af august til december 2025 har der været en række debatter og observationer omkring igangsættelse af Ozempic-patienter blandt HCP'erne, primært inden for almen praksis. Generelt er der en overvægt af rapporter, der indikerer, at der ikke er mødt indvendinger vedrørende opstart af Ozempic-patienter. Dette er blevet nævnt gentagne gange af både sygeplejersker og læger, hvilket tyder på en generel accept af produktet.
-            </p>
-            <p>
-              Der er dog også blevet rejst bekymringer og indvendinger i visse tilfælde. Nogle HCP'er har udtrykt bekymring over at skifte velbehandlede insulinpatienter til Ozempic, især når deres HbA1c-niveauer er tilfredsstillende. Der er også blevet nævnt pres fra regionerne og frygt for at komplicere behandlingerne, samt frustration over tilskudsklausulen.
-            </p>
+            {isSentimentReport ? (
+              <>
+                <p>
+                  Analysen af HCP og HCO interaktioner fra oktober til december 2025 viser en overordnet positiv stemning over for Novo Nordisk's produktportefølje. Særligt GLP-1 produkterne modtages godt, og der ses en markant stigende interesse for vægttabsbehandling blandt sundhedsprofessionelle.
+                </p>
+                <p>
+                  Der er dog identificeret udfordringer relateret til produkttilgængelighed og leveringssikkerhed, som påvirker HCP'ernes villighed til at initiere nye patienter. Derudover ses et stigende ønske om digitale kommunikationskanaler og mere fleksible kontaktmuligheder.
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  I perioden fra slutningen af august til december 2025 har der været en række debatter og observationer omkring igangsættelse af Ozempic-patienter blandt HCP'erne, primært inden for almen praksis. Generelt er der en overvægt af rapporter, der indikerer, at der ikke er mødt indvendinger vedrørende opstart af Ozempic-patienter. Dette er blevet nævnt gentagne gange af både sygeplejersker og læger, hvilket tyder på en generel accept af produktet.
+                </p>
+                <p>
+                  Der er dog også blevet rejst bekymringer og indvendinger i visse tilfælde. Nogle HCP'er har udtrykt bekymring over at skifte velbehandlede insulinpatienter til Ozempic, især når deres HbA1c-niveauer er tilfredsstillende. Der er også blevet nævnt pres fra regionerne og frygt for at komplicere behandlingerne, samt frustration over tilskudsklausulen.
+                </p>
+              </>
+            )}
           </div>
         </section>
 
