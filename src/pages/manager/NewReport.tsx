@@ -324,51 +324,34 @@ const NewReport = () => {
 
         {/* Step 2: Configure - Quick Reports */}
         {step === 'configure' && selectedCategory === 'quick-reports' && (
-          <TooltipProvider>
-            <div className="space-y-4">
-              {quickReportOptions.map((report) => {
-                const Icon = report.icon;
-                return (
-                  <div key={report.id} className="relative">
-                    <button
-                      onClick={() => handleQuickReport(report.id, report.label)}
-                      disabled={isGenerating}
-                      className="w-full group disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <div className="flex items-center gap-5 p-6 rounded-2xl border bg-card hover:bg-accent/50 transition-all hover:shadow-sm">
-                        <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                          <Icon className="h-6 w-6" />
-                        </div>
-                        <div className="flex-1 text-left">
-                          <h3 className="text-lg font-medium text-foreground mb-0.5">{report.label}</h3>
-                          <p className="text-sm text-muted-foreground">{report.description}</p>
-                        </div>
-                        {isGenerating ? (
-                          <Loader2 className="h-5 w-5 text-primary animate-spin" />
-                        ) : (
-                          <ArrowLeft className="h-5 w-5 text-muted-foreground rotate-180 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                        )}
-                      </div>
-                    </button>
-                    {/* Developer tooltip */}
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button 
-                          className="absolute top-3 right-3 p-1.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-900/50 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Info className="h-3.5 w-3.5" />
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent side="left" className="max-w-xs text-xs">
-                        <p>{report.devNote}</p>
-                      </TooltipContent>
-                    </Tooltip>
+          <div className="space-y-4">
+            {quickReportOptions.map((report) => {
+              const Icon = report.icon;
+              return (
+                <button
+                  key={report.id}
+                  onClick={() => handleQuickReport(report.id, report.label)}
+                  disabled={isGenerating}
+                  className="w-full group disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <div className="flex items-center gap-5 p-6 rounded-2xl border bg-card hover:bg-accent/50 transition-all hover:shadow-sm">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <h3 className="text-lg font-medium text-foreground mb-0.5">{report.label}</h3>
+                      <p className="text-sm text-muted-foreground">{report.description}</p>
+                    </div>
+                    {isGenerating ? (
+                      <Loader2 className="h-5 w-5 text-primary animate-spin" />
+                    ) : (
+                      <ArrowLeft className="h-5 w-5 text-muted-foreground rotate-180 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                    )}
                   </div>
-                );
-              })}
-            </div>
-          </TooltipProvider>
+                </button>
+              );
+            })}
+          </div>
         )}
 
         {/* Step 2: Configure - Debrief Report */}
