@@ -13,7 +13,9 @@ import {
   FileText,
   ChevronDown,
   ChevronUp,
-  MessageSquareQuote
+  MessageSquareQuote,
+  ThumbsUp,
+  ThumbsDown
 } from "lucide-react";
 import { format } from "date-fns";
 import { da } from "date-fns/locale";
@@ -35,6 +37,7 @@ interface InsightCategory {
   title: string;
   count: number;
   description: string;
+  impact: 'positive' | 'neutral' | 'negative';
 }
 
 const insightCategories: InsightCategory[] = [
@@ -42,24 +45,28 @@ const insightCategories: InsightCategory[] = [
     id: '1', 
     title: 'Ingen indvendinger ved opstart af Ozempic', 
     count: 111,
+    impact: 'positive',
     description: 'En stor del af HCP\'erne har ikke rapporteret nogen indvendinger ved opstart af Ozempic-patienter. Mange HCP\'er har nævnt, at der ikke er nogen specifikke indvendinger eller bekymringer vedrørende igangsættelse af Ozempic, og nogle har endda udtrykt positiv interesse for behandlingen.'
   },
   { 
     id: '2', 
     title: 'Interesse for opfølgning og yderligere information', 
     count: 39,
+    impact: 'positive',
     description: 'Der er en generel interesse blandt HCP\'erne for opfølgning og yderligere information om Ozempic. Nogle HCP\'er har udtrykt interesse for opfølgende aftaler om forløbsplaner, og der er også interesse for materiale om hypoglykæmi og organbeskyttelse.'
   },
   { 
     id: '3', 
     title: 'Spørgsmål og behov for afklaring', 
     count: 35,
+    impact: 'neutral',
     description: 'Flere HCP\'er har stillet spørgsmål og udtrykt behov for afklaring vedrørende Ozempic. Der er mange spørgsmål til algoritmen for dosering, herunder brug af 8 doser og 2 mg.'
   },
   { 
     id: '4', 
     title: 'Bekymringer og indvendinger ved opstart', 
     count: 20,
+    impact: 'negative',
     description: 'Der er flere HCP\'er, der har udtrykt bekymringer og indvendinger ved opstart af Ozempic. Nogle af bekymringerne skyldes regionale krav om først at afprøve DPP-4-hæmmere.'
   },
 ];
@@ -126,6 +133,27 @@ const InsightReportView = () => {
       : null;
 
   const totalStatements = insightCategories.reduce((sum, cat) => sum + cat.count, 0);
+  
+  // Calculate impact summary
+  const positiveCount = insightCategories.filter(c => c.impact === 'positive').reduce((sum, c) => sum + c.count, 0);
+  const negativeCount = insightCategories.filter(c => c.impact === 'negative').reduce((sum, c) => sum + c.count, 0);
+  const neutralCount = insightCategories.filter(c => c.impact === 'neutral').reduce((sum, c) => sum + c.count, 0);
+  
+  const getImpactStyles = (impact: 'positive' | 'neutral' | 'negative', isOpen: boolean) => {
+    if (impact === 'positive') {
+      return isOpen 
+        ? 'border-green-500 bg-green-50 dark:bg-green-950/30' 
+        : 'border-green-200 hover:border-green-400 hover:bg-green-50/50 dark:border-green-900 dark:hover:bg-green-950/20';
+    }
+    if (impact === 'negative') {
+      return isOpen 
+        ? 'border-orange-500 bg-orange-50 dark:bg-orange-950/30' 
+        : 'border-orange-200 hover:border-orange-400 hover:bg-orange-50/50 dark:border-orange-900 dark:hover:bg-orange-950/20';
+    }
+    return isOpen 
+      ? 'border-primary bg-primary/5' 
+      : 'border-border hover:border-primary/50 hover:bg-muted/50';
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -192,11 +220,58 @@ const InsightReportView = () => {
           </div>
         </section>
 
+        {/* Impact Overview */}
+        <section className="mb-6">
+          <div className="flex items-center gap-6 p-4 rounded-lg bg-muted/30 border">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30">
+                <ThumbsUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+              </div>
+              <div>
+                <span className="text-lg font-semibold text-foreground">{positiveCount}</span>
+                <span className="text-sm text-muted-foreground ml-1">positive</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-muted">
+                <span className="text-xs font-medium text-muted-foreground">~</span>
+              </div>
+              <div>
+                <span className="text-lg font-semibold text-foreground">{neutralCount}</span>
+                <span className="text-sm text-muted-foreground ml-1">neutrale</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30">
+                <ThumbsDown className="h-4 w-4 text-orange-600 dark:text-orange-400" />
+              </div>
+              <div>
+                <span className="text-lg font-semibold text-foreground">{negativeCount}</span>
+                <span className="text-sm text-muted-foreground ml-1">udfordringer</span>
+              </div>
+            </div>
+            <div className="flex-1" />
+            <div className="h-2 flex-1 max-w-[200px] rounded-full overflow-hidden bg-muted flex">
+              <div 
+                className="h-full bg-green-500" 
+                style={{ width: `${(positiveCount / totalStatements) * 100}%` }} 
+              />
+              <div 
+                className="h-full bg-gray-400" 
+                style={{ width: `${(neutralCount / totalStatements) * 100}%` }} 
+              />
+              <div 
+                className="h-full bg-orange-500" 
+                style={{ width: `${(negativeCount / totalStatements) * 100}%` }} 
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Insights/Themes */}
         <section className="mb-10">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-foreground">Temaer</h2>
-            <span className="text-sm text-muted-foreground">{totalStatements} observationer</span>
           </div>
           
           <div className="space-y-2">
@@ -207,14 +282,18 @@ const InsightReportView = () => {
                 onOpenChange={() => toggleCategory(category.id)}
               >
                 <CollapsibleTrigger className="w-full">
-                  <div className={`flex items-center justify-between p-3 rounded-lg border transition-colors text-left ${
-                    openCategories.includes(category.id) 
-                      ? 'border-primary bg-primary/5' 
-                      : 'border-border hover:border-primary/50 hover:bg-muted/50'
-                  }`}>
-                    <span className="text-sm font-medium text-foreground">
-                      {category.title} <span className="text-muted-foreground">({category.count})</span>
-                    </span>
+                  <div className={`flex items-center justify-between p-3 rounded-lg border transition-colors text-left ${getImpactStyles(category.impact, openCategories.includes(category.id))}`}>
+                    <div className="flex items-center gap-2">
+                      {category.impact === 'positive' && (
+                        <ThumbsUp className="h-4 w-4 text-green-600 dark:text-green-400 shrink-0" />
+                      )}
+                      {category.impact === 'negative' && (
+                        <ThumbsDown className="h-4 w-4 text-orange-600 dark:text-orange-400 shrink-0" />
+                      )}
+                      <span className="text-sm font-medium text-foreground">
+                        {category.title} <span className="text-muted-foreground">({category.count})</span>
+                      </span>
+                    </div>
                     <ChevronDown 
                       className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform ${
                         openCategories.includes(category.id) ? 'rotate-180' : ''
