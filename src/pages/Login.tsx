@@ -14,7 +14,11 @@ const Login = () => {
   const handleLogin = () => {
     if (selectedRole) {
       setRole(selectedRole as UserRole);
-      navigate("/");
+      if (selectedRole === "manager") {
+        navigate("/manager");
+      } else {
+        navigate("/");
+      }
     }
   };
 
