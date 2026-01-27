@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { da } from "date-fns/locale";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
@@ -38,22 +39,36 @@ const objectionCategories = [
     id: 'regional-interpretation',
     title: 'Indvendinger og bekymringer om regionens fortolkning af...',
     description: 'Denne kategori dækker indvendinger og bekymringer fra HCP\'en og HCO\'en om, hvordan regionens fortolkning af klausuler og retningslinjer påvirker behandling.',
+    color: '#16a34a', // green
   },
   {
     id: 'treatment-start',
     title: 'Ingen indvendinger eller bekymringer ved opstart af...',
     description: 'Denne kategori dækker statements, hvor HCP\'en eller HCO\'en udtrykker ingen bekymringer om opstart.',
+    color: '#ea580c', // orange
   },
   {
     id: 'patient-treatment',
     title: 'Indvendinger og bekymringer om opstart af behandling hos patienter...',
     description: 'Denne kategori dækker indvendinger eller bekymringer om at starte behandling hos specifikke patientgrupper.',
+    color: '#1d4ed8', // blue
   },
   {
     id: 'uncertainty',
-    title: 'Usikkerhed',
+    title: 'Usikkerhed og behov for afklaring om tilskud og retningslinjer',
     description: 'Denne kategori dækker statements, hvor HCP\'en eller HCO\'en udtrykker usikkerhed om tilskud, retningslinjer eller ansøgninger.',
+    color: '#84cc16', // lime
   },
+];
+
+// Chart data showing topic trends over months
+const topicTrendData = [
+  { month: '08-25', regional: 2, treatment: 0, patient: 0, uncertainty: 0 },
+  { month: '09-25', regional: 6, treatment: 1, patient: 1, uncertainty: 1 },
+  { month: '10-25', regional: 4, treatment: 0, patient: 0, uncertainty: 0 },
+  { month: '11-25', regional: 7, treatment: 0, patient: 0, uncertainty: 0 },
+  { month: '12-25', regional: 0, treatment: 0, patient: 0, uncertainty: 0 },
+  { month: 'Selected range', regional: 0, treatment: 0, patient: 0, uncertainty: 0 },
 ];
 
 const ReportView = () => {
@@ -316,21 +331,73 @@ const ReportView = () => {
               </CardContent>
             </Card>
 
-            {/* Emner - Topics Summary */}
+            {/* Emner - Topics Summary with Chart */}
             <Card>
-              <CardHeader>
+              <CardHeader className="pb-2">
                 <CardTitle className="text-base">Emner</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center justify-between py-2 border-b">
-                  <span className="text-sm text-muted-foreground">Kendte emner</span>
-                  <Badge variant="secondary">0</Badge>
+              <CardContent className="space-y-4">
+                {/* Stats row */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-muted-foreground/30" />
+                    <span className="text-sm text-muted-foreground">Kendte emner</span>
+                    <Badge variant="secondary" className="text-xs">0</Badge>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-destructive">Nye emner</span>
+                    <span className="text-destructive">↗</span>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between py-2">
-                  <span className="text-sm text-muted-foreground">Nye emner</span>
-                  <Badge variant="secondary">0</Badge>
+
+                {/* Progress bar placeholder */}
+                <div className="h-2 rounded-full bg-primary/20 w-full" />
+
+                {/* Chart */}
+                <div className="h-52 mt-4">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={topicTrendData} margin={{ left: -20, right: 0, top: 10, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
+                      <XAxis 
+                        dataKey="month" 
+                        className="text-xs" 
+                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
+                        axisLine={{ stroke: 'hsl(var(--border))' }}
+                      />
+                      <YAxis 
+                        className="text-xs" 
+                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
+                        axisLine={{ stroke: 'hsl(var(--border))' }}
+                      />
+                      <Tooltip 
+                        contentStyle={{ 
+                          backgroundColor: 'hsl(var(--card))', 
+                          border: '1px solid hsl(var(--border))',
+                          borderRadius: '8px',
+                          fontSize: '12px'
+                        }}
+                      />
+                      <Bar dataKey="regional" stackId="a" fill="#16a34a" radius={[0, 0, 0, 0]} />
+                      <Bar dataKey="treatment" stackId="a" fill="#ea580c" radius={[0, 0, 0, 0]} />
+                      <Bar dataKey="patient" stackId="a" fill="#1d4ed8" radius={[0, 0, 0, 0]} />
+                      <Bar dataKey="uncertainty" stackId="a" fill="#84cc16" radius={[2, 2, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
-                <div className="pt-4 text-center text-sm text-muted-foreground">
+
+                {/* Legend */}
+                <div className="space-y-1.5 text-xs">
+                  {objectionCategories.map((cat) => (
+                    <div key={cat.id} className="flex items-center gap-2">
+                      <div className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: cat.color }} />
+                      <span className="text-muted-foreground truncate">{cat.title}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <Separator />
+
+                <div className="text-center text-sm text-muted-foreground">
                   Ingen emner i den valgte periode
                 </div>
               </CardContent>
