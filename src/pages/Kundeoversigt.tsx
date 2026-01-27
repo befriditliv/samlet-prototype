@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/table";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { AskJarvis } from "@/components/AskJarvis";
+import { NavigationMenu } from "@/components/NavigationMenu";
 import { QueryBuilder } from "@/components/QueryBuilder";
 import { toast } from "sonner";
 
@@ -366,7 +367,7 @@ const Kundeoversigt = () => {
                 )}
               </div>
               <AskJarvis />
-              <img src={jarvisLogo} alt="Jarvis" className="h-10 w-10" />
+              <NavigationMenu />
             </div>
           </div>
         </div>
