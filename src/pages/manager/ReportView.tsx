@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { 
   ArrowLeft,
   Calendar,
@@ -479,10 +480,30 @@ const ReportView = () => {
                   <Calendar className="h-4 w-4" />
                   {format(data.dateRange.from, "d. MMM", { locale: da })} - {format(data.dateRange.to, "d. MMM yyyy", { locale: da })}
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <Users className="h-4 w-4" />
-                  {data.employee === 'all' ? 'Alle' : data.employee}
-                </div>
+                {data.employee === 'all' ? (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="flex items-center gap-1.5 hover:text-foreground transition-colors">
+                        <Users className="h-4 w-4" />
+                        <span>Alle ({salesReps.length})</span>
+                        <ChevronDown className="h-3 w-3" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-3" align="end">
+                      <div className="text-xs font-medium text-muted-foreground mb-2">Inkluderede medarbejdere</div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {salesReps.map((rep) => (
+                          <Badge key={rep} variant="secondary" className="text-xs">{rep}</Badge>
+                        ))}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                ) : (
+                  <div className="flex items-center gap-1.5">
+                    <Users className="h-4 w-4" />
+                    <Badge variant="secondary" className="text-xs">{data.employee}</Badge>
+                  </div>
+                )}
                 <Badge variant="secondary">{data.product}</Badge>
               </div>
             </div>
