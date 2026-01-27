@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { EmployeeOverview } from "@/components/manager/EmployeeOverview";
 import { InsightTools } from "@/components/manager/InsightTools";
+import { ActionCenter } from "@/components/ActionCenter";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
 
@@ -132,6 +133,11 @@ const ManagerDashboard = () => {
             </div>
           </div>
           <EmployeeOverview />
+        </section>
+
+        {/* Signals */}
+        <section id="signals">
+          <ActionCenter />
         </section>
 
         {/* Analysis Tools */}
