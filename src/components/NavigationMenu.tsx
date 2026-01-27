@@ -112,7 +112,7 @@ export const NavigationMenu = () => {
                 <div className="font-semibold text-sm">
                   {role === "key_account_manager" ? "Key Account Manager" : "Manager"}
                 </div>
-                <div className="text-xs text-muted-foreground truncate">Britt Ketels</div>
+                <div className="text-xs text-muted-foreground truncate">Bruger</div>
               </div>
               <Button 
                 variant="ghost" 
