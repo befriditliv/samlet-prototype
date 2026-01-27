@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { MessageCircle, Target, Calendar, BookOpen, LayoutDashboard, Send, X } from "lucide-react";
+import { MessageCircle, HelpCircle, Calendar, BookOpen, LayoutDashboard, Send, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 const quickSuggestions = [
   {
-    icon: Target,
-    text: "Show best canvas targets near me",
+    icon: HelpCircle,
+    text: "How can you help me?",
     color: "text-blue-500",
     bg: "bg-blue-50 dark:bg-blue-950/30"
   },
