@@ -449,7 +449,7 @@ const ReportView = () => {
       <main className="container mx-auto px-6 py-8 max-w-6xl">
         {/* Navigation */}
         <button 
-          onClick={() => navigate('/manager')}
+          onClick={() => navigate(-1)}
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
         >
           <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
