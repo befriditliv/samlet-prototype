@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { 
   ArrowLeft,
   Calendar,
@@ -14,7 +17,10 @@ import {
   Lightbulb,
   BarChart3,
   Download,
-  Share2
+  Share2,
+  ChevronDown,
+  ChevronRight,
+  Eye
 } from "lucide-react";
 import { format } from "date-fns";
 import { da } from "date-fns/locale";
@@ -23,6 +29,27 @@ import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { HcpSearch } from "@/components/HcpSearch";
+
+interface DebriefItem {
+  id: string;
+  date: string;
+  hcoName: string;
+  salesRep: string;
+  hcps: string[];
+  meetingPurpose: string;
+  objections: string;
+  nextSteps: string;
+}
+
+interface ObjectionCategory {
+  id: string;
+  title: string;
+  fullTitle: string;
+  description: string;
+  color: string;
+  count: number;
+  debriefs: DebriefItem[];
+}
 
 interface ReportData {
   reportType: string;
@@ -33,31 +60,65 @@ interface ReportData {
   compareEnabled: boolean;
 }
 
-// Objection categories matching original layout
-const objectionCategories = [
+// Objection categories with debrief data
+const objectionCategories: ObjectionCategory[] = [
   {
     id: 'regional-interpretation',
     title: 'Indvendinger og bekymringer om regionens fortolkning af...',
-    description: 'Denne kategori dækker indvendinger og bekymringer fra HCP\'en og HCO\'en om, hvordan regionens fortolkning af klausuler og retningslinjer påvirker behandling.',
-    color: '#16a34a', // green
+    fullTitle: 'Indvendinger og bekymringer om regionens fortolkning af klausuler og tilskud',
+    description: 'Denne kategori dækker indvendinger og bekymringer fra HCP\'en og HCO\'en om, hvordan regionens fortolkning af klausuler og tilskud påvirker opstart og brug af behandlinger.',
+    color: '#16a34a',
+    count: 19,
+    debriefs: [
+      {
+        id: '1',
+        date: '15/10/25',
+        hcoName: 'Rigshospitalet Endokrinologisk Afdeling',
+        salesRep: 'SQIE',
+        hcps: ['Dr. Lars Andersen', 'Dr. Maria Hansen'],
+        meetingPurpose: 'Mødet fokuserede på regionale forskelle i tilskudsregler og hvordan dette påvirker behandlingsvalg.',
+        objections: 'Der blev udtrykt bekymring om uensartet fortolkning af tilskudsregler mellem regioner.',
+        nextSteps: 'Opfølgende møde planlagt for at gennemgå opdaterede retningslinjer.'
+      }
+    ]
   },
   {
     id: 'treatment-start',
     title: 'Ingen indvendinger eller bekymringer ved opstart af...',
-    description: 'Denne kategori dækker statements, hvor HCP\'en eller HCO\'en udtrykker ingen bekymringer om opstart.',
-    color: '#ea580c', // orange
+    fullTitle: 'Ingen indvendinger eller bekymringer ved opstart af behandling',
+    description: 'Denne kategori dækker statements, hvor HCP\'en eller HCO\'en udtrykker, at der ikke var indvendinger eller bekymringer ved opstart af behandling.',
+    color: '#ea580c',
+    count: 1,
+    debriefs: [
+      {
+        id: '2',
+        date: '08/09/25',
+        hcoName: 'Lægepraksis Mogens Nørgaard Christiansen',
+        salesRep: 'BKET',
+        hcps: ['Louise Gildsig', 'Mogens Nørgaard Christiansen', 'Maja Abilgaard'],
+        meetingPurpose: 'Mødet fokuserede på, hvornår GLP-1 er relevant, samt type 2 diabetes og selektion af patienter til Wegovy. Deltagerne kom hurtigt forbi NSU og DPP4 hæmmere og vurderede, at disse behandlinger ikke har stor relevans for deres type 2 diabetes patienter.',
+        objections: 'Ozempic: Der var ingen indvendinger i forbindelse med opstart af en Ozempic patient.',
+        nextSteps: 'Der er ingen ny aktivitet planlagt med deltagerne.'
+      }
+    ]
   },
   {
     id: 'patient-treatment',
     title: 'Indvendinger og bekymringer om opstart af behandling hos patienter...',
-    description: 'Denne kategori dækker indvendinger eller bekymringer om at starte behandling hos specifikke patientgrupper.',
-    color: '#1d4ed8', // blue
+    fullTitle: 'Indvendinger og bekymringer om opstart af behandling hos patienter med velreguleret sygdom',
+    description: 'Denne kategori dækker statements, hvor HCP\'en eller HCO\'en udtrykker indvendinger eller bekymringer om at starte behandling hos patienter, der allerede er velbehandlede.',
+    color: '#1d4ed8',
+    count: 1,
+    debriefs: []
   },
   {
     id: 'uncertainty',
     title: 'Usikkerhed og behov for afklaring om tilskud og retningslinjer',
-    description: 'Denne kategori dækker statements, hvor HCP\'en eller HCO\'en udtrykker usikkerhed om tilskud, retningslinjer eller ansøgninger.',
-    color: '#84cc16', // lime
+    fullTitle: 'Usikkerhed og behov for afklaring om tilskud og retningslinjer',
+    description: 'Denne kategori dækker statements, hvor HCP\'en eller HCO\'en udtrykker usikkerhed om tilskud, retningslinjer eller ønsker afklaring på regler for behandling og ordination.',
+    color: '#84cc16',
+    count: 1,
+    debriefs: []
   },
 ];
 
@@ -75,6 +136,8 @@ const ReportView = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const reportData = location.state as ReportData | null;
+  const [selectedCategory, setSelectedCategory] = useState<ObjectionCategory | null>(null);
+  const [expandedDebriefs, setExpandedDebriefs] = useState<string[]>([]);
 
   // Fallback data if navigated directly
   const data: ReportData = reportData || {
@@ -86,7 +149,132 @@ const ReportView = () => {
     compareEnabled: true
   };
 
+  const toggleDebrief = (id: string) => {
+    setExpandedDebriefs(prev => 
+      prev.includes(id) ? prev.filter(d => d !== id) : [...prev, id]
+    );
+  };
+
   return (
+    <>
+    <Dialog open={!!selectedCategory} onOpenChange={(open) => !open && setSelectedCategory(null)}>
+      <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+        {selectedCategory && (
+          <>
+            <DialogHeader>
+              <DialogTitle className="text-xl font-bold pr-8">
+                {selectedCategory.fullTitle}
+              </DialogTitle>
+            </DialogHeader>
+            
+            <div className="space-y-6 mt-4">
+              {/* Beskrivelse */}
+              <div>
+                <h4 className="text-sm font-medium text-muted-foreground mb-2">Beskrivelse</h4>
+                <p className="text-sm text-foreground leading-relaxed">
+                  {selectedCategory.description}
+                </p>
+              </div>
+
+              {/* Refereret i debriefs */}
+              <div>
+                <h4 className="text-sm font-medium text-muted-foreground mb-3">
+                  Refereret i debriefs ({selectedCategory.debriefs.length})
+                </h4>
+                
+                {selectedCategory.debriefs.length === 0 ? (
+                  <p className="text-sm text-muted-foreground italic">Ingen debriefs i denne kategori</p>
+                ) : (
+                  <div className="space-y-3">
+                    {selectedCategory.debriefs.map((debrief) => (
+                      <Collapsible 
+                        key={debrief.id} 
+                        open={expandedDebriefs.includes(debrief.id)}
+                        onOpenChange={() => toggleDebrief(debrief.id)}
+                      >
+                        <div className="border rounded-lg overflow-hidden">
+                          <CollapsibleTrigger className="w-full">
+                            <div className="flex items-center justify-between p-4 hover:bg-muted/30 transition-colors">
+                              <div className="flex items-center gap-3">
+                                {expandedDebriefs.includes(debrief.id) ? (
+                                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                                ) : (
+                                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                                )}
+                                <div className="text-left">
+                                  <div className="text-sm font-medium">{debrief.date}</div>
+                                  <div className="text-sm text-muted-foreground">{debrief.hcoName}</div>
+                                </div>
+                              </div>
+                              <Badge variant="outline" className="font-mono">{debrief.salesRep}</Badge>
+                            </div>
+                          </CollapsibleTrigger>
+                          
+                          <CollapsibleContent>
+                            <div className="px-4 pb-4 space-y-4">
+                              {/* Mødedetaljer */}
+                              <div className="bg-muted/20 rounded-lg p-4">
+                                <h5 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                                  Mødedetaljer
+                                </h5>
+                                <div className="grid grid-cols-3 gap-4 text-sm">
+                                  <div>
+                                    <div className="text-muted-foreground text-xs">Dato</div>
+                                    <div className="font-medium">{debrief.date}</div>
+                                  </div>
+                                  <div>
+                                    <div className="text-muted-foreground text-xs">Sales rep</div>
+                                    <div className="font-medium">{debrief.salesRep}</div>
+                                  </div>
+                                  <div>
+                                    <div className="text-muted-foreground text-xs">HCPs</div>
+                                    <div className="font-medium">{debrief.hcps.join(', ')}</div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Debrief indhold */}
+                              <div>
+                                <h5 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                                  Debrief indhold
+                                </h5>
+                                <div className="border rounded-lg p-4 space-y-4 bg-card">
+                                  <div>
+                                    <h6 className="font-semibold text-foreground mb-1">Mødepurpose og indhold</h6>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">
+                                      {debrief.meetingPurpose}
+                                    </p>
+                                  </div>
+                                  
+                                  <div>
+                                    <h6 className="font-semibold text-foreground mb-1">Indvendinger vedrørende</h6>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">
+                                      <span className="text-primary">{debrief.objections}</span>
+                                    </p>
+                                  </div>
+                                  
+                                  <div>
+                                    <h6 className="font-semibold text-foreground mb-1">Næste opkaldsmål</h6>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">
+                                      {debrief.nextSteps}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </CollapsibleContent>
+                        </div>
+                      </Collapsible>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-background">
       {/* Header */}
       <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-10 shadow-sm">
@@ -302,9 +490,21 @@ const ReportView = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {objectionCategories.map((category) => (
-                  <Card key={category.id} className="hover:shadow-md transition-shadow">
+                  <Card 
+                    key={category.id} 
+                    className="hover:shadow-md transition-shadow cursor-pointer group"
+                    onClick={() => setSelectedCategory(category)}
+                  >
                     <CardContent className="pt-5">
-                      <h4 className="text-sm font-semibold text-foreground mb-2 line-clamp-2">{category.title}</h4>
+                      <div className="flex items-start justify-between gap-2">
+                        <h4 className="text-sm font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                          {category.title}
+                        </h4>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="text-sm text-muted-foreground">{category.count}</span>
+                          <Eye className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                      </div>
                       <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
                         {category.description}
                       </p>
@@ -406,6 +606,7 @@ const ReportView = () => {
         </div>
       </main>
     </div>
+    </>
   );
 };
 
