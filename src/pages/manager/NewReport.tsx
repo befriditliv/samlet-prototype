@@ -172,8 +172,38 @@ const NewReport = () => {
     }
   };
 
-  const handleQuickReport = (reportId: string, reportLabel: string) => {
-    generateReport(reportLabel, false);
+  const handleQuickReport = async (reportId: string, reportLabel: string) => {
+    setIsGenerating(true);
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setIsGenerating(false);
+    toast.success(`${reportLabel} generated successfully`);
+    
+    // Route to InsightReportView for specific quick reports
+    if (reportId === 'ozempic-initiation') {
+      navigate('/manager/insight-report', {
+        state: {
+          reportType: 'ozempic-initiation',
+          title: 'Ozempic Initiering Insights',
+          query: 'hvad siger hcperne ift. ozempic initiering',
+          dateRange: { from: new Date(2025, 6, 1), to: new Date(2025, 11, 31) },
+          product: 'Ozempic',
+          employee: 'all'
+        }
+      });
+    } else if (reportId === 'sentiment-trends') {
+      navigate('/manager/insight-report', {
+        state: {
+          reportType: 'sentiment-trends',
+          title: 'HCO/HCP Sentiment & Market Trends',
+          query: 'hvad er den generelle stemning og markedstrends blandt HCPs og HCOs?',
+          dateRange: { from: new Date(2025, 9, 1), to: new Date(2025, 11, 31) },
+          product: 'Alle produkter',
+          employee: 'all'
+        }
+      });
+    } else {
+      navigate('/manager');
+    }
   };
 
   const handleDebriefReportGenerate = () => {
