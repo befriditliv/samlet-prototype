@@ -445,232 +445,389 @@ const ReportView = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-6 py-8 max-w-4xl">
+      <main className="container mx-auto px-6 py-8 max-w-6xl">
         {/* Navigation */}
         <button 
           onClick={() => navigate('/manager')}
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6 group"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
         >
           <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm font-medium">Tilbage</span>
+          <span className="text-sm font-medium">Tilbage til dashboard</span>
         </button>
 
-        {/* Compact metadata bar */}
-        <div className="flex flex-wrap items-center gap-4 mb-8 p-4 rounded-lg bg-muted/30 border text-sm">
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-            <span>{format(data.dateRange.from, "d. MMM", { locale: da })} - {format(data.dateRange.to, "d. MMM yyyy", { locale: da })}</span>
-          </div>
-          <div className="h-4 w-px bg-border" />
-          <div className="flex items-center gap-2">
-            <FileText className="h-4 w-4 text-muted-foreground" />
-            <span><strong>1.247</strong> møder</span>
-            <span className="text-muted-foreground">→</span>
-            <span><strong>687</strong> debriefs (55%)</span>
-            <span className="text-muted-foreground">→</span>
-            <span className="text-primary font-semibold">{totalDebriefs} relevante</span>
-          </div>
-          <div className="flex-1" />
-          <div className="flex items-center gap-1">
-            <Users className="h-4 w-4 text-muted-foreground" />
-            {salesReps.slice(0, 4).map((user) => (
-              <Badge key={user} variant="secondary" className="text-xs">{user}</Badge>
-            ))}
-            {salesReps.length > 4 && (
-              <Badge variant="outline" className="text-xs">+{salesReps.length - 4}</Badge>
-            )}
-          </div>
+        {/* Stats Row */}
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <Card>
+            <CardContent className="pt-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-foreground">1.247</div>
+                <div className="text-sm text-muted-foreground mt-1">Møder i perioden</div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-foreground">687 <span className="text-lg font-normal text-muted-foreground">(55%)</span></div>
+                <div className="text-sm text-muted-foreground mt-1">Debriefs i perioden</div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary">{totalDebriefs}</div>
+                <div className="text-sm text-muted-foreground mt-1">Relevante debriefs</div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Period Info Row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                Periode
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-sm font-medium">
+                {format(data.dateRange.from, "d. MMMM yyyy", { locale: da })} - {format(data.dateRange.to, "d. MMMM yyyy", { locale: da })}
+              </div>
+            </CardContent>
+          </Card>
+          
+          {data.compareEnabled && data.compareDateRange && (
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4" />
+                  Sammenligningsperiode
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-sm font-medium">
+                  {format(data.compareDateRange.from, "d. MMMM yyyy", { locale: da })} - {format(data.compareDateRange.to, "d. MMMM yyyy", { locale: da })}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+          
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                Brugere
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-1">
+                {salesReps.map((user) => (
+                  <Badge key={user} variant="secondary" className="text-xs">{user}</Badge>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Main Content */}
-        <div className="space-y-8">
-          {/* Executive Summary - Combined */}
-          <section>
-            <h2 className="text-2xl font-bold text-foreground mb-4">Executive Summary</h2>
-            <div className="text-foreground/90 space-y-4 leading-relaxed">
-              <p>
-                Analysen af {totalDebriefs} relevante debriefs viser en <strong>tydelig evolution i HCP-bekymringer</strong> over perioden. 
-                Indledningsvist dominerede spørgsmål om tilskudsregler og regionale forskelle, men fokus er gradvist skiftet mod 
-                kombinationsbehandling og senest patientudvælgelse.
-              </p>
-              <p>
-                Over de seneste 5 måneder har vi observeret en markant ændring i de bekymringer HCP'er udtrykker ved Ozempic-initiering. 
-                Hvor tilskuds- og regulatoriske spørgsmål tidligere fyldte mest, er disse nu afløst af mere klinisk orienterede overvejelser 
-                omkring kombinationsbehandling og individualiseret patientudvælgelse. <strong>Dette indikerer at grundlæggende adgangsbarrierer er ved at blive adresseret.</strong>
-              </p>
-            </div>
+        <div className="space-y-6">
+          {/* Main Analysis Content */}
+          <div className="space-y-6">
+            {/* Kort oversigt */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-primary" />
+                  Kort oversigt
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground leading-relaxed">
+                  Analysen af {totalDebriefs} relevante debriefs viser en <span className="text-foreground font-medium">tydelig evolution i HCP-bekymringer</span> over perioden. 
+                  Indledningsvist dominerede spørgsmål om <span className="text-foreground font-medium">tilskudsregler og regionale forskelle</span>, men fokus er gradvist skiftet mod 
+                  <span className="text-foreground font-medium"> kombinationsbehandling</span> og senest <span className="text-foreground font-medium">patientudvælgelse</span>. 
+                  Dette indikerer at grundlæggende adgangsbarrierer er ved at blive adresseret, og HCP'er nu fokuserer på klinisk implementering.
+                </p>
+              </CardContent>
+            </Card>
 
-            {/* Key stats inline */}
-            <div className="flex flex-wrap gap-6 mt-6 p-4 rounded-lg bg-muted/20 border border-dashed">
-              <div className="flex items-center gap-2">
-                <TrendingDown className="h-4 w-4 text-green-500" />
-                <span className="text-sm"><strong>Tilskud:</strong> -35%</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-amber-500" />
-                <span className="text-sm"><strong>Kombination:</strong> +62%</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-blue-500" />
-                <span className="text-sm"><strong>Patientudvælgelse:</strong> +180%</span>
-              </div>
-            </div>
-          </section>
+            {/* Hovedanalyse */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Udvikling i bekymringsmønstre for Ozempic-initiering</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Emnebeskrivelse */}
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground mb-2">Emnebeskrivelse</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Over de seneste 5 måneder har vi observeret en markant ændring i de bekymringer HCP'er udtrykker ved Ozempic-initiering. 
+                    Hvor tilskuds- og regulatoriske spørgsmål tidligere fyldte mest, er disse nu afløst af mere klinisk orienterede overvejelser 
+                    omkring kombinationsbehandling og individualiseret patientudvælgelse.
+                  </p>
+                </div>
 
-          {/* Indsigter og Anbefalinger - collapsed into one section */}
-          <section>
-            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-              <Lightbulb className="h-5 w-5 text-primary" />
-              Indsigter og anbefalinger
-            </h3>
-            <div className="space-y-3 text-sm text-muted-foreground">
-              <p className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                <span>HCP'er bevæger sig fra "kan jeg ordinere det?" til "hvordan bruger jeg det optimalt?" – et positivt tegn.</span>
-              </p>
-              <p className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                <span><strong>Prioritér kombinationsbehandling:</strong> Udvikl doseringsguides for Ozempic + SGLT2i/insulin.</span>
-              </p>
-              <p className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                <span><strong>Styrk praktisk support:</strong> Patientudvælgelsesværktøjer og tjeklister til opstartsbivirkninger.</span>
-              </p>
-            </div>
-          </section>
+                <Separator />
 
-          {/* Bekymringstemaer - Collapsible list like Insight Report */}
-          <section>
-            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-amber-500" />
-              Bekymringstemaer
-            </h3>
-            
-            <div className="space-y-2">
-              {objectionCategories.map((category) => (
-                <Collapsible key={category.id}>
-                  <CollapsibleTrigger className="w-full">
-                    <div className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors text-left">
-                      <div className="flex items-center gap-2">
-                        <div className="h-3 w-3 rounded-full shrink-0" style={{ backgroundColor: category.color }} />
-                        <span className="text-sm font-medium text-foreground">
-                          {category.title} <span className="text-muted-foreground">({category.count})</span>
-                        </span>
+                {/* Statistisk analyse */}
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <BarChart3 className="h-4 w-4" />
+                    Statistisk analyse
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-3">Udvikling baseret på {totalDebriefs} kategoriserede debriefs</p>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <TrendingDown className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
+                      <span><span className="font-medium text-foreground">Tilskudsbekymringer faldet 35%</span> – fra 18 debriefs i august til kun 2 i december. Regionale afklaringer og bedre dokumentation har reduceret usikkerheden.</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <TrendingUp className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
+                      <span><span className="font-medium text-foreground">Kombinationsbehandling steget 62%</span> – HCP'er søger nu aktivt vejledning om Ozempic sammen med SGLT2i, insulin og andre antidiabetika.</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <TrendingUp className="h-4 w-4 text-blue-500 mt-0.5 shrink-0" />
+                      <span><span className="font-medium text-foreground">Patientudvælgelse steget 180%</span> – Nye spørgsmål om prioritering, særlige patientgrupper og praktisk opstartshåndtering dominerer nu.</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <Separator />
+
+                {/* Indsigter */}
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <Lightbulb className="h-4 w-4" />
+                    Indsigter
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+                    Skiftet i bekymringsmønstre afspejler en modning i markedets forståelse af Ozempic og indikerer fremdrift i adoptionsrejsen.
+                  </p>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>HCP'er bevæger sig fra "kan jeg ordinere det?" til "hvordan bruger jeg det optimalt?" – et positivt tegn på øget behandlingsvillighed.</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Den stigende interesse for kombinationsbehandling tyder på, at Ozempic i stigende grad ses som en naturlig del af behandlingsarsenalet.</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Fokus på patientudvælgelse og bivirkningshåndtering viser behov for mere praktisk, klinisk støttemateriale.</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <Separator />
+
+                {/* Konklusion og anbefalinger */}
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4" />
+                    Konklusion og anbefalinger
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-3">Markedet er klar til næste fase af engagement</p>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span><span className="font-medium text-foreground">Prioritér kombinationsbehandling:</span> Udvikl og distribuer konkrete doseringsguides og protokoller for Ozempic + SGLT2i/insulin.</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span><span className="font-medium text-foreground">Styrk praktisk support:</span> Lav patientudvælgelsesværktøjer og tjeklister til håndtering af opstartsbivirkninger.</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span><span className="font-medium text-foreground">Adressér kapacitetsudfordringer:</span> Overvej digitale opfølgningsløsninger til klinikker med begrænsede ressourcer.</span>
+                    </li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Indvendinger og bekymringer - Category Cards */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <AlertCircle className="h-5 w-5 text-amber-500" />
+                Indvendinger og bekymringer
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {objectionCategories.map((category) => (
+                  <Card 
+                    key={category.id} 
+                    className="hover:shadow-md transition-shadow cursor-pointer group"
+                    onClick={() => setSelectedCategory(category)}
+                  >
+                    <CardContent className="pt-5">
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2">
+                          <div className="h-3 w-3 rounded-full shrink-0" style={{ backgroundColor: category.color }} />
+                          <h4 className="text-sm font-semibold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                            {category.title}
+                          </h4>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <Badge variant="secondary" className="text-xs">{category.count}</Badge>
+                          <Eye className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-3">
+                        {category.description}
+                      </p>
+                      <div className="flex items-center gap-1 text-xs">
                         {category.trend === 'up' ? (
                           <ArrowUpRight className="h-3.5 w-3.5 text-amber-500" />
                         ) : category.trend === 'down' ? (
                           <ArrowDownRight className="h-3.5 w-3.5 text-green-500" />
                         ) : null}
-                        <span className={`text-xs ${category.trend === 'up' ? 'text-amber-500' : category.trend === 'down' ? 'text-green-500' : 'text-muted-foreground'}`}>
-                          {category.trend === 'up' ? '+' : '-'}{category.trendPercent}%
+                        <span className={category.trend === 'up' ? 'text-amber-500' : category.trend === 'down' ? 'text-green-500' : 'text-muted-foreground'}>
+                          {category.trend === 'up' ? '+' : category.trend === 'down' ? '-' : ''}{category.trendPercent}%
                         </span>
-                        <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-muted-foreground">siden periode start</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Emneudvikling over tid - Full width chart section */}
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base">Emneudvikling over tid</CardTitle>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Hvordan bekymringer skifter fra adgang til klinisk implementering
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Area Chart showing evolution */}
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={topicTrendData} margin={{ left: -20, right: 0, top: 10, bottom: 0 }}>
+                      <defs>
+                        <linearGradient id="colorSubsidy" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#16a34a" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="#16a34a" stopOpacity={0.1}/>
+                        </linearGradient>
+                        <linearGradient id="colorCombination" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#ea580c" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="#ea580c" stopOpacity={0.1}/>
+                        </linearGradient>
+                        <linearGradient id="colorPatient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#1d4ed8" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="#1d4ed8" stopOpacity={0.1}/>
+                        </linearGradient>
+                        <linearGradient id="colorCapacity" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#84cc16" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="#84cc16" stopOpacity={0.1}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
+                      <XAxis 
+                        dataKey="month" 
+                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
+                        axisLine={{ stroke: 'hsl(var(--border))' }}
+                      />
+                      <YAxis 
+                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
+                        axisLine={{ stroke: 'hsl(var(--border))' }}
+                      />
+                      <Tooltip 
+                        contentStyle={{ 
+                          backgroundColor: 'hsl(var(--card))', 
+                          border: '1px solid hsl(var(--border))',
+                          borderRadius: '8px',
+                          fontSize: '12px'
+                        }}
+                        labelStyle={{ fontWeight: 'bold', marginBottom: '4px' }}
+                      />
+                      <Area 
+                        type="monotone" 
+                        dataKey="subsidy" 
+                        name="Tilskud" 
+                        stroke="#16a34a" 
+                        fill="url(#colorSubsidy)" 
+                        strokeWidth={2}
+                      />
+                      <Area 
+                        type="monotone" 
+                        dataKey="combination" 
+                        name="Kombination" 
+                        stroke="#ea580c" 
+                        fill="url(#colorCombination)" 
+                        strokeWidth={2}
+                      />
+                      <Area 
+                        type="monotone" 
+                        dataKey="patientSelection" 
+                        name="Patient" 
+                        stroke="#1d4ed8" 
+                        fill="url(#colorPatient)" 
+                        strokeWidth={2}
+                      />
+                      <Area 
+                        type="monotone" 
+                        dataKey="capacity" 
+                        name="Kapacitet" 
+                        stroke="#84cc16" 
+                        fill="url(#colorCapacity)" 
+                        strokeWidth={2}
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Legend with trends */}
+                <div className="space-y-2">
+                  {objectionCategories.map((cat) => (
+                    <div key={cat.id} className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2">
+                        <div className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: cat.color }} />
+                        <span className="text-muted-foreground truncate max-w-[140px]">{cat.title.split(' ').slice(0, 3).join(' ')}...</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {cat.trend === 'up' ? (
+                          <ArrowUpRight className="h-3 w-3 text-amber-500" />
+                        ) : cat.trend === 'down' ? (
+                          <ArrowDownRight className="h-3 w-3 text-green-500" />
+                        ) : null}
+                        <span className={cat.trend === 'up' ? 'text-amber-500' : cat.trend === 'down' ? 'text-green-500' : 'text-muted-foreground'}>
+                          {cat.count}
+                        </span>
                       </div>
                     </div>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <div className="px-3 py-3 space-y-3">
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {category.description}
-                      </p>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="text-xs text-primary"
-                        onClick={() => setSelectedCategory(category)}
-                      >
-                        <Eye className="h-3 w-3 mr-1" />
-                        Se {category.debriefs.length} debriefs
-                      </Button>
-                    </div>
-                  </CollapsibleContent>
-                </Collapsible>
-              ))}
-            </div>
-          </section>
-
-          {/* Chart - Collapsible */}
-          <Collapsible>
-            <CollapsibleTrigger className="w-full">
-              <div className="flex items-center justify-between p-4 rounded-lg border border-dashed hover:bg-muted/30 transition-colors">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <BarChart3 className="h-4 w-4" />
-                  <span className="text-sm font-medium">Emneudvikling over tid</span>
+                  ))}
                 </div>
-                <ChevronDown className="h-4 w-4 text-muted-foreground" />
-              </div>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <Card className="mt-3 border-0 shadow-none">
-                <CardContent className="pt-4">
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={topicTrendData} margin={{ left: -20, right: 0, top: 10, bottom: 0 }}>
-                        <defs>
-                          <linearGradient id="colorSubsidy" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#16a34a" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#16a34a" stopOpacity={0.1}/>
-                          </linearGradient>
-                          <linearGradient id="colorCombination" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#ea580c" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#ea580c" stopOpacity={0.1}/>
-                          </linearGradient>
-                          <linearGradient id="colorPatient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#1d4ed8" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#1d4ed8" stopOpacity={0.1}/>
-                          </linearGradient>
-                          <linearGradient id="colorCapacity" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#84cc16" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#84cc16" stopOpacity={0.1}/>
-                          </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
-                        <XAxis 
-                          dataKey="month" 
-                          tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
-                          axisLine={{ stroke: 'hsl(var(--border))' }}
-                        />
-                        <YAxis 
-                          tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
-                          axisLine={{ stroke: 'hsl(var(--border))' }}
-                        />
-                        <Tooltip 
-                          contentStyle={{ 
-                            backgroundColor: 'hsl(var(--card))', 
-                            border: '1px solid hsl(var(--border))',
-                            borderRadius: '8px',
-                            fontSize: '12px'
-                          }}
-                        />
-                        <Area type="monotone" dataKey="subsidy" name="Tilskud" stroke="#16a34a" fill="url(#colorSubsidy)" strokeWidth={2} />
-                        <Area type="monotone" dataKey="combination" name="Kombination" stroke="#ea580c" fill="url(#colorCombination)" strokeWidth={2} />
-                        <Area type="monotone" dataKey="patientSelection" name="Patient" stroke="#1d4ed8" fill="url(#colorPatient)" strokeWidth={2} />
-                        <Area type="monotone" dataKey="capacity" name="Kapacitet" stroke="#84cc16" fill="url(#colorCapacity)" strokeWidth={2} />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
-            </CollapsibleContent>
-          </Collapsible>
 
-          {/* Actions - Compact like Insight Report */}
-          <div className="flex items-center justify-between pt-4 border-t">
-            <span className="text-sm text-muted-foreground">
-              Genereret: {format(new Date(), "d. MMMM yyyy", { locale: da })}
-            </span>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Download className="h-4 w-4" />
-                Download PDF
-              </Button>
-              <Button variant="outline" size="sm" className="gap-2">
-                <Share2 className="h-4 w-4" />
-                Del
-              </Button>
-            </div>
+                <Separator />
+
+                {/* Key insight */}
+                <div className="bg-primary/5 rounded-lg p-3">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    <span className="font-medium text-foreground">Nøgleindsigt:</span> Fokus skifter fra administrative barrierer til klinisk implementering – et positivt tegn på markedsmodning.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Actions - At bottom */}
+            <Card>
+              <CardContent className="pt-6 space-y-3">
+                <Button className="w-full gap-2" variant="outline">
+                  <Download className="h-4 w-4" />
+                  Download rapport
+                </Button>
+                <Button className="w-full gap-2" variant="outline">
+                  <Share2 className="h-4 w-4" />
+                  Del rapport
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </main>
