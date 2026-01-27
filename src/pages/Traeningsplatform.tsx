@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -104,6 +105,7 @@ const commonObjections = [{
 }];
 const Traeningsplatform = () => {
   const navigate = useNavigate();
+  const { role } = useAuth();
   const [viewState, setViewState] = useState<ViewState>("landing");
   const [wizardStep, setWizardStep] = useState(1);
   const [scenarioConfig, setScenarioConfig] = useState<ScenarioConfig>({
@@ -250,7 +252,7 @@ const Traeningsplatform = () => {
       <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto px-6 py-5">
           <div className="flex items-center gap-6">
-            <Button variant="ghost" size="icon" onClick={() => viewState === "landing" ? navigate("/") : handleBackToLanding()} className="shrink-0">
+            <Button variant="ghost" size="icon" onClick={() => viewState === "landing" ? navigate(role === 'manager' ? '/manager' : '/') : handleBackToLanding()} className="shrink-0">
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <img src={jarvisLogo} alt="Jarvis Logo" className="h-10 w-10" />

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   ChevronLeft,
   ChevronRight,
@@ -88,6 +89,7 @@ const filterLabels: Record<FilterType, string> = {
 
 const Kundeoversigt = () => {
   const navigate = useNavigate();
+  const { role } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   
   // Read initial values from URL params
@@ -338,7 +340,7 @@ const Kundeoversigt = () => {
               <Button 
                 variant="ghost" 
                 size="icon"
-                onClick={() => navigate('/')}
+                onClick={() => navigate(role === 'manager' ? '/manager' : '/')}
                 className="shrink-0"
               >
                 <ChevronLeft className="h-5 w-5" />
