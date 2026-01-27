@@ -6,9 +6,6 @@ import {
   Calendar, 
   Users, 
   GraduationCap, 
-  HelpCircle, 
-  Shield, 
-  ExternalLink,
   Settings,
   User,
   LogOut
@@ -35,12 +32,6 @@ const menuItems = [
     label: "Træningsplatform",
     href: "/traeningsplatform",
     isRoute: true
-  },
-  {
-    icon: HelpCircle,
-    label: "Support",
-    href: "#",
-    isRoute: false
   }
 ];
 
