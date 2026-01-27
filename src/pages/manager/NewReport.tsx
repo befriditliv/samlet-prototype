@@ -21,7 +21,6 @@ import {
   SlidersHorizontal,
   UserX,
   Activity,
-  Swords,
   Info,
   Stethoscope,
   Users,
@@ -95,13 +94,6 @@ const quickReportOptions = [
     description: 'Analyze overall sentiment and emerging market themes',
     icon: Activity,
     devNote: 'DEV: Use MIP. Prompt: Analyze the last 30 days of HCP and HCO interaction data.',
-  },
-  {
-    id: 'competitor-report',
-    label: 'Competitor Report',
-    description: 'Track competitor mentions, perceptions, and competitive landscape',
-    icon: Swords,
-    devNote: 'DEV: Use MIP. Prompt: Analyze the last 30 days for competitor mentions.',
   },
 ];
 
