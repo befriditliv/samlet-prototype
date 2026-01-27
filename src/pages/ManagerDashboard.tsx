@@ -4,7 +4,7 @@ import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
 
 import { Button } from "@/components/ui/button";
-import { BookOpen, Menu, Lightbulb, User, Building2, BarChart3, Plus, Users, LogOut } from "lucide-react";
+import { BookOpen, Menu, Lightbulb, BarChart3, Plus, Users, LogOut } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -53,12 +53,8 @@ const ManagerDashboard = () => {
                         Create Report
                       </a>
                       <a href="/kundeoversigt" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-foreground">
-                        <User className="h-5 w-5 text-primary" />
-                        HCP
-                      </a>
-                      <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-foreground">
-                        <Building2 className="h-5 w-5 text-primary" />
-                        HCO
+                        <Users className="h-5 w-5 text-primary" />
+                        Client Overview
                       </a>
                       <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-foreground">
                         <BarChart3 className="h-5 w-5 text-primary" />
