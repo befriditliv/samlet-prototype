@@ -2,7 +2,7 @@ import { EmployeeOverview } from "@/components/manager/EmployeeOverview";
 import { InsightTools } from "@/components/manager/InsightTools";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
-import { ThemeToggle } from "@/components/ThemeToggle";
+
 import { Button } from "@/components/ui/button";
 import { BookOpen, Menu, Lightbulb, User, Building2, BarChart3, Plus, Users, LogOut } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -34,7 +34,6 @@ const ManagerDashboard = () => {
                 <HcpSearch />
               </div>
               <AskJarvisManager />
-              <ThemeToggle />
               <Sheet>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon">
