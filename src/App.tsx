@@ -15,6 +15,8 @@ import ManagerDashboard from "./pages/ManagerDashboard";
 import NewReport from "./pages/manager/NewReport";
 import ReportView from "./pages/manager/ReportView";
 import InsightReportView from "./pages/manager/InsightReportView";
+import DebriefQualityReportView from "./pages/manager/DebriefQualityReportView";
+import CampaignAdherenceReportView from "./pages/manager/CampaignAdherenceReportView";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 
@@ -34,6 +36,8 @@ const App = () => (
             <Route path="/manager/new-report" element={<ProtectedRoute><NewReport /></ProtectedRoute>} />
             <Route path="/manager/report" element={<ProtectedRoute><ReportView /></ProtectedRoute>} />
             <Route path="/manager/insight-report" element={<ProtectedRoute><InsightReportView /></ProtectedRoute>} />
+            <Route path="/manager/debrief-quality-report" element={<ProtectedRoute><DebriefQualityReportView /></ProtectedRoute>} />
+            <Route path="/manager/campaign-adherence-report" element={<ProtectedRoute><CampaignAdherenceReportView /></ProtectedRoute>} />
             <Route path="/kundeoversigt" element={<ProtectedRoute><Kundeoversigt /></ProtectedRoute>} />
             <Route path="/traeningsplatform" element={<ProtectedRoute><Traeningsplatform /></ProtectedRoute>} />
             <Route path="/hco/:id" element={<ProtectedRoute><HcoDetail /></ProtectedRoute>} />
