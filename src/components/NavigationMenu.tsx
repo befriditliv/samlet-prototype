@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const menuItems = [
   {
@@ -45,6 +46,7 @@ const menuItems = [
 
 export const NavigationMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { role, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleMenuClick = (item: typeof menuItems[0]) => {
@@ -107,10 +109,20 @@ export const NavigationMenu = () => {
                 <User className="h-5 w-5 text-primary-foreground" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="font-semibold text-sm">Britt Ketels</div>
-                <div className="text-xs text-muted-foreground truncate">bket@novonordisk.com</div>
+                <div className="font-semibold text-sm">
+                  {role === "key_account_manager" ? "Key Account Manager" : "Manager"}
+                </div>
+                <div className="text-xs text-muted-foreground truncate">Britt Ketels</div>
               </div>
-              <Button variant="ghost" size="icon" className="shrink-0">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="shrink-0"
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
+              >
                 <LogOut className="h-4 w-4" />
               </Button>
             </div>
