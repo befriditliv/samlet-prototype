@@ -79,23 +79,50 @@ interface Statement {
   source: string;
 }
 
+// Generate realistic statements for each category
+const generateStatements = (categoryId: string, count: number, quotes: string[]): Statement[] => {
+  const roles = ['Physician', 'Nurse', 'Specialist'];
+  const names = ['Lars Andersen', 'Maria Hansen', 'Peter Christensen', 'Sofie Nielsen', 'Thomas Madsen', 'Mette Larsen', 'Jonas Pedersen', 'Anne Søndergaard', 'Henrik Rasmussen', 'Lise Mortensen', 'Camilla Olsen', 'Michael Krogh', 'Eva Thomsen', 'Christian Bak', 'Julie Poulsen'];
+  
+  return Array.from({ length: count }, (_, i) => ({
+    id: `${categoryId}-${i}`,
+    role: roles[i % roles.length],
+    date: `${['sep', 'okt', 'nov', 'dec'][Math.floor(Math.random() * 4)]}. ${Math.floor(Math.random() * 28) + 1}, 2025`,
+    quote: quotes[i % quotes.length],
+    source: `${names[i % names.length]} - 2025-${String(9 + Math.floor(i / 10)).padStart(2, '0')}-${String((i % 28) + 1).padStart(2, '0')}`
+  }));
+};
+
 const statementsByCategory: Record<string, Statement[]> = {
-  '1': [
-    { id: '1', role: 'Physician', date: 'nov. 19, 2025', quote: 'Der blev ikke nævnt nogen indvendinger fra HCP\'erne vedrørende opstart af Ozempic-patienter.', source: 'Team meeting - 2025-11-19' },
-    { id: '2', role: 'Nurse', date: 'nov. 18, 2025', quote: 'HCP\'en havde ingen indvendinger eller bekymringer omkring opstart af Ozempic.', source: 'Amaal Muuse - 2025-11-18' },
-  ],
-  '2': [
-    { id: '3', role: 'Physician', date: 'sep. 26, 2025', quote: 'Der er interesse for mere viden om Score2 diabetes og hypoglykaemi.', source: 'Stine Vedel Andersen - 2025-09-26' },
-    { id: '4', role: 'Nurse', date: 'okt. 15, 2025', quote: 'Ønsker materiale om organbeskyttelse ved Ozempic.', source: 'Karen Nielsen - 2025-10-15' },
-  ],
-  '3': [
-    { id: '5', role: 'Nurse', date: 'nov. 05, 2025', quote: 'Patienter udtrykker bekymring over doseringsalgoritmer, herunder brugen af 8 doser og 2 mg.', source: 'Mia Dam Lekke - 2025-11-05' },
-    { id: '6', role: 'Physician', date: 'okt. 22, 2025', quote: 'Spørgsmål om krav til afprøvning af antidiabetika før Ozempic.', source: 'Lars Hansen - 2025-10-22' },
-  ],
-  '4': [
-    { id: '7', role: 'Physician', date: 'okt. 02, 2025', quote: 'Der blev rejst indvendinger omkring regionens klausul fortolkning i forbindelse med opstart.', source: 'Aftab Rehmat - 2025-10-02' },
-    { id: '8', role: 'Nurse', date: 'sep. 15, 2025', quote: 'Bekymring over at skifte velbehandlede insulinpatienter til Ozempic.', source: 'Peter Madsen - 2025-09-15' },
-  ],
+  '1': generateStatements('1', 111, [
+    'Der blev ikke nævnt nogen indvendinger fra HCP\'erne vedrørende opstart af Ozempic-patienter.',
+    'HCP\'en havde ingen indvendinger eller bekymringer omkring opstart af Ozempic.',
+    'Positiv modtagelse af Ozempic som førstevalg.',
+    'Ingen bekymringer ved opstart – patienten var motiveret.',
+    'Uproblematisk initiering, HCP var allerede bekendt med produktet.',
+    'God erfaring med tidligere patienter, ingen forbehold.',
+    'HCP udtrykte tillid til Ozempic som behandlingsvalg.',
+  ]),
+  '2': generateStatements('2', 39, [
+    'Der er interesse for mere viden om Score2 diabetes og hypoglykaemi.',
+    'Ønsker materiale om organbeskyttelse ved Ozempic.',
+    'Interesse for opfølgende aftale om forløbsplaner.',
+    'Vil gerne have mere data om langtidseffekter.',
+    'Efterspørger patientvenligt informationsmateriale.',
+  ]),
+  '3': generateStatements('3', 35, [
+    'Patienter udtrykker bekymring over doseringsalgoritmer, herunder brugen af 8 doser og 2 mg.',
+    'Spørgsmål om krav til afprøvning af antidiabetika før Ozempic.',
+    'Uklarhed om dosisoptrapning hos ældre patienter.',
+    'Spørgsmål til algoritmen for skift fra insulin.',
+    'Behov for afklaring om kombination med andre præparater.',
+  ]),
+  '4': generateStatements('4', 20, [
+    'Der blev rejst indvendinger omkring regionens klausul fortolkning i forbindelse med opstart.',
+    'Bekymring over at skifte velbehandlede insulinpatienter til Ozempic.',
+    'Regionale krav om DPP-4 afprøvning først skaber frustration.',
+    'Bekymring om GI-bivirkninger hos sårbare patienter.',
+  ]),
 };
 
 const allStatements = Object.values(statementsByCategory).flat();
