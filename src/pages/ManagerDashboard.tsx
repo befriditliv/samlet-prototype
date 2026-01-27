@@ -58,7 +58,7 @@ const ManagerDashboard = () => {
                       </a>
                       <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-foreground">
                         <BarChart3 className="h-5 w-5 text-primary" />
-                        Activity Hub
+                        Signals
                       </a>
                     </nav>
                   </div>
