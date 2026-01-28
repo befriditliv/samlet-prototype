@@ -134,6 +134,66 @@ const sentimentCategories: InsightCategory[] = [
   },
 ];
 
+// Off-Label Information categories
+const offLabelCategories: InsightCategory[] = [
+  { 
+    id: 'ol1', 
+    title: 'Off-label ordination af Ozempic til overvægt', 
+    count: 28,
+    impact: 'neutral',
+    description: 'HCP\'er har uopfordret nævnt, at de ordinerer Ozempic til patienter med svær overvægt, selvom det ikke er den godkendte indikation. Flere nævner prisforskel til Wegovy som årsag.'
+  },
+  { 
+    id: 'ol2', 
+    title: 'Klinikker med systematisk off-label praksis', 
+    count: 12,
+    impact: 'neutral',
+    description: 'Enkelte klinikker har etableret fast praksis for off-label ordination. HCP\'erne har selv bragt dette op under samtaler om patientforløb.'
+  },
+  { 
+    id: 'ol3', 
+    title: 'Prisforskelle nævnt som motivation', 
+    count: 18,
+    impact: 'neutral',
+    description: 'HCP\'er har spontant nævnt, at Ozempic 1,0mg er væsentligt billigere end Wegovy og har samme effekt, som begrundelse for off-label brug.'
+  },
+  { 
+    id: 'ol4', 
+    title: 'Patientefterspørgsel driver beslutning', 
+    count: 9,
+    impact: 'neutral',
+    description: 'Nogle HCP\'er nævner, at patienter selv efterspørger Ozempic til vægttab efter at have hørt om det fra venner eller medier.'
+  },
+];
+
+// Statements for off-label report
+const offLabelStatementsByCategory: Record<string, Statement[]> = {
+  'ol1': generateStatements('ol1', 28, [
+    'Lægen nævnte uopfordret, at de på klinikken er begyndt at ordinere Ozempic 1,0mg til svær overvægt.',
+    'HCP\'en fortalte, at flere patienter får Ozempic off-label til vægttab med gode resultater.',
+    'Under samtalen nævnte lægen, at de bruger Ozempic til overvægtige patienter uden diabetes.',
+    'Klinikkens praksis inkluderer nu Ozempic til ren overvægtsbehandling, fortalte HCP\'en.',
+    'Lægen oplyste spontant, at de ordinerer Ozempic off-label da det er billigere end Wegovy.',
+  ]),
+  'ol2': generateStatements('ol2', 12, [
+    'Klinikken har etableret en fast praksis for at tilbyde Ozempic til overvægtige patienter.',
+    'HCP\'en beskrev deres systematiske tilgang til off-label ordination af Ozempic.',
+    'Lægen forklarede, at alle læger på klinikken nu bruger Ozempic til overvægt.',
+    'Klinikken har haft interne drøftelser og besluttet at tilbyde Ozempic off-label.',
+  ]),
+  'ol3': generateStatements('ol3', 18, [
+    'Lægen nævnte, at Ozempic 1,0mg er væsentligt billigere end Wegovy og har samme effekt.',
+    'HCP\'en fremhævede prisfordelen ved Ozempic fremfor Wegovy til overvægtsbehandling.',
+    'Prisen er den primære årsag til at vælge Ozempic fremfor Wegovy, forklarede lægen.',
+    'Patienterne foretrækker Ozempic på grund af lavere egenbetaling, sagde HCP\'en.',
+  ]),
+  'ol4': generateStatements('ol4', 9, [
+    'Patienter kommer og spørger specifikt efter Ozempic til vægttab, fortalte lægen.',
+    'HCP\'en nævnte øget patientefterspørgsel efter Ozempic efter medieomtale.',
+    'Mange patienter har hørt om Ozempic fra venner og vil gerne prøve det, sagde lægen.',
+  ]),
+};
+
 // Statements for sentiment report
 const sentimentStatementsByCategory: Record<string, Statement[]> = {
   's1': generateStatements('s1', 87, [
@@ -218,8 +278,20 @@ const InsightReportView = () => {
 
   // Select data based on report type
   const isSentimentReport = data.reportType === 'sentiment-trends';
-  const insightCategories = isSentimentReport ? sentimentCategories : ozempicCategories;
-  const statementsByCategory = isSentimentReport ? sentimentStatementsByCategory : ozempicStatementsByCategory;
+  const isOffLabelReport = data.reportType === 'off-label-insights';
+  
+  const insightCategories = isOffLabelReport 
+    ? offLabelCategories 
+    : isSentimentReport 
+      ? sentimentCategories 
+      : ozempicCategories;
+  
+  const statementsByCategory = isOffLabelReport 
+    ? offLabelStatementsByCategory 
+    : isSentimentReport 
+      ? sentimentStatementsByCategory 
+      : ozempicStatementsByCategory;
+  
   const allStatements = Object.values(statementsByCategory).flat();
 
   const toggleCategory = (id: string) => {
@@ -318,7 +390,16 @@ const InsightReportView = () => {
         <section className="mb-10">
           <h2 className="text-2xl font-bold text-foreground mb-4">Executive Summary</h2>
           <div className="text-foreground/90 space-y-4 leading-relaxed">
-            {isSentimentReport ? (
+            {isOffLabelReport ? (
+              <>
+                <p>
+                  Denne rapport identificerer debriefs hvor HCP'er uopfordret har delt information om off-label ordination af Ozempic til behandling af svær overvægt. I alt {totalStatements} observationer er registreret i perioden, hvor HCP'er har nævnt off-label praksis uden at dette var initieret af medarbejderen.
+                </p>
+                <p>
+                  <strong>Vigtigt:</strong> I henhold til retningslinjerne har medarbejderne ikke faciliteret eller fremmet dialog om off-label ordination. Det fremgår tydeligt af alle registreringer, at det var lægen der uopfordret nævnte off-label praksis, og at medarbejderen førte samtalen tilbage til mødets oprindelige formål.
+                </p>
+              </>
+            ) : isSentimentReport ? (
               <>
                 <p>
                   Analysen af HCP og HCO interaktioner fra oktober til december 2025 viser en overordnet positiv stemning over for Novo Nordisk's produktportefølje. Særligt GLP-1 produkterne modtages godt, og der ses en markant stigende interesse for vægttabsbehandling blandt sundhedsprofessionelle.
