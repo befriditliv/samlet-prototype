@@ -23,6 +23,7 @@ import {
   Activity,
   Info,
   Stethoscope,
+  AlertTriangle,
   Users,
   Target
 } from "lucide-react";
@@ -66,6 +67,13 @@ const quickReportOptions = [
     description: 'Analyse af HCP-bekymringer og barrierer ved Ozempic-initiering over tid',
     icon: Stethoscope,
     devNote: 'DEV: Use MIP with objection/concern analysis. Set current date minus 90 days for trend data.',
+  },
+  {
+    id: 'off-label-insights',
+    label: 'Off-Label Information Insights',
+    description: 'Find debriefs hvor HCPs uopfordret har delt information om off-label ordination',
+    icon: AlertTriangle,
+    devNote: 'DEV: Search debriefs for HCP-volunteered off-label information (e.g., Ozempic for obesity).',
   },
   {
     id: 'debrief-quality',
@@ -180,6 +188,17 @@ const NewReport = () => {
           title: 'Ozempic Initiering Insights',
           query: 'hvad siger hcperne ift. ozempic initiering',
           dateRange: { from: new Date(2025, 6, 1), to: new Date(2025, 11, 31) },
+          product: 'Ozempic',
+          employee: 'all'
+        }
+      });
+    } else if (reportId === 'off-label-insights') {
+      navigate('/manager/insight-report', {
+        state: {
+          reportType: 'off-label-insights',
+          title: 'Off-Label Information Insights',
+          query: 'hvilke HCPs har uopfordret nævnt off-label ordination af Ozempic?',
+          dateRange: { from: new Date(2025, 0, 1), to: new Date(2025, 11, 31) },
           product: 'Ozempic',
           employee: 'all'
         }
