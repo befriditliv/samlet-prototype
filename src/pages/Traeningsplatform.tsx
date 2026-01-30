@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 
 // Types
-type ViewState = "landing" | "custom-wizard" | "hcp-wizard" | "simulation" | "results";
+type ViewState = "landing" | "custom-wizard" | "hcp-wizard" | "scenario-preview" | "simulation" | "results";
 interface ScenarioConfig {
   name: string;
   product: string;
@@ -165,6 +165,10 @@ const Traeningsplatform = () => {
       objections: []
     });
   };
+  const handleShowScenarioPreview = () => {
+    setViewState("scenario-preview");
+  };
+
   const handleStartSimulation = () => {
     setViewState("simulation");
     setChatMessages([{
@@ -519,9 +523,9 @@ const Traeningsplatform = () => {
               {wizardStep < 3 ? <Button onClick={() => setWizardStep(prev => prev + 1)} disabled={!canProceedCustomWizard()} className="gap-2">
                   Fortsæt
                   <ArrowRight className="h-4 w-4" />
-                </Button> : <Button onClick={handleStartSimulation} disabled={!canProceedCustomWizard()} className="gap-2">
-                  <MessageSquare className="h-4 w-4" />
-                  Start simulation
+                </Button> : <Button onClick={handleShowScenarioPreview} disabled={!canProceedCustomWizard()} className="gap-2">
+                  Se scenarie
+                  <ArrowRight className="h-4 w-4" />
                 </Button>}
             </div>
           </div>}
@@ -638,10 +642,124 @@ const Traeningsplatform = () => {
               {wizardStep < 2 ? <Button onClick={() => setWizardStep(prev => prev + 1)} disabled={!canProceedHcpWizard()} className="gap-2">
                   Fortsæt
                   <ArrowRight className="h-4 w-4" />
-                </Button> : <Button onClick={handleStartSimulation} disabled={!canProceedHcpWizard()} className="gap-2">
-                  <MessageSquare className="h-4 w-4" />
-                  Start simulation
+                </Button> : <Button onClick={handleShowScenarioPreview} disabled={!canProceedHcpWizard()} className="gap-2">
+                  Se scenarie
+                  <ArrowRight className="h-4 w-4" />
                 </Button>}
+            </div>
+          </div>}
+
+        {/* ==================== SCENARIO PREVIEW ==================== */}
+        {viewState === "scenario-preview" && <div className="max-w-2xl mx-auto space-y-8">
+            {/* Header */}
+            <div className="text-center space-y-3">
+              <h2 className="text-2xl font-bold text-primary">
+                {scenarioConfig.name || `${scenarioConfig.product} - Træningsscenarie`}
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Oprettet af {scenarioConfig.hcpName ? `baseret på ${scenarioConfig.hcpName}` : "Dig"}
+              </p>
+            </div>
+
+            {/* Scenario Details Card */}
+            <Card className="border shadow-lg overflow-hidden">
+              <CardContent className="p-0">
+                {/* Product Section */}
+                <div className="p-6 border-b">
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Produkt</h4>
+                    <div className="flex items-center gap-3">
+                      <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
+                        <Check className="h-3.5 w-3.5 text-primary-foreground" />
+                      </div>
+                      <span className="font-medium text-foreground">{scenarioConfig.product}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Adoption Stage Section */}
+                <div className="p-6 border-b bg-accent/20">
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Adoptionsstige</h4>
+                    <div className="flex items-center gap-3">
+                      <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
+                        <Check className="h-3.5 w-3.5 text-primary-foreground" />
+                      </div>
+                      <div>
+                        <span className="font-medium text-foreground">
+                          {adoptionStages.find(s => s.id === scenarioConfig.adoptionStage)?.label || "Ikke valgt"}
+                        </span>
+                        <p className="text-sm text-muted-foreground">
+                          {adoptionStages.find(s => s.id === scenarioConfig.adoptionStage)?.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Objections Section */}
+                {scenarioConfig.objections.length > 0 && <div className="p-6 border-b">
+                  <div className="space-y-4">
+                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Indvendinger</h4>
+                    <div className="space-y-3">
+                      {scenarioConfig.objections.map(objId => {
+                        const objection = commonObjections.find(o => o.id === objId);
+                        if (!objection) return null;
+                        const Icon = objection.icon;
+                        return (
+                          <div key={objId} className="flex items-center gap-3">
+                            <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
+                              <Check className="h-3.5 w-3.5 text-primary-foreground" />
+                            </div>
+                            <Icon className="h-4 w-4 text-muted-foreground" />
+                            <span className="text-foreground">{objection.label}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>}
+
+                {/* Objective Section */}
+                <div className="p-6 border-b bg-accent/20">
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Formål</h4>
+                    <div className="p-4 rounded-lg bg-card border">
+                      <p className="text-foreground">
+                        {scenarioConfig.objections.length > 0 
+                          ? `Håndter indvendinger og overbevis HCP'en om fordelene ved ${scenarioConfig.product}`
+                          : `Diskuter ${scenarioConfig.product} med HCP'en og adresser eventuelle bekymringer`}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Persona Section */}
+                <div className="p-6">
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Persona</h4>
+                    <div className="p-4 rounded-lg bg-card border">
+                      <p className="text-foreground">
+                        {scenarioConfig.hcpName 
+                          ? `${scenarioConfig.hcpName} - baseret på tidligere interaktioner og feedback`
+                          : `En ${adoptionStages.find(s => s.id === scenarioConfig.adoptionStage)?.label || "typisk"} HCP der prioriterer evidensbaseret behandling`}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Navigation */}
+            <div className="flex items-center justify-between pt-4">
+              <Button variant="ghost" onClick={() => setViewState(scenarioConfig.hcpId ? "hcp-wizard" : "custom-wizard")} className="gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                Tilbage
+              </Button>
+              <Button onClick={handleStartSimulation} size="lg" className="gap-2 px-8">
+                Start simulation
+                <ArrowRight className="h-4 w-4" />
+              </Button>
             </div>
           </div>}
 
