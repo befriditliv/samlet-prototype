@@ -82,12 +82,12 @@ const AppJarvis = () => {
       <div className="flex-1 overflow-y-auto p-4 pb-20">
         {responses.length === 0 && !isLoading && (
           <div className="text-center py-12">
-            <h3 className="text-lg font-medium text-foreground mb-2">Start en samtale</h3>
-            <p className="text-sm text-muted-foreground mb-6">Spørg mig om hvad som helst</p>
+            <h3 className="text-lg font-medium text-foreground mb-2">Start a conversation</h3>
+            <p className="text-sm text-muted-foreground mb-6">Ask me anything</p>
 
             <div className="space-y-2 max-w-sm mx-auto">
               <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">
-                Hurtige forslag
+                Quick suggestions
               </p>
               {querySuggestions.map((suggestion) => {
                 const config = categoryConfig[suggestion.category];
