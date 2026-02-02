@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { format, addDays, startOfWeek, addWeeks, getWeek } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { WebDebriefDialog } from "./WebDebriefDialog";
+import { openAskJarvis } from "./AskJarvis";
 
 type MeetingStatus = "next-call" | "needs-debrief" | "upcoming" | "debrief-processing" | "debrief-ready" | "done";
 
@@ -444,7 +445,7 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
                     )}
                     
                     {meeting.status === "upcoming" && (
-                      <Button variant="ghost" size="icon">
+                      <Button variant="ghost" size="icon" onClick={openAskJarvis}>
                         <MessageCircle className="h-5 w-5" />
                       </Button>
                     )}
