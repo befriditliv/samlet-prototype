@@ -51,7 +51,7 @@ const filterLabels: Record<FilterType, string> = {
   'no-next-step': 'No next step planned',
   'high-value': 'High-value'
 };
-const Kundeoversigt = () => {
+const ClientOverview = () => {
   const navigate = useNavigate();
   const {
     role
@@ -576,4 +576,4 @@ const Kundeoversigt = () => {
       </main>
     </div>;
 };
-export default Kundeoversigt;
+export default ClientOverview;

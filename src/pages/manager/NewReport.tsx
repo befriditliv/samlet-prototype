@@ -219,7 +219,7 @@ const NewReport = () => {
     } else if (reportId === 'campaign-adherence') {
       navigate('/manager/campaign-adherence-report');
     } else if (reportId === 'high-potential-no-engagement') {
-      navigate('/kundeoversigt', {
+      navigate('/client-overview', {
         state: {
           filter: 'high-potential-no-engagement',
           title: 'High Potential Clients without Recent Engagement'

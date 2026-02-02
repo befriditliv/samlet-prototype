@@ -70,7 +70,7 @@ const ManagerDashboard = () => {
                         <Plus className="h-5 w-5 text-primary" />
                         Create Report
                       </a>
-                      <a href="/kundeoversigt" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-foreground">
+                      <a href="/client-overview" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-accent transition-colors text-foreground">
                         <Users className="h-5 w-5 text-primary" />
                         Client Overview
                       </a>
