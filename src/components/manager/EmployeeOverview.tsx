@@ -134,6 +134,46 @@ const employeeData = [
     completed: 18, 
     outstanding: 3,
     meetingsNextWeek: 5 
+  },
+  { 
+    name: "Catherine Williams", 
+    adherence: 82, 
+    avgLength: 1024, 
+    completed: 20, 
+    outstanding: 5,
+    meetingsNextWeek: 4 
+  },
+  { 
+    name: "David Roberts", 
+    adherence: 79, 
+    avgLength: 845, 
+    completed: 16, 
+    outstanding: 4,
+    meetingsNextWeek: 3 
+  },
+  { 
+    name: "Jennifer Adams", 
+    adherence: 76, 
+    avgLength: 912, 
+    completed: 14, 
+    outstanding: 6,
+    meetingsNextWeek: 5 
+  },
+  { 
+    name: "Robert Taylor", 
+    adherence: 74, 
+    avgLength: 768, 
+    completed: 12, 
+    outstanding: 5,
+    meetingsNextWeek: 4 
+  },
+  { 
+    name: "Amanda Clarke", 
+    adherence: 71, 
+    avgLength: 654, 
+    completed: 10, 
+    outstanding: 7,
+    meetingsNextWeek: 3 
   }
 ];
 
