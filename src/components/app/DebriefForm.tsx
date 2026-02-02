@@ -50,6 +50,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
   const [recordingTime, setRecordingTime] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [savedDebriefData, setSavedDebriefData] = useState<DebriefData | null>(null);
 
   const [template, setTemplate] = useState<DebriefTemplate>({
     quickDebrief: undefined,
@@ -153,6 +154,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
     };
 
     addToQueue(meetingId, debriefData);
+    setSavedDebriefData(debriefData);
     setPhase('saved');
   };
 
@@ -168,7 +170,16 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
     };
 
     addToQueue(meetingId, debriefData);
+    setSavedDebriefData(debriefData);
     setPhase('saved');
+  };
+
+  const handleConfirmSave = () => {
+    if (savedDebriefData) {
+      onSave(savedDebriefData);
+    } else {
+      onBack();
+    }
   };
 
   const handleRetryDebrief = () => {
@@ -360,7 +371,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
         {/* Bottom button - using primary color */}
         <div className="px-6 pb-8">
           <Button
-            onClick={onBack}
+            onClick={handleConfirmSave}
             size="lg"
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl py-4 text-base font-semibold"
           >
