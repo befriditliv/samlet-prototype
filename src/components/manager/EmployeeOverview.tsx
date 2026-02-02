@@ -236,6 +236,8 @@ export const EmployeeOverview = () => {
     emp.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const displayedEmployees = showAll ? filteredEmployees : filteredEmployees.slice(0, 5);
+
   return (
     <div className="space-y-8">
       {/* Activity Overview */}
@@ -604,13 +606,13 @@ export const EmployeeOverview = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredEmployees.map((emp, idx) => (
+                {displayedEmployees.map((emp, idx) => (
                   <tr
                     key={emp.name}
                     className={cn(
                       "group hover:bg-muted/30 transition-colors",
                       tableInView && "animate-fade-in",
-                      idx !== filteredEmployees.length - 1 && "border-b border-border/50"
+                      idx !== displayedEmployees.length - 1 && "border-b border-border/50"
                     )}
                     style={tableInView ? { animationDelay: `${idx * 50}ms` } : undefined}
                   >
@@ -667,11 +669,14 @@ export const EmployeeOverview = () => {
               </tbody>
             </table>
           </div>
-          <div className="border-t border-border/50 p-4 flex justify-center bg-muted/20">
-            <Button variant="ghost" size="sm" onClick={() => setShowAll(!showAll)} className="text-muted-foreground hover:text-foreground">
-              Show more <ChevronDown className="h-4 w-4 ml-1" />
-            </Button>
-          </div>
+          {filteredEmployees.length > 5 && (
+            <div className="border-t border-border/50 p-4 flex justify-center bg-muted/20">
+              <Button variant="ghost" size="sm" onClick={() => setShowAll(!showAll)} className="text-muted-foreground hover:text-foreground">
+                {showAll ? 'Show less' : `Show all ${filteredEmployees.length} employees`}
+                <ChevronDown className={cn("h-4 w-4 ml-1 transition-transform", showAll && "rotate-180")} />
+              </Button>
+            </div>
+          )}
         </Card>
       </div>
     </div>
