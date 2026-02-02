@@ -12,6 +12,7 @@ type WebView = "dashboard" | "debrief-review";
 const Index = () => {
   const [currentView, setCurrentView] = useState<WebView>("dashboard");
   const [selectedMeetingId, setSelectedMeetingId] = useState<string | null>(null);
+  const [completedMeetings, setCompletedMeetings] = useState<string[]>([]);
 
   const handleDebriefReview = (meetingId: string) => {
     setSelectedMeetingId(meetingId);
@@ -24,7 +25,10 @@ const Index = () => {
   };
 
   const handleApproveDebrief = () => {
-    // After approval, go back to dashboard
+    // Mark meeting as completed after approval
+    if (selectedMeetingId) {
+      setCompletedMeetings(prev => [...prev, selectedMeetingId]);
+    }
     handleBackToDashboard();
   };
 
@@ -69,7 +73,7 @@ const Index = () => {
 
         {/* Day Calendar View */}
         <section id="schedule">
-          <DayCalendarView onDebriefReview={handleDebriefReview} />
+          <DayCalendarView onDebriefReview={handleDebriefReview} completedMeetings={completedMeetings} />
         </section>
       </main>
     </div>
