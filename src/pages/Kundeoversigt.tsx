@@ -5,51 +5,19 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { 
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-  Users,
-  Building2,
-  SlidersHorizontal,
-  Search,
-  X,
-  ArrowUpDown,
-  Sparkles
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Users, Building2, SlidersHorizontal, Search, X, ArrowUpDown, Sparkles } from "lucide-react";
 import { format, subDays } from "date-fns";
 import { da } from "date-fns/locale";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { AskJarvis } from "@/components/AskJarvis";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { QueryBuilder } from "@/components/QueryBuilder";
 import { toast } from "sonner";
-
 type EntityType = 'hcp' | 'hco';
 type FilterType = 'all' | 'overdue' | 'high-value-low-engagement' | 'missing-consent' | 'no-next-step' | 'high-value';
-
 interface HcpResult {
   id: string;
   name: string;
@@ -62,7 +30,6 @@ interface HcpResult {
   hco_name?: string;
   next_meeting_date?: string | null;
 }
-
 interface HcoResult {
   id: string;
   name: string;
@@ -74,10 +41,8 @@ interface HcoResult {
   last_interaction_date?: string | null;
   next_interaction_date?: string | null;
 }
-
 type SortField = 'name' | 'last_meeting' | 'next_meeting' | 'type';
 type SortDirection = 'asc' | 'desc';
-
 const filterLabels: Record<FilterType, string> = {
   'all': 'All',
   'overdue': 'Overdue for contact',
@@ -86,16 +51,16 @@ const filterLabels: Record<FilterType, string> = {
   'no-next-step': 'No next step planned',
   'high-value': 'High-value'
 };
-
 const Kundeoversigt = () => {
   const navigate = useNavigate();
-  const { role } = useAuth();
+  const {
+    role
+  } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   // Read initial values from URL params
-  const initialEntityType = (searchParams.get('type') as EntityType) || 'hcp';
-  const initialFilter = (searchParams.get('filter') as FilterType) || 'all';
-  
+  const initialEntityType = searchParams.get('type') as EntityType || 'hcp';
+  const initialFilter = searchParams.get('filter') as FilterType || 'all';
   const [entityType, setEntityType] = useState<EntityType>(initialEntityType);
   const [activeFilter, setActiveFilter] = useState<FilterType>(initialFilter);
   const [hcpResults, setHcpResults] = useState<HcpResult[]>([]);
@@ -109,7 +74,6 @@ const Kundeoversigt = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [showQueryBuilder, setShowQueryBuilder] = useState(false);
   const [queryBuilderLoading, setQueryBuilderLoading] = useState(false);
-  
   const ITEMS_PER_PAGE = 15;
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
@@ -120,29 +84,30 @@ const Kundeoversigt = () => {
     if (activeFilter !== 'all') {
       params.set('filter', activeFilter);
     }
-    setSearchParams(params, { replace: true });
+    setSearchParams(params, {
+      replace: true
+    });
   }, [entityType, activeFilter]);
-
   useEffect(() => {
     setCurrentPage(1);
     fetchData();
   }, [entityType, searchQuery, activeFilter]);
-
   useEffect(() => {
     fetchData();
   }, [currentPage]);
-
   const fetchData = async () => {
     setLoading(true);
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
     const thirtyDaysAgo = subDays(new Date(), 30);
     const sixtyDaysAgo = subDays(new Date(), 60);
     const today = format(new Date(), 'yyyy-MM-dd');
-
     try {
       if (entityType === 'hcp') {
         // Build base query with filters
-        let countQuery = supabase.from('hcps').select('*', { count: 'exact', head: true });
+        let countQuery = supabase.from('hcps').select('*', {
+          count: 'exact',
+          head: true
+        });
         let dataQuery = supabase.from('hcps').select(`
           id,
           name,
@@ -154,7 +119,7 @@ const Kundeoversigt = () => {
           segmentation,
           hcos (name)
         `);
-        
+
         // Apply search filter
         if (searchQuery) {
           countQuery = countQuery.ilike('name', `%${searchQuery}%`);
@@ -171,43 +136,37 @@ const Kundeoversigt = () => {
           countQuery = countQuery.or(filterCondition);
           dataQuery = dataQuery.or(filterCondition);
         } else if (activeFilter === 'high-value-low-engagement') {
-          countQuery = countQuery
-            .in('access_level', ['Tier A', 'Tier B', 'High', 'Medium'])
-            .or(`last_meeting_date.is.null,last_meeting_date.lt.${format(sixtyDaysAgo, 'yyyy-MM-dd')}`);
-          dataQuery = dataQuery
-            .in('access_level', ['Tier A', 'Tier B', 'High', 'Medium'])
-            .or(`last_meeting_date.is.null,last_meeting_date.lt.${format(sixtyDaysAgo, 'yyyy-MM-dd')}`);
+          countQuery = countQuery.in('access_level', ['Tier A', 'Tier B', 'High', 'Medium']).or(`last_meeting_date.is.null,last_meeting_date.lt.${format(sixtyDaysAgo, 'yyyy-MM-dd')}`);
+          dataQuery = dataQuery.in('access_level', ['Tier A', 'Tier B', 'High', 'Medium']).or(`last_meeting_date.is.null,last_meeting_date.lt.${format(sixtyDaysAgo, 'yyyy-MM-dd')}`);
         }
         // Note: 'no-next-step' filter would require a more complex query with joins
-        
-        const { count } = await countQuery;
+
+        const {
+          count
+        } = await countQuery;
         setTotalCount(count || 0);
-
-        dataQuery = dataQuery
-          .order('name', { ascending: sortDirection === 'asc' })
-          .range(offset, offset + ITEMS_PER_PAGE - 1);
-
-        const { data, error } = await dataQuery;
-        
+        dataQuery = dataQuery.order('name', {
+          ascending: sortDirection === 'asc'
+        }).range(offset, offset + ITEMS_PER_PAGE - 1);
+        const {
+          data,
+          error
+        } = await dataQuery;
         if (error) throw error;
 
         // Fetch upcoming meetings for these HCPs
         const hcpIds = (data || []).map(h => h.id);
-        
-        const { data: upcomingMeetings } = await supabase
-          .from('interactions')
-          .select('hcp_id, interaction_date')
-          .in('hcp_id', hcpIds)
-          .gte('interaction_date', today)
-          .order('interaction_date', { ascending: true });
-
+        const {
+          data: upcomingMeetings
+        } = await supabase.from('interactions').select('hcp_id, interaction_date').in('hcp_id', hcpIds).gte('interaction_date', today).order('interaction_date', {
+          ascending: true
+        });
         const nextMeetingMap: Record<string, string> = {};
         (upcomingMeetings || []).forEach((m: any) => {
           if (m.hcp_id && !nextMeetingMap[m.hcp_id]) {
             nextMeetingMap[m.hcp_id] = m.interaction_date;
           }
         });
-        
         let results = (data || []).map(item => ({
           ...item,
           hco_name: (item.hcos as any)?.name,
@@ -218,66 +177,59 @@ const Kundeoversigt = () => {
         if (activeFilter === 'no-next-step') {
           results = results.filter(hcp => !hcp.next_meeting_date);
         }
-
         setHcpResults(results);
       } else {
         // HCO queries
-        let countQuery = supabase.from('hcos').select('*', { count: 'exact', head: true });
+        let countQuery = supabase.from('hcos').select('*', {
+          count: 'exact',
+          head: true
+        });
         let dataQuery = supabase.from('hcos').select('*');
-        
         if (searchQuery) {
           countQuery = countQuery.ilike('name', `%${searchQuery}%`);
           dataQuery = dataQuery.ilike('name', `%${searchQuery}%`);
         }
-
         if (activeFilter === 'high-value') {
           countQuery = countQuery.in('tier', ['Tier A', 'Tier B', 'A', 'B']);
           dataQuery = dataQuery.in('tier', ['Tier A', 'Tier B', 'A', 'B']);
         }
-
-        const { count } = await countQuery;
+        const {
+          count
+        } = await countQuery;
         setTotalCount(count || 0);
-
-        dataQuery = dataQuery
-          .order('name', { ascending: sortDirection === 'asc' })
-          .range(offset, offset + ITEMS_PER_PAGE - 1);
-
-        const { data, error } = await dataQuery;
-        
+        dataQuery = dataQuery.order('name', {
+          ascending: sortDirection === 'asc'
+        }).range(offset, offset + ITEMS_PER_PAGE - 1);
+        const {
+          data,
+          error
+        } = await dataQuery;
         if (error) throw error;
 
         // Fetch interactions for HCOs
         const hcoIds = (data || []).map(h => h.id);
-        
-        const { data: pastInteractions } = await supabase
-          .from('interactions')
-          .select('hco_id, interaction_date')
-          .in('hco_id', hcoIds)
-          .lt('interaction_date', today)
-          .order('interaction_date', { ascending: false });
-
-        const { data: futureInteractions } = await supabase
-          .from('interactions')
-          .select('hco_id, interaction_date')
-          .in('hco_id', hcoIds)
-          .gte('interaction_date', today)
-          .order('interaction_date', { ascending: true });
-
+        const {
+          data: pastInteractions
+        } = await supabase.from('interactions').select('hco_id, interaction_date').in('hco_id', hcoIds).lt('interaction_date', today).order('interaction_date', {
+          ascending: false
+        });
+        const {
+          data: futureInteractions
+        } = await supabase.from('interactions').select('hco_id, interaction_date').in('hco_id', hcoIds).gte('interaction_date', today).order('interaction_date', {
+          ascending: true
+        });
         const lastInteractionMap: Record<string, string> = {};
         const nextInteractionMap: Record<string, string> = {};
-        
         (pastInteractions || []).forEach((i: any) => {
           if (i.hco_id && !lastInteractionMap[i.hco_id]) {
             lastInteractionMap[i.hco_id] = i.interaction_date;
           }
         });
-        
         (futureInteractions || []).forEach((i: any) => {
           if (i.hco_id && !nextInteractionMap[i.hco_id]) {
             nextInteractionMap[i.hco_id] = i.interaction_date;
           }
         });
-
         setHcoResults((data || []).map(item => ({
           ...item,
           last_interaction_date: lastInteractionMap[item.id] || null,
@@ -290,7 +242,6 @@ const Kundeoversigt = () => {
       setLoading(false);
     }
   };
-
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -299,7 +250,6 @@ const Kundeoversigt = () => {
       setSortDirection('asc');
     }
   };
-
   const handleEntityClick = (id: string) => {
     if (entityType === 'hcp') {
       navigate(`/hcp/${id}`);
@@ -307,42 +257,35 @@ const Kundeoversigt = () => {
       navigate(`/hco/${id}`);
     }
   };
-
   const handleClearFilter = () => {
     setActiveFilter('all');
     setSearchQuery('');
   };
-
   const formatMeetingDate = (date: string | null) => {
     if (!date) return 'Not applicable';
-    return format(new Date(date), 'dd.MM.yyyy', { locale: da });
+    return format(new Date(date), 'dd.MM.yyyy', {
+      locale: da
+    });
   };
-
-  const SortableHeader = ({ field, children }: { field: SortField; children: React.ReactNode }) => (
-    <TableHead 
-      className="cursor-pointer hover:bg-muted/50 transition-colors"
-      onClick={() => handleSort(field)}
-    >
+  const SortableHeader = ({
+    field,
+    children
+  }: {
+    field: SortField;
+    children: React.ReactNode;
+  }) => <TableHead className="cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => handleSort(field)}>
       <div className="flex items-center gap-1">
         {children}
         <ArrowUpDown className="h-3 w-3 text-muted-foreground" />
       </div>
-    </TableHead>
-  );
-
-  return (
-    <div className="min-h-screen bg-background">
+    </TableHead>;
+  return <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="bg-card border-b sticky top-0 z-10">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button 
-                variant="ghost" 
-                size="icon"
-                onClick={() => navigate(role === 'manager' ? '/manager' : '/')}
-                className="shrink-0"
-              >
+              <Button variant="ghost" size="icon" onClick={() => navigate(role === 'manager' ? '/manager' : '/')} className="shrink-0">
                 <ChevronLeft className="h-5 w-5" />
               </Button>
               <h1 className="text-xl font-semibold">Client Overview</h1>
@@ -351,22 +294,10 @@ const Kundeoversigt = () => {
             <div className="flex items-center gap-3">
               <div className="relative w-80">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search for HCPs or HCOs..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 pr-8"
-                />
-                {searchQuery && (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6"
-                    onClick={() => setSearchQuery('')}
-                  >
+                <Input placeholder="Search for HCPs or HCOs..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-9 pr-8" />
+                {searchQuery && <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6" onClick={() => setSearchQuery('')}>
                     <X className="h-3 w-3" />
-                  </Button>
-                )}
+                  </Button>}
               </div>
               <AskJarvis />
               <NavigationMenu />
@@ -384,51 +315,30 @@ const Kundeoversigt = () => {
             <Badge variant="outline" className="font-medium">
               {totalCount} {entityType === 'hcp' ? 'HCPs' : 'HCOs'}
             </Badge>
-            {activeFilter !== 'all' && (
-              <Badge variant="secondary" className="gap-1">
+            {activeFilter !== 'all' && <Badge variant="secondary" className="gap-1">
                 {filterLabels[activeFilter]}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-4 w-4 ml-1 hover:bg-transparent"
-                  onClick={handleClearFilter}
-                >
+                <Button variant="ghost" size="icon" className="h-4 w-4 ml-1 hover:bg-transparent" onClick={handleClearFilter}>
                   <X className="h-3 w-3" />
                 </Button>
-              </Badge>
-            )}
+              </Badge>}
           </div>
 
           <div className="flex items-center gap-2">
             {/* Query Builder Toggle */}
-            <Button
-              variant={showQueryBuilder ? "default" : "outline"}
-              size="sm"
-              onClick={() => setShowQueryBuilder(!showQueryBuilder)}
-              className="gap-2"
-            >
-              <Sparkles className="h-4 w-4" />
-              Advanced Search
-            </Button>
+            
 
             {/* HCO/HCP Toggle */}
             <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
-              <Button
-                variant={entityType === 'hco' ? 'default' : 'ghost'}
-                size="icon"
-                onClick={() => { setEntityType('hco'); setActiveFilter('all'); }}
-                className="h-9 w-9"
-                title="Vis HCOs"
-              >
+              <Button variant={entityType === 'hco' ? 'default' : 'ghost'} size="icon" onClick={() => {
+              setEntityType('hco');
+              setActiveFilter('all');
+            }} className="h-9 w-9" title="Vis HCOs">
                 <Building2 className="h-4 w-4" />
               </Button>
-              <Button
-                variant={entityType === 'hcp' ? 'default' : 'ghost'}
-                size="icon"
-                onClick={() => { setEntityType('hcp'); setActiveFilter('all'); }}
-                className="h-9 w-9"
-                title="Vis HCPs"
-              >
+              <Button variant={entityType === 'hcp' ? 'default' : 'ghost'} size="icon" onClick={() => {
+              setEntityType('hcp');
+              setActiveFilter('all');
+            }} className="h-9 w-9" title="Vis HCPs">
                 <Users className="h-4 w-4" />
               </Button>
             </div>
@@ -460,51 +370,37 @@ const Kundeoversigt = () => {
                           Pre-defined filters from Activity Hub
                         </p>
                         <div className="space-y-2">
-                          {entityType === 'hcp' ? (
-                            <>
-                              <Button 
-                                variant={activeFilter === 'overdue' ? 'default' : 'outline'} 
-                                size="sm" 
-                                className="w-full justify-start"
-                                onClick={() => { setActiveFilter('overdue'); setFilterOpen(false); }}
-                              >
+                          {entityType === 'hcp' ? <>
+                              <Button variant={activeFilter === 'overdue' ? 'default' : 'outline'} size="sm" className="w-full justify-start" onClick={() => {
+                            setActiveFilter('overdue');
+                            setFilterOpen(false);
+                          }}>
                                 Overdue for contact
                               </Button>
-                              <Button 
-                                variant={activeFilter === 'missing-consent' ? 'default' : 'outline'} 
-                                size="sm" 
-                                className="w-full justify-start"
-                                onClick={() => { setActiveFilter('missing-consent'); setFilterOpen(false); }}
-                              >
+                              <Button variant={activeFilter === 'missing-consent' ? 'default' : 'outline'} size="sm" className="w-full justify-start" onClick={() => {
+                            setActiveFilter('missing-consent');
+                            setFilterOpen(false);
+                          }}>
                                 Missing consent
                               </Button>
-                              <Button 
-                                variant={activeFilter === 'high-value-low-engagement' ? 'default' : 'outline'} 
-                                size="sm" 
-                                className="w-full justify-start"
-                                onClick={() => { setActiveFilter('high-value-low-engagement'); setFilterOpen(false); }}
-                              >
+                              <Button variant={activeFilter === 'high-value-low-engagement' ? 'default' : 'outline'} size="sm" className="w-full justify-start" onClick={() => {
+                            setActiveFilter('high-value-low-engagement');
+                            setFilterOpen(false);
+                          }}>
                                 High-value, low engagement
                               </Button>
-                              <Button 
-                                variant={activeFilter === 'no-next-step' ? 'default' : 'outline'} 
-                                size="sm" 
-                                className="w-full justify-start"
-                                onClick={() => { setActiveFilter('no-next-step'); setFilterOpen(false); }}
-                              >
+                              <Button variant={activeFilter === 'no-next-step' ? 'default' : 'outline'} size="sm" className="w-full justify-start" onClick={() => {
+                            setActiveFilter('no-next-step');
+                            setFilterOpen(false);
+                          }}>
                                 No next step planned
                               </Button>
-                            </>
-                          ) : (
-                            <Button 
-                              variant={activeFilter === 'high-value' ? 'default' : 'outline'} 
-                              size="sm" 
-                              className="w-full justify-start"
-                              onClick={() => { setActiveFilter('high-value'); setFilterOpen(false); }}
-                            >
+                            </> : <Button variant={activeFilter === 'high-value' ? 'default' : 'outline'} size="sm" className="w-full justify-start" onClick={() => {
+                          setActiveFilter('high-value');
+                          setFilterOpen(false);
+                        }}>
                               High-value HCOs
-                            </Button>
-                          )}
+                            </Button>}
                         </div>
                       </AccordionContent>
                     </AccordionItem>
@@ -520,11 +416,7 @@ const Kundeoversigt = () => {
                         <p className="text-sm text-muted-foreground mb-3">
                           Search for {entityType === 'hcp' ? 'HCPs' : 'HCOs'} by name.
                         </p>
-                        <Input
-                          placeholder={`Search ${entityType === 'hcp' ? 'HCP' : 'HCO'}...`}
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                        />
+                        <Input placeholder={`Search ${entityType === 'hcp' ? 'HCP' : 'HCO'}...`} value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
                       </AccordionContent>
                     </AccordionItem>
 
@@ -540,17 +432,13 @@ const Kundeoversigt = () => {
                           Filter {entityType === 'hcp' ? 'HCPs' : 'HCOs'} by distance, meetings, persona and more.
                         </p>
                         <div className="space-y-2">
-                          {['Maximum distance', 'Last meeting', 'Future meetings', 'Region', 
-                            'Target class: Insulin', 'Target class: GLP1', 'Target class: Obesity',
-                            'Target class: Account value', 'Type', 'Responsible agent'].map((filter) => (
-                            <div key={filter} className="flex items-center justify-between py-2 border-b last:border-0">
+                          {['Maximum distance', 'Last meeting', 'Future meetings', 'Region', 'Target class: Insulin', 'Target class: GLP1', 'Target class: Obesity', 'Target class: Account value', 'Type', 'Responsible agent'].map(filter => <div key={filter} className="flex items-center justify-between py-2 border-b last:border-0">
                               <div className="flex items-center gap-2">
                                 <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
                                 <span className="text-sm">{filter}</span>
                               </div>
                               <div className="h-4 w-4 border rounded-full" />
-                            </div>
-                          ))}
+                            </div>)}
                         </div>
                       </AccordionContent>
                     </AccordionItem>
@@ -604,22 +492,15 @@ const Kundeoversigt = () => {
         </div>
 
         {/* Query Builder Panel */}
-        {showQueryBuilder && (
-          <div className="mb-6">
-            <QueryBuilder
-              entityType={entityType}
-              onClose={() => setShowQueryBuilder(false)}
-              onExecuteQuery={async (query) => {
-                setQueryBuilderLoading(true);
-                toast.info("Custom query submitted", {
-                  description: `"${query}" - AI translation coming soon`
-                });
-                setQueryBuilderLoading(false);
-              }}
-              isLoading={queryBuilderLoading}
-            />
-          </div>
-        )}
+        {showQueryBuilder && <div className="mb-6">
+            <QueryBuilder entityType={entityType} onClose={() => setShowQueryBuilder(false)} onExecuteQuery={async query => {
+          setQueryBuilderLoading(true);
+          toast.info("Custom query submitted", {
+            description: `"${query}" - AI translation coming soon`
+          });
+          setQueryBuilderLoading(false);
+        }} isLoading={queryBuilderLoading} />
+          </div>}
 
         {/* Data Table */}
         <div className="bg-card rounded-lg border shadow-sm overflow-hidden">
@@ -636,67 +517,37 @@ const Kundeoversigt = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {loading ? (
-                <TableRow>
+              {loading ? <TableRow>
                   <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
                     Loading...
                   </TableCell>
-                </TableRow>
-              ) : entityType === 'hcp' ? (
-                hcpResults.length === 0 ? (
-                  <TableRow>
+                </TableRow> : entityType === 'hcp' ? hcpResults.length === 0 ? <TableRow>
                     <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
                       No HCPs found
                     </TableCell>
-                  </TableRow>
-                ) : (
-                  hcpResults.map((hcp) => (
-                    <TableRow 
-                      key={hcp.id} 
-                      className="cursor-pointer hover:bg-muted/50 transition-colors"
-                      onClick={() => handleEntityClick(hcp.id)}
-                    >
+                  </TableRow> : hcpResults.map(hcp => <TableRow key={hcp.id} className="cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => handleEntityClick(hcp.id)}>
                       <TableCell className="font-medium">{hcp.name}</TableCell>
                       <TableCell>{hcp.title}</TableCell>
                       <TableCell>{formatMeetingDate(hcp.last_meeting_date)}</TableCell>
                       <TableCell>{formatMeetingDate(hcp.next_meeting_date || null)}</TableCell>
                       <TableCell className="max-w-[200px] truncate">{hcp.hco_name || '—'}</TableCell>
                       <TableCell>
-                        {hcp.segmentation ? (
-                          <Badge variant="secondary">{hcp.segmentation}</Badge>
-                        ) : '—'}
+                        {hcp.segmentation ? <Badge variant="secondary">{hcp.segmentation}</Badge> : '—'}
                       </TableCell>
-                    </TableRow>
-                  ))
-                )
-              ) : (
-                hcoResults.length === 0 ? (
-                  <TableRow>
+                    </TableRow>) : hcoResults.length === 0 ? <TableRow>
                     <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
                       No HCOs found
                     </TableCell>
-                  </TableRow>
-                ) : (
-                  hcoResults.map((hco) => (
-                    <TableRow 
-                      key={hco.id}
-                      className="cursor-pointer hover:bg-muted/50 transition-colors"
-                      onClick={() => handleEntityClick(hco.id)}
-                    >
+                  </TableRow> : hcoResults.map(hco => <TableRow key={hco.id} className="cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => handleEntityClick(hco.id)}>
                       <TableCell className="font-medium">{hco.name}</TableCell>
                       <TableCell>{hco.organization_type}</TableCell>
                       <TableCell>{formatMeetingDate(hco.last_interaction_date || null)}</TableCell>
                       <TableCell>{formatMeetingDate(hco.next_interaction_date || null)}</TableCell>
                       <TableCell>—</TableCell>
                       <TableCell>
-                        {hco.tier ? (
-                          <Badge variant="secondary">{hco.tier}</Badge>
-                        ) : '—'}
+                        {hco.tier ? <Badge variant="secondary">{hco.tier}</Badge> : '—'}
                       </TableCell>
-                    </TableRow>
-                  ))
-                )
-              )}
+                    </TableRow>)}
             </TableBody>
           </Table>
         </div>
@@ -708,43 +559,21 @@ const Kundeoversigt = () => {
           </span>
           
           <div className="flex items-center gap-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setCurrentPage(1)}
-              disabled={currentPage === 1}
-            >
+            <Button variant="ghost" size="icon" onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
               <ChevronsLeft className="h-4 w-4" />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-            >
+            <Button variant="ghost" size="icon" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}>
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-              disabled={currentPage >= totalPages}
-            >
+            <Button variant="ghost" size="icon" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage >= totalPages}>
               <ChevronRight className="h-4 w-4" />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setCurrentPage(totalPages)}
-              disabled={currentPage >= totalPages}
-            >
+            <Button variant="ghost" size="icon" onClick={() => setCurrentPage(totalPages)} disabled={currentPage >= totalPages}>
               <ChevronsRight className="h-4 w-4" />
             </Button>
           </div>
         </div>
       </main>
-    </div>
-  );
+    </div>;
 };
-
 export default Kundeoversigt;
