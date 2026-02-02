@@ -7,6 +7,8 @@ import { TaskCenter } from "./TaskCenter";
 import { HCPAssistant } from "./HCPAssistant";
 import { SyncStatus } from "./SyncStatus";
 
+type MeetingStatus = "upcoming" | "in-progress" | "debrief-needed" | "debrief-submitting" | "debrief-processing" | "debrief-ready" | "debrief-failed" | "done";
+
 interface DailyOverviewProps {
   onPrepare: (id: string) => void;
   onDebrief: (id: string) => void;
@@ -16,6 +18,7 @@ interface DailyOverviewProps {
   onReports: () => void;
   onNewAction: () => void;
   onIntelligence: () => void;
+  meetingStatuses?: Record<string, MeetingStatus>;
 }
 
 interface Participant {
@@ -186,13 +189,20 @@ export const DailyOverviewApple = ({
   onDebriefReview,
   onVoiceNote,
   onAskAI,
+  meetingStatuses = {},
 }: DailyOverviewProps) => {
-  const [meetings] = useState<Meeting[]>(mockMeetings);
+  const [baseMeetings] = useState<Meeting[]>(mockMeetings);
   const [isTaskCenterOpen, setIsTaskCenterOpen] = useState(false);
   const [hcpAssistantOpen, setHcpAssistantOpen] = useState(false);
   const [selectedHCP, setSelectedHCP] = useState<string>("");
   const [showBriefing, setShowBriefing] = useState(false);
   const [showCompletedMeetings, setShowCompletedMeetings] = useState(false);
+
+  // Apply status overrides from parent
+  const meetings = baseMeetings.map(m => ({
+    ...m,
+    status: meetingStatuses[m.id] || m.status
+  }));
 
   // Split meetings into active and completed
   const activeMeetings = meetings.filter(m => m.status !== "done");
