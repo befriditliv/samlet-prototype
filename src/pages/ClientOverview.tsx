@@ -356,7 +356,7 @@ const ClientOverview = () => {
                 </SheetHeader>
                 
                 <div className="mt-6 space-y-4">
-                  <Accordion type="multiple" defaultValue={["quick-filters", "search", "filters", "sort", "saved"]} className="space-y-2">
+                  <Accordion type="multiple" defaultValue={["quick-filters"]} className="space-y-2">
                     {/* Quick Filters from Activity Hub */}
                     <AccordionItem value="quick-filters" className="border rounded-lg px-4 border-primary">
                       <AccordionTrigger className="hover:no-underline">
