@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-export type UserRole = "key_account_manager" | "manager" | null;
+export type UserRole = "key_account_manager" | "key_account_manager_app" | "manager" | null;
 
 interface AuthContextType {
   role: UserRole;

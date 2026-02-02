@@ -20,7 +20,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   // Redirect KAM away from manager-specific pages
-  if (role === "key_account_manager" && location.pathname.startsWith("/manager")) {
+  if ((role === "key_account_manager" || role === "key_account_manager_app") && location.pathname.startsWith("/manager")) {
     return <Navigate to="/" replace />;
   }
 
