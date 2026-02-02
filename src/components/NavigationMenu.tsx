@@ -25,13 +25,13 @@ const menuItems = [
   },
   {
     icon: Users,
-    label: "Kundeoversigt",
+    label: "Client Overview",
     href: "/kundeoversigt",
     isRoute: true
   },
   {
     icon: GraduationCap,
-    label: "Træningsplatform",
+    label: "Training Platform",
     href: "/traeningsplatform",
     isRoute: true
   }
@@ -121,7 +121,7 @@ export const NavigationMenu = () => {
                 }}
               >
                 <Settings className="h-5 w-5" />
-                <span className="font-medium">Indstillinger</span>
+                <span className="font-medium">Settings</span>
               </button>
             </div>
           </div>
@@ -135,7 +135,7 @@ export const NavigationMenu = () => {
                 <div className="font-semibold text-sm">
                   {role === "key_account_manager" ? "Key Account Manager" : "Manager"}
                 </div>
-                <div className="text-xs text-muted-foreground truncate">Bruger</div>
+                <div className="text-xs text-muted-foreground truncate">User</div>
               </div>
               <Button 
                 variant="ghost" 

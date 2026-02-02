@@ -31,7 +31,7 @@ const Settings = () => {
       case "manager":
         return "Manager";
       default:
-        return "Bruger";
+        return "User";
     }
   };
 
@@ -41,8 +41,8 @@ const Settings = () => {
 
   const handleSave = () => {
     toast({
-      title: "Indstillinger gemt",
-      description: "Dine profilindstillinger er blevet opdateret.",
+      title: "Settings saved",
+      description: "Your profile settings have been updated.",
     });
   };
 
@@ -64,7 +64,7 @@ const Settings = () => {
               <Button variant="ghost" size="icon" onClick={handleBack}>
                 <ArrowLeft className="h-5 w-5" />
               </Button>
-              <h1 className="text-xl font-bold text-foreground">Indstillinger</h1>
+              <h1 className="text-xl font-bold text-foreground">Settings</h1>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-full max-w-md">
@@ -97,9 +97,9 @@ const Settings = () => {
                 <p className="text-muted-foreground">bruger@example.com</p>
                 <div className="flex items-center gap-2 mt-2">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                    Aktiv
+                    Active
                   </span>
-                  <span className="text-xs text-muted-foreground">• Medlem siden 2024</span>
+                  <span className="text-xs text-muted-foreground">• Member since 2024</span>
                 </div>
               </div>
             </div>
@@ -110,10 +110,10 @@ const Settings = () => {
             <div className="p-6 border-b bg-muted/30">
               <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
                 <User className="h-5 w-5 text-primary" />
-                Profiloplysninger
+                Profile Details
               </h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Opdater dine profilindstillinger. Nogle felter administreres af din organisation.
+                Update your profile settings. Some fields are managed by your organization.
               </p>
             </div>
             
@@ -122,15 +122,15 @@ const Settings = () => {
               <div className="grid gap-2">
                 <Label htmlFor="name" className="flex items-center gap-2">
                   <User className="h-4 w-4 text-muted-foreground" />
-                  Navn
+                  Name
                 </Label>
                 <Input
                   id="name"
-                  value="Bruger"
+                  value="User"
                   disabled
                   className="bg-muted/50 border-dashed"
                 />
-                <p className="text-xs text-muted-foreground">Administreret af din organisation</p>
+                <p className="text-xs text-muted-foreground">Managed by your organization</p>
               </div>
 
               {/* Email Field */}
@@ -145,14 +145,14 @@ const Settings = () => {
                   disabled
                   className="bg-muted/50 border-dashed"
                 />
-                <p className="text-xs text-muted-foreground">Administreret af din organisation</p>
+                <p className="text-xs text-muted-foreground">Managed by your organization</p>
               </div>
 
               {/* Role Field */}
               <div className="grid gap-2">
                 <Label htmlFor="role" className="flex items-center gap-2">
                   <Shield className="h-4 w-4 text-muted-foreground" />
-                  Rolle
+                  Role
                 </Label>
                 <Input
                   id="role"
@@ -160,7 +160,7 @@ const Settings = () => {
                   disabled
                   className="bg-muted/50 border-dashed"
                 />
-                <p className="text-xs text-muted-foreground">Administreret af din organisation</p>
+                <p className="text-xs text-muted-foreground">Managed by your organization</p>
               </div>
 
               <Separator />
@@ -169,11 +169,11 @@ const Settings = () => {
               <div className="grid gap-2">
                 <Label htmlFor="language" className="flex items-center gap-2">
                   <Globe className="h-4 w-4 text-muted-foreground" />
-                  Sprog (Locale)
+                  Language (Locale)
                 </Label>
                 <Select value={language} onValueChange={setLanguage}>
                   <SelectTrigger className="bg-background">
-                    <SelectValue placeholder="Vælg sprog" />
+                    <SelectValue placeholder="Select language" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="da">🇩🇰 Dansk</SelectItem>
@@ -188,7 +188,7 @@ const Settings = () => {
               {/* Save Button */}
               <div className="flex justify-end pt-4">
                 <Button onClick={handleSave} className="px-8">
-                  Gem ændringer
+                  Save changes
                 </Button>
               </div>
             </div>
@@ -199,18 +199,18 @@ const Settings = () => {
             <div className="p-6 border-b bg-muted/30">
               <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
                 <Bell className="h-5 w-5 text-primary" />
-                Notifikationer
+                Notifications
               </h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Administrer hvordan du modtager notifikationer.
+                Manage how you receive notifications.
               </p>
             </div>
             
             <div className="p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label className="text-base">Email notifikationer</Label>
-                  <p className="text-sm text-muted-foreground">Modtag opdateringer via email</p>
+                  <Label className="text-base">Email notifications</Label>
+                  <p className="text-sm text-muted-foreground">Receive updates via email</p>
                 </div>
                 <Switch 
                   checked={emailNotifications} 
@@ -220,8 +220,8 @@ const Settings = () => {
               <Separator />
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label className="text-base">Push notifikationer</Label>
-                  <p className="text-sm text-muted-foreground">Modtag notifikationer i browseren</p>
+                  <Label className="text-base">Push notifications</Label>
+                  <p className="text-sm text-muted-foreground">Receive notifications in browser</p>
                 </div>
                 <Switch 
                   checked={pushNotifications} 
@@ -240,8 +240,8 @@ const Settings = () => {
                     <Download className="h-5 w-5 text-muted-foreground" />
                   </div>
                   <div className="text-left">
-                    <span className="font-semibold text-foreground block">Avancerede indstillinger</span>
-                    <span className="text-sm text-muted-foreground">Data eksport og mere</span>
+                    <span className="font-semibold text-foreground block">Advanced settings</span>
+                    <span className="text-sm text-muted-foreground">Data export and more</span>
                   </div>
                 </div>
                 <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${advancedOpen ? "rotate-180" : ""}`} />
@@ -250,17 +250,17 @@ const Settings = () => {
                 <div className="px-6 pb-6 border-t">
                   <div className="space-y-4 pt-6">
                     <div className="p-4 rounded-lg bg-muted/30 border border-dashed">
-                      <h4 className="font-medium text-foreground mb-1">Data eksport</h4>
+                      <h4 className="font-medium text-foreground mb-1">Data export</h4>
                       <p className="text-sm text-muted-foreground mb-3">
-                        Download en kopi af dine data.
+                        Download a copy of your data.
                       </p>
                       <Button variant="outline" size="sm" disabled>
                         <Download className="h-4 w-4 mr-2" />
-                        Eksporter data
+                        Export data
                       </Button>
                     </div>
                     <p className="text-xs text-muted-foreground text-center">
-                      Kontakt din administrator for yderligere avancerede indstillinger.
+                      Contact your administrator for additional advanced settings.
                     </p>
                   </div>
                 </div>

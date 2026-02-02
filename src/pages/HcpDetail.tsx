@@ -90,8 +90,8 @@ export default function HcpDetail() {
       } catch (error) {
         console.error("Error fetching HCP data:", error);
         toast({
-          title: "Fejl",
-          description: "Kunne ikke hente data",
+          title: "Error",
+          description: "Could not fetch data",
           variant: "destructive",
         });
       } finally {
@@ -107,7 +107,7 @@ export default function HcpDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-muted-foreground">Indlæser...</div>
+        <div className="text-muted-foreground">Loading...</div>
       </div>
     );
   }
@@ -116,10 +116,10 @@ export default function HcpDetail() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <p className="text-muted-foreground mb-4">HCP ikke fundet</p>
+          <p className="text-muted-foreground mb-4">HCP not found</p>
           <Button variant="outline" onClick={() => navigate(role === 'manager' ? '/manager' : '/')}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Tilbage
+            Back
           </Button>
         </div>
       </div>
@@ -175,7 +175,7 @@ export default function HcpDetail() {
                     <Building2 className="h-4 w-4 text-primary" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground">Organisation</p>
+                    <p className="text-xs text-muted-foreground">Organization</p>
                     <button 
                       onClick={() => navigate(`/hco/${hco.id}`)}
                       className="text-foreground hover:text-primary hover:underline transition-colors"
@@ -190,7 +190,7 @@ export default function HcpDetail() {
                       <MapPin className="h-4 w-4 text-primary" />
                     </div>
                     <div>
-                      <p className="text-xs text-muted-foreground">Adresse</p>
+                      <p className="text-xs text-muted-foreground">Address</p>
                       <p className="text-foreground">{hco.address}</p>
                     </div>
                   </div>
@@ -201,7 +201,7 @@ export default function HcpDetail() {
                       <Phone className="h-4 w-4 text-primary" />
                     </div>
                     <div>
-                      <p className="text-xs text-muted-foreground">Telefon</p>
+                      <p className="text-xs text-muted-foreground">Phone</p>
                       <p className="text-foreground">{hco.phone}</p>
                     </div>
                   </div>
@@ -213,29 +213,29 @@ export default function HcpDetail() {
 
         {/* HCP Details */}
         <Card className="p-6">
-          <h3 className="text-lg font-semibold text-card-foreground mb-4">HCP Detaljer</h3>
+          <h3 className="text-lg font-semibold text-card-foreground mb-4">HCP Details</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
-              <h4 className="font-medium text-card-foreground mb-2">Sidste møde</h4>
+              <h4 className="font-medium text-card-foreground mb-2">Last Meeting</h4>
               <p className="text-sm text-muted-foreground">
                 {hcp.last_meeting_date 
-                  ? new Date(hcp.last_meeting_date).toLocaleDateString("da-DK")
-                  : "Ingen registreret"}
+                  ? new Date(hcp.last_meeting_date).toLocaleDateString("en-US")
+                  : "None registered"}
               </p>
             </div>
 
             <div>
               <h4 className="font-medium text-card-foreground mb-2">Activity Plan</h4>
               <p className="text-sm text-muted-foreground">
-                {hcp.activity_plan || "Ingen plan"}
+                {hcp.activity_plan || "No plan"}
               </p>
             </div>
 
             <div>
               <h4 className="font-medium text-card-foreground mb-2">Marketing Consent</h4>
               <p className="text-sm text-muted-foreground">
-                {hcp.marketing_consent ? "Ja" : "Nej"}
+                {hcp.marketing_consent ? "Yes" : "No"}
               </p>
             </div>
           </div>
@@ -244,7 +244,7 @@ export default function HcpDetail() {
         {/* Interactions */}
         {interactions.length > 0 && (
           <Card className="p-6">
-            <h3 className="text-lg font-semibold text-card-foreground mb-4">Tidligere interaktioner</h3>
+            <h3 className="text-lg font-semibold text-card-foreground mb-4">Previous Interactions</h3>
             
             <div className="space-y-2">
               {interactions.map((interaction) => (
@@ -265,7 +265,7 @@ export default function HcpDetail() {
                         </div>
                         <div className="text-left">
                           <p className="text-sm text-muted-foreground">
-                            {new Date(interaction.interaction_date).toLocaleDateString("da-DK")} - {interaction.interaction_type}
+                            {new Date(interaction.interaction_date).toLocaleDateString("en-US")} - {interaction.interaction_type}
                           </p>
                           <p className="font-medium text-card-foreground">{interaction.title}</p>
                         </div>
@@ -278,7 +278,7 @@ export default function HcpDetail() {
                           <p className="text-sm text-muted-foreground mb-2">{interaction.notes}</p>
                         )}
                         {interaction.created_by && (
-                          <p className="text-xs text-muted-foreground">Oprettet af: {interaction.created_by}</p>
+                          <p className="text-xs text-muted-foreground">Created by: {interaction.created_by}</p>
                         )}
                       </div>
                     </CollapsibleContent>
@@ -291,9 +291,9 @@ export default function HcpDetail() {
 
         {interactions.length === 0 && (
           <Card className="p-6">
-            <h3 className="text-lg font-semibold text-card-foreground mb-4">Tidligere interaktioner</h3>
+            <h3 className="text-lg font-semibold text-card-foreground mb-4">Previous Interactions</h3>
             <p className="text-sm text-muted-foreground text-center py-8">
-              Ingen tidligere interaktioner registreret
+              No previous interactions registered
             </p>
           </Card>
         )}

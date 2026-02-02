@@ -36,9 +36,9 @@ const quickDebriefOptions = [
 ];
 
 const debriefQuestions = [
-  "Hvordan gik mødet overordnet? Fortæl om de vigtigste samtalepunkter.",
-  "Var der nogen bekymringer eller indvendinger fra lægen?",
-  "Hvilke materialer delte du, og hvad er de næste skridt?"
+  "How did the meeting go overall? Tell me about the key discussion points.",
+  "Were there any concerns or objections from the physician?",
+  "What materials did you share, and what are the next steps?"
 ];
 
 export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => {
@@ -260,7 +260,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
                     className="bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-lg transition-all duration-300 rounded-xl px-8 py-3 text-base font-semibold"
                   >
                     <CheckCircle className="h-5 w-5 mr-3" />
-                    Gem Debrief
+                    Save Debrief
                   </Button>
                 </div>
               </Card>
@@ -349,9 +349,9 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-xl font-semibold text-foreground">Debrief gemt</h2>
+              <h2 className="text-xl font-semibold text-foreground">Debrief saved</h2>
               <p className="text-sm text-muted-foreground">
-                Dit debrief behandles nu. Du får en notifikation, når det er klar til gennemgang.
+                Your debrief is now being processed. You'll receive a notification when it's ready for review.
               </p>
             </div>
           </div>
@@ -387,7 +387,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="flex-1">
-              <h1 className="text-lg font-semibold text-foreground">Møde debrief</h1>
+              <h1 className="text-lg font-semibold text-foreground">Meeting debrief</h1>
               <p className="text-xs text-muted-foreground">Dr. Sarah Johnson • 2026-01-16</p>
             </div>
           </div>
@@ -397,7 +397,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
         <div className="px-6 pt-4 flex justify-end">
           <div className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-full text-sm font-medium">
             <CheckCircle className="h-4 w-4" />
-            Fejlet
+            Failed
           </div>
         </div>
 
@@ -433,7 +433,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
             size="lg"
             className="w-full rounded-2xl py-4 text-base font-medium border-2"
           >
-            Tilbage
+            Back
           </Button>
         </div>
       </div>

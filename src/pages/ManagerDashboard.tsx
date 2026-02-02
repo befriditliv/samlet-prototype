@@ -110,7 +110,7 @@ const ManagerDashboard = () => {
                       onClick={handleLogout}
                     >
                       <LogOut className="h-4 w-4" />
-                      Log ud
+                      Sign out
                     </Button>
                   </div>
                 </SheetContent>

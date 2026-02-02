@@ -32,14 +32,14 @@ const Login = () => {
             <img src={jarvisLogo} alt="Jarvis Logo" className="h-20 w-20" />
           </div>
           <CardTitle className="text-2xl font-bold">Jarvis Key Account Manager</CardTitle>
-          <CardDescription>Vælg din rolle for at fortsætte</CardDescription>
+          <CardDescription>Select your role to continue</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Rolle</label>
+            <label className="text-sm font-medium text-foreground">Role</label>
             <Select value={selectedRole} onValueChange={setSelectedRole}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Vælg din rolle" />
+                <SelectValue placeholder="Select your role" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="key_account_manager">Key Account Manager (Web)</SelectItem>
@@ -53,7 +53,7 @@ const Login = () => {
             className="w-full" 
             disabled={!selectedRole}
           >
-            Log ind
+            Sign in
           </Button>
         </CardContent>
       </Card>

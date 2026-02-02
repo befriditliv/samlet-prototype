@@ -97,8 +97,8 @@ export default function HcoDetail() {
     } catch (error) {
       console.error("Error fetching HCO data:", error);
       toast({
-        title: "Fejl",
-        description: "Kunne ikke hente data",
+        title: "Error",
+        description: "Could not fetch data",
         variant: "destructive",
       });
     } finally {
@@ -109,7 +109,7 @@ export default function HcoDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-muted-foreground">Indlæser...</div>
+        <div className="text-muted-foreground">Loading...</div>
       </div>
     );
   }
@@ -118,10 +118,10 @@ export default function HcoDetail() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <p className="text-muted-foreground mb-4">HCO ikke fundet</p>
+          <p className="text-muted-foreground mb-4">HCO not found</p>
           <Button variant="outline" onClick={() => navigate(role === 'manager' ? '/manager' : '/')}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Tilbage
+            Back
           </Button>
         </div>
       </div>
@@ -169,7 +169,7 @@ export default function HcoDetail() {
                     <MapPin className="h-4 w-4 text-primary" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground">Rutevejledning</p>
+                    <p className="text-xs text-muted-foreground">Directions</p>
                     <p className="text-foreground">{hco.address}</p>
                   </div>
                 </div>
@@ -180,7 +180,7 @@ export default function HcoDetail() {
                     <Phone className="h-4 w-4 text-primary" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground">Telefon</p>
+                    <p className="text-xs text-muted-foreground">Phone</p>
                     <p className="text-foreground">{hco.phone}</p>
                   </div>
                 </div>
@@ -204,33 +204,33 @@ export default function HcoDetail() {
 
         {/* HCO Insights */}
         <Card className="p-6">
-          <h3 className="text-lg font-semibold text-card-foreground mb-4">HCO Indsigter</h3>
+          <h3 className="text-lg font-semibold text-card-foreground mb-4">HCO Insights</h3>
           
           <div className="space-y-6">
             {hco.introduction && (
               <div>
-                <h4 className="font-medium text-card-foreground mb-2">Introduktion</h4>
+                <h4 className="font-medium text-card-foreground mb-2">Introduction</h4>
                 <p className="text-sm text-muted-foreground">{hco.introduction}</p>
               </div>
             )}
 
             {hco.latest_communication && (
               <div>
-                <h4 className="font-medium text-card-foreground mb-2">Seneste kommunikation</h4>
+                <h4 className="font-medium text-card-foreground mb-2">Latest Communication</h4>
                 <p className="text-sm text-muted-foreground">{hco.latest_communication}</p>
               </div>
             )}
 
             {hco.digital_engagement && (
               <div>
-                <h4 className="font-medium text-card-foreground mb-2">Digitalt engagement</h4>
+                <h4 className="font-medium text-card-foreground mb-2">Digital Engagement</h4>
                 <p className="text-sm text-muted-foreground">{hco.digital_engagement}</p>
               </div>
             )}
 
             {hco.hcp_insights && (
               <div>
-                <h4 className="font-medium text-card-foreground mb-2">HCP indsigt</h4>
+                <h4 className="font-medium text-card-foreground mb-2">HCP Insights</h4>
                 <p className="text-sm text-muted-foreground">{hco.hcp_insights}</p>
               </div>
             )}
@@ -240,16 +240,16 @@ export default function HcoDetail() {
         {/* Employees Table */}
         {hcps.length > 0 && (
           <Card className="p-6">
-            <h3 className="text-lg font-semibold text-card-foreground mb-4">Medarbejdere</h3>
+            <h3 className="text-lg font-semibold text-card-foreground mb-4">Staff</h3>
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>NAVN</TableHead>
-                    <TableHead>TITEL</TableHead>
+                    <TableHead>NAME</TableHead>
+                    <TableHead>TITLE</TableHead>
                     <TableHead>MARKETING CONSENT</TableHead>
                     <TableHead>ACCESS LEVEL</TableHead>
-                    <TableHead>SIDSTE MØDE</TableHead>
+                    <TableHead>LAST MEETING</TableHead>
                     <TableHead>ACTIVITY PLAN</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -285,7 +285,7 @@ export default function HcoDetail() {
         {/* Interactions */}
         {interactions.length > 0 && (
           <Card className="p-6">
-            <h3 className="text-lg font-semibold text-card-foreground mb-4">Tidligere interaktioner</h3>
+            <h3 className="text-lg font-semibold text-card-foreground mb-4">Previous Interactions</h3>
             
             <div className="space-y-2">
               {interactions.map((interaction) => (
@@ -306,7 +306,7 @@ export default function HcoDetail() {
                         </div>
                         <div className="text-left">
                           <p className="text-sm text-muted-foreground">
-                            {new Date(interaction.interaction_date).toLocaleDateString("da-DK")} - {interaction.interaction_type}
+                            {new Date(interaction.interaction_date).toLocaleDateString("en-US")} - {interaction.interaction_type}
                           </p>
                           <p className="font-medium text-card-foreground">{interaction.title}</p>
                         </div>
@@ -319,7 +319,7 @@ export default function HcoDetail() {
                           <p className="text-sm text-muted-foreground mb-2">{interaction.notes}</p>
                         )}
                         {interaction.created_by && (
-                          <p className="text-xs text-muted-foreground">Oprettet af: {interaction.created_by}</p>
+                          <p className="text-xs text-muted-foreground">Created by: {interaction.created_by}</p>
                         )}
                       </div>
                     </CollapsibleContent>
