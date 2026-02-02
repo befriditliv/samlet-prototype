@@ -1,11 +1,45 @@
+import { useState } from "react";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvis } from "@/components/AskJarvis";
 import { DayCalendarView } from "@/components/DayCalendarView";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { ActionCenter } from "@/components/ActionCenter";
+import { WebDebriefReview } from "@/components/WebDebriefReview";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
+type WebView = "dashboard" | "debrief-review";
+
 const Index = () => {
+  const [currentView, setCurrentView] = useState<WebView>("dashboard");
+  const [selectedMeetingId, setSelectedMeetingId] = useState<string | null>(null);
+
+  const handleDebriefReview = (meetingId: string) => {
+    setSelectedMeetingId(meetingId);
+    setCurrentView("debrief-review");
+  };
+
+  const handleBackToDashboard = () => {
+    setCurrentView("dashboard");
+    setSelectedMeetingId(null);
+  };
+
+  const handleApproveDebrief = () => {
+    // After approval, go back to dashboard
+    handleBackToDashboard();
+  };
+
+  // Debrief Review View
+  if (currentView === "debrief-review" && selectedMeetingId) {
+    return (
+      <WebDebriefReview
+        meetingId={selectedMeetingId}
+        onBack={handleBackToDashboard}
+        onApprove={handleApproveDebrief}
+      />
+    );
+  }
+
+  // Main Dashboard View
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-background">
       <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-10 shadow-sm">
@@ -35,7 +69,7 @@ const Index = () => {
 
         {/* Day Calendar View */}
         <section id="schedule">
-          <DayCalendarView />
+          <DayCalendarView onDebriefReview={handleDebriefReview} />
         </section>
       </main>
     </div>

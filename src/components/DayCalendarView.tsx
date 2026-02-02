@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, User, MapPin, MessageCircle, ChevronUp, Lightbulb, Calendar, AlertCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight, User, MapPin, MessageCircle, ChevronUp, Lightbulb, Calendar, AlertCircle, Loader2, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { format, addDays, startOfWeek, addWeeks, getWeek } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { WebDebriefDialog } from "./WebDebriefDialog";
+
+type MeetingStatus = "next-call" | "needs-debrief" | "upcoming" | "debrief-processing" | "debrief-ready" | "done";
 
 interface Meeting {
   id: string;
@@ -16,7 +18,7 @@ interface Meeting {
   location: string;
   startTime: string;
   duration: string;
-  status: "next-call" | "needs-debrief" | "upcoming";
+  status: MeetingStatus;
   expandable?: boolean;
   recommendations?: string[];
   metrics?: {
@@ -25,6 +27,10 @@ interface Meeting {
     segmentation: string;
     daysSinceEngagement: number;
   };
+}
+
+interface DayCalendarViewProps {
+  onDebriefReview?: (meetingId: string) => void;
 }
 
 const mockMeetings: Meeting[] = [
@@ -69,13 +75,13 @@ const mockMeetings: Meeting[] = [
   }
 ];
 
-export const DayCalendarView = () => {
+export const DayCalendarView = ({ onDebriefReview }: DayCalendarViewProps) => {
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 10, 24)); // Nov 24, 2024
   const [expandedMeetings, setExpandedMeetings] = useState<string[]>([]);
   const [outstandingDialogOpen, setOutstandingDialogOpen] = useState(false);
   const [debriefDialogOpen, setDebriefDialogOpen] = useState(false);
   const [selectedMeetingForDebrief, setSelectedMeetingForDebrief] = useState<Meeting | null>(null);
-  const [completedDebriefs, setCompletedDebriefs] = useState<string[]>([]);
+  const [meetingStatuses, setMeetingStatuses] = useState<Record<string, MeetingStatus>>({});
   
   // Days with missing debriefs (for demo purposes)
   const daysWithMissingDebriefs = [
@@ -124,9 +130,14 @@ export const DayCalendarView = () => {
     setSelectedDate(addWeeks(selectedDate, direction === 'prev' ? -1 : 1));
   };
   
+  // Get effective status for a meeting (considering local overrides)
+  const getMeetingStatus = (meeting: Meeting): MeetingStatus => {
+    return meetingStatuses[meeting.id] || meeting.status;
+  };
+
   const meetingsCount = mockMeetings.length;
-  const missingDebriefCount = mockMeetings.filter(m => m.status === "needs-debrief" && !completedDebriefs.includes(m.id)).length;
-  const outstandingDebriefs = mockMeetings.filter(m => m.status === "needs-debrief" && !completedDebriefs.includes(m.id));
+  const missingDebriefCount = mockMeetings.filter(m => getMeetingStatus(m) === "needs-debrief").length;
+  const outstandingDebriefs = mockMeetings.filter(m => getMeetingStatus(m) === "needs-debrief");
 
   const openDebriefDialog = (meeting: Meeting) => {
     setSelectedMeetingForDebrief(meeting);
@@ -135,7 +146,19 @@ export const DayCalendarView = () => {
 
   const handleDebriefSave = () => {
     if (selectedMeetingForDebrief) {
-      setCompletedDebriefs(prev => [...prev, selectedMeetingForDebrief.id]);
+      // Set to processing first
+      setMeetingStatuses(prev => ({
+        ...prev,
+        [selectedMeetingForDebrief.id]: "debrief-processing"
+      }));
+      
+      // After 3 seconds, set to ready for review
+      setTimeout(() => {
+        setMeetingStatuses(prev => ({
+          ...prev,
+          [selectedMeetingForDebrief.id]: "debrief-ready"
+        }));
+      }, 3000);
     }
   };
 
@@ -147,7 +170,7 @@ export const DayCalendarView = () => {
     );
   };
 
-  const getStatusButton = (status: Meeting['status']) => {
+  const getStatusButton = (status: MeetingStatus) => {
     switch (status) {
       case "next-call":
         return (
@@ -159,6 +182,26 @@ export const DayCalendarView = () => {
         return (
           <Badge variant="destructive">
             Needs Debrief
+          </Badge>
+        );
+      case "debrief-processing":
+        return (
+          <Badge className="bg-primary/10 text-primary border border-primary/20">
+            <Loader2 className="h-3 w-3 mr-1.5 animate-spin" />
+            Processing...
+          </Badge>
+        );
+      case "debrief-ready":
+        return (
+          <Badge className="bg-primary/5 text-primary border border-primary/20">
+            <CheckCircle2 className="h-3 w-3 mr-1.5" />
+            Ready for review
+          </Badge>
+        );
+      case "done":
+        return (
+          <Badge className="bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300">
+            Completed
           </Badge>
         );
       case "upcoming":
@@ -374,20 +417,24 @@ export const DayCalendarView = () => {
 
                   {/* Status & Actions */}
                   <div className="flex items-center gap-3">
-                    {completedDebriefs.includes(meeting.id) ? (
-                      <Badge className="bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300">
-                        Debriefed
-                      </Badge>
-                    ) : (
-                      getStatusButton(meeting.status)
-                    )}
+                    {getStatusButton(getMeetingStatus(meeting))}
                     
-                    {meeting.status === "needs-debrief" && !completedDebriefs.includes(meeting.id) && (
+                    {getMeetingStatus(meeting) === "needs-debrief" && (
                       <Button 
                         className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
                         onClick={() => openDebriefDialog(meeting)}
                       >
                         Debrief
+                      </Button>
+                    )}
+
+                    {getMeetingStatus(meeting) === "debrief-ready" && onDebriefReview && (
+                      <Button 
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                        onClick={() => onDebriefReview(meeting.id)}
+                      >
+                        <CheckCircle2 className="h-4 w-4 mr-1.5" />
+                        Review
                       </Button>
                     )}
                     
