@@ -433,7 +433,7 @@ const ReportView = () => {
             <img src={jarvisLogo} alt="Jarvis Logo" className="h-14 w-14" />
             <div className="flex-1">
               <h1 className="text-2xl font-bold text-foreground">Debrief Insights</h1>
-              <p className="text-sm text-muted-foreground">Struktureret analyse af HCP indvendinger og bekymringer</p>
+              <p className="text-sm text-muted-foreground">Structured analysis of HCP objections and concerns</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-full max-w-md">
@@ -535,7 +535,7 @@ const ReportView = () => {
             {/* Hovedanalyse */}
             <Card>
               <CardHeader>
-                <CardTitle>Udvikling i bekymringsmønstre for Ozempic-initiering</CardTitle>
+                <CardTitle>Concern Pattern Development for Ozempic Initiation</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Emnebeskrivelse */}
