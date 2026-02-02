@@ -265,7 +265,7 @@ const DebriefQualityReportView = () => {
             className="gap-2 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
-            Tilbage
+            Back
           </Button>
           
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -275,7 +275,7 @@ const DebriefQualityReportView = () => {
             </div>
             <div className="flex items-center gap-1.5">
               <Users className="h-4 w-4" />
-              Alle medarbejdere
+              All employees
             </div>
             <Badge variant="secondary">YTD</Badge>
           </div>
@@ -327,7 +327,7 @@ const DebriefQualityReportView = () => {
 
         {/* Quality Dimensions */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-foreground mb-4">Kvalitetsdimensioner</h2>
+          <h2 className="text-xl font-semibold text-foreground mb-4">Quality Dimensions</h2>
           <div className="space-y-2">
             {qualityDimensions.map((dimension) => (
               <Collapsible
@@ -353,7 +353,7 @@ const DebriefQualityReportView = () => {
                         <span className="text-sm font-medium w-12 text-right">{dimension.score}/{dimension.maxScore}</span>
                       </div>
                       <Badge className={`text-xs ${getStatusColor(dimension.status)}`}>
-                        {dimension.status === 'good' ? 'God' : dimension.status === 'medium' ? 'Medium' : 'Svag'}
+                        {dimension.status === 'good' ? 'Good' : dimension.status === 'medium' ? 'Medium' : 'Weak'}
                       </Badge>
                       <ChevronDown 
                         className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform ${
@@ -370,7 +370,7 @@ const DebriefQualityReportView = () => {
                       <div className="p-3 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900">
                         <div className="flex items-center gap-2 mb-2">
                           <CheckCircle2 className="h-4 w-4 text-green-600" />
-                          <span className="text-sm font-medium text-green-700 dark:text-green-400">Styrker</span>
+                          <span className="text-sm font-medium text-green-700 dark:text-green-400">Strengths</span>
                         </div>
                         <ul className="text-xs text-green-700 dark:text-green-400 space-y-1">
                           {dimension.goodExamples.map((ex, i) => (
@@ -381,7 +381,7 @@ const DebriefQualityReportView = () => {
                       <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900">
                         <div className="flex items-center gap-2 mb-2">
                           <AlertTriangle className="h-4 w-4 text-amber-600" />
-                          <span className="text-sm font-medium text-amber-700 dark:text-amber-400">Forbedringspotentiale</span>
+                          <span className="text-sm font-medium text-amber-700 dark:text-amber-400">Improvement Areas</span>
                         </div>
                         <ul className="text-xs text-amber-700 dark:text-amber-400 space-y-1">
                           {dimension.improvementAreas.map((area, i) => (
@@ -399,7 +399,7 @@ const DebriefQualityReportView = () => {
 
         {/* Employee Breakdown */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-foreground mb-4">Medarbejder-breakdown</h2>
+          <h2 className="text-xl font-semibold text-foreground mb-4">Employee Breakdown</h2>
           <div className="space-y-3">
             {employeeBreakdown.map((emp) => (
               <Card key={emp.name} className="border">
@@ -447,10 +447,10 @@ const DebriefQualityReportView = () => {
               <div className="flex items-center justify-between p-4 rounded-lg border border-dashed hover:border-primary/50 hover:bg-muted/30 transition-colors">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <MessageSquareQuote className="h-4 w-4" />
-                  <span className="text-sm font-medium">Eksempler på debriefs</span>
+                  <span className="text-sm font-medium">Debrief Examples</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span>{debriefExcerpts.length} eksempler</span>
+                  <span>{debriefExcerpts.length} examples</span>
                   {showExcerpts ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                 </div>
               </div>
@@ -463,7 +463,7 @@ const DebriefQualityReportView = () => {
                     variant={excerptFilter === 'all' ? 'default' : 'outline'}
                     onClick={() => setExcerptFilter('all')}
                   >
-                    Alle
+                    All
                   </Button>
                   <Button 
                     size="sm" 
@@ -472,7 +472,7 @@ const DebriefQualityReportView = () => {
                     className="gap-1"
                   >
                     <CheckCircle2 className="h-3 w-3" />
-                    Gode eksempler
+                    Good Examples
                   </Button>
                   <Button 
                     size="sm" 
@@ -481,7 +481,7 @@ const DebriefQualityReportView = () => {
                     className="gap-1"
                   >
                     <AlertTriangle className="h-3 w-3" />
-                    Forbedringspotentiale
+                    Improvement Areas
                   </Button>
                 </div>
               </div>
@@ -531,7 +531,7 @@ const DebriefQualityReportView = () => {
             </Button>
             <Button variant="outline" size="sm" className="gap-2 bg-background">
               <Share2 className="h-4 w-4" />
-              Del
+              Share
             </Button>
           </div>
         </div>
