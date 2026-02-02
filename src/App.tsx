@@ -19,6 +19,9 @@ import DebriefQualityReportView from "./pages/manager/DebriefQualityReportView";
 import CampaignAdherenceReportView from "./pages/manager/CampaignAdherenceReportView";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
+import AppIndex from "./pages/AppIndex";
+import AppJarvis from "./pages/AppJarvis";
+import AppProfile from "./pages/AppProfile";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +35,9 @@ const App = () => (
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/app" element={<ProtectedRoute><AppIndex /></ProtectedRoute>} />
+            <Route path="/app/jarvis" element={<ProtectedRoute><AppJarvis /></ProtectedRoute>} />
+            <Route path="/app/profil" element={<ProtectedRoute><AppProfile /></ProtectedRoute>} />
             <Route path="/manager" element={<ProtectedRoute><ManagerDashboard /></ProtectedRoute>} />
             <Route path="/manager/new-report" element={<ProtectedRoute><NewReport /></ProtectedRoute>} />
             <Route path="/manager/report" element={<ProtectedRoute><ReportView /></ProtectedRoute>} />
