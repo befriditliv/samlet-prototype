@@ -142,7 +142,7 @@ export const HCPAssistant = ({ isOpen, onClose, hcpName, showBriefing = false }:
 
   const BriefingContent = ({ name }: { name: string }) => (
     <div className="text-sm text-card-foreground leading-relaxed space-y-3">
-      <p>Metro Medical Center er en kardiologisk klinik med 12 specialister. {name} leder hjertesvigtklinikken.</p>
+      <p>Metro Medical Center is a cardiology clinic with 12 specialists. {name} leads the heart failure clinic.</p>
 
       <div>
         <p className="font-medium mb-1">Last meeting (Jan 7)</p>

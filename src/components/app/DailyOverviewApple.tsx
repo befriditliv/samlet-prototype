@@ -42,7 +42,7 @@ const mockMeetings: Meeting[] = [
     time: "9:00",
     duration: "45 min",
     hcpName: "Dr. Sarah Johnson",
-    specialty: "Kardiologi",
+    specialty: "Cardiology",
     location: "Metro Medical Center",
     address: "1234 Healthcare Blvd, Suite 200",
     phone: "+45 12 34 56 78",
@@ -53,7 +53,7 @@ const mockMeetings: Meeting[] = [
     time: "11:30",
     duration: "30 min",
     hcpName: "Dr. Michael Chen",
-    specialty: "Onkologi",
+    specialty: "Oncology",
     location: "City General Hospital",
     status: "debrief-failed"
   },
@@ -62,13 +62,13 @@ const mockMeetings: Meeting[] = [
     time: "14:00",
     duration: "60 min",
     hcpName: "Dr. Emily Rodriguez",
-    specialty: "Endokrinologi",
+    specialty: "Endocrinology",
     location: "University Health System",
     status: "upcoming",
     participants: [
-      { name: "Dr. Emily Rodriguez", specialty: "Endokrinologi" },
-      { name: "Dr. Thomas Baker", specialty: "Diabetologi" },
-      { name: "Sygeplejerske Patricia Hall", specialty: "Diabetespleje" }
+      { name: "Dr. Emily Rodriguez", specialty: "Endocrinology" },
+      { name: "Dr. Thomas Baker", specialty: "Diabetology" },
+      { name: "Nurse Patricia Hall", specialty: "Diabetes Care" }
     ]
   },
   {
@@ -76,7 +76,7 @@ const mockMeetings: Meeting[] = [
     time: "16:30",
     duration: "30 min",
     hcpName: "Dr. James Wilson",
-    specialty: "Neurologi",
+    specialty: "Neurology",
     location: "Central Neuroscience Clinic",
     address: "890 Brain Way, Suite 500",
     phone: "+45 87 65 43 21",
@@ -87,7 +87,7 @@ const mockMeetings: Meeting[] = [
     time: "08:00",
     duration: "30 min",
     hcpName: "Dr. Amanda Peters",
-    specialty: "Reumatologi",
+    specialty: "Rheumatology",
     location: "Wellness Medical Group",
     status: "done"
   }
@@ -247,7 +247,7 @@ export const DailyOverviewApple = ({
     };
   }, [expandedMeetingId]);
 
-  const todayDate = new Date().toLocaleDateString("da-DK", {
+  const todayDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     day: "numeric",
     month: "long"

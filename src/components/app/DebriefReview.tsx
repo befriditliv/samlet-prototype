@@ -36,8 +36,8 @@ interface BrandNote {
 const mockDebriefData = {
   meeting: {
     hcpName: "Marianne Lindberg Pedersen + 1",
-    specialty: "Endokrinologi",
-    date: "12. januar 2026",
+    specialty: "Endocrinology",
+    date: "January 12, 2026",
     time: "13:00",
     location: "Rigshospitalet"
   },
