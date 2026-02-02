@@ -485,7 +485,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
                 <Mic className="h-4 w-4 text-primary" />
               </div>
               <div>
-                <p className="text-xs text-primary font-medium mb-1">Jarvis spørger:</p>
+                <p className="text-xs text-primary font-medium mb-1">Jarvis asks:</p>
                 <p className="text-foreground font-medium leading-relaxed">
                   {debriefQuestions[currentQuestionIndex]}
                 </p>
@@ -502,14 +502,14 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
               <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto animate-pulse">
                 <img src={jarvisLogo} alt="Jarvis" className="h-12 w-12" />
               </div>
-              <p className="text-sm text-muted-foreground">Jarvis stiller spørgsmål...</p>
+              <p className="text-sm text-muted-foreground">Jarvis is asking...</p>
             </div>
           ) : isRecording ? (
             // Recording state
             <div className="text-center space-y-6 w-full">
               <div className="flex items-center justify-center gap-2">
                 <span className="w-3 h-3 bg-destructive rounded-full animate-pulse" />
-                <span className="text-base font-medium text-foreground tracking-tight">Optager</span>
+                <span className="text-base font-medium text-foreground tracking-tight">Recording</span>
               </div>
 
               {/* Timer */}
@@ -538,7 +538,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
               <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center mx-auto">
                 <img src={jarvisLogo} alt="Jarvis" className="h-12 w-12 opacity-50" />
               </div>
-              <p className="text-sm text-muted-foreground">Forbereder...</p>
+              <p className="text-sm text-muted-foreground">Preparing...</p>
             </div>
           )}
         </div>
@@ -553,7 +553,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl py-4 text-base font-semibold"
               >
                 <CheckCircle className="h-5 w-5 mr-2" />
-                Afslut Debrief
+                Finish Debrief
               </Button>
             ) : (
               <Button
@@ -561,7 +561,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
                 size="lg"
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl py-4 text-base font-semibold"
               >
-                Næste Spørgsmål
+                Next Question
                 <ChevronRight className="h-5 w-5 ml-2" />
               </Button>
             )}
@@ -572,7 +572,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
               }}
               className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
             >
-              Annuller
+              Cancel
             </button>
           </div>
         )}
