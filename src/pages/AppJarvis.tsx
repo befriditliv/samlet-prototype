@@ -151,7 +151,7 @@ const AppJarvis = () => {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Skriv din besked her..."
+            placeholder="Type your message here..."
             onKeyDown={(e) => e.key === "Enter" && handleSendQuery()}
             className="flex-1 rounded-xl border-border/50 focus:border-primary bg-background"
             disabled={isLoading}
