@@ -25,52 +25,52 @@ interface PrepItem {
 const prepSections: PrepSection[] = [
   {
     id: "overview",
-    title: "Overblik",
+    title: "Overview",
     icon: FileText,
     items: [
       {
         id: "1",
-        title: "Praksis Profil",
-        subtitle: "Metro Medical Center - 450 læger, 12 kardiologer. Dr. Johnson leder hjertesvigtklinikken med 800+ patienter årligt.",
+        title: "Practice Profile",
+        subtitle: "Metro Medical Center - 450 physicians, 12 cardiologists. Dr. Johnson leads the heart failure clinic with 800+ patients annually.",
       },
       {
         id: "2",
-        title: "Ordinationsmønstre",
-        subtitle: "Høj ordination af ACE-hæmmere og betablokkere. Viser præference for evidensbaserede protokoller.",
+        title: "Prescription Patterns",
+        subtitle: "High prescription of ACE inhibitors and beta blockers. Shows preference for evidence-based protocols.",
       },
     ],
   },
   {
     id: "recent",
-    title: "Seneste Møder",
+    title: "Recent Meetings",
     icon: History,
     items: [
       {
         id: "3",
-        title: "Q4 Kardiologi Review",
-        subtitle: "Diskuterede SGLT2-hæmmer adoption og patientovervågningsprotokoller.",
+        title: "Q4 Cardiology Review",
+        subtitle: "Discussed SGLT2 inhibitor adoption and patient monitoring protocols.",
       },
       {
         id: "4",
-        title: "Klinisk Data Diskussion",
-        subtitle: "Gennemgik DAPA-HF forsøgsresultater. Positiv modtagelse af real-world evidens.",
+        title: "Clinical Data Discussion",
+        subtitle: "Reviewed DAPA-HF trial results. Positive reception of real-world evidence.",
       },
     ],
   },
   {
     id: "actions",
-    title: "Anbefalede Handlinger",
+    title: "Recommended Actions",
     icon: TrendingUp,
     items: [
       {
         id: "5",
-        title: "Præsenter SGLT2 Kliniske Fordele",
-        subtitle: "Fokus på kardiovaskulære outcomes og reducerede hospitalsindlæggelser.",
+        title: "Present SGLT2 Clinical Benefits",
+        subtitle: "Focus on cardiovascular outcomes and reduced hospitalizations.",
       },
       {
         id: "6",
-        title: "Diskuter Implementeringsstrategi",
-        subtitle: "Adresser patientudvælgelseskriterier og overvågningsprotokoller.",
+        title: "Discuss Implementation Strategy",
+        subtitle: "Address patient selection criteria and monitoring protocols.",
       },
     ],
   },
@@ -82,12 +82,12 @@ const prepSections: PrepSection[] = [
       {
         id: "7",
         title: "Email Engagement",
-        subtitle: "95% åbningsrate på kardiologi nyhedsbreve. Downloadet 8 kliniske studier.",
+        subtitle: "95% open rate on cardiology newsletters. Downloaded 8 clinical studies.",
       },
       {
         id: "8",
-        title: "Platform Aktivitet",
-        subtitle: "Aktiv bruger af vores kliniske portal med 15 logins dette kvartal.",
+        title: "Platform Activity",
+        subtitle: "Active user of our clinical portal with 15 logins this quarter.",
       },
     ],
   },
@@ -113,7 +113,7 @@ export const PrepPage = ({ meetingId, onBack, onStartMeeting }: PrepPageProps) =
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
-                <h1 className="text-lg font-semibold">Forbered</h1>
+                <h1 className="text-lg font-semibold">Prepare</h1>
                 <p className="text-xs text-muted-foreground">Dr. Sarah Johnson</p>
               </div>
             </div>
@@ -131,11 +131,11 @@ export const PrepPage = ({ meetingId, onBack, onStartMeeting }: PrepPageProps) =
       <div className="px-4 py-4 space-y-4">
         {/* Jarvis AI Summary */}
         <Card className="p-4 border-0 bg-primary/5 rounded-xl">
-          <h3 className="font-semibold text-primary text-sm mb-2">Jarvis AI Opsummering</h3>
+          <h3 className="font-semibold text-primary text-sm mb-2">Jarvis AI Summary</h3>
           <div className="space-y-2 text-sm text-muted-foreground">
-            <p>• Dr. Johnson har vist stærk interesse i patient-adherence løsninger.</p>
-            <p>• Metro Medical Center har for nylig opdateret deres lægemiddelliste.</p>
-            <p>• Overvej at nævne CARDIAC-ADVANCE forsøgsresultaterne.</p>
+            <p>• Dr. Johnson has shown strong interest in patient adherence solutions.</p>
+            <p>• Metro Medical Center recently updated their formulary list.</p>
+            <p>• Consider mentioning the CARDIAC-ADVANCE trial results.</p>
           </div>
         </Card>
 
@@ -147,8 +147,8 @@ export const PrepPage = ({ meetingId, onBack, onStartMeeting }: PrepPageProps) =
                 <Play className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold text-sm">Lyt til briefing</h3>
-                <p className="text-xs text-muted-foreground">3 min audio opsummering</p>
+                <h3 className="font-semibold text-sm">Listen to briefing</h3>
+                <p className="text-xs text-muted-foreground">3 min audio summary</p>
               </div>
             </div>
             <Button
@@ -157,7 +157,7 @@ export const PrepPage = ({ meetingId, onBack, onStartMeeting }: PrepPageProps) =
               onClick={() => setIsPlaying(!isPlaying)}
               className={`rounded-xl h-10 px-4 ${isPlaying ? "bg-primary text-primary-foreground border-primary" : ""}`}
             >
-              {isPlaying ? "Pause" : "Afspil"}
+              {isPlaying ? "Pause" : "Play"}
             </Button>
           </div>
           {isPlaying && (
@@ -185,7 +185,7 @@ export const PrepPage = ({ meetingId, onBack, onStartMeeting }: PrepPageProps) =
                     </div>
                     <div>
                       <h3 className="font-semibold text-sm">{section.title}</h3>
-                      <p className="text-xs text-muted-foreground">{section.items.length} punkter</p>
+                      <p className="text-xs text-muted-foreground">{section.items.length} items</p>
                     </div>
                   </div>
                   <ChevronDown
