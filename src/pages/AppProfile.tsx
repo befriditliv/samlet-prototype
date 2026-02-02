@@ -35,7 +35,7 @@ const AppProfile = () => {
         <div className="p-4 bg-card rounded-xl border border-border/40">
           <div className="space-y-3">
             <button className="w-full text-left py-3 text-sm text-foreground border-b border-border/30">
-              Notifikationer
+              Notifications
             </button>
             <button className="w-full text-left py-3 text-sm text-foreground border-b border-border/30">
               Support
@@ -44,7 +44,7 @@ const AppProfile = () => {
               onClick={logout}
               className="w-full text-left py-3 text-sm text-destructive"
             >
-              Log ud
+              Log out
             </button>
           </div>
         </div>
