@@ -18,7 +18,7 @@ import {
   ThumbsDown
 } from "lucide-react";
 import { format } from "date-fns";
-import { da } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
@@ -45,31 +45,31 @@ interface InsightCategory {
 const ozempicCategories: InsightCategory[] = [
   { 
     id: '1', 
-    title: 'Ingen indvendinger ved opstart af Ozempic', 
+    title: 'No objections when initiating Ozempic', 
     count: 111,
     impact: 'positive',
-    description: 'En stor del af HCP\'erne har ikke rapporteret nogen indvendinger ved opstart af Ozempic-patienter. Mange HCP\'er har nævnt, at der ikke er nogen specifikke indvendinger eller bekymringer vedrørende igangsættelse af Ozempic, og nogle har endda udtrykt positiv interesse for behandlingen.'
+    description: 'A large portion of HCPs have not reported any objections when initiating Ozempic patients. Many HCPs have mentioned that there are no specific objections or concerns regarding Ozempic initiation, and some have even expressed positive interest in the treatment.'
   },
   { 
     id: '2', 
-    title: 'Interesse for opfølgning og yderligere information', 
+    title: 'Interest in follow-up and additional information', 
     count: 39,
     impact: 'positive',
-    description: 'Der er en generel interesse blandt HCP\'erne for opfølgning og yderligere information om Ozempic. Nogle HCP\'er har udtrykt interesse for opfølgende aftaler om forløbsplaner, og der er også interesse for materiale om hypoglykæmi og organbeskyttelse.'
+    description: 'There is general interest among HCPs for follow-up and additional information about Ozempic. Some HCPs have expressed interest in follow-up appointments about treatment plans, and there is also interest in materials about hypoglycemia and organ protection.'
   },
   { 
     id: '3', 
-    title: 'Spørgsmål og behov for afklaring', 
+    title: 'Questions and need for clarification', 
     count: 35,
     impact: 'neutral',
-    description: 'Flere HCP\'er har stillet spørgsmål og udtrykt behov for afklaring vedrørende Ozempic. Der er mange spørgsmål til algoritmen for dosering, herunder brug af 8 doser og 2 mg.'
+    description: 'Several HCPs have asked questions and expressed the need for clarification regarding Ozempic. There are many questions about the dosing algorithm, including the use of 8 doses and 2 mg.'
   },
   { 
     id: '4', 
-    title: 'Bekymringer og indvendinger ved opstart', 
+    title: 'Concerns and objections at initiation', 
     count: 20,
     impact: 'negative',
-    description: 'Der er flere HCP\'er, der har udtrykt bekymringer og indvendinger ved opstart af Ozempic. Nogle af bekymringerne skyldes regionale krav om først at afprøve DPP-4-hæmmere.'
+    description: 'Several HCPs have expressed concerns and objections when initiating Ozempic. Some of the concerns stem from regional requirements to first try DPP-4 inhibitors.'
   },
 ];
 
@@ -84,12 +84,12 @@ interface Statement {
 // Generate realistic statements for each category
 const generateStatements = (categoryId: string, count: number, quotes: string[]): Statement[] => {
   const roles = ['Physician', 'Nurse', 'Specialist'];
-  const names = ['Lars Andersen', 'Maria Hansen', 'Peter Christensen', 'Sofie Nielsen', 'Thomas Madsen', 'Mette Larsen', 'Jonas Pedersen', 'Anne Søndergaard', 'Henrik Rasmussen', 'Lise Mortensen', 'Camilla Olsen', 'Michael Krogh', 'Eva Thomsen', 'Christian Bak', 'Julie Poulsen'];
+  const names = ['James Harrison', 'Sarah Chen', 'Michael Thompson', 'Emily Roberts', 'David Wright', 'Lisa Anderson', 'Robert Mitchell', 'Catherine Williams', 'Andrew Palmer', 'Rebecca Foster', 'Jennifer Moore', 'Christopher Lee', 'Amanda Taylor', 'Daniel Brown', 'Jessica Clark'];
   
   return Array.from({ length: count }, (_, i) => ({
     id: `${categoryId}-${i}`,
     role: roles[i % roles.length],
-    date: `${['sep', 'okt', 'nov', 'dec'][Math.floor(Math.random() * 4)]}. ${Math.floor(Math.random() * 28) + 1}, 2025`,
+    date: `${['Sep', 'Oct', 'Nov', 'Dec'][Math.floor(Math.random() * 4)]} ${Math.floor(Math.random() * 28) + 1}, 2025`,
     quote: quotes[i % quotes.length],
     source: `${names[i % names.length]} - 2025-${String(9 + Math.floor(i / 10)).padStart(2, '0')}-${String((i % 28) + 1).padStart(2, '0')}`
   }));
@@ -99,38 +99,38 @@ const generateStatements = (categoryId: string, count: number, quotes: string[])
 const sentimentCategories: InsightCategory[] = [
   { 
     id: 's1', 
-    title: 'Generelt positiv stemning over for Novo Nordisk produkter', 
+    title: 'Generally positive sentiment towards Novo Nordisk products', 
     count: 87,
     impact: 'positive',
-    description: 'Flertallet af HCP\'er udtrykker tilfredshed med Novo Nordisk\'s produktportefølje og support. Der nævnes særligt god erfaring med GLP-1 produkter og værdien af det kliniske supportmateriale.'
+    description: 'The majority of HCPs express satisfaction with Novo Nordisk\'s product portfolio and support. Particularly good experience with GLP-1 products and the value of clinical support materials is mentioned.'
   },
   { 
     id: 's2', 
-    title: 'Stigende interesse for vægttabsbehandling', 
+    title: 'Increasing interest in weight loss treatment', 
     count: 64,
     impact: 'positive',
-    description: 'Markant øget fokus på vægttabsbehandling blandt HCP\'er. Flere efterspørger information om Wegovy og diskuterer patientgrupper der kunne have gavn af behandlingen.'
+    description: 'Significantly increased focus on weight loss treatment among HCPs. Several are requesting information about Wegovy and discussing patient groups that could benefit from the treatment.'
   },
   { 
     id: 's3', 
-    title: 'Bekymring om tilgængelighed og leveringssikkerhed', 
+    title: 'Concerns about availability and supply security', 
     count: 42,
     impact: 'negative',
-    description: 'Flere HCP\'er og HCO\'er udtrykker frustration over leveringsudfordringer. Dette påvirker deres villighed til at initiere nye patienter på visse produkter.'
+    description: 'Several HCPs and HCOs express frustration over delivery challenges. This affects their willingness to initiate new patients on certain products.'
   },
   { 
     id: 's4', 
-    title: 'Ønske om mere digital kommunikation', 
+    title: 'Desire for more digital communication', 
     count: 31,
     impact: 'neutral',
-    description: 'HCP\'er efterspørger flere digitale kontaktmuligheder og online ressourcer. Der er interesse for webinarer, digitale opdateringer og selvbetjeningsløsninger.'
+    description: 'HCPs are requesting more digital contact options and online resources. There is interest in webinars, digital updates and self-service solutions.'
   },
   { 
     id: 's5', 
-    title: 'Konkurrencepres fra biosimilars', 
+    title: 'Competitive pressure from biosimilars', 
     count: 18,
     impact: 'negative',
-    description: 'Enkelte HCO\'er nævner prispres fra biosimilars og generiske alternativer. Dette påvirker primært insulinmarkedet og kræver tydelig værdikommunikation.'
+    description: 'Some HCOs mention price pressure from biosimilars and generic alternatives. This primarily affects the insulin market and requires clear value communication.'
   },
 ];
 
@@ -138,125 +138,125 @@ const sentimentCategories: InsightCategory[] = [
 const offLabelCategories: InsightCategory[] = [
   { 
     id: 'ol1', 
-    title: 'Off-label ordination af Ozempic til overvægt', 
+    title: 'Off-label prescription of Ozempic for obesity', 
     count: 28,
     impact: 'neutral',
-    description: 'HCP\'er har uopfordret nævnt, at de ordinerer Ozempic til patienter med svær overvægt, selvom det ikke er den godkendte indikation. Flere nævner prisforskel til Wegovy som årsag.'
+    description: 'HCPs have unsolicited mentioned that they prescribe Ozempic to patients with severe obesity, even though it is not the approved indication. Several mention the price difference to Wegovy as the reason.'
   },
   { 
     id: 'ol2', 
-    title: 'Klinikker med systematisk off-label praksis', 
+    title: 'Clinics with systematic off-label practice', 
     count: 12,
     impact: 'neutral',
-    description: 'Enkelte klinikker har etableret fast praksis for off-label ordination. HCP\'erne har selv bragt dette op under samtaler om patientforløb.'
+    description: 'Some clinics have established a regular practice for off-label prescription. The HCPs themselves brought this up during conversations about patient pathways.'
   },
   { 
     id: 'ol3', 
-    title: 'Prisforskelle nævnt som motivation', 
+    title: 'Price differences mentioned as motivation', 
     count: 18,
     impact: 'neutral',
-    description: 'HCP\'er har spontant nævnt, at Ozempic 1,0mg er væsentligt billigere end Wegovy og har samme effekt, som begrundelse for off-label brug.'
+    description: 'HCPs have spontaneously mentioned that Ozempic 1.0mg is significantly cheaper than Wegovy and has the same effect, as justification for off-label use.'
   },
   { 
     id: 'ol4', 
-    title: 'Patientefterspørgsel driver beslutning', 
+    title: 'Patient demand drives decision', 
     count: 9,
     impact: 'neutral',
-    description: 'Nogle HCP\'er nævner, at patienter selv efterspørger Ozempic til vægttab efter at have hørt om det fra venner eller medier.'
+    description: 'Some HCPs mention that patients themselves request Ozempic for weight loss after hearing about it from friends or media.'
   },
 ];
 
 // Statements for off-label report
 const offLabelStatementsByCategory: Record<string, Statement[]> = {
   'ol1': generateStatements('ol1', 28, [
-    'Lægen nævnte uopfordret, at de på klinikken er begyndt at ordinere Ozempic 1,0mg til svær overvægt.',
-    'HCP\'en fortalte, at flere patienter får Ozempic off-label til vægttab med gode resultater.',
-    'Under samtalen nævnte lægen, at de bruger Ozempic til overvægtige patienter uden diabetes.',
-    'Klinikkens praksis inkluderer nu Ozempic til ren overvægtsbehandling, fortalte HCP\'en.',
-    'Lægen oplyste spontant, at de ordinerer Ozempic off-label da det er billigere end Wegovy.',
+    'The physician unsolicited mentioned that they have started prescribing Ozempic 1.0mg for severe obesity at the clinic.',
+    'The HCP said that several patients receive Ozempic off-label for weight loss with good results.',
+    'During the conversation, the physician mentioned that they use Ozempic for obese patients without diabetes.',
+    'The clinic\'s practice now includes Ozempic for pure obesity treatment, the HCP explained.',
+    'The physician spontaneously stated that they prescribe Ozempic off-label as it is cheaper than Wegovy.',
   ]),
   'ol2': generateStatements('ol2', 12, [
-    'Klinikken har etableret en fast praksis for at tilbyde Ozempic til overvægtige patienter.',
-    'HCP\'en beskrev deres systematiske tilgang til off-label ordination af Ozempic.',
-    'Lægen forklarede, at alle læger på klinikken nu bruger Ozempic til overvægt.',
-    'Klinikken har haft interne drøftelser og besluttet at tilbyde Ozempic off-label.',
+    'The clinic has established a regular practice to offer Ozempic to obese patients.',
+    'The HCP described their systematic approach to off-label prescription of Ozempic.',
+    'The physician explained that all doctors at the clinic now use Ozempic for obesity.',
+    'The clinic has had internal discussions and decided to offer Ozempic off-label.',
   ]),
   'ol3': generateStatements('ol3', 18, [
-    'Lægen nævnte, at Ozempic 1,0mg er væsentligt billigere end Wegovy og har samme effekt.',
-    'HCP\'en fremhævede prisfordelen ved Ozempic fremfor Wegovy til overvægtsbehandling.',
-    'Prisen er den primære årsag til at vælge Ozempic fremfor Wegovy, forklarede lægen.',
-    'Patienterne foretrækker Ozempic på grund af lavere egenbetaling, sagde HCP\'en.',
+    'The physician mentioned that Ozempic 1.0mg is significantly cheaper than Wegovy and has the same effect.',
+    'The HCP highlighted the price advantage of Ozempic over Wegovy for obesity treatment.',
+    'Price is the primary reason for choosing Ozempic over Wegovy, explained the physician.',
+    'Patients prefer Ozempic due to lower out-of-pocket costs, said the HCP.',
   ]),
   'ol4': generateStatements('ol4', 9, [
-    'Patienter kommer og spørger specifikt efter Ozempic til vægttab, fortalte lægen.',
-    'HCP\'en nævnte øget patientefterspørgsel efter Ozempic efter medieomtale.',
-    'Mange patienter har hørt om Ozempic fra venner og vil gerne prøve det, sagde lægen.',
+    'Patients come asking specifically for Ozempic for weight loss, said the physician.',
+    'The HCP mentioned increased patient demand for Ozempic after media coverage.',
+    'Many patients have heard about Ozempic from friends and want to try it, said the physician.',
   ]),
 };
 
 // Statements for sentiment report
 const sentimentStatementsByCategory: Record<string, Statement[]> = {
   's1': generateStatements('s1', 87, [
-    'Meget tilfreds med Novo Nordisk\'s produkter og den support vi får.',
-    'GLP-1 behandlingen har ændret vores tilgang til type 2 diabetes.',
-    'Godt klinisk materiale der er let at bruge i hverdagen.',
-    'Patienterne responderer godt på behandlingen.',
-    'Værdsætter den personlige kontakt med KAM\'en.',
+    'Very satisfied with Novo Nordisk\'s products and the support we receive.',
+    'GLP-1 treatment has changed our approach to type 2 diabetes.',
+    'Good clinical material that is easy to use in everyday practice.',
+    'Patients respond well to the treatment.',
+    'Appreciate the personal contact with the KAM.',
   ]),
   's2': generateStatements('s2', 64, [
-    'Ser stor interesse fra patienter omkring vægttabsbehandling.',
-    'Ønsker mere viden om Wegovy og indikationer.',
-    'Vægttab er blevet et centralt samtaleemne i konsultationer.',
-    'Efterspørger guidelines for patientudvælgelse til vægttabsbehandling.',
+    'Seeing great interest from patients regarding weight loss treatment.',
+    'Want more knowledge about Wegovy and indications.',
+    'Weight loss has become a central topic in consultations.',
+    'Requesting guidelines for patient selection for weight loss treatment.',
   ]),
   's3': generateStatements('s3', 42, [
-    'Leveringsusikkerhed gør det svært at starte nye patienter.',
-    'Patienter er frustrerede over manglende tilgængelighed.',
-    'Vi har måttet udskyde opstart på grund af leveringsproblemer.',
-    'Ønsker bedre kommunikation om forventet leveringstid.',
+    'Supply uncertainty makes it difficult to start new patients.',
+    'Patients are frustrated about lack of availability.',
+    'We have had to postpone initiation due to delivery problems.',
+    'Want better communication about expected delivery time.',
   ]),
   's4': generateStatements('s4', 31, [
-    'Kunne godt tænke os flere online ressourcer.',
-    'Webinarer ville være en effektiv måde at holde os opdateret.',
-    'Digital adgang til produktinformation ville spare tid.',
+    'Would like more online resources.',
+    'Webinars would be an effective way to keep us updated.',
+    'Digital access to product information would save time.',
   ]),
   's5': generateStatements('s5', 18, [
-    'Vi ser prispres fra biosimilars på insulinområdet.',
-    'Regionen presser på for billigere alternativer.',
-    'Behov for tydelig kommunikation af merværdi.',
+    'We see price pressure from biosimilars in the insulin area.',
+    'The region is pushing for cheaper alternatives.',
+    'Need for clear communication of added value.',
   ]),
 };
 
 // Statements for ozempic report
 const ozempicStatementsByCategory: Record<string, Statement[]> = {
   '1': generateStatements('1', 111, [
-    'Der blev ikke nævnt nogen indvendinger fra HCP\'erne vedrørende opstart af Ozempic-patienter.',
-    'HCP\'en havde ingen indvendinger eller bekymringer omkring opstart af Ozempic.',
-    'Positiv modtagelse af Ozempic som førstevalg.',
-    'Ingen bekymringer ved opstart – patienten var motiveret.',
-    'Uproblematisk initiering, HCP var allerede bekendt med produktet.',
-    'God erfaring med tidligere patienter, ingen forbehold.',
-    'HCP udtrykte tillid til Ozempic som behandlingsvalg.',
+    'No objections were mentioned by HCPs regarding initiation of Ozempic patients.',
+    'The HCP had no objections or concerns about starting Ozempic.',
+    'Positive reception of Ozempic as first choice.',
+    'No concerns at initiation – the patient was motivated.',
+    'Unproblematic initiation, HCP was already familiar with the product.',
+    'Good experience with previous patients, no reservations.',
+    'HCP expressed confidence in Ozempic as a treatment choice.',
   ]),
   '2': generateStatements('2', 39, [
-    'Der er interesse for mere viden om Score2 diabetes og hypoglykaemi.',
-    'Ønsker materiale om organbeskyttelse ved Ozempic.',
-    'Interesse for opfølgende aftale om forløbsplaner.',
-    'Vil gerne have mere data om langtidseffekter.',
-    'Efterspørger patientvenligt informationsmateriale.',
+    'There is interest in more knowledge about Score2 diabetes and hypoglycemia.',
+    'Want materials on organ protection with Ozempic.',
+    'Interest in follow-up appointment about treatment plans.',
+    'Would like more data on long-term effects.',
+    'Requesting patient-friendly information materials.',
   ]),
   '3': generateStatements('3', 35, [
-    'Patienter udtrykker bekymring over doseringsalgoritmer, herunder brugen af 8 doser og 2 mg.',
-    'Spørgsmål om krav til afprøvning af antidiabetika før Ozempic.',
-    'Uklarhed om dosisoptrapning hos ældre patienter.',
-    'Spørgsmål til algoritmen for skift fra insulin.',
-    'Behov for afklaring om kombination med andre præparater.',
+    'Patients express concern about dosing algorithms, including the use of 8 doses and 2 mg.',
+    'Questions about requirements for trying antidiabetics before Ozempic.',
+    'Uncertainty about dose escalation in elderly patients.',
+    'Questions about the algorithm for switching from insulin.',
+    'Need for clarification on combination with other preparations.',
   ]),
   '4': generateStatements('4', 20, [
-    'Der blev rejst indvendinger omkring regionens klausul fortolkning i forbindelse med opstart.',
-    'Bekymring over at skifte velbehandlede insulinpatienter til Ozempic.',
-    'Regionale krav om DPP-4 afprøvning først skaber frustration.',
-    'Bekymring om GI-bivirkninger hos sårbare patienter.',
+    'Objections were raised about the region\'s clause interpretation in connection with initiation.',
+    'Concern about switching well-treated insulin patients to Ozempic.',
+    'Regional requirements for DPP-4 trial first create frustration.',
+    'Concern about GI side effects in vulnerable patients.',
   ]),
 };
 
@@ -308,7 +308,7 @@ const InsightReportView = () => {
   const activeTheme = openCategories.length === 1 
     ? insightCategories.find(c => c.id === openCategories[0])?.title 
     : openCategories.length > 1 
-      ? `${openCategories.length} temaer` 
+      ? `${openCategories.length} themes` 
       : null;
 
   const totalStatements = insightCategories.reduce((sum, cat) => sum + cat.count, 0);
@@ -365,17 +365,17 @@ const InsightReportView = () => {
             className="gap-2 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
-            Tilbage
+            Back
           </Button>
           
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1.5">
               <Calendar className="h-4 w-4" />
-              {format(data.dateRange.from, "d. MMM", { locale: da })} - {format(data.dateRange.to, "d. MMM yyyy", { locale: da })}
+              {format(data.dateRange.from, "MMM d", { locale: enUS })} - {format(data.dateRange.to, "MMM d, yyyy", { locale: enUS })}
             </div>
             <div className="flex items-center gap-1.5">
               <Users className="h-4 w-4" />
-              {data.employee === 'all' ? 'Alle' : data.employee}
+              {data.employee === 'all' ? 'All' : data.employee}
             </div>
             <Badge variant="secondary">{data.product}</Badge>
           </div>
@@ -393,28 +393,28 @@ const InsightReportView = () => {
             {isOffLabelReport ? (
               <>
                 <p>
-                  Denne rapport identificerer debriefs hvor HCP'er uopfordret har delt information om off-label ordination af Ozempic til behandling af svær overvægt. I alt {totalStatements} observationer er registreret i perioden, hvor HCP'er har nævnt off-label praksis uden at dette var initieret af medarbejderen.
+                  This report identifies debriefs where HCPs have unsolicited shared information about off-label prescription of Ozempic for the treatment of severe obesity. A total of {totalStatements} observations have been recorded in the period where HCPs have mentioned off-label practices without this being initiated by the employee.
                 </p>
                 <p>
-                  <strong>Vigtigt:</strong> I henhold til retningslinjerne har medarbejderne ikke faciliteret eller fremmet dialog om off-label ordination. Det fremgår tydeligt af alle registreringer, at det var lægen der uopfordret nævnte off-label praksis, og at medarbejderen førte samtalen tilbage til mødets oprindelige formål.
+                  <strong>Important:</strong> In accordance with guidelines, employees have not facilitated or promoted dialogue about off-label prescription. It is clearly stated in all records that it was the physician who unsolicited mentioned off-label practices, and that the employee steered the conversation back to the meeting's original purpose.
                 </p>
               </>
             ) : isSentimentReport ? (
               <>
                 <p>
-                  Analysen af HCP og HCO interaktioner fra oktober til december 2025 viser en overordnet positiv stemning over for Novo Nordisk's produktportefølje. Særligt GLP-1 produkterne modtages godt, og der ses en markant stigende interesse for vægttabsbehandling blandt sundhedsprofessionelle.
+                  The analysis of HCP and HCO interactions from October to December 2025 shows an overall positive sentiment towards Novo Nordisk's product portfolio. GLP-1 products in particular are well received, and there is a significantly increasing interest in weight loss treatment among healthcare professionals.
                 </p>
                 <p>
-                  Der er dog identificeret udfordringer relateret til produkttilgængelighed og leveringssikkerhed, som påvirker HCP'ernes villighed til at initiere nye patienter. Derudover ses et stigende ønske om digitale kommunikationskanaler og mere fleksible kontaktmuligheder.
+                  However, challenges related to product availability and supply security have been identified, which affect HCPs' willingness to initiate new patients. Additionally, there is an increasing desire for digital communication channels and more flexible contact options.
                 </p>
               </>
             ) : (
               <>
                 <p>
-                  I perioden fra slutningen af august til december 2025 har der været en række debatter og observationer omkring igangsættelse af Ozempic-patienter blandt HCP'erne, primært inden for almen praksis. Generelt er der en overvægt af rapporter, der indikerer, at der ikke er mødt indvendinger vedrørende opstart af Ozempic-patienter. Dette er blevet nævnt gentagne gange af både sygeplejersker og læger, hvilket tyder på en generel accept af produktet.
+                  In the period from late August to December 2025, there have been a number of debates and observations regarding the initiation of Ozempic patients among HCPs, primarily in general practice. Generally, there is an overweight of reports indicating that no objections were encountered regarding the initiation of Ozempic patients. This has been mentioned repeatedly by both nurses and physicians, suggesting a general acceptance of the product.
                 </p>
                 <p>
-                  Der er dog også blevet rejst bekymringer og indvendinger i visse tilfælde. Nogle HCP'er har udtrykt bekymring over at skifte velbehandlede insulinpatienter til Ozempic, især når deres HbA1c-niveauer er tilfredsstillende. Der er også blevet nævnt pres fra regionerne og frygt for at komplicere behandlingerne, samt frustration over tilskudsklausulen.
+                  However, concerns and objections have also been raised in certain cases. Some HCPs have expressed concern about switching well-treated insulin patients to Ozempic, especially when their HbA1c levels are satisfactory. Pressure from regions and fear of complicating treatments have also been mentioned, as well as frustration with the subsidy clause.
                 </p>
               </>
             )}
@@ -439,7 +439,7 @@ const InsightReportView = () => {
               </div>
               <div>
                 <span className="text-lg font-semibold text-foreground">{neutralCount}</span>
-                <span className="text-sm text-muted-foreground ml-1">neutrale</span>
+                <span className="text-sm text-muted-foreground ml-1">neutral</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -448,7 +448,7 @@ const InsightReportView = () => {
               </div>
               <div>
                 <span className="text-lg font-semibold text-foreground">{negativeCount}</span>
-                <span className="text-sm text-muted-foreground ml-1">udfordringer</span>
+                <span className="text-sm text-muted-foreground ml-1">challenges</span>
               </div>
             </div>
             <div className="flex-1" />
@@ -472,7 +472,7 @@ const InsightReportView = () => {
         {/* Insights/Themes */}
         <section className="mb-10">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-foreground">Temaer</h2>
+            <h2 className="text-xl font-semibold text-foreground">Themes</h2>
           </div>
           
           <div className="space-y-2">
@@ -529,7 +529,7 @@ const InsightReportView = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span>{displayedStatements.length} kilder</span>
+                  <span>{displayedStatements.length} sources</span>
                   {showStatements ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                 </div>
               </div>
@@ -557,7 +557,7 @@ const InsightReportView = () => {
         {/* Footer Actions */}
         <div className="flex items-center justify-between py-4">
           <span className="text-sm text-muted-foreground">
-            Genereret: {format(new Date(), "d. MMMM yyyy", { locale: da })}
+            Generated: {format(new Date(), "MMMM d, yyyy", { locale: enUS })}
           </span>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="gap-2 bg-background">
@@ -566,7 +566,7 @@ const InsightReportView = () => {
             </Button>
             <Button variant="outline" size="sm" className="gap-2 bg-background">
               <Share2 className="h-4 w-4" />
-              Del
+              Share
             </Button>
           </div>
         </div>
