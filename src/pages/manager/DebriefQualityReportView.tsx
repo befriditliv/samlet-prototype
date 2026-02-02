@@ -50,75 +50,71 @@ const qualityDimensions: QualityDimension[] = [
   {
     id: 'structure',
     title: 'Structure and format',
-    score: 8,
+    score: 9,
     maxScore: 10,
     status: 'good',
-    trend: 'stable',
-    description: 'Debriefs generally follow a clear structure with purpose, activity description and next steps.',
+    trend: 'up',
+    description: 'Debriefs consistently follow a clear structure with purpose, activity description and next steps. Significant improvement in recent weeks.',
     goodExamples: [
       'Clear purpose defined at the start of debrief',
       'Good separation between activity, reaction and follow-up',
       'Consistent use of structured fields'
     ],
     improvementAreas: [
-      'Some debriefs lack clearly defined next steps',
-      'Follow-up times not always specified'
+      'Some debriefs could include more specific timelines'
     ]
   },
   {
     id: 'depth',
     title: 'Depth and detail level',
-    score: 5,
+    score: 8,
     maxScore: 10,
-    status: 'medium',
+    status: 'good',
     trend: 'up',
-    description: 'Varying quality in the depth of debriefs. Some are very superficial while others contain valuable details.',
+    description: 'Strong improvement in detail quality. Most debriefs now contain valuable insights and specific details.',
     goodExamples: [
       'Specific HCP quotes included',
       'Description of concrete concerns and barriers',
       'Nuanced description of HCP engagement'
     ],
     improvementAreas: [
-      'Many debriefs are too short and generic',
-      'Missing description of HCP reactions',
-      'Too little context about the meeting situation'
+      'Continue to encourage specific examples',
+      'More context about the meeting situation when relevant'
     ]
   },
   {
     id: 'actionability',
     title: 'Actionability',
-    score: 4,
+    score: 8,
     maxScore: 10,
-    status: 'poor',
-    trend: 'down',
-    description: 'Debriefs often lack concrete, action-oriented insights that can be used for follow-up.',
+    status: 'good',
+    trend: 'up',
+    description: 'Debriefs now include concrete, action-oriented insights. Clear improvement from week 49 to 50.',
     goodExamples: [
       'Clear agreements about next contact documented',
-      'Specific materials agreed for sending'
+      'Specific materials agreed for sending',
+      'Concrete deadlines specified for follow-ups'
     ],
     improvementAreas: [
-      'Follow-up often described as "will follow up" without specific plan',
-      'Missing assignment of responsibility for agreed actions',
-      'Few concrete deadlines or milestones'
+      'Some follow-ups could include more specific milestones'
     ]
   },
   {
     id: 'hcp-insight',
     title: 'HCP insight and reactions',
-    score: 6,
+    score: 9,
     maxScore: 10,
-    status: 'medium',
-    trend: 'stable',
-    description: 'Moderate level of documentation of HCP reactions and insights from meetings.',
+    status: 'good',
+    trend: 'up',
+    description: 'Excellent documentation of HCP reactions and insights. Team has significantly improved in capturing specific feedback.',
     goodExamples: [
       'Direct quotes from HCPs included',
       'Description of engagement level during the meeting',
-      'Documentation of specific questions asked'
+      'Documentation of specific questions asked',
+      'Nuanced descriptions of concerns and interests'
     ],
     improvementAreas: [
-      'Reactions often generic ("positive reception")',
-      'Missing nuances in description of concerns',
-      'Too little focus on unspoken signals'
+      'Continue the great progress'
     ]
   }
 ];
@@ -134,32 +130,32 @@ interface EmployeeQuality {
 
 const employeeBreakdown: EmployeeQuality[] = [
   {
-    name: 'Christian Schmidt Larsen',
-    avgScore: 7.2,
-    debriefCount: 16,
-    strengths: ['Thorough structure', 'Good HCP quotes'],
-    improvements: ['Shorter follow-up descriptions']
+    name: 'Sarah Mitchell',
+    avgScore: 9.2,
+    debriefCount: 18,
+    strengths: ['Excellent structure', 'Great HCP quotes', 'Clear action items'],
+    improvements: ['Keep up the momentum']
   },
   {
-    name: 'Lenette Skott',
-    avgScore: 6.8,
-    debriefCount: 5,
-    strengths: ['Action-oriented', 'Good detail level'],
-    improvements: ['More specific agreements']
+    name: 'James Harrison',
+    avgScore: 8.8,
+    debriefCount: 12,
+    strengths: ['Action-oriented', 'Detailed insights', 'Strong follow-ups'],
+    improvements: ['Minor formatting consistency']
   },
   {
-    name: 'Gitte Baker',
-    avgScore: 5.4,
+    name: 'Emily Thompson',
+    avgScore: 8.4,
     debriefCount: 14,
-    strengths: ['Consistent format'],
-    improvements: ['More depth in descriptions', 'Better HCP insight']
+    strengths: ['Consistent format', 'Good depth', 'Clear next steps'],
+    improvements: ['Include more HCP quotes']
   },
   {
-    name: 'Christine Willesen',
-    avgScore: 5.1,
-    debriefCount: 5,
-    strengths: ['Good structure'],
-    improvements: ['More detailed reactions', 'Concrete next steps']
+    name: 'Michael Chen',
+    avgScore: 8.1,
+    debriefCount: 8,
+    strengths: ['Good structure', 'Improving rapidly'],
+    improvements: ['Continue adding specific details']
   }
 ];
 
@@ -297,9 +293,13 @@ const DebriefQualityReportView = () => {
                 <div className="text-center">
                   <div className="text-5xl font-bold text-foreground">{overallScore}</div>
                   <div className="text-sm text-muted-foreground">/10</div>
-                  <Badge className="mt-2 bg-amber-500/10 text-amber-600 border-amber-200/50">
-                    Medium quality
+                  <Badge className="mt-2 bg-green-500/10 text-green-600 border-green-200/50">
+                    High quality
                   </Badge>
+                  <div className="flex items-center gap-1 mt-2 text-xs text-green-600">
+                    <TrendingUp className="h-3 w-3" />
+                    <span>8 → 9 (week 49-50)</span>
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -311,16 +311,16 @@ const DebriefQualityReportView = () => {
           <h2 className="text-2xl font-bold text-foreground mb-4">Executive Summary</h2>
           <div className="text-foreground/90 space-y-4 leading-relaxed">
             <p>
-              The analysis of the team's debriefs from August to December 2025 shows <strong>moderate quality</strong> with an average of {overallScore}/10. 
-              Debriefs generally have a <strong>good structure</strong>, but there is significant room for improvement in <strong>depth</strong> and <strong>actionability</strong>.
+              The analysis of the team's debriefs from August to December 2025 shows <strong>high quality</strong> with an excellent average of {overallScore}/10. 
+              The team has shown <strong>significant improvement</strong>, particularly from week 49 to 50 where the overall score increased from 8 to 9.
             </p>
             <p>
-              In particular, it is noted that many debriefs are too short and lack concrete, action-oriented insights. 
-              HCP reactions are often documented in generic terms such as "positive reception" rather than specific quotes or nuanced descriptions of engagement.
+              Debriefs consistently feature strong structure, detailed HCP insights with specific quotes, and actionable follow-up plans.
+              The team has excelled at documenting concrete agreements with clear timelines and milestones.
             </p>
             <p>
-              <strong>Anbefaling:</strong> Fokus på at træne medarbejdere i at inkludere specifikke HCP citater, konkrete aftaler med deadlines, 
-              og mere detaljerede beskrivelser af HCP bekymringer og reaktioner.
+              <strong>Recommendation:</strong> Continue the excellent momentum. Share best practices from top performers across the team 
+              and maintain focus on capturing specific HCP quotes and reactions.
             </p>
           </div>
         </section>
