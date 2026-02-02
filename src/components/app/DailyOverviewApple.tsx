@@ -411,9 +411,9 @@ export const DailyOverviewApple = ({
                         <span className="text-[11px] font-medium text-destructive">Needs debrief</span>
                       )}
                       {meeting.status === "debrief-ready" && (
-                        <div className="flex items-center gap-2 px-2.5 py-1.5 border border-primary/30 rounded-full">
-                          <CheckCircle2 className="h-3 w-3 text-primary" />
-                          <span className="text-[11px] font-medium text-primary">Ready for review</span>
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 border border-primary/20 rounded-full">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
+                          <span className="text-xs font-medium text-primary">Ready for review</span>
                         </div>
                       )}
                       {meeting.status === "upcoming" && (
