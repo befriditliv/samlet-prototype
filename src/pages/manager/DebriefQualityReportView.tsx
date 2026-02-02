@@ -22,7 +22,7 @@ import {
   Minus
 } from "lucide-react";
 import { format } from "date-fns";
-import { da } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
@@ -49,39 +49,39 @@ interface QualityDimension {
 const qualityDimensions: QualityDimension[] = [
   {
     id: 'structure',
-    title: 'Struktur og format',
+    title: 'Structure and format',
     score: 8,
     maxScore: 10,
     status: 'good',
     trend: 'stable',
-    description: 'Debriefs følger generelt en klar struktur med formål, aktivitetsbeskrivelse og næste skridt.',
+    description: 'Debriefs generally follow a clear structure with purpose, activity description and next steps.',
     goodExamples: [
-      'Klart formål defineret i starten af debrief',
-      'God opdeling mellem aktivitet, reaktion og opfølgning',
-      'Konsistent brug af strukturerede felter'
+      'Clear purpose defined at the start of debrief',
+      'Good separation between activity, reaction and follow-up',
+      'Consistent use of structured fields'
     ],
     improvementAreas: [
-      'Nogle debriefs mangler klart defineret næste skridt',
-      'Tidspunkter for opfølgning ikke altid angivet'
+      'Some debriefs lack clearly defined next steps',
+      'Follow-up times not always specified'
     ]
   },
   {
     id: 'depth',
-    title: 'Dybde og detaljegrad',
+    title: 'Depth and detail level',
     score: 5,
     maxScore: 10,
     status: 'medium',
     trend: 'up',
-    description: 'Varierende kvalitet i dybden af debriefs. Nogle er meget overfladiske mens andre indeholder værdifulde detaljer.',
+    description: 'Varying quality in the depth of debriefs. Some are very superficial while others contain valuable details.',
     goodExamples: [
-      'Specifikke HCP-citater inkluderet',
-      'Beskrivelse af konkrete bekymringer og barrierer',
-      'Nuanceret beskrivelse af HCP engagement'
+      'Specific HCP quotes included',
+      'Description of concrete concerns and barriers',
+      'Nuanced description of HCP engagement'
     ],
     improvementAreas: [
-      'Mange debriefs er for korte og generiske',
-      'Manglende beskrivelse af HCP reaktioner',
-      'For lidt kontekst om mødesituationen'
+      'Many debriefs are too short and generic',
+      'Missing description of HCP reactions',
+      'Too little context about the meeting situation'
     ]
   },
   {
@@ -91,34 +91,34 @@ const qualityDimensions: QualityDimension[] = [
     maxScore: 10,
     status: 'poor',
     trend: 'down',
-    description: 'Debriefs mangler ofte konkrete, handlingsorienterede indsigter der kan bruges til opfølgning.',
+    description: 'Debriefs often lack concrete, action-oriented insights that can be used for follow-up.',
     goodExamples: [
-      'Klare aftaler om næste kontakt dokumenteret',
-      'Specifikke materialer aftalt til fremsendelse'
+      'Clear agreements about next contact documented',
+      'Specific materials agreed for sending'
     ],
     improvementAreas: [
-      'Opfølgning ofte beskrevet som "vil følge op" uden specifik plan',
-      'Manglende ansvarsfordeling på aftalte handlinger',
-      'Få konkrete deadlines eller milepæle'
+      'Follow-up often described as "will follow up" without specific plan',
+      'Missing assignment of responsibility for agreed actions',
+      'Few concrete deadlines or milestones'
     ]
   },
   {
     id: 'hcp-insight',
-    title: 'HCP indsigt og reaktioner',
+    title: 'HCP insight and reactions',
     score: 6,
     maxScore: 10,
     status: 'medium',
     trend: 'stable',
-    description: 'Moderat niveau af dokumentation af HCP reaktioner og indsigter fra møder.',
+    description: 'Moderate level of documentation of HCP reactions and insights from meetings.',
     goodExamples: [
-      'Direkte citater fra HCP\'er inkluderet',
-      'Beskrivelse af engagement-niveau under mødet',
-      'Dokumentation af specifikke spørgsmål stillet'
+      'Direct quotes from HCPs included',
+      'Description of engagement level during the meeting',
+      'Documentation of specific questions asked'
     ],
     improvementAreas: [
-      'Reaktioner ofte generiske ("positiv modtagelse")',
-      'Manglende nuancer i beskrivelse af bekymringer',
-      'For lidt fokus på uudtalte signaler'
+      'Reactions often generic ("positive reception")',
+      'Missing nuances in description of concerns',
+      'Too little focus on unspoken signals'
     ]
   }
 ];
@@ -137,29 +137,29 @@ const employeeBreakdown: EmployeeQuality[] = [
     name: 'Christian Schmidt Larsen',
     avgScore: 7.2,
     debriefCount: 16,
-    strengths: ['Grundig struktur', 'Gode HCP citater'],
-    improvements: ['Kortere opfølgningsbeskrivelser']
+    strengths: ['Thorough structure', 'Good HCP quotes'],
+    improvements: ['Shorter follow-up descriptions']
   },
   {
     name: 'Lenette Skott',
     avgScore: 6.8,
     debriefCount: 5,
-    strengths: ['Handlingsorienteret', 'God detaljegrad'],
-    improvements: ['Flere specifikke aftaler']
+    strengths: ['Action-oriented', 'Good detail level'],
+    improvements: ['More specific agreements']
   },
   {
     name: 'Gitte Baker',
     avgScore: 5.4,
     debriefCount: 14,
-    strengths: ['Konsistent format'],
-    improvements: ['Mere dybde i beskrivelser', 'Bedre HCP indsigt']
+    strengths: ['Consistent format'],
+    improvements: ['More depth in descriptions', 'Better HCP insight']
   },
   {
     name: 'Christine Willesen',
     avgScore: 5.1,
     debriefCount: 5,
-    strengths: ['God struktur'],
-    improvements: ['Mere detaljerede reaktioner', 'Konkrete næste skridt']
+    strengths: ['Good structure'],
+    improvements: ['More detailed reactions', 'Concrete next steps']
   }
 ];
 
@@ -177,34 +177,34 @@ const debriefExcerpts: DebriefExcerpt[] = [
   {
     id: '1',
     employee: 'Christian Schmidt Larsen',
-    date: 'dec. 18, 2025',
+    date: 'Dec. 18, 2025',
     quality: 'good',
-    excerpt: 'HCP viste stor interesse for de nye kardiovaskulære data. Specifikt spurgte hun ind til SUSTAIN-6 resultaterne og bad om materiale til at dele med kollegerne. Aftalt at sende PDF og booke opfølgende møde i januar for at diskutere implementering i praksis.',
-    feedback: 'Godt eksempel: Specifik HCP reaktion, konkret aftale, klart næste skridt med tidspunkt.'
+    excerpt: 'HCP showed great interest in the new cardiovascular data. She specifically asked about the SUSTAIN-6 results and requested material to share with colleagues. Agreed to send PDF and book follow-up meeting in January to discuss implementation in practice.',
+    feedback: 'Good example: Specific HCP reaction, concrete agreement, clear next step with timeframe.'
   },
   {
     id: '2',
     employee: 'Lenette Skott',
-    date: 'dec. 12, 2025',
+    date: 'Dec. 12, 2025',
     quality: 'good',
-    excerpt: 'Lægen udtrykte bekymring over patienternes gastrointestinale bivirkninger de første uger. Vi gennemgik dosisoptrapningsalgoritmen sammen, og han var positiv over for at starte patienter på lavere dosis. Vil følge op om 3 uger for at høre erfaringer.',
-    feedback: 'Godt eksempel: Dokumenterer bekymring, beskriver løsning, har konkret opfølgningsplan.'
+    excerpt: 'The physician expressed concern about patients\' gastrointestinal side effects in the first weeks. We reviewed the dose titration algorithm together, and he was positive about starting patients on a lower dose. Will follow up in 3 weeks to hear about experiences.',
+    feedback: 'Good example: Documents concern, describes solution, has concrete follow-up plan.'
   },
   {
     id: '3',
     employee: 'Gitte Baker',
-    date: 'dec. 5, 2025',
+    date: 'Dec. 5, 2025',
     quality: 'poor',
-    excerpt: 'Godt møde. HCP var interesseret. Vil følge op senere.',
-    feedback: 'Forbedringspotentiale: For kort, ingen konkrete detaljer, uklart hvad HCP var interesseret i, ingen specifik opfølgningsplan.'
+    excerpt: 'Good meeting. HCP was interested. Will follow up later.',
+    feedback: 'Room for improvement: Too short, no concrete details, unclear what HCP was interested in, no specific follow-up plan.'
   },
   {
     id: '4',
     employee: 'Christine Willesen',
-    date: 'nov. 28, 2025',
+    date: 'Nov. 28, 2025',
     quality: 'poor',
-    excerpt: 'Præsenterede materialet. Positivt modtaget.',
-    feedback: 'Forbedringspotentiale: Mangler beskrivelse af hvilket materiale, ingen HCP reaktioner dokumenteret, ingen næste skridt.'
+    excerpt: 'Presented the material. Positively received.',
+    feedback: 'Room for improvement: Missing description of which material, no HCP reactions documented, no next steps.'
   }
 ];
 
@@ -291,14 +291,14 @@ const DebriefQualityReportView = () => {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-foreground mb-2">Samlet kvalitetsscore</h2>
-                  <p className="text-muted-foreground">Baseret på {employeeBreakdown.reduce((sum, e) => sum + e.debriefCount, 0)} debriefs fra 4 medarbejdere</p>
+                  <h2 className="text-2xl font-bold text-foreground mb-2">Overall quality score</h2>
+                  <p className="text-muted-foreground">Based on {employeeBreakdown.reduce((sum, e) => sum + e.debriefCount, 0)} debriefs from 4 employees</p>
                 </div>
                 <div className="text-center">
                   <div className="text-5xl font-bold text-foreground">{overallScore}</div>
                   <div className="text-sm text-muted-foreground">/10</div>
                   <Badge className="mt-2 bg-amber-500/10 text-amber-600 border-amber-200/50">
-                    Medium kvalitet
+                    Medium quality
                   </Badge>
                 </div>
               </div>
@@ -311,12 +311,12 @@ const DebriefQualityReportView = () => {
           <h2 className="text-2xl font-bold text-foreground mb-4">Executive Summary</h2>
           <div className="text-foreground/90 space-y-4 leading-relaxed">
             <p>
-              Analysen af teamets debriefs fra august til december 2025 viser en <strong>moderat kvalitet</strong> med et gennemsnit på {overallScore}/10. 
-              Debriefs har generelt en <strong>god struktur</strong>, men der er betydeligt rum for forbedring inden for <strong>dybde</strong> og <strong>actionability</strong>.
+              The analysis of the team's debriefs from August to December 2025 shows <strong>moderate quality</strong> with an average of {overallScore}/10. 
+              Debriefs generally have a <strong>good structure</strong>, but there is significant room for improvement in <strong>depth</strong> and <strong>actionability</strong>.
             </p>
             <p>
-              Særligt bemærkes det, at mange debriefs er for korte og mangler konkrete, handlingsorienterede indsigter. 
-              HCP reaktioner dokumenteres ofte i generiske vendinger som "positiv modtagelse" frem for specifikke citater eller nuancerede beskrivelser af engagement.
+              In particular, it is noted that many debriefs are too short and lack concrete, action-oriented insights. 
+              HCP reactions are often documented in generic terms such as "positive reception" rather than specific quotes or nuanced descriptions of engagement.
             </p>
             <p>
               <strong>Anbefaling:</strong> Fokus på at træne medarbejdere i at inkludere specifikke HCP citater, konkrete aftaler med deadlines, 
@@ -522,7 +522,7 @@ const DebriefQualityReportView = () => {
         {/* Footer Actions */}
         <div className="flex items-center justify-between py-4">
           <span className="text-sm text-muted-foreground">
-            Genereret: {format(new Date(), "d. MMMM yyyy", { locale: da })}
+            Generated: {format(new Date(), "MMMM d, yyyy", { locale: enUS })}
           </span>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="gap-2 bg-background">

@@ -53,56 +53,56 @@ interface HcpOption {
 const products = ["Ozempic", "Saxenda", "Tresiba", "NovoPen 6", "Wegovy", "Fiasp", "SELECT", "Rybelsus"];
 const adoptionStages = [{
   id: "unaware",
-  label: "Uaware",
-  description: "Kender ikke til produktet"
+  label: "Unaware",
+  description: "Not familiar with the product"
 }, {
   id: "aware",
   label: "Aware",
-  description: "Kender til produktet"
+  description: "Knows about the product"
 }, {
   id: "interested",
   label: "Interested",
-  description: "Viser interesse"
+  description: "Shows interest"
 }, {
   id: "trial",
   label: "Trial",
-  description: "Prøver produktet"
+  description: "Trying the product"
 }, {
   id: "evaluating",
   label: "Evaluating",
-  description: "Evaluerer produktet"
+  description: "Evaluating the product"
 }, {
   id: "user",
   label: "User",
-  description: "Bruger produktet aktivt"
+  description: "Actively using the product"
 }, {
   id: "advocate",
   label: "Advocate",
-  description: "Anbefaler produktet"
+  description: "Recommends the product"
 }];
 const commonObjections = [{
   id: "1",
-  label: "Regionspres/frygt for sanktioner",
+  label: "Regional pressure/fear of sanctions",
   icon: Building2
 }, {
   id: "2",
-  label: "Pris bekymring",
+  label: "Price concern",
   icon: TrendingUp
 }, {
   id: "3",
-  label: "Manglende evidens",
+  label: "Lack of evidence",
   icon: BookOpen
 }, {
   id: "4",
-  label: "Bivirkninger",
+  label: "Side effects",
   icon: AlertCircle
 }, {
   id: "5",
-  label: "Eksisterende behandling fungerer",
+  label: "Current treatment is working",
   icon: CheckCircle2
 }, {
   id: "6",
-  label: "Patientpræference",
+  label: "Patient preference",
   icon: Users
 }];
 const Traeningsplatform = () => {
@@ -173,7 +173,7 @@ const Traeningsplatform = () => {
     setViewState("simulation");
     setChatMessages([{
       role: "hcp",
-      content: `Hej, jeg hedder ${scenarioConfig.hcpName || "Dr. Hansen"}. Hvad kan jeg hjælpe dig med i dag?`
+      content: `Hello, I'm ${scenarioConfig.hcpName || "Dr. Hansen"}. How can I help you today?`
     }]);
   };
   const handleSendMessage = () => {
@@ -186,7 +186,7 @@ const Traeningsplatform = () => {
     setTimeout(() => {
       setChatMessages(prev => [...prev, {
         role: "hcp",
-        content: "Det er interessant. Kan du fortælle mig mere om bivirkningsprofilen og hvordan det sammenlignes med andre behandlinger på markedet?"
+        content: "That's interesting. Can you tell me more about the side effect profile and how it compares to other treatments on the market?"
       }]);
     }, 1000);
   };
@@ -197,16 +197,16 @@ const Traeningsplatform = () => {
       improvements: ["You did not address the client's concern about economic and political pressure.", "You did not provide any strategies or arguments to support the use of Ozempic despite the guidelines.", "You did not engage with the client's request for suggestions on handling objections."],
       recommendations: "To improve future conversations, focus on understanding the client's specific concerns and provide tailored solutions or arguments that address those concerns.",
       scores: [{
-        label: "Virksomhedskendskab",
+        label: "Company knowledge",
         score: 3
       }, {
-        label: "Produktkendskab",
+        label: "Product knowledge",
         score: 3
       }, {
-        label: "Indvendinger Håndtering",
+        label: "Objection handling",
         score: 2
       }, {
-        label: "Kommunikation",
+        label: "Communication",
         score: 1
       }]
     });
@@ -264,7 +264,7 @@ const Traeningsplatform = () => {
             <img src={jarvisLogo} alt="Jarvis Logo" className="h-10 w-10" />
             <div className="flex-1">
               <h1 className="text-xl font-bold text-foreground">
-                Jarvis Træningsplatform
+                Jarvis Training Platform
               </h1>
             </div>
             <div className="flex items-center gap-3">
@@ -285,16 +285,16 @@ const Traeningsplatform = () => {
             <div className="text-center space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
                 <Sparkles className="h-4 w-4" />
-                AI-drevet træning
+                AI-powered training
               </div>
               <h2 className="text-3xl font-bold leading-tight">
                 <span className="text-foreground">Jarvis</span>
                 {" "}
-                <span className="text-primary">Træningsplatform</span>
+                <span className="text-primary">Training Platform</span>
               </h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                Træn HCP-samtaler, håndter indvendinger og styrk din produktviden – 
-                alt sammen i et sikkert miljø med øjeblikkelig feedback.
+                Practice HCP conversations, handle objections and strengthen your product knowledge – 
+                all in a safe environment with instant feedback.
               </p>
             </div>
 
@@ -415,8 +415,8 @@ const Traeningsplatform = () => {
             {/* Progress Header */}
             <div className="space-y-4">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Trin {wizardStep} af 3</span>
-                <span className="text-muted-foreground">{Math.round(getWizardProgress())}% færdig</span>
+                <span className="text-muted-foreground">Step {wizardStep} of 3</span>
+                <span className="text-muted-foreground">{Math.round(getWizardProgress())}% complete</span>
               </div>
               <Progress value={getWizardProgress()} className="h-2" />
             </div>
@@ -427,22 +427,22 @@ const Traeningsplatform = () => {
                 {/* Step 1: Product */}
                 {wizardStep === 1 && <div className="space-y-6">
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-bold text-foreground">Vælg produkt</h3>
+                      <h3 className="text-2xl font-bold text-foreground">Select product</h3>
                       <p className="text-muted-foreground">
-                        Hvilket produkt vil du fokusere på i denne træningssession?
+                        Which product do you want to focus on in this training session?
                       </p>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="name">Scenarienavn (valgfrit)</Label>
+                      <Label htmlFor="name">Scenario name (optional)</Label>
                       <Input id="name" value={scenarioConfig.name} onChange={e => setScenarioConfig(prev => ({
                   ...prev,
                   name: e.target.value
-                }))} placeholder="F.eks. Wegovy - SELECT forberedelse" />
+                }))} placeholder="E.g. Wegovy - SELECT preparation" />
                     </div>
 
                     <div className="space-y-3">
-                      <Label>Produkt *</Label>
+                      <Label>Product *</Label>
                       <div className="grid grid-cols-2 gap-3">
                         {products.map(product => <div key={product} className={cn("p-4 rounded-xl border-2 cursor-pointer transition-all", scenarioConfig.product === product ? "border-primary bg-primary/5" : "border-border hover:border-primary/30 hover:bg-accent/30")} onClick={() => setScenarioConfig(prev => ({
                     ...prev,
@@ -462,9 +462,9 @@ const Traeningsplatform = () => {
                 {/* Step 2: Adoption Stage */}
                 {wizardStep === 2 && <div className="space-y-6">
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-bold text-foreground">Vælg adoptionsstige</h3>
+                      <h3 className="text-2xl font-bold text-foreground">Select adoption stage</h3>
                       <p className="text-muted-foreground">
-                        Hvor er HCP'en i forhold til at adoptere {scenarioConfig.product}?
+                        Where is the HCP in terms of adopting {scenarioConfig.product}?
                       </p>
                     </div>
 
@@ -489,9 +489,9 @@ const Traeningsplatform = () => {
                 {/* Step 3: Objections */}
                 {wizardStep === 3 && <div className="space-y-6">
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-bold text-foreground">Vælg indvendinger</h3>
+                      <h3 className="text-2xl font-bold text-foreground">Select objections</h3>
                       <p className="text-muted-foreground">
-                        Hvilke indvendinger vil du træne at håndtere? Vælg mindst én.
+                        Which objections do you want to practice handling? Select at least one.
                       </p>
                     </div>
 
@@ -517,14 +517,14 @@ const Traeningsplatform = () => {
             <div className="flex items-center justify-between">
               <Button variant="ghost" onClick={() => wizardStep > 1 ? setWizardStep(prev => prev - 1) : handleBackToLanding()} className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
-                {wizardStep > 1 ? "Tilbage" : "Annuller"}
+                {wizardStep > 1 ? "Back" : "Cancel"}
               </Button>
 
               {wizardStep < 3 ? <Button onClick={() => setWizardStep(prev => prev + 1)} disabled={!canProceedCustomWizard()} className="gap-2">
-                  Fortsæt
+                  Continue
                   <ArrowRight className="h-4 w-4" />
                 </Button> : <Button onClick={handleShowScenarioPreview} disabled={!canProceedCustomWizard()} className="gap-2">
-                  Se scenarie
+                  View scenario
                   <ArrowRight className="h-4 w-4" />
                 </Button>}
             </div>
@@ -535,8 +535,8 @@ const Traeningsplatform = () => {
             {/* Progress Header */}
             <div className="space-y-4">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Trin {wizardStep} af 2</span>
-                <span className="text-muted-foreground">{Math.round(wizardStep / 2 * 100)}% færdig</span>
+                <span className="text-muted-foreground">Step {wizardStep} of 2</span>
+                <span className="text-muted-foreground">{Math.round(wizardStep / 2 * 100)}% complete</span>
               </div>
               <Progress value={wizardStep / 2 * 100} className="h-2" />
             </div>
@@ -547,26 +547,26 @@ const Traeningsplatform = () => {
                 {/* Step 1: Select HCP */}
                 {wizardStep === 1 && <div className="space-y-6">
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-bold text-foreground">Vælg en HCP</h3>
+                      <h3 className="text-2xl font-bold text-foreground">Select an HCP</h3>
                       <p className="text-muted-foreground">
-                        Hvilken HCP vil du forberede dig på at møde?
+                        Which HCP are you preparing to meet?
                       </p>
                     </div>
 
                     <div className="space-y-3">
-                      <Label>Søg efter HCP'er</Label>
+                      <Label>Search for HCPs</Label>
                       <Popover open={hcpOpen} onOpenChange={setHcpOpen}>
                         <PopoverTrigger asChild>
                           <Button variant="outline" role="combobox" aria-expanded={hcpOpen} className="w-full justify-between font-normal h-12">
-                            {scenarioConfig.hcpName || "Søg og vælg en HCP..."}
+                            {scenarioConfig.hcpName || "Search and select an HCP..."}
                             <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-full p-0" align="start">
                           <Command>
-                            <CommandInput placeholder="Søg efter HCP'er..." />
+                            <CommandInput placeholder="Search for HCPs..." />
                             <CommandList>
-                              <CommandEmpty>Ingen HCP'er fundet.</CommandEmpty>
+                              <CommandEmpty>No HCPs found.</CommandEmpty>
                               <CommandGroup>
                                 {hcpOptions.map(hcp => <CommandItem key={hcp.id} value={hcp.name} onSelect={() => {
                             setScenarioConfig(prev => ({
@@ -609,9 +609,9 @@ const Traeningsplatform = () => {
                 {/* Step 2: Select Product */}
                 {wizardStep === 2 && <div className="space-y-6">
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-bold text-foreground">Vælg produkt</h3>
+                      <h3 className="text-2xl font-bold text-foreground">Select product</h3>
                       <p className="text-muted-foreground">
-                        Hvilket produkt vil du diskutere med {scenarioConfig.hcpName}?
+                        Which product do you want to discuss with {scenarioConfig.hcpName}?
                       </p>
                     </div>
 
@@ -636,14 +636,14 @@ const Traeningsplatform = () => {
             <div className="flex items-center justify-between">
               <Button variant="ghost" onClick={() => wizardStep > 1 ? setWizardStep(prev => prev - 1) : handleBackToLanding()} className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
-                {wizardStep > 1 ? "Tilbage" : "Annuller"}
+                {wizardStep > 1 ? "Back" : "Cancel"}
               </Button>
 
               {wizardStep < 2 ? <Button onClick={() => setWizardStep(prev => prev + 1)} disabled={!canProceedHcpWizard()} className="gap-2">
-                  Fortsæt
+                  Continue
                   <ArrowRight className="h-4 w-4" />
                 </Button> : <Button onClick={handleShowScenarioPreview} disabled={!canProceedHcpWizard()} className="gap-2">
-                  Se scenarie
+                  View scenario
                   <ArrowRight className="h-4 w-4" />
                 </Button>}
             </div>
@@ -654,10 +654,10 @@ const Traeningsplatform = () => {
             {/* Header */}
             <div className="text-center space-y-3">
               <h2 className="text-2xl font-bold text-primary">
-                {scenarioConfig.name || `${scenarioConfig.product} - Træningsscenarie`}
+                {scenarioConfig.name || `${scenarioConfig.product} - Training Scenario`}
               </h2>
               <p className="text-sm text-muted-foreground">
-                Oprettet af {scenarioConfig.hcpName ? `baseret på ${scenarioConfig.hcpName}` : "Dig"}
+                Created {scenarioConfig.hcpName ? `based on ${scenarioConfig.hcpName}` : "by you"}
               </p>
             </div>
 
@@ -667,7 +667,7 @@ const Traeningsplatform = () => {
                 {/* Product Section */}
                 <div className="p-6 border-b">
                   <div className="space-y-3">
-                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Produkt</h4>
+                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Product</h4>
                     <div className="flex items-center gap-3">
                       <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
                         <Check className="h-3.5 w-3.5 text-primary-foreground" />
@@ -680,14 +680,14 @@ const Traeningsplatform = () => {
                 {/* Adoption Stage Section */}
                 <div className="p-6 border-b bg-accent/20">
                   <div className="space-y-3">
-                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Adoptionsstige</h4>
+                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Adoption Stage</h4>
                     <div className="flex items-center gap-3">
                       <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
                         <Check className="h-3.5 w-3.5 text-primary-foreground" />
                       </div>
                       <div>
                         <span className="font-medium text-foreground">
-                          {adoptionStages.find(s => s.id === scenarioConfig.adoptionStage)?.label || "Ikke valgt"}
+                          {adoptionStages.find(s => s.id === scenarioConfig.adoptionStage)?.label || "Not selected"}
                         </span>
                         <p className="text-sm text-muted-foreground">
                           {adoptionStages.find(s => s.id === scenarioConfig.adoptionStage)?.description}
@@ -700,7 +700,7 @@ const Traeningsplatform = () => {
                 {/* Objections Section */}
                 {scenarioConfig.objections.length > 0 && <div className="p-6 border-b">
                   <div className="space-y-4">
-                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Indvendinger</h4>
+                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Objections</h4>
                     <div className="space-y-3">
                       {scenarioConfig.objections.map(objId => {
                         const objection = commonObjections.find(o => o.id === objId);
@@ -723,12 +723,12 @@ const Traeningsplatform = () => {
                 {/* Objective Section */}
                 <div className="p-6 border-b bg-accent/20">
                   <div className="space-y-3">
-                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Formål</h4>
+                    <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">Objective</h4>
                     <div className="p-4 rounded-lg bg-card border">
                       <p className="text-foreground">
                         {scenarioConfig.objections.length > 0 
-                          ? `Håndter indvendinger og overbevis HCP'en om fordelene ved ${scenarioConfig.product}`
-                          : `Diskuter ${scenarioConfig.product} med HCP'en og adresser eventuelle bekymringer`}
+                          ? `Handle objections and convince the HCP of the benefits of ${scenarioConfig.product}`
+                          : `Discuss ${scenarioConfig.product} with the HCP and address any concerns`}
                       </p>
                     </div>
                   </div>
@@ -741,8 +741,8 @@ const Traeningsplatform = () => {
                     <div className="p-4 rounded-lg bg-card border">
                       <p className="text-foreground">
                         {scenarioConfig.hcpName 
-                          ? `${scenarioConfig.hcpName} - baseret på tidligere interaktioner og feedback`
-                          : `En ${adoptionStages.find(s => s.id === scenarioConfig.adoptionStage)?.label || "typisk"} HCP der prioriterer evidensbaseret behandling`}
+                          ? `${scenarioConfig.hcpName} - based on previous interactions and feedback`
+                          : `A ${adoptionStages.find(s => s.id === scenarioConfig.adoptionStage)?.label || "typical"} HCP who prioritizes evidence-based treatment`}
                       </p>
                     </div>
                   </div>
@@ -754,7 +754,7 @@ const Traeningsplatform = () => {
             <div className="flex items-center justify-between pt-4">
               <Button variant="ghost" onClick={() => setViewState(scenarioConfig.hcpId ? "hcp-wizard" : "custom-wizard")} className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
-                Tilbage
+                Back
               </Button>
               <Button onClick={handleStartSimulation} size="lg" className="gap-2 px-8">
                 Start simulation
@@ -774,12 +774,12 @@ const Traeningsplatform = () => {
                 <div>
                   <div className="font-semibold">{scenarioConfig.hcpName || "Dr. Hansen"}</div>
                   <div className="text-sm text-muted-foreground">
-                    {scenarioConfig.product && `Diskuterer ${scenarioConfig.product}`}
+                    {scenarioConfig.product && `Discussing ${scenarioConfig.product}`}
                   </div>
                 </div>
               </div>
               <Button variant="outline" size="sm" onClick={handleEndSimulation}>
-                Afslut simulation
+                End simulation
               </Button>
             </div>
 
@@ -797,7 +797,7 @@ const Traeningsplatform = () => {
                 {/* Chat Input */}
                 <div className="border-t p-4">
                   <div className="flex gap-3">
-                    <Input value={currentMessage} onChange={e => setCurrentMessage(e.target.value)} placeholder="Skriv din besked..." onKeyDown={e => e.key === "Enter" && handleSendMessage()} className="flex-1 h-12" />
+                    <Input value={currentMessage} onChange={e => setCurrentMessage(e.target.value)} placeholder="Type your message..." onKeyDown={e => e.key === "Enter" && handleSendMessage()} className="flex-1 h-12" />
                     <Button size="icon" onClick={handleSendMessage} className="h-12 w-12 rounded-full">
                       <Send className="h-5 w-5" />
                     </Button>
@@ -811,8 +811,8 @@ const Traeningsplatform = () => {
         {viewState === "results" && simulationResult && <div className="max-w-3xl mx-auto space-y-8">
             {/* Header */}
             <div className="text-center space-y-4">
-              <Badge variant="destructive" className="text-xs px-3 py-1">Kunne forbedres</Badge>
-              <h2 className="text-3xl font-bold text-foreground">Simuleringsresultat</h2>
+              <Badge variant="destructive" className="text-xs px-3 py-1">Needs improvement</Badge>
+              <h2 className="text-3xl font-bold text-foreground">Simulation Result</h2>
               <div className="flex justify-center">
                 {renderStars(simulationResult.rating)}
               </div>
@@ -827,7 +827,7 @@ const Traeningsplatform = () => {
                     <div className="h-10 w-10 rounded-xl bg-success/10 flex items-center justify-center">
                       <CheckCircle2 className="h-5 w-5 text-success" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground">Hvad gik godt</h3>
+                    <h3 className="text-lg font-semibold text-foreground">What went well</h3>
                   </div>
                   <div className="space-y-3">
                     {simulationResult.positives.map((positive, index) => <div key={index} className="flex items-start gap-3">
@@ -845,7 +845,7 @@ const Traeningsplatform = () => {
                     <div className="h-10 w-10 rounded-xl bg-destructive/10 flex items-center justify-center">
                       <AlertCircle className="h-5 w-5 text-destructive" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground">Hvad kunne forbedres</h3>
+                    <h3 className="text-lg font-semibold text-foreground">What could be improved</h3>
                   </div>
                   <div className="space-y-3">
                     {simulationResult.improvements.map((improvement, index) => <div key={index} className="flex items-start gap-3">
@@ -865,7 +865,7 @@ const Traeningsplatform = () => {
                     <Sparkles className="h-5 w-5 text-primary" />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-lg font-semibold text-foreground">Anbefalinger</h3>
+                    <h3 className="text-lg font-semibold text-foreground">Recommendations</h3>
                     <p className="text-muted-foreground">{simulationResult.recommendations}</p>
                   </div>
                 </div>
@@ -875,7 +875,7 @@ const Traeningsplatform = () => {
             {/* Score breakdown */}
             <Card className="border-0 shadow-sm">
               <CardContent className="p-6 space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">Pointfordeling</h3>
+                <h3 className="text-lg font-semibold text-foreground">Score breakdown</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {simulationResult.scores.map((score, index) => <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-accent/30">
                       <span className="text-sm font-medium">{score.label}</span>
@@ -889,11 +889,11 @@ const Traeningsplatform = () => {
             <div className="flex items-center justify-center gap-4">
               <Button variant="outline" onClick={handleBackToLanding} className="gap-2">
                 <ArrowLeft className="h-4 w-4" />
-                Tilbage til oversigt
+                Back to overview
               </Button>
               <Button onClick={handleStartCustomScenario} className="gap-2">
                 <MessageSquare className="h-4 w-4" />
-                Prøv igen
+                Try again
               </Button>
             </div>
           </div>}
