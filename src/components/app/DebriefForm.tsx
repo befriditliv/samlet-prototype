@@ -50,7 +50,6 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
   const [recordingTime, setRecordingTime] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const [savedDebriefData, setSavedDebriefData] = useState<DebriefData | null>(null);
 
   const [template, setTemplate] = useState<DebriefTemplate>({
     quickDebrief: undefined,
@@ -136,7 +135,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
     }
   };
 
-  // Finish debrief
+  // Finish debrief - go directly back to overview
   const handleFinishDebrief = () => {
     setIsRecording(false);
     if (timerRef.current) {
@@ -154,8 +153,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
     };
 
     addToQueue(meetingId, debriefData);
-    setSavedDebriefData(debriefData);
-    setPhase('saved');
+    onSave(debriefData); // Go directly back to overview with status update
   };
 
   const handleSaveDebrief = () => {
@@ -170,16 +168,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
     };
 
     addToQueue(meetingId, debriefData);
-    setSavedDebriefData(debriefData);
-    setPhase('saved');
-  };
-
-  const handleConfirmSave = () => {
-    if (savedDebriefData) {
-      onSave(savedDebriefData);
-    } else {
-      onBack();
-    }
+    onSave(debriefData); // Go directly back to overview with status update
   };
 
   const handleRetryDebrief = () => {
@@ -329,58 +318,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
     );
   }
 
-  // Saved Confirmation Phase
-  if (phase === 'saved') {
-    return (
-      <div className="min-h-screen bg-background flex flex-col animate-fade-in">
-        {/* Header */}
-        <div className="px-4 sm:px-6 py-4 border-b border-border/30">
-          <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onBack}
-              className="rounded-xl p-2 h-9 w-9"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div className="flex-1 text-center">
-              <h1 className="text-lg font-semibold text-foreground">Debrief</h1>
-            </div>
-            <div className="w-9" /> {/* Spacer for centering */}
-          </div>
-        </div>
-
-        {/* Main Content - Centered success message */}
-        <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-          <div className="text-center space-y-6 max-w-sm mx-auto">
-            {/* Success icon - using primary color */}
-            <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-              <CheckCircle className="h-10 w-10 text-primary" />
-            </div>
-
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold text-foreground">Debrief saved</h2>
-              <p className="text-sm text-muted-foreground">
-                Your debrief is now being processed. You'll receive a notification when it's ready for review.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom button - using primary color */}
-        <div className="px-6 pb-8">
-          <Button
-            onClick={handleConfirmSave}
-            size="lg"
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl py-4 text-base font-semibold"
-          >
-            OK
-          </Button>
-        </div>
-      </div>
-    );
-  }
+  // Note: 'saved' phase removed - we now go directly back to overview
 
   // Failed Phase
   if (phase === 'failed') {
