@@ -42,25 +42,25 @@ const mockDebriefData = {
     location: "Rigshospitalet"
   },
   complianceIssues: [
-    "Mulig off-label diskussion detekteret - verificér at samtalen holdt sig inden for godkendt indikation",
-    "Reference til konkurrentprodukt uden sammenlignende data"
+    "Possible off-label discussion detected - verify that the conversation stayed within approved indication",
+    "Reference to competitor product without comparative data"
   ],
-  purpose: "Formålet med mødet var en konstruktiv diskussion om flere medicinske emner, inklusive hjertekar-sygdomme, off-label brug, samt specifikke brands som Ozempic, Wegovy, Rebelsus og GLP-1. Derudover blev initiering og kommunale tilskudsplaner drøftet.",
+  purpose: "The purpose of the meeting was a constructive discussion about several medical topics, including cardiovascular disease, off-label use, and specific brands such as Ozempic, Wegovy, Rebelsus and GLP-1. Additionally, initiation and municipal subsidy plans were discussed.",
   brands: [
     {
       brand: "Ozempic",
       activities: [
-        "Diskussion om Ozempic og dets anvendelse, herunder off-label use og relaterede kommunale tilskudsplaner."
+        "Discussion about Ozempic and its use, including off-label use and related municipal subsidy plans."
       ],
       reactions: []
     },
     {
       brand: "Wegovy",
       activities: [
-        "Gennemgang af Wegovy til vægtbehandling og patientprofiler der egner sig til behandlingen."
+        "Review of Wegovy for weight management and patient profiles suitable for the treatment."
       ],
       reactions: [
-        "HCP udtrykte bekymring om tilgængelighed og ventetid på produktet."
+        "HCP expressed concern about availability and wait time for the product."
       ]
     },
     {
@@ -71,16 +71,16 @@ const mockDebriefData = {
     {
       brand: "GLP-1",
       activities: [
-        "Drøftelse af GLP-1 og dets betydning ved behandling af hjertekar-sygdomme."
+        "Discussion of GLP-1 and its significance in treating cardiovascular disease."
       ],
       reactions: []
     }
   ] as BrandNote[],
   objections: [
-    "Spørgsmål om refusionsveje for nye behandlinger",
-    "Bekymring om patientens evne til at håndtere injektionsbehandling"
+    "Questions about reimbursement pathways for new treatments",
+    "Concern about patient's ability to manage injection treatment"
   ],
-  nextAction: "Opfølgning på kommunale tilskudsplaner samt yderligere drøftelser om SWIP-præsentationen."
+  nextAction: "Follow-up on municipal subsidy plans and further discussions about the SWIP presentation."
 };
 
 export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewProps) => {
@@ -190,7 +190,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
                 <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-1">Compliance advarsel</h3>
+                <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-1">Compliance warning</h3>
                 <ul className="space-y-1">
                   {notes.complianceIssues.map((issue, index) => (
                     <li key={index} className="text-sm text-amber-700 dark:text-amber-300">
@@ -241,7 +241,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
 
                     {(brandNote.reactions?.length ?? 0) > 0 && (
                       <div>
-                        <p className="text-xs font-medium text-muted-foreground mb-1.5">HCP reaktioner</p>
+                        <p className="text-xs font-medium text-muted-foreground mb-1.5">HCP reactions</p>
                         <ul className="space-y-1.5">
                           {brandNote.reactions.map((reaction, reactIndex) => (
                             <li key={reactIndex} className="flex items-start gap-2 text-sm text-foreground">
