@@ -109,7 +109,7 @@ export const HcpSearch = () => {
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 z-10" />
       <Input
         type="text"
-        placeholder="Søg efter HCPs eller HCOs..."
+        placeholder="Search for HCPs or HCOs..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyDown={handleKeyDown}

@@ -189,7 +189,7 @@ export const ActionCenter = () => {
           onClick={() => navigate('/kundeoversigt')}
           className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
         >
-          Se alle kunder
+          View all clients
           <ChevronRight className="h-4 w-4" />
         </button>
       </div>

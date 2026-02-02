@@ -118,16 +118,16 @@ const mockHCPData: Record<string, HCPData> = {
     daysSinceLastInteraction: 34,
     importantPoints: [
       {
-        title: "Gennemgå Wegovy administration",
-        description: "Diskuter eventuelle opdateringer til dosering eller workflow der er relevante for kardiologisk praksis siden sidste møde."
+        title: "Review Wegovy administration",
+        description: "Discuss any updates to dosing or workflow relevant to cardiology practice since last meeting."
       },
       {
-        title: "Afdæk præferencer for klinisk indhold",
-        description: "Spørg ind til HCP'ens interesse for at modtage fremtidige kliniske opdateringer eller undervisningsmateriale digitalt."
+        title: "Explore clinical content preferences",
+        description: "Ask about HCP's interest in receiving future clinical updates or educational materials digitally."
       },
       {
-        title: "Klarlæg behov for patientstøtte",
-        description: "Undersøg hvilke ressourcer der kan hjælpe med at forbedre patient-adherence og outcomes med Wegovy."
+        title: "Clarify patient support needs",
+        description: "Explore what resources could help improve patient adherence and outcomes with Wegovy."
       }
     ]
   },
@@ -139,8 +139,8 @@ const mockHCPData: Record<string, HCPData> = {
     segmentationStatus: "Growing",
     daysSinceLastInteraction: 14,
     importantPoints: [
-      { title: "Multidisciplinær tilgang", description: "Diskuter fordele ved tværfagligt samarbejde for bedre patientresultater." },
-      { title: "Diabetes protokoller", description: "Gennemgå de nyeste guidelines for diabetes-behandling og Wegovy integration." }
+      { title: "Multidisciplinary approach", description: "Discuss benefits of cross-functional collaboration for better patient outcomes." },
+      { title: "Diabetes protocols", description: "Review the latest guidelines for diabetes treatment and Wegovy integration." }
     ]
   },
   "Dr. Michael Chen": {
@@ -151,8 +151,8 @@ const mockHCPData: Record<string, HCPData> = {
     segmentationStatus: "Stable",
     daysSinceLastInteraction: 21,
     importantPoints: [
-      { title: "Onkologi-samarbejde", description: "Afdæk muligheder for samarbejde om patienter med cancer og metaboliske tilstande." },
-      { title: "Kliniske data", description: "Del de seneste kliniske resultater og evidens for Wegovy i onkologisk kontekst." }
+      { title: "Oncology collaboration", description: "Explore opportunities for collaboration on patients with cancer and metabolic conditions." },
+      { title: "Clinical data", description: "Share the latest clinical results and evidence for Wegovy in oncology context." }
     ]
   },
   "Dr. James Wilson": {
@@ -163,8 +163,8 @@ const mockHCPData: Record<string, HCPData> = {
     segmentationStatus: "At risk",
     daysSinceLastInteraction: 62,
     importantPoints: [
-      { title: "Første kontakt", description: "Introducer Novo Nordisks produktportefølje og afdæk interesse for fremtidigt samarbejde." },
-      { title: "Neurologisk vinkel", description: "Diskuter potentielle fordele ved Wegovy for neurologiske patienter med overvægt." }
+      { title: "First contact", description: "Introduce Novo Nordisk's product portfolio and explore interest in future collaboration." },
+      { title: "Neurological angle", description: "Discuss potential benefits of Wegovy for neurological patients with obesity." }
     ]
   },
   "Dr. Amanda Peters": {
@@ -175,7 +175,7 @@ const mockHCPData: Record<string, HCPData> = {
     segmentationStatus: "Stable",
     daysSinceLastInteraction: 7,
     importantPoints: [
-      { title: "Reumatologi-opfølgning", description: "Følg op på tidligere samtale om Wegovy og ledproblematikker." }
+      { title: "Rheumatology follow-up", description: "Follow up on previous conversation about Wegovy and joint issues." }
     ]
   }
 };
@@ -257,9 +257,9 @@ export const DailyOverviewApple = ({
 
   const greeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return "God morgen";
-    if (hour < 17) return "God eftermiddag";
-    return "God aften";
+    if (hour < 12) return "Good morning";
+    if (hour < 17) return "Good afternoon";
+    return "Good evening";
   };
 
   const scrollToFirstPending = () => {
@@ -293,7 +293,7 @@ export const DailyOverviewApple = ({
       <div className="px-4 pb-3 flex items-center gap-3">
         <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full">
           <Calendar className="h-3.5 w-3.5 text-primary" />
-          <span className="text-xs font-medium text-primary">{meetings.length} møder</span>
+          <span className="text-xs font-medium text-primary">{meetings.length} meetings</span>
         </div>
         {pendingDebriefCount > 0 && (
           <button
@@ -301,7 +301,7 @@ export const DailyOverviewApple = ({
             className="flex items-center gap-2 px-3 py-1.5 bg-destructive/10 rounded-full active:scale-95 transition-transform"
           >
             <Bell className="h-3.5 w-3.5 text-destructive" />
-            <span className="text-xs font-medium text-destructive">{pendingDebriefCount} mangler debrief</span>
+            <span className="text-xs font-medium text-destructive">{pendingDebriefCount} need debrief</span>
           </button>
         )}
       </div>
@@ -309,7 +309,7 @@ export const DailyOverviewApple = ({
       {/* Content */}
       <div className="px-4 py-4">
         <div className="space-y-3">
-          <h2 className="text-base font-semibold text-foreground">Dagens program</h2>
+          <h2 className="text-base font-semibold text-foreground">Today's schedule</h2>
 
           {/* Timeline container */}
           <div className="relative" ref={containerRef}>
@@ -382,34 +382,34 @@ export const DailyOverviewApple = ({
                       {meeting.status === "debrief-submitting" && (
                         <div className="flex items-center gap-2 px-2.5 py-1 bg-muted/50 rounded-lg">
                           <WifiOff className="h-3 w-3 text-muted-foreground animate-pulse" />
-                          <span className="text-[11px] font-medium text-muted-foreground">Synkroniserer...</span>
+                          <span className="text-[11px] font-medium text-muted-foreground">Syncing...</span>
                         </div>
                       )}
                       {meeting.status === "debrief-processing" && (
                         <div className="flex items-center gap-2 px-2.5 py-1 bg-primary/10 rounded-lg">
                           <Loader2 className="h-3 w-3 text-primary animate-spin" />
-                          <span className="text-[11px] font-medium text-primary">Behandler...</span>
+                          <span className="text-[11px] font-medium text-primary">Processing...</span>
                         </div>
                       )}
                       {meeting.status === "debrief-failed" && (
                         <div className="flex items-center gap-2 px-2.5 py-1 bg-destructive/10 rounded-lg">
                           <AlertCircle className="h-3 w-3 text-destructive" />
-                          <span className="text-[11px] font-medium text-destructive">Fejlet</span>
+                          <span className="text-[11px] font-medium text-destructive">Failed</span>
                         </div>
                       )}
                       {meeting.status === "debrief-needed" && (
-                        <span className="text-[11px] font-medium text-destructive">Mangler debrief</span>
+                        <span className="text-[11px] font-medium text-destructive">Needs debrief</span>
                       )}
                       {meeting.status === "debrief-ready" && (
                         <div className="flex items-center gap-2 px-2.5 py-1 bg-primary/10 rounded-lg">
                           <CheckCircle2 className="h-3 w-3 text-primary" />
-                          <span className="text-[11px] font-medium text-primary">Klar til review</span>
+                          <span className="text-[11px] font-medium text-primary">Ready for review</span>
                         </div>
                       )}
                       {meeting.status === "upcoming" && (
                         <div className="flex items-center gap-2">
                           <span className={`text-[11px] font-medium ${isNextUpcoming ? "text-primary" : "text-muted-foreground"}`}>
-                            {isNextUpcoming ? "Næste møde" : "Kommende"}
+                            {isNextUpcoming ? "Next meeting" : "Upcoming"}
                           </span>
                           {meeting.address && (
                             <a
@@ -420,7 +420,7 @@ export const DailyOverviewApple = ({
                               className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium text-muted-foreground hover:text-primary bg-muted/50 hover:bg-primary/10 rounded-md transition-colors"
                             >
                               <MapPin className="h-3 w-3" />
-                              Rutevejledning
+                              Directions
                             </a>
                           )}
                           {meeting.phone && (
@@ -430,7 +430,7 @@ export const DailyOverviewApple = ({
                               className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium text-muted-foreground hover:text-primary bg-muted/50 hover:bg-primary/10 rounded-md transition-colors"
                             >
                               <Phone className="h-3 w-3" />
-                              Ring
+                              Call
                             </a>
                           )}
                         </div>
@@ -446,7 +446,7 @@ export const DailyOverviewApple = ({
                           className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-medium px-3 py-1.5 h-8"
                         >
                           <CheckCircle2 className="h-3.5 w-3.5 mr-1" />
-                          Gennemse
+                          Review
                         </Button>
                       )}
                       {meeting.status === "debrief-needed" && (
@@ -480,7 +480,7 @@ export const DailyOverviewApple = ({
                       <div className="mb-4 pb-3 border-b border-border/30">
                         <h3 className="text-xs font-medium text-foreground mb-2 flex items-center gap-2">
                           <User className="w-3.5 h-3.5 text-primary" />
-                          Mødedeltagere ({meeting.participants.length})
+                          Participants ({meeting.participants.length})
                         </h3>
                         <div className="space-y-1.5">
                           {meeting.participants.map((participant, idx) => (
@@ -504,7 +504,7 @@ export const DailyOverviewApple = ({
                         <Lightbulb className="w-4 h-4 text-primary" />
                         Jarvis recommended actions
                       </h3>
-                      <p className="text-xs text-muted-foreground mb-3">Personlige anbefalinger for din kommende samtale</p>
+                      <p className="text-xs text-muted-foreground mb-3">Personalized recommendations for your upcoming conversation</p>
                       <div className="space-y-3">
                         {hcpData.importantPoints.map((point, idx) => (
                           <div key={idx} className="flex items-start gap-3">
@@ -524,7 +524,7 @@ export const DailyOverviewApple = ({
                         hcpData.accessLevel === "Medium" ? "bg-yellow-100 text-yellow-700" :
                         "bg-red-100 text-red-700"
                       }`}>
-                        {hcpData.accessLevel} adgang
+                        {hcpData.accessLevel} access
                       </span>
                       <span className={`text-[10px] font-medium px-2 py-1 rounded-md ${
                         hcpData.consentStatus === "OPT IN" ? "bg-green-100 text-green-700" :
@@ -534,7 +534,7 @@ export const DailyOverviewApple = ({
                         {hcpData.consentStatus}
                       </span>
                       <span className="text-[10px] font-medium px-2 py-1 rounded-md bg-muted text-muted-foreground">
-                        {hcpData.daysSinceLastInteraction} dage siden sidst
+                        {hcpData.daysSinceLastInteraction} days since last
                       </span>
                     </div>
 
@@ -550,7 +550,7 @@ export const DailyOverviewApple = ({
                         className="flex-1 rounded-xl text-sm font-medium h-10 gap-1.5"
                       >
                         <MessageCircle className="h-4 w-4" />
-                        Mere info
+                        More info
                       </Button>
                       {meeting.status === "debrief-ready" ? (
                         <Button
@@ -594,8 +594,8 @@ export const DailyOverviewApple = ({
               >
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm font-medium text-muted-foreground">
-                    Afsluttede møder ({completedMeetings.length})
+                <span className="text-sm font-medium text-muted-foreground">
+                    Completed meetings ({completedMeetings.length})
                   </span>
                 </div>
                 {showCompletedMeetings ? (

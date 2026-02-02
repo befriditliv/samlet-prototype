@@ -240,22 +240,22 @@ export const DayCalendarView = () => {
           </Popover>
           
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <span>{meetingsCount} møder</span>
+            <span>{meetingsCount} meetings</span>
             {missingDebriefCount > 0 && (
               <>
                 <span className="text-destructive/80">
-                  {missingDebriefCount} mangler debrief
+                  {missingDebriefCount} need debrief
                 </span>
                 <Dialog open={outstandingDialogOpen} onOpenChange={setOutstandingDialogOpen}>
                   <DialogTrigger asChild>
                     <Button variant="ghost" size="sm" className="h-7 gap-1 text-destructive/80 hover:text-destructive">
                       <AlertCircle className="h-3.5 w-3.5" />
-                      Se alle
+                      View all
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
-                      <DialogTitle>Udestående Debriefs ({missingDebriefCount})</DialogTitle>
+                      <DialogTitle>Outstanding Debriefs ({missingDebriefCount})</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4 mt-4">
                       {outstandingDebriefs.map((meeting) => (

@@ -81,9 +81,9 @@ export const HCPAssistant = ({ isOpen, onClose, hcpName, showBriefing = false }:
   const querySuggestions = getQuerySuggestions(hcpName);
 
   const quickChips = [
-    "Hvad diskuterede vi sidst?",
-    "Hvem arbejder på klinikken?",
-    "Opsummer digitalt engagement",
+    "What did we discuss last time?",
+    "Who works at the clinic?",
+    "Summarize digital engagement",
   ];
 
   // Auto-send briefing when opened with showBriefing
@@ -145,28 +145,28 @@ export const HCPAssistant = ({ isOpen, onClose, hcpName, showBriefing = false }:
       <p>Metro Medical Center er en kardiologisk klinik med 12 specialister. {name} leder hjertesvigtklinikken.</p>
 
       <div>
-        <p className="font-medium mb-1">Seneste møde (7. jan)</p>
-        <p className="text-muted-foreground">Telefonopkald om Wegovy og patient-adherence. God dialog, ønsker opfølgning på CARDIAC-ADVANCE.</p>
+        <p className="font-medium mb-1">Last meeting (Jan 7)</p>
+        <p className="text-muted-foreground">Phone call about Wegovy and patient adherence. Good dialogue, wants follow-up on CARDIAC-ADVANCE.</p>
       </div>
 
       <div>
-        <p className="font-medium mb-1">Nøglepersoner</p>
+        <p className="font-medium mb-1">Key people</p>
         <ul className="text-muted-foreground space-y-0.5">
-          <li>• {name} – Leder, hjertesvigt</li>
+          <li>• {name} – Lead, heart failure</li>
           <li>• Dr. Hansen – Diabetes, OPT IN</li>
         </ul>
       </div>
 
       <div>
-        <p className="font-medium mb-1">Seneste aktivitet</p>
+        <p className="font-medium mb-1">Recent activity</p>
         <ul className="text-muted-foreground space-y-0.5">
-          <li>• Åbnet 3 nyhedsbreve (SGLT2)</li>
-          <li>• Downloadet 2 whitepapers</li>
-          <li>• Deltog i webinar om Wegovy SELECT (dec)</li>
+          <li>• Opened 3 newsletters (SGLT2)</li>
+          <li>• Downloaded 2 whitepapers</li>
+          <li>• Attended webinar about Wegovy SELECT (Dec)</li>
         </ul>
       </div>
 
-      <p className="text-muted-foreground italic pt-1">Er der andet du vil vide?</p>
+      <p className="text-muted-foreground italic pt-1">Is there anything else you'd like to know?</p>
     </div>
   );
 
@@ -227,7 +227,7 @@ export const HCPAssistant = ({ isOpen, onClose, hcpName, showBriefing = false }:
               <div className="flex items-center gap-4">
                 <img src={jarvisLogo} alt="Jarvis" className="w-12 h-12 shrink-0" />
                 <div>
-                  <h2 className="text-2xl font-semibold text-card-foreground tracking-tight">Spørg Jarvis</h2>
+                  <h2 className="text-2xl font-semibold text-card-foreground tracking-tight">Ask Jarvis</h2>
                   <p className="text-sm text-muted-foreground">{hcpName}</p>
                 </div>
               </div>
@@ -253,7 +253,7 @@ export const HCPAssistant = ({ isOpen, onClose, hcpName, showBriefing = false }:
                 className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
               >
                 <RotateCcw className="h-3 w-3 mr-1" />
-                Start forfra
+                Start over
               </Button>
             )}
           </div>
@@ -355,7 +355,7 @@ export const HCPAssistant = ({ isOpen, onClose, hcpName, showBriefing = false }:
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder={`Spørg om ${hcpName}...`}
+                placeholder={`Ask about ${hcpName}...`}
                 onKeyDown={(e) => e.key === "Enter" && handleSendQuery()}
                 className="flex-1 rounded-xl border-border/50 focus:border-primary bg-background"
                 disabled={isLoading}

@@ -47,7 +47,7 @@ export const SyncStatus = () => {
       <PopoverContent className="w-72 p-0" align="end">
         <div className="p-3 border-b border-border/50">
           <div className="flex items-center justify-between">
-            <h4 className="font-semibold text-sm">Synkronisering</h4>
+            <h4 className="font-semibold text-sm">Synchronization</h4>
             <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${isOnline ? 'bg-green-100 text-green-700' : 'bg-muted text-muted-foreground'}`}>
               {isOnline ? 'Online' : 'Offline'}
             </span>
@@ -56,7 +56,7 @@ export const SyncStatus = () => {
 
         <div className="p-2 max-h-60 overflow-y-auto">
           {queue.length === 0 ? (
-            <p className="text-xs text-muted-foreground text-center py-4">Ingen ventende</p>
+            <p className="text-xs text-muted-foreground text-center py-4">No pending items</p>
           ) : (
             <div className="space-y-1">
               {queue.map((item) => (
@@ -80,13 +80,13 @@ export const SyncStatus = () => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium text-foreground truncate">
-                      Møde debrief
+                      Meeting debrief
                     </p>
                     <p className="text-[10px] text-muted-foreground">
-                      {item.status === 'submitting' && 'Sender...'}
-                      {item.status === 'pending' && 'Venter'}
-                      {item.status === 'submitted' && 'Sendt'}
-                      {item.status === 'failed' && 'Fejlet'}
+                      {item.status === 'submitting' && 'Sending...'}
+                      {item.status === 'pending' && 'Waiting'}
+                      {item.status === 'submitted' && 'Sent'}
+                      {item.status === 'failed' && 'Failed'}
                     </p>
                   </div>
                 </div>
@@ -103,7 +103,7 @@ export const SyncStatus = () => {
               onClick={retryFailed}
               className="w-full h-8 text-xs rounded-lg"
             >
-              Prøv igen
+              Try again
             </Button>
           </div>
         )}

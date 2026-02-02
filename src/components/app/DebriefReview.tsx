@@ -96,8 +96,8 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     toast({
-      title: "Debrief sendt",
-      description: "Dit debrief er nu sendt til IOengage",
+      title: "Debrief sent",
+      description: "Your debrief has been sent to IOengage",
     });
 
     setIsSubmitting(false);
@@ -106,8 +106,8 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
 
   const handleDelete = () => {
     toast({
-      title: "Debrief slettet",
-      description: "Dit debrief er blevet slettet",
+      title: "Debrief deleted",
+      description: "Your debrief has been deleted",
     });
     onBack();
   };
@@ -129,7 +129,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="flex-1 min-w-0">
-              <h1 className="text-lg font-semibold text-foreground tracking-tight">Møde debrief</h1>
+              <h1 className="text-lg font-semibold text-foreground tracking-tight">Meeting debrief</h1>
               <p className="text-xs text-muted-foreground truncate">{notes.meeting.hcpName} · {notes.meeting.date}</p>
             </div>
 
@@ -150,7 +150,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
                   className="text-destructive focus:text-destructive focus:bg-destructive/10 rounded-lg cursor-pointer"
                 >
                   <Trash2 className="h-4 w-4 mr-2" />
-                  Slet debrief
+                  Delete debrief
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -162,18 +162,18 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent className="rounded-2xl mx-4">
           <AlertDialogHeader>
-            <AlertDialogTitle>Slet debrief?</AlertDialogTitle>
+            <AlertDialogTitle>Delete debrief?</AlertDialogTitle>
             <AlertDialogDescription>
-              Er du sikker på, at du vil slette dette debrief? Denne handling kan ikke fortrydes.
+              Are you sure you want to delete this debrief? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="rounded-xl">Annuller</AlertDialogCancel>
+            <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               className="bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-xl"
             >
-              Slet
+              Delete
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -205,7 +205,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
 
         {/* Purpose / Formål */}
         <Card className="p-4 border-0 bg-card rounded-xl">
-          <h3 className="font-semibold text-foreground mb-2">Formål med besøget</h3>
+          <h3 className="font-semibold text-foreground mb-2">Purpose of visit</h3>
           <p className="text-sm text-muted-foreground leading-relaxed">
             {notes.purpose}
           </p>
@@ -213,7 +213,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
 
         {/* Brand Notes - Each brand in its own box */}
         <div className="space-y-3">
-          <h3 className="text-sm font-medium text-muted-foreground px-1">Aktivitetsoversigt</h3>
+          <h3 className="text-sm font-medium text-muted-foreground px-1">Activity Overview</h3>
 
           {notes.brands?.map((brandNote, index) => {
             const hasContent = (brandNote.activities?.length ?? 0) > 0 || (brandNote.reactions?.length ?? 0) > 0;
@@ -254,7 +254,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
                     )}
                   </div>
                 ) : (
-                  <p className="text-sm text-muted-foreground italic">Ingen aktivitet registreret</p>
+                  <p className="text-sm text-muted-foreground italic">No activity registered</p>
                 )}
               </Card>
             );
@@ -273,12 +273,12 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
           {isSubmitting ? (
             <>
               <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-              Sender...
+              Sending...
             </>
           ) : (
             <>
               <Send className="h-5 w-5 mr-2" />
-              Indsend til IOengage
+              Submit to IOengage
             </>
           )}
         </Button>
@@ -289,7 +289,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
           className="w-full rounded-2xl py-4 text-base font-medium border-2"
         >
           <Edit3 className="h-5 w-5 mr-2" />
-          Rediger noter
+          Edit notes
         </Button>
       </div>
     </div>

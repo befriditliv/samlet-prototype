@@ -79,7 +79,7 @@ type SortField = 'name' | 'last_meeting' | 'next_meeting' | 'type';
 type SortDirection = 'asc' | 'desc';
 
 const filterLabels: Record<FilterType, string> = {
-  'all': 'Alle',
+  'all': 'All',
   'overdue': 'Overdue for contact',
   'high-value-low-engagement': 'High-value, low engagement',
   'missing-consent': 'Missing consent',
@@ -314,7 +314,7 @@ const Kundeoversigt = () => {
   };
 
   const formatMeetingDate = (date: string | null) => {
-    if (!date) return 'Ikke relevant';
+    if (!date) return 'Not applicable';
     return format(new Date(date), 'dd.MM.yyyy', { locale: da });
   };
 
@@ -345,14 +345,14 @@ const Kundeoversigt = () => {
               >
                 <ChevronLeft className="h-5 w-5" />
               </Button>
-              <h1 className="text-xl font-semibold">Kundeoversigt</h1>
+              <h1 className="text-xl font-semibold">Client Overview</h1>
             </div>
             
             <div className="flex items-center gap-3">
               <div className="relative w-80">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Søg efter HCP'er eller HCO'er..."
+                  placeholder="Search for HCPs or HCOs..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-9 pr-8"
@@ -380,7 +380,7 @@ const Kundeoversigt = () => {
         {/* Top Controls */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <span className="text-muted-foreground">Fandt</span>
+            <span className="text-muted-foreground">Found</span>
             <Badge variant="outline" className="font-medium">
               {totalCount} {entityType === 'hcp' ? 'HCPs' : 'HCOs'}
             </Badge>
@@ -408,7 +408,7 @@ const Kundeoversigt = () => {
               className="gap-2"
             >
               <Sparkles className="h-4 w-4" />
-              Avanceret søgning
+              Advanced Search
             </Button>
 
             {/* HCO/HCP Toggle */}
@@ -452,12 +452,12 @@ const Kundeoversigt = () => {
                       <AccordionTrigger className="hover:no-underline">
                         <div className="flex items-center gap-2">
                           <Sparkles className="h-4 w-4" />
-                          Hurtige filtre
+                          Quick Filters
                         </div>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground mb-3">
-                          Pre-definerede filtre fra Activity Hub
+                          Pre-defined filters from Activity Hub
                         </p>
                         <div className="space-y-2">
                           {entityType === 'hcp' ? (
@@ -513,15 +513,15 @@ const Kundeoversigt = () => {
                       <AccordionTrigger className="hover:no-underline">
                         <div className="flex items-center gap-2">
                           <Search className="h-4 w-4" />
-                          Søg
+                          Search
                         </div>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground mb-3">
-                          Søg efter {entityType === 'hcp' ? 'HCP\'er' : 'HCO\'er'} efter navn.
+                          Search for {entityType === 'hcp' ? 'HCPs' : 'HCOs'} by name.
                         </p>
                         <Input
-                          placeholder={`Søg ${entityType === 'hcp' ? 'HCP' : 'HCO'}...`}
+                          placeholder={`Search ${entityType === 'hcp' ? 'HCP' : 'HCO'}...`}
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                         />
@@ -532,15 +532,15 @@ const Kundeoversigt = () => {
                       <AccordionTrigger className="hover:no-underline">
                         <div className="flex items-center gap-2">
                           <SlidersHorizontal className="h-4 w-4" />
-                          Avancerede filtre
+                          Advanced Filters
                         </div>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground mb-3">
-                          Filtrer {entityType === 'hcp' ? 'HCP\'er' : 'HCO\'er'} efter afstand, møder, persona og mere.
+                          Filter {entityType === 'hcp' ? 'HCPs' : 'HCOs'} by distance, meetings, persona and more.
                         </p>
                         <div className="space-y-2">
-                          {['Maksimal afstand', 'Sidste møde', 'Fremtidige møder', 'Region', 
+                          {['Maximum distance', 'Last meeting', 'Future meetings', 'Region', 
                             'Target class: Insulin', 'Target class: GLP1', 'Target class: Obesity',
                             'Target class: Account value', 'Type', 'Responsible agent'].map((filter) => (
                             <div key={filter} className="flex items-center justify-between py-2 border-b last:border-0">
@@ -559,12 +559,12 @@ const Kundeoversigt = () => {
                       <AccordionTrigger className="hover:no-underline">
                         <div className="flex items-center gap-2">
                           <ArrowUpDown className="h-4 w-4" />
-                          Sorter efter
+                          Sort by
                         </div>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground">
-                          Sorter {entityType === 'hcp' ? 'HCP\'er' : 'HCO\'er'} efter afstand, møder, persona og mere.
+                          Sort {entityType === 'hcp' ? 'HCPs' : 'HCOs'} by distance, meetings, persona and more.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
@@ -578,12 +578,12 @@ const Kundeoversigt = () => {
                             <path d="M14 9h4" />
                             <path d="M14 13h4" />
                           </svg>
-                          Gemte filtre
+                          Saved Filters
                         </div>
                       </AccordionTrigger>
                       <AccordionContent>
                         <p className="text-sm text-muted-foreground">
-                          Opret eller aktiver gemte filtre.
+                          Create or activate saved filters.
                         </p>
                       </AccordionContent>
                     </AccordionItem>
@@ -591,10 +591,10 @@ const Kundeoversigt = () => {
 
                   <div className="flex gap-3 pt-4">
                     <Button variant="outline" className="flex-1" onClick={handleClearFilter}>
-                      Ryd alle filtre
+                      Clear all filters
                     </Button>
                     <Button className="flex-1" onClick={() => setFilterOpen(false)}>
-                      Søg ({totalCount})
+                      Search ({totalCount})
                     </Button>
                   </div>
                 </div>
@@ -626,10 +626,10 @@ const Kundeoversigt = () => {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/50">
-                <SortableHeader field="name">NAVN</SortableHeader>
+                <SortableHeader field="name">NAME</SortableHeader>
                 <SortableHeader field="type">TYPE</SortableHeader>
-                <SortableHeader field="last_meeting">SIDSTE MØDE</SortableHeader>
-                <SortableHeader field="next_meeting">NÆSTE MØDE</SortableHeader>
+                <SortableHeader field="last_meeting">LAST MEETING</SortableHeader>
+                <SortableHeader field="next_meeting">NEXT MEETING</SortableHeader>
                 <TableHead>ORGANISATION</TableHead>
                 {entityType === 'hcp' && <TableHead>SEGMENTERING</TableHead>}
                 {entityType === 'hco' && <TableHead>TIER</TableHead>}
@@ -639,14 +639,14 @@ const Kundeoversigt = () => {
               {loading ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
-                    Indlæser...
+                    Loading...
                   </TableCell>
                 </TableRow>
               ) : entityType === 'hcp' ? (
                 hcpResults.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
-                      Ingen HCP'er fundet
+                      No HCPs found
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -673,7 +673,7 @@ const Kundeoversigt = () => {
                 hcoResults.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
-                      Ingen HCO'er fundet
+                      No HCOs found
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -704,7 +704,7 @@ const Kundeoversigt = () => {
         {/* Pagination */}
         <div className="flex items-center justify-between mt-6">
           <span className="text-sm text-muted-foreground">
-            Side {currentPage} af {totalPages || 1}
+            Page {currentPage} of {totalPages || 1}
           </span>
           
           <div className="flex items-center gap-1">
