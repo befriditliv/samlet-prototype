@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useToast } from "@/hooks/use-toast";
+import { AIInsightsSection } from "@/components/AIInsightsSection";
 
 interface HCP {
   id: string;
@@ -211,35 +212,8 @@ export default function HcpDetail() {
           </div>
         </Card>
 
-        {/* HCP Details */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold text-card-foreground mb-4">HCP Details</h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div>
-              <h4 className="font-medium text-card-foreground mb-2">Last Meeting</h4>
-              <p className="text-sm text-muted-foreground">
-                {hcp.last_meeting_date 
-                  ? new Date(hcp.last_meeting_date).toLocaleDateString("en-US")
-                  : "None registered"}
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-medium text-card-foreground mb-2">Activity Plan</h4>
-              <p className="text-sm text-muted-foreground">
-                {hcp.activity_plan || "No plan"}
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-medium text-card-foreground mb-2">Marketing Consent</h4>
-              <p className="text-sm text-muted-foreground">
-                {hcp.marketing_consent ? "Yes" : "No"}
-              </p>
-            </div>
-          </div>
-        </Card>
+        {/* AI-Generated Insights */}
+        <AIInsightsSection entityType="hcp" entityName={hcp.name} />
 
         {/* Interactions */}
         {interactions.length > 0 && (
