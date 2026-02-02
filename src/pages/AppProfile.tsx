@@ -12,8 +12,8 @@ const AppProfile = () => {
         <div className="flex items-center gap-4">
           <img src={jarvisLogo} alt="Jarvis" className="h-12 w-12" />
           <div>
-            <h1 className="text-2xl font-semibold text-foreground tracking-tight">Profil</h1>
-            <p className="text-sm text-muted-foreground">Dine indstillinger</p>
+            <h1 className="text-2xl font-semibold text-foreground tracking-tight">Profile</h1>
+            <p className="text-sm text-muted-foreground">Your settings</p>
           </div>
         </div>
       </div>
