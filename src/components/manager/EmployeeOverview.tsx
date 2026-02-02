@@ -505,17 +505,17 @@ export const EmployeeOverview = () => {
           {/* Current Score Indicator */}
           <div className="flex items-center justify-center gap-8 mt-4 pt-4 border-t border-border/50">
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary">6<span className="text-lg text-muted-foreground">/10</span></div>
+              <div className="text-3xl font-bold text-primary">9<span className="text-lg text-muted-foreground">/10</span></div>
               <p className="text-xs text-muted-foreground mt-1">Current Score</p>
             </div>
             <div className="h-10 w-px bg-border/50" />
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-muted">
-                <TrendingDown className="h-4 w-4 text-muted-foreground" />
+              <div className="p-1.5 rounded-lg bg-green-500/10">
+                <TrendingUp className="h-4 w-4 text-green-600" />
               </div>
               <div>
-                <p className="text-sm font-medium text-foreground">-1 from peak</p>
-                <p className="text-xs text-muted-foreground">Week 48 was highest</p>
+                <p className="text-sm font-medium text-foreground">+2 from last week</p>
+                <p className="text-xs text-muted-foreground">Strong improvement in W50</p>
               </div>
             </div>
           </div>
