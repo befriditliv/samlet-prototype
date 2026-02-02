@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useToast } from "@/hooks/use-toast";
 import { AIInsightsSection } from "@/components/AIInsightsSection";
+import { InteractionsList } from "@/components/InteractionsList";
 
 interface HCP {
   id: string;
@@ -216,61 +217,7 @@ export default function HcpDetail() {
         <AIInsightsSection entityType="hcp" entityName={hcp.name} />
 
         {/* Interactions */}
-        {interactions.length > 0 && (
-          <Card className="p-6">
-            <h3 className="text-lg font-semibold text-card-foreground mb-4">Previous Interactions</h3>
-            
-            <div className="space-y-2">
-              {interactions.map((interaction) => (
-                <Collapsible
-                  key={interaction.id}
-                  open={expandedInteraction === interaction.id}
-                  onOpenChange={(open) => setExpandedInteraction(open ? interaction.id : null)}
-                >
-                  <div className="border rounded-lg bg-card hover:bg-accent/5 transition-colors">
-                    <CollapsibleTrigger className="w-full p-4 flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
-                          {interaction.interaction_type === "Telefonopkald" ? (
-                            <PhoneIcon className="h-5 w-5 text-primary" />
-                          ) : (
-                            <Users className="h-5 w-5 text-primary" />
-                          )}
-                        </div>
-                        <div className="text-left">
-                          <p className="text-sm text-muted-foreground">
-                            {new Date(interaction.interaction_date).toLocaleDateString("en-US")} - {interaction.interaction_type}
-                          </p>
-                          <p className="font-medium text-card-foreground">{interaction.title}</p>
-                        </div>
-                      </div>
-                      <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform ${expandedInteraction === interaction.id ? "rotate-180" : ""}`} />
-                    </CollapsibleTrigger>
-                    <CollapsibleContent className="px-4 pb-4">
-                      <div className="pt-2 border-t">
-                        {interaction.notes && (
-                          <p className="text-sm text-muted-foreground mb-2">{interaction.notes}</p>
-                        )}
-                        {interaction.created_by && (
-                          <p className="text-xs text-muted-foreground">Created by: {interaction.created_by}</p>
-                        )}
-                      </div>
-                    </CollapsibleContent>
-                  </div>
-                </Collapsible>
-              ))}
-            </div>
-          </Card>
-        )}
-
-        {interactions.length === 0 && (
-          <Card className="p-6">
-            <h3 className="text-lg font-semibold text-card-foreground mb-4">Previous Interactions</h3>
-            <p className="text-sm text-muted-foreground text-center py-8">
-              No previous interactions registered
-            </p>
-          </Card>
-        )}
+        <InteractionsList interactions={interactions} />
       </div>
     </div>
   );
