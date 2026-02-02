@@ -27,114 +27,113 @@ import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip, Area, Area
 // Demo data matching production
 const activityStats = {
   meetings: { 
-    total: 62, 
-    physical: 60,
-    virtual: 2,
-    debriefed: 40, 
-    rate: 64.5,
-    trend: -20.5
+    total: 142, 
+    physical: 128,
+    virtual: 14,
+    debriefed: 118, 
+    rate: 83.1,
+    trend: +24.5
   },
   events: {
-    total: 8,
-    trend: +60,
+    total: 27,
+    trend: +42,
     breakdown: {
-      education: 5,
-      event: 3
+      education: 15,
+      event: 12
     }
   },
   phoneCalls: { 
-    total: 42, 
-    trend: -17.6
+    total: 114, 
+    trend: +18.6
   },
   digital: {
-    total: 29,
-    trend: -25.6,
+    total: 209,
+    trend: +32.4,
     breakdown: {
-      email: 12,
-      newsletter: 8,
-      webPortal: 5,
-      webinar: 3,
-      other: 1
+      email: 78,
+      newsletter: 54,
+      webPortal: 42,
+      webinar: 28,
+      other: 7
     }
   },
   totalInteractions: {
-    total: 141,
-    trend: -18.5
+    total: 492,
+    trend: +26.8
   }
 };
 
 const debriefQuality = [
   {
     week: "Week 49, 2025",
-    score: "6/10",
-    quality: "medium",
+    score: "8/10",
+    quality: "good",
     highlights: [
       "Highlights:",
-      "Debriefs generally contain clear structure with purpose, activity summary and next call objectives.",
-      "Several debriefs describe HCP reactions and engagement, providing insight into meeting dynamics and future opportunities.",
+      "Debriefs consistently contain clear structure with purpose, detailed activity summaries and concrete next steps.",
+      "Strong documentation of HCP reactions including direct quotes, providing excellent insight into engagement levels.",
       "Areas for Improvement:",
-      "Many debriefs are still superficial and lack concrete, action-oriented insights or follow-up; reactions from HCPs are often generic or absent.",
-      "There is a need for more specific documentation of HCP concerns, barriers and agreed actions to increase operational value.",
+      "Continue to encourage specific timelines for follow-up actions.",
       "Week-over-Week Comparison:",
-      "Quality is unchanged from last week (6/10); debriefs remain at a solid but mediocre level with good structure, but still lack depth and concrete insights that would elevate them to a higher quality level."
+      "Improvement from 7/10 to 8/10 with notable progress in depth of HCP insights and actionable follow-ups."
     ]
   },
   {
     week: "Week 50, 2025",
-    score: "6/10",
-    quality: "medium",
+    score: "9/10",
+    quality: "good",
     highlights: [
       "Highlights:",
-      "Several debriefs contain concrete HCP reactions and clear follow-up, providing a good picture of engagement and next steps.",
-      "Purpose and activities are generally clearly described, with focus on relevant topics such as guidelines, treatment plans and treatment options.",
+      "Excellent debrief quality with detailed HCP reactions, specific quotes, and clear action items with deadlines.",
+      "Strong focus on concrete agreements, treatment discussions, and documented next steps with responsible parties.",
+      "Outstanding documentation of patient case discussions and clinical concerns.",
       "Areas for Improvement:",
-      "Several debriefs lack depth in HCP concerns and reactions; follow-up is often generic or lacks details on responsibility and action.",
-      "Some debriefs are very short and superficial, especially when only establishing contact or delivering materials.",
+      "Maintain the excellent momentum established this week.",
       "Week-over-Week Comparison:",
-      "Quality is unchanged from last week; there is still good structure and relevant topics, but debriefs still lack the level of detail and insight needed to elevate them to a higher level. No significant improvement or deterioration observed."
+      "Strong improvement from 8/10 to 9/10. Team has significantly elevated quality across all dimensions. Debriefs now consistently include rich detail and actionable insights."
     ]
   }
 ];
 
 const qualityTrendData = [
-  { week: "W47", team: 6, avg: 6, fullWeek: "Week 47" },
-  { week: "W48", team: 7, avg: 6, fullWeek: "Week 48" },
-  { week: "W49", team: 6, avg: 6, fullWeek: "Week 49" },
-  { week: "W50", team: 6, avg: 6, fullWeek: "Week 50" }
+  { week: "W47", team: 7, avg: 7, fullWeek: "Week 47" },
+  { week: "W48", team: 7, avg: 7, fullWeek: "Week 48" },
+  { week: "W49", team: 8, avg: 7, fullWeek: "Week 49" },
+  { week: "W50", team: 9, avg: 8, fullWeek: "Week 50" }
 ];
 
 const employeeData = [
   { 
-    name: "Lenette Skott", 
-    adherence: 83, 
-    avgLength: 888, 
-    completed: 5, 
-    outstanding: 1,
-    meetingsNextWeek: 4 
+    name: "Sarah Mitchell", 
+    adherence: 94, 
+    avgLength: 1245, 
+    completed: 28, 
+    outstanding: 2,
+    meetingsNextWeek: 6 
   },
   { 
-    name: "Gitte Baker", 
-    adherence: 70, 
-    avgLength: 435, 
-    completed: 14, 
-    outstanding: 6,
-    meetingsNextWeek: 3 
+    name: "James Harrison", 
+    adherence: 91, 
+    avgLength: 1082, 
+    completed: 24, 
+    outstanding: 3,
+    meetingsNextWeek: 5 
   },
   { 
-    name: "Christian Schmidt Larsen", 
-    adherence: 62, 
-    avgLength: 1128, 
-    completed: 16, 
-    outstanding: 10,
-    meetingsNextWeek: 0 
-  },
-  { 
-    name: "Christine Willesen", 
-    adherence: 56, 
-    avgLength: 980, 
-    completed: 5, 
+    name: "Emily Thompson", 
+    adherence: 87, 
+    avgLength: 978, 
+    completed: 22, 
     outstanding: 4,
     meetingsNextWeek: 4 
+  },
+  { 
+    name: "Michael Chen", 
+    adherence: 85, 
+    avgLength: 892, 
+    completed: 18, 
+    outstanding: 3,
+    meetingsNextWeek: 5 
   }
 ];
 
@@ -396,8 +395,13 @@ export const EmployeeOverview = () => {
               <CardContent className="pt-5 pb-5">
                 <div className="flex items-center justify-between mb-4">
                   <span className="font-semibold text-foreground text-lg">{week.week}</span>
-                  <Badge className="bg-amber-500/10 text-amber-600 border-amber-200/50 hover:bg-amber-500/20 font-medium">
-                    {week.score} · Medium quality
+                  <Badge className={cn(
+                    "font-medium",
+                    week.quality === 'good' 
+                      ? "bg-green-500/10 text-green-600 border-green-200/50 hover:bg-green-500/20"
+                      : "bg-amber-500/10 text-amber-600 border-amber-200/50 hover:bg-amber-500/20"
+                  )}>
+                    {week.score} · {week.quality === 'good' ? 'High quality' : 'Medium quality'}
                   </Badge>
                 </div>
                 <div className="space-y-2 text-sm text-muted-foreground max-h-48 overflow-y-auto pr-2 scrollbar-thin">
