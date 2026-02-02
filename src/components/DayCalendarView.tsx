@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { format, addDays, startOfWeek, addWeeks, getWeek } from "date-fns";
-import { da } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 
 interface Meeting {
   id: string;
@@ -164,14 +164,14 @@ export const DayCalendarView = () => {
             <PopoverTrigger asChild>
               <Button variant="outline" className="gap-2">
                 <Calendar className="h-4 w-4" />
-                <span className="capitalize">{format(selectedDate, 'EEEE, d MMMM', { locale: da })}</span>
+                <span className="capitalize">{format(selectedDate, 'EEEE, d MMMM', { locale: enUS })}</span>
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-4" align="start">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">Uge {weekNumber}</span>
+                    <span className="text-sm text-muted-foreground">Week {weekNumber}</span>
                     {weekHasMissingDebriefs && (
                       <div className="h-2 w-2 rounded-full bg-destructive" />
                     )}
@@ -201,7 +201,7 @@ export const DayCalendarView = () => {
                     const isSelected = date.getDate() === selectedDate.getDate() && 
                                      date.getMonth() === selectedDate.getMonth();
                     const hasMissing = hasMissingDebrief(date);
-                    const dayName = format(date, 'EEE', { locale: da }).toLowerCase();
+                    const dayName = format(date, 'EEE', { locale: enUS }).toLowerCase();
                     
                     return (
                       <button
