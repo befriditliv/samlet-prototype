@@ -96,10 +96,10 @@ const debriefQuality = [
 ];
 
 const qualityTrendData = [
-  { week: "W47", team: 7, avg: 7, fullWeek: "Week 47" },
-  { week: "W48", team: 7, avg: 7, fullWeek: "Week 48" },
+  { week: "W47", team: 6, avg: 6, fullWeek: "Week 47" },
+  { week: "W48", team: 7, avg: 6, fullWeek: "Week 48" },
   { week: "W49", team: 7, avg: 7, fullWeek: "Week 49" },
-  { week: "W50", team: 9, avg: 8, fullWeek: "Week 50" }
+  { week: "W50", team: 9, avg: 7, fullWeek: "Week 50" }
 ];
 
 const employeeData = [
