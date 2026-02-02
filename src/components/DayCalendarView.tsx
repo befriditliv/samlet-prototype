@@ -7,6 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { format, addDays, startOfWeek, addWeeks, getWeek } from "date-fns";
 import { enUS } from "date-fns/locale";
+import { WebDebriefDialog } from "./WebDebriefDialog";
 
 interface Meeting {
   id: string;
@@ -72,6 +73,9 @@ export const DayCalendarView = () => {
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 10, 24)); // Nov 24, 2024
   const [expandedMeetings, setExpandedMeetings] = useState<string[]>([]);
   const [outstandingDialogOpen, setOutstandingDialogOpen] = useState(false);
+  const [debriefDialogOpen, setDebriefDialogOpen] = useState(false);
+  const [selectedMeetingForDebrief, setSelectedMeetingForDebrief] = useState<Meeting | null>(null);
+  const [completedDebriefs, setCompletedDebriefs] = useState<string[]>([]);
   
   // Days with missing debriefs (for demo purposes)
   const daysWithMissingDebriefs = [
@@ -121,8 +125,19 @@ export const DayCalendarView = () => {
   };
   
   const meetingsCount = mockMeetings.length;
-  const missingDebriefCount = mockMeetings.filter(m => m.status === "needs-debrief").length;
-  const outstandingDebriefs = mockMeetings.filter(m => m.status === "needs-debrief");
+  const missingDebriefCount = mockMeetings.filter(m => m.status === "needs-debrief" && !completedDebriefs.includes(m.id)).length;
+  const outstandingDebriefs = mockMeetings.filter(m => m.status === "needs-debrief" && !completedDebriefs.includes(m.id));
+
+  const openDebriefDialog = (meeting: Meeting) => {
+    setSelectedMeetingForDebrief(meeting);
+    setDebriefDialogOpen(true);
+  };
+
+  const handleDebriefSave = () => {
+    if (selectedMeetingForDebrief) {
+      setCompletedDebriefs(prev => [...prev, selectedMeetingForDebrief.id]);
+    }
+  };
 
   const toggleMeeting = (meetingId: string) => {
     setExpandedMeetings(prev => 
@@ -281,7 +296,7 @@ export const DayCalendarView = () => {
                               className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
                               onClick={() => {
                                 setOutstandingDialogOpen(false);
-                                // Ville navigere til debrief-form her
+                                openDebriefDialog(meeting);
                               }}
                             >
                               Debrief
@@ -359,10 +374,19 @@ export const DayCalendarView = () => {
 
                   {/* Status & Actions */}
                   <div className="flex items-center gap-3">
-                    {getStatusButton(meeting.status)}
+                    {completedDebriefs.includes(meeting.id) ? (
+                      <Badge className="bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300">
+                        Debriefed
+                      </Badge>
+                    ) : (
+                      getStatusButton(meeting.status)
+                    )}
                     
-                    {meeting.status === "needs-debrief" && (
-                      <Button className="bg-destructive hover:bg-destructive/90 text-destructive-foreground">
+                    {meeting.status === "needs-debrief" && !completedDebriefs.includes(meeting.id) && (
+                      <Button 
+                        className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
+                        onClick={() => openDebriefDialog(meeting)}
+                      >
                         Debrief
                       </Button>
                     )}
@@ -443,6 +467,22 @@ export const DayCalendarView = () => {
           );
         })}
       </div>
+
+      {/* Debrief Dialog */}
+      {selectedMeetingForDebrief && (
+        <WebDebriefDialog
+          open={debriefDialogOpen}
+          onOpenChange={setDebriefDialogOpen}
+          meeting={{
+            id: selectedMeetingForDebrief.id,
+            doctorName: selectedMeetingForDebrief.doctorName,
+            specialty: selectedMeetingForDebrief.specialty,
+            location: selectedMeetingForDebrief.location,
+            startTime: selectedMeetingForDebrief.startTime
+          }}
+          onSave={handleDebriefSave}
+        />
+      )}
     </div>
   );
 };
