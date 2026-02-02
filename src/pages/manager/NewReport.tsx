@@ -63,29 +63,29 @@ const reportCategories = [
 const quickReportOptions = [
   {
     id: 'ozempic-initiation',
-    label: 'Ozempic Initiering',
-    description: 'Analyse af HCP-bekymringer og barrierer ved Ozempic-initiering over tid',
+    label: 'Ozempic Initiation',
+    description: 'Analysis of HCP concerns and barriers to Ozempic initiation over time',
     icon: Stethoscope,
     devNote: 'DEV: Use MIP with objection/concern analysis. Set current date minus 90 days for trend data.',
   },
   {
     id: 'off-label-insights',
     label: 'Off-Label Information Insights',
-    description: 'Find debriefs hvor HCPs uopfordret har delt information om off-label ordination',
+    description: 'Find debriefs where HCPs have unsolicited shared information about off-label prescription',
     icon: AlertTriangle,
     devNote: 'DEV: Search debriefs for HCP-volunteered off-label information (e.g., Ozempic for obesity).',
   },
   {
     id: 'debrief-quality',
     label: 'Debrief Quality Report',
-    description: 'Kvalitetsvurdering af medarbejderes debriefs – dybde, struktur og actionable insights',
+    description: 'Quality assessment of employee debriefs – depth, structure and actionable insights',
     icon: Users,
     devNote: 'DEV: Analyze debrief completeness, detail level, and actionability per employee.',
   },
   {
     id: 'campaign-adherence',
     label: 'Campaign Adherence',
-    description: 'Sammenhængsgrad mellem kampagnebudskaber og faktiske mødesamtaler',
+    description: 'Alignment between campaign messages and actual meeting conversations',
     icon: Target,
     devNote: 'DEV: Compare campaign prepare content vs actual debrief topics. Calculate adherence %.',
   },
@@ -185,8 +185,8 @@ const NewReport = () => {
       navigate('/manager/insight-report', {
         state: {
           reportType: 'ozempic-initiation',
-          title: 'Ozempic Initiering Insights',
-          query: 'hvad siger hcperne ift. ozempic initiering',
+          title: 'Ozempic Initiation Insights',
+          query: 'What are HCPs saying regarding Ozempic initiation?',
           dateRange: { from: new Date(2025, 6, 1), to: new Date(2025, 11, 31) },
           product: 'Ozempic',
           employee: 'all'
@@ -197,7 +197,7 @@ const NewReport = () => {
         state: {
           reportType: 'off-label-insights',
           title: 'Off-Label Information Insights',
-          query: 'hvilke HCPs har uopfordret nævnt off-label ordination af Ozempic?',
+          query: 'Which HCPs have unsolicited mentioned off-label prescription of Ozempic?',
           dateRange: { from: new Date(2025, 0, 1), to: new Date(2025, 11, 31) },
           product: 'Ozempic',
           employee: 'all'
@@ -208,9 +208,9 @@ const NewReport = () => {
         state: {
           reportType: 'sentiment-trends',
           title: 'HCO/HCP Sentiment & Market Trends',
-          query: 'hvad er den generelle stemning og markedstrends blandt HCPs og HCOs?',
+          query: 'What is the general sentiment and market trends among HCPs and HCOs?',
           dateRange: { from: new Date(2025, 9, 1), to: new Date(2025, 11, 31) },
-          product: 'Alle produkter',
+          product: 'All products',
           employee: 'all'
         }
       });
