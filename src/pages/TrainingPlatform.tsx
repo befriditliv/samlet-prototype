@@ -105,7 +105,7 @@ const commonObjections = [{
   label: "Patient preference",
   icon: Users
 }];
-const Traeningsplatform = () => {
+const TrainingPlatform = () => {
   const navigate = useNavigate();
   const { role } = useAuth();
   const [viewState, setViewState] = useState<ViewState>("landing");
@@ -900,4 +900,4 @@ const Traeningsplatform = () => {
       </main>
     </div>;
 };
-export default Traeningsplatform;
+export default TrainingPlatform;

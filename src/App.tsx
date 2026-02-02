@@ -9,8 +9,8 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import HcoDetail from "./pages/HcoDetail";
 import HcpDetail from "./pages/HcpDetail";
-import Kundeoversigt from "./pages/Kundeoversigt";
-import Traeningsplatform from "./pages/Traeningsplatform";
+import ClientOverview from "./pages/ClientOverview";
+import TrainingPlatform from "./pages/TrainingPlatform";
 import ManagerDashboard from "./pages/ManagerDashboard";
 import NewReport from "./pages/manager/NewReport";
 import ReportView from "./pages/manager/ReportView";
@@ -44,8 +44,8 @@ const App = () => (
             <Route path="/manager/insight-report" element={<ProtectedRoute><InsightReportView /></ProtectedRoute>} />
             <Route path="/manager/debrief-quality-report" element={<ProtectedRoute><DebriefQualityReportView /></ProtectedRoute>} />
             <Route path="/manager/campaign-adherence-report" element={<ProtectedRoute><CampaignAdherenceReportView /></ProtectedRoute>} />
-            <Route path="/kundeoversigt" element={<ProtectedRoute><Kundeoversigt /></ProtectedRoute>} />
-            <Route path="/traeningsplatform" element={<ProtectedRoute><Traeningsplatform /></ProtectedRoute>} />
+            <Route path="/client-overview" element={<ProtectedRoute><ClientOverview /></ProtectedRoute>} />
+            <Route path="/training-platform" element={<ProtectedRoute><TrainingPlatform /></ProtectedRoute>} />
             <Route path="/hco/:id" element={<ProtectedRoute><HcoDetail /></ProtectedRoute>} />
             <Route path="/hcp/:id" element={<ProtectedRoute><HcpDetail /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />

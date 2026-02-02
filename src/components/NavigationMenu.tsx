@@ -26,13 +26,13 @@ const menuItems = [
   {
     icon: Users,
     label: "Client Overview",
-    href: "/kundeoversigt",
+    href: "/client-overview",
     isRoute: true
   },
   {
     icon: GraduationCap,
     label: "Training Platform",
-    href: "/traeningsplatform",
+    href: "/training-platform",
     isRoute: true
   }
 ];

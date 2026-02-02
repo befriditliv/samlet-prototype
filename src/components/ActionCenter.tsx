@@ -165,7 +165,7 @@ export const ActionCenter = () => {
   };
 
   const handleViewList = (signal: SignalCard) => {
-    navigate(`/kundeoversigt?type=${signal.entityType}&filter=${signal.filterParam}`);
+    navigate(`/client-overview?type=${signal.entityType}&filter=${signal.filterParam}`);
   };
 
   if (loading) {
@@ -186,7 +186,7 @@ export const ActionCenter = () => {
           <p className="text-sm text-muted-foreground">Key metrics and alerts to help you prioritize your outreach</p>
         </div>
         <button 
-          onClick={() => navigate('/kundeoversigt')}
+          onClick={() => navigate('/client-overview')}
           className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
         >
           View all clients
