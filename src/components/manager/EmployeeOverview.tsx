@@ -44,7 +44,7 @@ const activityStats = {
   },
   phoneCalls: { 
     total: 114, 
-    trend: +18.6
+    trend: -7.0
   },
   digital: {
     total: 209,
@@ -66,16 +66,16 @@ const activityStats = {
 const debriefQuality = [
   {
     week: "Week 49, 2025",
-    score: "8/10",
-    quality: "good",
+    score: "7/10",
+    quality: "medium",
     highlights: [
       "Highlights:",
-      "Debriefs consistently contain clear structure with purpose, detailed activity summaries and concrete next steps.",
-      "Strong documentation of HCP reactions including direct quotes, providing excellent insight into engagement levels.",
+      "Debriefs contain clear structure with purpose, activity summaries and defined next steps.",
+      "Good documentation of HCP reactions, providing solid insight into engagement levels.",
       "Areas for Improvement:",
-      "Continue to encourage specific timelines for follow-up actions.",
+      "Some debriefs could include more specific HCP quotes and concrete timelines.",
       "Week-over-Week Comparison:",
-      "Improvement from 7/10 to 8/10 with notable progress in depth of HCP insights and actionable follow-ups."
+      "Stable quality at 7/10 with consistent structure and improving depth of insights."
     ]
   },
   {
@@ -98,7 +98,7 @@ const debriefQuality = [
 const qualityTrendData = [
   { week: "W47", team: 7, avg: 7, fullWeek: "Week 47" },
   { week: "W48", team: 7, avg: 7, fullWeek: "Week 48" },
-  { week: "W49", team: 8, avg: 7, fullWeek: "Week 49" },
+  { week: "W49", team: 7, avg: 7, fullWeek: "Week 49" },
   { week: "W50", team: 9, avg: 8, fullWeek: "Week 50" }
 ];
 
