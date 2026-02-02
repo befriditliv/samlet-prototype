@@ -16,6 +16,8 @@ const Login = () => {
       setRole(selectedRole as UserRole);
       if (selectedRole === "manager") {
         navigate("/manager");
+      } else if (selectedRole === "key_account_manager_app") {
+        navigate("/"); // App KAM goes to same dashboard for now
       } else {
         navigate("/");
       }
@@ -40,7 +42,8 @@ const Login = () => {
                 <SelectValue placeholder="Vælg din rolle" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="key_account_manager">Key Account Manager</SelectItem>
+                <SelectItem value="key_account_manager">Key Account Manager (Web)</SelectItem>
+                <SelectItem value="key_account_manager_app">Key Account Manager (App)</SelectItem>
                 <SelectItem value="manager">Manager</SelectItem>
               </SelectContent>
             </Select>
