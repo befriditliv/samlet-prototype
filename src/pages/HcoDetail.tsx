@@ -223,8 +223,12 @@ export default function HcoDetail() {
                 </TableHeader>
                 <TableBody>
                   {hcps.map((hcp) => (
-                    <TableRow key={hcp.id}>
-                      <TableCell className="font-medium">{hcp.name}</TableCell>
+                    <TableRow 
+                      key={hcp.id} 
+                      className="cursor-pointer hover:bg-accent/50 transition-colors"
+                      onClick={() => navigate(`/hcp/${hcp.id}`)}
+                    >
+                      <TableCell className="font-medium text-primary hover:underline">{hcp.name}</TableCell>
                       <TableCell>{hcp.title}</TableCell>
                       <TableCell>
                         {hcp.marketing_consent ? (
