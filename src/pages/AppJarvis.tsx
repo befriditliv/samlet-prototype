@@ -115,7 +115,7 @@ const AppJarvis = () => {
           <Card className="p-4 animate-pulse">
             <div className="flex items-center gap-3">
               <Loader2 className="h-5 w-5 text-primary animate-spin" />
-              <span className="text-sm text-muted-foreground">Jarvis analyserer...</span>
+              <span className="text-sm text-muted-foreground">Jarvis is analyzing...</span>
             </div>
           </Card>
         )}
