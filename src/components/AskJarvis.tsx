@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { MessageCircle, HelpCircle, Calendar, BookOpen, Send, X } from "lucide-react";
@@ -25,9 +25,21 @@ const quickSuggestions = [
   }
 ];
 
+// Custom event for opening Ask Jarvis from other components
+export const openAskJarvis = () => {
+  window.dispatchEvent(new CustomEvent("open-ask-jarvis"));
+};
+
 export const AskJarvis = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
+
+  // Listen for external open events
+  useEffect(() => {
+    const handleOpen = () => setIsOpen(true);
+    window.addEventListener("open-ask-jarvis", handleOpen);
+    return () => window.removeEventListener("open-ask-jarvis", handleOpen);
+  }, []);
 
   const handleSuggestionClick = (text: string) => {
     setMessage(text);
