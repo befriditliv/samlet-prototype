@@ -31,6 +31,7 @@ interface Meeting {
 
 interface DayCalendarViewProps {
   onDebriefReview?: (meetingId: string) => void;
+  completedMeetings?: string[];
 }
 
 const mockMeetings: Meeting[] = [
@@ -75,7 +76,7 @@ const mockMeetings: Meeting[] = [
   }
 ];
 
-export const DayCalendarView = ({ onDebriefReview }: DayCalendarViewProps) => {
+export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: DayCalendarViewProps) => {
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 10, 24)); // Nov 24, 2024
   const [expandedMeetings, setExpandedMeetings] = useState<string[]>([]);
   const [outstandingDialogOpen, setOutstandingDialogOpen] = useState(false);
@@ -130,8 +131,12 @@ export const DayCalendarView = ({ onDebriefReview }: DayCalendarViewProps) => {
     setSelectedDate(addWeeks(selectedDate, direction === 'prev' ? -1 : 1));
   };
   
-  // Get effective status for a meeting (considering local overrides)
+  // Get effective status for a meeting (considering local overrides and completed meetings from parent)
   const getMeetingStatus = (meeting: Meeting): MeetingStatus => {
+    // Check if meeting was completed via parent (IOengage submission)
+    if (completedMeetings.includes(meeting.id)) {
+      return "done";
+    }
     return meetingStatuses[meeting.id] || meeting.status;
   };
 
