@@ -6,9 +6,9 @@ export const BottomNav = () => {
   const location = useLocation();
 
   const tabs = [
-    { id: "home" as const, path: "/app", label: "Hjem", icon: Home },
-    { id: "jarvis" as const, path: "/app/jarvis", label: "Spørg Jarvis", icon: MessageCircle },
-    { id: "profile" as const, path: "/app/profil", label: "Profil", icon: User },
+    { id: "home" as const, path: "/app", label: "Home", icon: Home },
+    { id: "jarvis" as const, path: "/app/jarvis", label: "Ask Jarvis", icon: MessageCircle },
+    { id: "profile" as const, path: "/app/profil", label: "Profile", icon: User },
   ];
 
   const getActiveTab = () => {

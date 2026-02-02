@@ -72,8 +72,8 @@ const AppJarvis = () => {
         <div className="flex items-center gap-4">
           <img src={jarvisLogo} alt="Jarvis" className="w-12 h-12 shrink-0" />
           <div>
-            <h1 className="text-2xl font-semibold text-foreground tracking-tight">Spørg Jarvis</h1>
-            <p className="text-sm text-muted-foreground">Spørg om hvad som helst</p>
+            <h1 className="text-2xl font-semibold text-foreground tracking-tight">Ask Jarvis</h1>
+            <p className="text-sm text-muted-foreground">Ask about anything</p>
           </div>
         </div>
       </div>

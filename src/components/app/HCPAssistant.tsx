@@ -217,7 +217,7 @@ export const HCPAssistant = ({ isOpen, onClose, hcpName, showBriefing = false }:
         className="fixed right-0 top-0 z-[61] h-[100dvh] w-full max-w-md bg-card shadow-xl border-l border-border animate-slide-in-right"
         role="dialog"
         aria-modal="true"
-        aria-label={`Spørg Jarvis om ${hcpName}`}
+        aria-label={`Ask Jarvis about ${hcpName}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="h-[100dvh] flex flex-col overflow-hidden">
