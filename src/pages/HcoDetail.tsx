@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useToast } from "@/hooks/use-toast";
-
+import { AIInsightsSection } from "@/components/AIInsightsSection";
 interface HCO {
   id: string;
   name: string;
@@ -202,40 +202,8 @@ export default function HcoDetail() {
           </div>
         </Card>
 
-        {/* HCO Insights */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold text-card-foreground mb-4">HCO Insights</h3>
-          
-          <div className="space-y-6">
-            {hco.introduction && (
-              <div>
-                <h4 className="font-medium text-card-foreground mb-2">Introduction</h4>
-                <p className="text-sm text-muted-foreground">{hco.introduction}</p>
-              </div>
-            )}
-
-            {hco.latest_communication && (
-              <div>
-                <h4 className="font-medium text-card-foreground mb-2">Latest Communication</h4>
-                <p className="text-sm text-muted-foreground">{hco.latest_communication}</p>
-              </div>
-            )}
-
-            {hco.digital_engagement && (
-              <div>
-                <h4 className="font-medium text-card-foreground mb-2">Digital Engagement</h4>
-                <p className="text-sm text-muted-foreground">{hco.digital_engagement}</p>
-              </div>
-            )}
-
-            {hco.hcp_insights && (
-              <div>
-                <h4 className="font-medium text-card-foreground mb-2">HCP Insights</h4>
-                <p className="text-sm text-muted-foreground">{hco.hcp_insights}</p>
-              </div>
-            )}
-          </div>
-        </Card>
+        {/* AI-Generated Insights */}
+        <AIInsightsSection entityType="hco" entityName={hco.name} />
 
         {/* Employees Table */}
         {hcps.length > 0 && (
