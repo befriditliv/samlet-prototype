@@ -104,8 +104,9 @@ const Login = () => {
         <p className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} Oda ApS. All rights reserved.
         </p>
-        <p className="text-[10px] text-muted-foreground/60 flex items-center justify-center gap-1.5">Crafted with
-♥<span className="inline-block animate-pulse text-primary">♥</span>
+        <p className="text-[10px] text-muted-foreground/60 flex items-center justify-center gap-1.5">Crafted with ♥
+        <span className="inline-block animate-pulse text-primary">
+        </span>
           by the Oda Team
         </p>
       </footer>
