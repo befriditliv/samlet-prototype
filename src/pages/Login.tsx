@@ -7,13 +7,13 @@ import { Input } from "@/components/ui/input";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { Building2, Mail } from "lucide-react";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
-
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [showEmailLogin, setShowEmailLogin] = useState(false);
-  const { setRole } = useAuth();
+  const {
+    setRole
+  } = useAuth();
   const navigate = useNavigate();
-
   const handleLogin = () => {
     if (selectedRole) {
       setRole(selectedRole as UserRole);
@@ -26,9 +26,7 @@ const Login = () => {
       }
     }
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10 flex flex-col items-center justify-center p-6">
+  return <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10 flex flex-col items-center justify-center p-6">
       {/* Subtle branded accent line at top */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary/60" />
       
@@ -46,11 +44,7 @@ const Login = () => {
         </CardHeader>
         <CardContent className="space-y-5 pt-4">
           {/* SSO Button */}
-          <Button 
-            variant="outline" 
-            className="w-full h-12 gap-3 font-medium"
-            onClick={() => {}}
-          >
+          <Button variant="outline" className="w-full h-12 gap-3 font-medium" onClick={() => {}}>
             <Building2 className="h-5 w-5" />
             Sign in with SSO
           </Button>
@@ -66,29 +60,13 @@ const Login = () => {
           </div>
 
           {/* Email Sign-in Toggle */}
-          {!showEmailLogin ? (
-            <Button 
-              variant="ghost" 
-              className="w-full gap-2 text-muted-foreground hover:text-foreground"
-              onClick={() => setShowEmailLogin(true)}
-            >
+          {!showEmailLogin ? <Button variant="ghost" className="w-full gap-2 text-muted-foreground hover:text-foreground" onClick={() => setShowEmailLogin(true)}>
               <Mail className="h-4 w-4" />
               Sign in with email
-            </Button>
-          ) : (
-            <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
-              <Input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="h-11"
-              />
-              <Input 
-                type="password" 
-                placeholder="Enter your password" 
-                className="h-11"
-              />
-            </div>
-          )}
+            </Button> : <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+              <Input type="email" placeholder="Enter your email" className="h-11" />
+              <Input type="password" placeholder="Enter your password" className="h-11" />
+            </div>}
 
           {/* Demo Role Selector */}
           <div className="pt-2 space-y-3">
@@ -114,11 +92,7 @@ const Login = () => {
                 </SelectContent>
               </Select>
             </div>
-            <Button 
-              onClick={handleLogin} 
-              className="w-full h-11" 
-              disabled={!selectedRole}
-            >
+            <Button onClick={handleLogin} className="w-full h-11" disabled={!selectedRole}>
               Continue as Demo User
             </Button>
           </div>
@@ -130,14 +104,11 @@ const Login = () => {
         <p className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} Oda ApS. All rights reserved.
         </p>
-        <p className="text-[10px] text-muted-foreground/60 flex items-center justify-center gap-1.5">
-          Crafted with
-          <span className="inline-block animate-pulse text-primary">♥</span>
+        <p className="text-[10px] text-muted-foreground/60 flex items-center justify-center gap-1.5">Crafted with
+♥<span className="inline-block animate-pulse text-primary">♥</span>
           by the Oda Team
         </p>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Login;
