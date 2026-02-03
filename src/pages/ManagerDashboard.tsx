@@ -121,6 +121,11 @@ const ManagerDashboard = () => {
       </header>
 
       <main className="container mx-auto px-6 py-12 space-y-12">
+        {/* Signals */}
+        <section id="signals">
+          <ActionCenter />
+        </section>
+
         {/* Employee Overview */}
         <section id="employee-overview" className="space-y-4">
           <div className="flex items-center gap-3">
@@ -133,11 +138,6 @@ const ManagerDashboard = () => {
             </div>
           </div>
           <EmployeeOverview />
-        </section>
-
-        {/* Signals */}
-        <section id="signals">
-          <ActionCenter />
         </section>
 
         {/* Analysis Tools */}
