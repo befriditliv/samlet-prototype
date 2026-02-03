@@ -78,7 +78,7 @@ const Login = () => {
         <div className="h-1 bg-gradient-to-r from-primary via-primary/80 to-primary/60 origin-left animate-[scaleX_1s_ease-out_forwards]" style={{ transform: 'scaleX(0)', animationDelay: '0.3s', animationFillMode: 'forwards' }} />
         <CardHeader className="text-center space-y-4 pb-2">
           <div className="flex justify-center">
-            <div className="p-3 rounded-2xl bg-primary/5 transition-transform duration-500 hover:scale-105">
+            <div className="transition-transform duration-500 hover:scale-105">
               <img src={jarvisLogo} alt="Jarvis Logo" className="h-16 w-16" />
             </div>
           </div>
