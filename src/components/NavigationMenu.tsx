@@ -10,13 +10,16 @@ import {
   Settings,
   User,
   LogOut,
-  Sun
+  Sun,
+  BookOpen,
+  Plus,
+  BarChart3
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
-const menuItems = [
+const kamMenuItems = [
   {
     icon: Calendar,
     label: "Field Day",
@@ -34,6 +37,33 @@ const menuItems = [
     label: "Training Platform",
     href: "/training-platform",
     isRoute: true
+  }
+];
+
+const managerMenuItems = [
+  {
+    icon: BookOpen,
+    label: "Dashboard",
+    href: "/manager",
+    isRoute: true
+  },
+  {
+    icon: Plus,
+    label: "Create Report",
+    href: "/manager/new-report",
+    isRoute: true
+  },
+  {
+    icon: Users,
+    label: "Client Overview",
+    href: "/client-overview",
+    isRoute: true
+  },
+  {
+    icon: BarChart3,
+    label: "Signals",
+    href: "/manager#signals",
+    isRoute: false
   }
 ];
 
@@ -56,13 +86,19 @@ export const NavigationMenu = () => {
     localStorage.setItem("theme", newIsDark ? "dark" : "light");
   };
 
-  const handleMenuClick = (item: typeof menuItems[0]) => {
+  const handleMenuClick = (item: typeof kamMenuItems[0]) => {
     setIsOpen(false);
     if (item.isRoute) {
       navigate(item.href);
-    } else if (item.href.startsWith('#')) {
-      const element = document.querySelector(item.href);
-      element?.scrollIntoView({ behavior: 'smooth' });
+    } else if (item.href.includes('#')) {
+      // Handle hash navigation (e.g., /manager#signals)
+      const [path, hash] = item.href.split('#');
+      if (path && window.location.pathname !== path) {
+        navigate(item.href);
+      } else {
+        const element = document.querySelector(`#${hash}`);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -84,7 +120,7 @@ export const NavigationMenu = () => {
 
           <div className="flex-1 overflow-y-auto px-4">
             <nav className="space-y-2">
-              {menuItems.map((item, index) => (
+              {(role === 'manager' ? managerMenuItems : kamMenuItems).map((item, index) => (
                 <button
                   key={index}
                   className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent/50 transition-colors text-foreground text-left"
