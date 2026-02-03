@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, User, MapPin, MessageCircle, ChevronUp, Lightbulb, Calendar, AlertCircle, Loader2, CheckCircle2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, User, MapPin, MessageCircle, ChevronUp, Lightbulb, Calendar, AlertCircle, Loader2, CheckCircle2, Navigation } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -176,13 +176,21 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
     );
   };
 
-  const getStatusButton = (status: MeetingStatus) => {
+  const getStatusButton = (status: MeetingStatus, showDirection: boolean = false) => {
     switch (status) {
       case "next-call":
         return (
-          <Badge className="bg-blue-500 text-white hover:bg-blue-600">
-            Next Call
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge className="bg-blue-500 text-white hover:bg-blue-600">
+              Next Call
+            </Badge>
+            {showDirection && (
+              <Badge variant="outline" className="text-blue-600 border-blue-300 hover:bg-blue-50 dark:text-blue-400 dark:border-blue-700 dark:hover:bg-blue-950 cursor-pointer">
+                <Navigation className="h-3 w-3 mr-1" />
+                Direction
+              </Badge>
+            )}
+          </div>
         );
       case "needs-debrief":
         return (
@@ -423,7 +431,7 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
 
                   {/* Status & Actions */}
                   <div className="flex items-center gap-3">
-                    {getStatusButton(getMeetingStatus(meeting))}
+                    {getStatusButton(getMeetingStatus(meeting), getMeetingStatus(meeting) === "next-call")}
                     
                     {getMeetingStatus(meeting) === "needs-debrief" && (
                       <Button 
