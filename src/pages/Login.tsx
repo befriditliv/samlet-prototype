@@ -107,8 +107,7 @@ const Login = () => {
         </p>
         <p className="text-[10px] text-muted-foreground/60 flex items-center justify-center gap-1.5">
           Crafted with
-          <span className="inline-block animate-pulse text-primary">♥</span>
-          by the Oda Team
+          <span className="inline-block text-muted-foreground">♥</span>
         </p>
       </footer>
     </div>;
