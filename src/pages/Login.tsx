@@ -26,7 +26,7 @@ const Login = () => {
       }
     }
   };
-  return <div className="min-h-screen flex flex-col items-center justify-center p-6" style={{ background: 'linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 45%) 50%, hsl(217 91% 35%) 100%)' }}>
+  return <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10 flex flex-col items-center justify-center p-6">
       {/* Subtle branded accent line at top */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary/60 origin-left animate-[scaleX_1s_ease-out_forwards]" style={{ transform: 'scaleX(0)' }} />
       
