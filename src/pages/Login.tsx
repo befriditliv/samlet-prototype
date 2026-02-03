@@ -35,7 +35,7 @@ const Login = () => {
         <CardHeader className="text-center space-y-4 pb-2">
           <div className="flex justify-center">
             <div className="p-3 rounded-2xl bg-primary/5 transition-transform duration-500 hover:scale-105">
-              <img src={jarvisLogo} alt="Jarvis Logo" className="h-16 w-16 animate-[pulse_3s_ease-in-out_infinite]" style={{ animationDuration: '3s' }} />
+              <img src={jarvisLogo} alt="Jarvis Logo" className="h-16 w-16" />
             </div>
           </div>
           <div className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
