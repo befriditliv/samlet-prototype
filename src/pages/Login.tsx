@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
-import { ArrowRight, Mail, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
-import loginBg from "@/assets/jarvis-login-bg.jpg";
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState<string>("");
@@ -28,98 +27,105 @@ const Login = () => {
   };
 
   const handleSSO = () => {
-    // Mock SSO - just show a message or proceed with role selection
     if (selectedRole) {
       handleLogin();
     }
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${loginBg})` }}
-      />
-      
-      {/* Overlay for better contrast */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#003d7a]/30 via-[#005AC8]/20 to-[#003d7a]/40" />
-
-      {/* Jarvis Logo - Top Right */}
-      <div className="absolute top-6 right-6 z-10">
-        <div className="bg-primary rounded-lg p-2">
-          <img src={jarvisLogo} alt="Jarvis" className="h-8 w-8 invert brightness-0" />
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] flex flex-col">
+      {/* Header */}
+      <header className="w-full px-8 py-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+            <span className="text-white font-bold text-sm">J</span>
+          </div>
         </div>
-      </div>
+      </header>
 
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-md px-6 flex flex-col items-center">
-        {/* Tagline */}
-        <h1 className="text-4xl md:text-5xl font-light text-white text-center mb-12 leading-tight">
-          <span className="font-bold">Helping</span> you<br />
-          <span className="font-bold">succeed</span> everyday
-        </h1>
-
-        {/* Login Card */}
-        <div className="w-full space-y-4">
-          {/* SSO Button */}
-          <Button
-            onClick={handleSSO}
-            variant="outline"
-            className="w-full h-12 bg-white/95 hover:bg-white text-foreground border-0 rounded-full font-medium shadow-lg"
-          >
-            Sign in using SSO
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-
-          {/* Divider */}
-          <div className="flex items-center gap-4 py-2">
-            <div className="flex-1 h-px bg-white/30" />
-            <span className="text-white/70 text-sm">or</span>
-            <div className="flex-1 h-px bg-white/30" />
+      <main className="flex-1 flex items-center justify-center px-6">
+        <div className="w-full max-w-sm">
+          {/* Title */}
+          <div className="text-center mb-12">
+            <h1 className="text-3xl font-semibold tracking-tight text-foreground mb-3">
+              Welcome back
+            </h1>
+            <p className="text-muted-foreground">
+              Sign in to Jarvis
+            </p>
           </div>
 
-          {/* Email Input */}
-          <div className="relative">
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          {/* Form */}
+          <div className="space-y-4">
+            {/* SSO Button */}
+            <Button
+              onClick={handleSSO}
+              variant="outline"
+              className="w-full h-12 rounded-xl border-border/60 bg-background hover:bg-accent/50 font-medium transition-all duration-200"
+              disabled={!selectedRole}
+            >
+              Continue with SSO
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+
+            {/* Divider */}
+            <div className="flex items-center gap-4 py-3">
+              <div className="flex-1 h-px bg-border/60" />
+              <span className="text-muted-foreground text-xs uppercase tracking-wider">or</span>
+              <div className="flex-1 h-px bg-border/60" />
+            </div>
+
+            {/* Email Input */}
             <Input
               type="email"
-              placeholder="your.email@company.com"
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full h-12 pl-12 bg-white/20 backdrop-blur-sm border-white/30 text-white placeholder:text-white/60 rounded-full focus:bg-white/30"
+              className="w-full h-12 rounded-xl border-border/60 bg-background px-4 text-base focus-visible:ring-1 focus-visible:ring-primary/50"
             />
-          </div>
 
-          {/* Role Selector - For Prototype */}
-          <div className="relative">
+            {/* Role Selector */}
             <Select value={selectedRole} onValueChange={setSelectedRole}>
-              <SelectTrigger className="w-full h-12 bg-white/20 backdrop-blur-sm border-white/30 text-white rounded-full pl-4 focus:ring-white/50 [&>span]:text-white/60 data-[state=open]:bg-white/30">
-                <SelectValue placeholder="Select your role (prototype)" />
+              <SelectTrigger className="w-full h-12 rounded-xl border-border/60 bg-background px-4 focus:ring-1 focus:ring-primary/50">
+                <SelectValue placeholder="Select role" />
               </SelectTrigger>
-              <SelectContent className="rounded-xl">
-                <SelectItem value="key_account_manager">Key Account Manager (Web)</SelectItem>
-                <SelectItem value="key_account_manager_app">Key Account Manager (App)</SelectItem>
-                <SelectItem value="manager">Manager</SelectItem>
+              <SelectContent className="rounded-xl border-border/60">
+                <SelectItem value="key_account_manager" className="rounded-lg">
+                  Key Account Manager (Web)
+                </SelectItem>
+                <SelectItem value="key_account_manager_app" className="rounded-lg">
+                  Key Account Manager (App)
+                </SelectItem>
+                <SelectItem value="manager" className="rounded-lg">
+                  Manager
+                </SelectItem>
               </SelectContent>
             </Select>
+
+            {/* Sign In Button */}
+            <Button 
+              onClick={handleLogin} 
+              className="w-full h-12 rounded-xl bg-foreground text-background hover:bg-foreground/90 font-medium transition-all duration-200"
+              disabled={!selectedRole}
+            >
+              Sign in
+            </Button>
           </div>
 
-          {/* Sign In Button */}
-          <Button 
-            onClick={handleLogin} 
-            className="w-full h-12 bg-primary hover:bg-primary/90 text-white rounded-full font-medium shadow-lg"
-            disabled={!selectedRole}
-          >
-            Sign in
-          </Button>
+          {/* Footer Note */}
+          <p className="mt-8 text-center text-xs text-muted-foreground">
+            Role selection is for prototype navigation only
+          </p>
         </div>
+      </main>
 
-        {/* Footer */}
-        <p className="mt-8 text-white/50 text-sm text-center">
+      {/* Footer */}
+      <footer className="w-full px-8 py-6 text-center">
+        <p className="text-xs text-muted-foreground">
           Jarvis Key Account Manager
         </p>
-      </div>
+      </footer>
     </div>
   );
 };
