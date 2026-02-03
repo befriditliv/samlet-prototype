@@ -88,6 +88,14 @@ export default {
             height: "0",
           },
         },
+        "scaleX": {
+          "0%": {
+            transform: "scaleX(0)",
+          },
+          "100%": {
+            transform: "scaleX(1)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
