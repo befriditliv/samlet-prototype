@@ -176,21 +176,15 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
     );
   };
 
-  const getStatusButton = (status: MeetingStatus, showDirection: boolean = false) => {
+  const getStatusButton = (status: MeetingStatus) => {
+    const pillStyle = "bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-950/50 dark:text-blue-400 dark:hover:bg-blue-900/50 border-0";
+    
     switch (status) {
       case "next-call":
         return (
-          <div className="flex items-center gap-2">
-            <Badge className="bg-blue-500 text-white hover:bg-blue-600">
-              Next Call
-            </Badge>
-            {showDirection && (
-              <Badge variant="outline" className="text-blue-600 border-blue-300 hover:bg-blue-50 dark:text-blue-400 dark:border-blue-700 dark:hover:bg-blue-950 cursor-pointer">
-                <Navigation className="h-3 w-3 mr-1" />
-                Direction
-              </Badge>
-            )}
-          </div>
+          <Badge className={pillStyle}>
+            Next Call
+          </Badge>
         );
       case "needs-debrief":
         return (
@@ -220,9 +214,15 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
         );
       case "upcoming":
         return (
-          <Badge className="bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-            Upcoming
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge className={pillStyle}>
+              Upcoming
+            </Badge>
+            <Badge className={`${pillStyle} cursor-pointer`}>
+              <Navigation className="h-3 w-3 mr-1" />
+              Direction
+            </Badge>
+          </div>
         );
     }
   };
@@ -431,7 +431,7 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
 
                   {/* Status & Actions */}
                   <div className="flex items-center gap-3">
-                    {getStatusButton(getMeetingStatus(meeting), getMeetingStatus(meeting) === "next-call")}
+                    {getStatusButton(getMeetingStatus(meeting))}
                     
                     {getMeetingStatus(meeting) === "needs-debrief" && (
                       <Button 
