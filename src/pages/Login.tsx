@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
+import { Building2, Mail } from "lucide-react";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState<string>("");
+  const [showEmailLogin, setShowEmailLogin] = useState(false);
   const { setRole } = useAuth();
   const navigate = useNavigate();
 
@@ -17,7 +20,7 @@ const Login = () => {
       if (selectedRole === "manager") {
         navigate("/manager");
       } else if (selectedRole === "key_account_manager_app") {
-        navigate("/"); // App KAM goes to same dashboard for now
+        navigate("/");
       } else {
         navigate("/");
       }
@@ -25,36 +28,100 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-background flex items-center justify-center p-6">
-      <Card className="w-full max-w-md shadow-xl">
-        <CardHeader className="text-center space-y-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10 flex items-center justify-center p-6">
+      {/* Subtle branded accent line at top */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary/60" />
+      
+      <Card className="w-full max-w-md shadow-xl border-t-4 border-t-primary">
+        <CardHeader className="text-center space-y-4 pb-2">
           <div className="flex justify-center">
-            <img src={jarvisLogo} alt="Jarvis Logo" className="h-20 w-20" />
+            <div className="p-3 rounded-2xl bg-primary/5">
+              <img src={jarvisLogo} alt="Jarvis Logo" className="h-16 w-16" />
+            </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Jarvis Key Account Manager</CardTitle>
-          <CardDescription>Select your role to continue</CardDescription>
+          <div>
+            <CardTitle className="text-2xl font-bold">Welcome to Jarvis</CardTitle>
+            <CardDescription className="mt-1">Key Account Manager Platform</CardDescription>
+          </div>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Role</label>
-            <Select value={selectedRole} onValueChange={setSelectedRole}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select your role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="key_account_manager">Key Account Manager (Web)</SelectItem>
-                <SelectItem value="key_account_manager_app">Key Account Manager (App)</SelectItem>
-                <SelectItem value="manager">Manager</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        <CardContent className="space-y-5 pt-4">
+          {/* SSO Button */}
           <Button 
-            onClick={handleLogin} 
-            className="w-full" 
-            disabled={!selectedRole}
+            variant="outline" 
+            className="w-full h-12 gap-3 font-medium"
+            onClick={() => {}}
           >
-            Sign in
+            <Building2 className="h-5 w-5" />
+            Sign in with SSO
           </Button>
+
+          {/* Divider */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">or</span>
+            </div>
+          </div>
+
+          {/* Email Sign-in Toggle */}
+          {!showEmailLogin ? (
+            <Button 
+              variant="ghost" 
+              className="w-full gap-2 text-muted-foreground hover:text-foreground"
+              onClick={() => setShowEmailLogin(true)}
+            >
+              <Mail className="h-4 w-4" />
+              Sign in with email
+            </Button>
+          ) : (
+            <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+              <Input 
+                type="email" 
+                placeholder="Enter your email" 
+                className="h-11"
+              />
+              <Input 
+                type="password" 
+                placeholder="Enter your password" 
+                className="h-11"
+              />
+            </div>
+          )}
+
+          {/* Demo Role Selector */}
+          <div className="pt-2 space-y-3">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-dashed" />
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="bg-card px-2 text-muted-foreground">Demo Access</span>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Select role</label>
+              <Select value={selectedRole} onValueChange={setSelectedRole}>
+                <SelectTrigger className="w-full h-11">
+                  <SelectValue placeholder="Choose a demo role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="key_account_manager">Key Account Manager (Web)</SelectItem>
+                  <SelectItem value="key_account_manager_app">Key Account Manager (App)</SelectItem>
+                  <SelectItem value="manager">Manager</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <Button 
+              onClick={handleLogin} 
+              className="w-full h-11" 
+              disabled={!selectedRole}
+            >
+              Continue as Demo User
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
