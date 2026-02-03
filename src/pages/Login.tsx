@@ -7,25 +7,69 @@ import { Input } from "@/components/ui/input";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import { Building2, Mail } from "lucide-react";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
+
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [showEmailLogin, setShowEmailLogin] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     setRole
   } = useAuth();
   const navigate = useNavigate();
+
   const handleLogin = () => {
     if (selectedRole) {
-      setRole(selectedRole as UserRole);
-      if (selectedRole === "manager") {
-        navigate("/manager");
-      } else if (selectedRole === "key_account_manager_app") {
-        navigate("/");
-      } else {
-        navigate("/");
-      }
+      setIsLoading(true);
+      
+      setTimeout(() => {
+        setRole(selectedRole as UserRole);
+        if (selectedRole === "manager") {
+          navigate("/manager");
+        } else if (selectedRole === "key_account_manager_app") {
+          navigate("/");
+        } else {
+          navigate("/");
+        }
+      }, 1500);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10 animate-pulse" />
+        
+        {/* Logo container with animations */}
+        <div className="relative z-10 flex flex-col items-center gap-6">
+          {/* Glowing ring */}
+          <div className="absolute inset-0 -m-8 rounded-full bg-primary/20 blur-2xl animate-pulse" />
+          
+          {/* Logo with scale animation */}
+          <div className="relative p-6 rounded-3xl bg-card/80 backdrop-blur-sm border border-primary/20 shadow-2xl animate-scale-in">
+            <img 
+              src={jarvisLogo} 
+              alt="Jarvis Logo" 
+              className="h-20 w-20"
+            />
+          </div>
+          
+          {/* Loading bar */}
+          <div className="w-48 h-1 bg-muted rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-primary via-primary/80 to-primary/60 origin-left animate-[scaleX_1.5s_ease-out_forwards]"
+              style={{ transform: 'scaleX(0)' }}
+            />
+          </div>
+          
+          {/* Loading text */}
+          <p className="text-sm text-muted-foreground animate-fade-in">
+            Initializing Jarvis...
+          </p>
+        </div>
+      </div>
+    );
+  }
   return <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10 flex flex-col items-center justify-center p-6">
       {/* Subtle branded accent line at top */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary/60 origin-left animate-[scaleX_1s_ease-out_forwards]" style={{ transform: 'scaleX(0)' }} />
