@@ -181,9 +181,14 @@ export const ActionCenter = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-lg font-semibold text-foreground">Signals</h2>
-          <p className="text-sm text-muted-foreground">Key metrics and alerts to help you prioritize your outreach</p>
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-lg bg-primary/10">
+            <ShieldAlert className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-foreground">Signals</h2>
+            <p className="text-sm text-muted-foreground">Key metrics and alerts to help you prioritize your outreach</p>
+          </div>
         </div>
         <button 
           onClick={() => navigate('/client-overview')}
