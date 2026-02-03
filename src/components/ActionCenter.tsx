@@ -43,25 +43,30 @@ const getSeverityDot = (severity: SignalSeverity, count: number) => {
   }
 };
 
-export const ActionCenter = () => {
+interface ActionCenterProps {
+  timePeriod?: string;
+}
+
+export const ActionCenter = ({ timePeriod = "30" }: ActionCenterProps) => {
   const navigate = useNavigate();
   const [signals, setSignals] = useState<SignalCard[]>([]);
   const [loading, setLoading] = useState(true);
+  const days = parseInt(timePeriod);
 
   useEffect(() => {
     fetchSignalCounts();
-  }, []);
+  }, [timePeriod]);
 
   const fetchSignalCounts = async () => {
     setLoading(true);
-    const thirtyDaysAgo = subDays(new Date(), 30);
-    const sixtyDaysAgo = subDays(new Date(), 60);
+    const periodAgo = subDays(new Date(), days);
+    const doublePeriodAgo = subDays(new Date(), days * 2);
 
     try {
       const { count: overdueCount } = await supabase
         .from('hcps')
         .select('*', { count: 'exact', head: true })
-        .or(`last_meeting_date.is.null,last_meeting_date.lt.${format(thirtyDaysAgo, 'yyyy-MM-dd')}`);
+        .or(`last_meeting_date.is.null,last_meeting_date.lt.${format(periodAgo, 'yyyy-MM-dd')}`);
 
       const { count: missingConsentCount } = await supabase
         .from('hcps')
@@ -72,7 +77,7 @@ export const ActionCenter = () => {
         .from('hcps')
         .select('*', { count: 'exact', head: true })
         .in('access_level', ['Tier A', 'Tier B', 'High', 'Medium'])
-        .or(`last_meeting_date.is.null,last_meeting_date.lt.${format(sixtyDaysAgo, 'yyyy-MM-dd')}`);
+        .or(`last_meeting_date.is.null,last_meeting_date.lt.${format(doublePeriodAgo, 'yyyy-MM-dd')}`);
 
       const today = format(new Date(), 'yyyy-MM-dd');
       const { data: hcpsWithNextStep } = await supabase
@@ -97,7 +102,7 @@ export const ActionCenter = () => {
         {
           id: 'overdue',
           title: 'Overdue for contact',
-          description: '30+ days since last meeting',
+          description: `${days}+ days since last meeting`,
           count: overdueCount || 0,
           severity: (overdueCount || 0) > 10 ? 'critical' : (overdueCount || 0) > 5 ? 'warning' : 'info',
           icon: <Clock className="h-4 w-4" />,
@@ -117,7 +122,7 @@ export const ActionCenter = () => {
         {
           id: 'high-value-low-engagement',
           title: 'High-value, low engagement',
-          description: 'Priority HCPs inactive 60+ days',
+          description: `Priority HCPs inactive ${days * 2}+ days`,
           count: highValueLowEngagementCount || 0,
           severity: (highValueLowEngagementCount || 0) > 5 ? 'critical' : (highValueLowEngagementCount || 0) > 2 ? 'warning' : 'info',
           icon: <TrendingDown className="h-4 w-4" />,
