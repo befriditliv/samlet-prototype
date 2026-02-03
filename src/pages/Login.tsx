@@ -40,7 +40,7 @@ const Login = () => {
           </div>
           <div className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
             <CardTitle className="text-2xl font-bold">Welcome to Jarvis</CardTitle>
-            <CardDescription className="mt-1">Key Account Manager Platform</CardDescription>
+            <CardDescription className="mt-1">Transform every HCP interaction into better meetings, better data, and better decisions - in real time.</CardDescription>
           </div>
         </CardHeader>
         <CardContent className="space-y-5 pt-4">
