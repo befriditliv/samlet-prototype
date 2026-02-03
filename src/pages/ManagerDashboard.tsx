@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ActivityOverview } from "@/components/manager/ActivityOverview";
 import { EmployeeOverview } from "@/components/manager/EmployeeOverview";
 import { InsightTools } from "@/components/manager/InsightTools";
 import { ActionCenter } from "@/components/ActionCenter";
@@ -121,23 +122,37 @@ const ManagerDashboard = () => {
       </header>
 
       <main className="container mx-auto px-6 py-12 space-y-12">
-        {/* Employee Overview */}
+        {/* Activity Overview */}
+        <section id="activity-overview" className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-primary/10">
+              <BookOpen className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Activity Overview</h2>
+              <p className="text-sm text-muted-foreground">Track engagement, quality, and team progress</p>
+            </div>
+          </div>
+          <ActivityOverview />
+        </section>
+
+        {/* Signals */}
+        <section id="signals">
+          <ActionCenter />
+        </section>
+
+        {/* Debrief Quality & Employee Table */}
         <section id="employee-overview" className="space-y-4">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-lg bg-primary/10">
               <BookOpen className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">Employee Overview</h2>
-              <p className="text-sm text-muted-foreground">Track engagement, quality, and team progress</p>
+              <h2 className="text-2xl font-bold text-foreground">Debrief Quality</h2>
+              <p className="text-sm text-muted-foreground">Weekly quality scores and employee performance</p>
             </div>
           </div>
           <EmployeeOverview />
-        </section>
-
-        {/* Signals */}
-        <section id="signals">
-          <ActionCenter />
         </section>
 
         {/* Analysis Tools */}
