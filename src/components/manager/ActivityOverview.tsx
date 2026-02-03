@@ -62,7 +62,12 @@ const AnimatedNumber = ({
   animate?: boolean;
 }) => <span className={cn("inline-block", animate && "animate-count-up")}>{value}{suffix}</span>;
 
-export const ActivityOverview = () => {
+interface ActivityOverviewProps {
+  timePeriod: string;
+  periodLabel: string;
+}
+
+export const ActivityOverview = ({ timePeriod, periodLabel }: ActivityOverviewProps) => {
   const { ref: meetingRef, inView: meetingInView } = useInViewOnce<HTMLDivElement>({
     threshold: 0.2,
     rootMargin: "0px 0px -10% 0px",
@@ -110,12 +115,12 @@ export const ActivityOverview = () => {
               <div className="flex items-center gap-3 justify-end">
                 <div className="text-right">
                   <p className="text-xs text-muted-foreground uppercase tracking-wide">Period</p>
-                  <p className="text-sm font-semibold text-foreground">Last 30 days</p>
+                  <p className="text-sm font-semibold text-foreground">{periodLabel}</p>
                 </div>
                 <div className="h-8 w-px bg-border/50" />
                 <div className="text-right">
                   <p className="text-xs text-muted-foreground uppercase tracking-wide">Comparison</p>
-                  <p className="text-sm font-medium text-muted-foreground">vs. previous 30 days</p>
+                  <p className="text-sm font-medium text-muted-foreground">vs. previous {timePeriod} days</p>
                 </div>
               </div>
             </div>
