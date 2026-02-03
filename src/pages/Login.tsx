@@ -46,7 +46,7 @@ const Login = () => {
           <div className="absolute inset-0 -m-8 rounded-full bg-primary/20 blur-2xl animate-pulse" />
           
           {/* Logo with scale animation */}
-          <div className="relative p-6 rounded-3xl bg-card/80 backdrop-blur-sm border border-primary/20 shadow-2xl animate-scale-in">
+          <div className="relative animate-scale-in">
             <img 
               src={jarvisLogo} 
               alt="Jarvis Logo" 
