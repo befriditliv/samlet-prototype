@@ -182,9 +182,15 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
     switch (status) {
       case "next-call":
         return (
-          <Badge className={pillStyle}>
-            Next Call
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge className={pillStyle}>
+              Next Call
+            </Badge>
+            <Badge className={`${pillStyle} cursor-pointer`}>
+              <Navigation className="h-3 w-3 mr-1" />
+              Direction
+            </Badge>
+          </div>
         );
       case "needs-debrief":
         return (
