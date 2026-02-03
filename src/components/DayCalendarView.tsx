@@ -216,6 +216,9 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
         return (
           <div className="flex items-center gap-2">
             <Badge className={pillStyle}>
+              Next Call
+            </Badge>
+            <Badge className={pillStyle}>
               Upcoming
             </Badge>
             <Badge className={`${pillStyle} cursor-pointer`}>
