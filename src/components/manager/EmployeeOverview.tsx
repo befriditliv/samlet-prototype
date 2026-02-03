@@ -152,12 +152,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-interface EmployeeOverviewProps {
-  timePeriod?: string;
-  periodLabel?: string;
-}
-
-export const EmployeeOverview = ({ timePeriod = "30", periodLabel = "Last 30 days" }: EmployeeOverviewProps) => {
+export const EmployeeOverview = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
 
@@ -350,19 +345,19 @@ export const EmployeeOverview = ({ timePeriod = "30", periodLabel = "Last 30 day
                   </th>
                   <th className="text-left py-4 px-5">
                     <div className="text-sm font-semibold text-foreground">Debrief Adherence</div>
-                    <div className="text-xs font-normal text-muted-foreground">{periodLabel}</div>
+                    <div className="text-xs font-normal text-muted-foreground">Last 30 days</div>
                   </th>
                   <th className="text-left py-4 px-5">
                     <div className="text-sm font-semibold text-foreground">Avg. Debrief Length</div>
-                    <div className="text-xs font-normal text-muted-foreground">{periodLabel}</div>
+                    <div className="text-xs font-normal text-muted-foreground">Last 30 days</div>
                   </th>
                   <th className="text-left py-4 px-5">
                     <div className="text-sm font-semibold text-foreground">Debriefs</div>
-                    <div className="text-xs font-normal text-muted-foreground">{periodLabel}</div>
+                    <div className="text-xs font-normal text-muted-foreground">Last 30 days</div>
                   </th>
                   <th className="text-left py-4 px-5">
                     <div className="text-sm font-semibold text-foreground">Meetings</div>
-                    <div className="text-xs font-normal text-muted-foreground">Next {timePeriod} days</div>
+                    <div className="text-xs font-normal text-muted-foreground">Next 7 days</div>
                   </th>
                 </tr>
               </thead>

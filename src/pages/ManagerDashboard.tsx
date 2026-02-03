@@ -8,28 +8,17 @@ import { AskJarvisManager } from "@/components/manager/AskJarvis";
 
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { BookOpen, Menu, Lightbulb, BarChart3, Plus, Users, LogOut, Sun, Calendar } from "lucide-react";
+import { BookOpen, Menu, Lightbulb, BarChart3, Plus, Users, LogOut, Sun } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
-export type TimePeriod = "7" | "30" | "60" | "90";
-
-const periodLabels: Record<TimePeriod, string> = {
-  "7": "Last 7 days",
-  "30": "Last 30 days",
-  "60": "Last 60 days",
-  "90": "Last 90 days",
-};
-
 const ManagerDashboard = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const [isDark, setIsDark] = useState(false);
-  const [timePeriod, setTimePeriod] = useState<TimePeriod>("30");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -133,24 +122,6 @@ const ManagerDashboard = () => {
       </header>
 
       <main className="container mx-auto px-6 py-12 space-y-12">
-        {/* Global Time Period Filter */}
-        <div className="flex items-center justify-end">
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-            <Select value={timePeriod} onValueChange={(v) => setTimePeriod(v as TimePeriod)}>
-              <SelectTrigger className="w-40 h-9 border-0 bg-muted/50 focus:bg-card">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="7">Last 7 days</SelectItem>
-                <SelectItem value="30">Last 30 days</SelectItem>
-                <SelectItem value="60">Last 60 days</SelectItem>
-                <SelectItem value="90">Last 90 days</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
         {/* Activity Overview */}
         <section id="activity-overview" className="space-y-4">
           <div className="flex items-center gap-3">
@@ -162,12 +133,12 @@ const ManagerDashboard = () => {
               <p className="text-sm text-muted-foreground">Track engagement, quality, and team progress</p>
             </div>
           </div>
-          <ActivityOverview timePeriod={timePeriod} periodLabel={periodLabels[timePeriod]} />
+          <ActivityOverview />
         </section>
 
         {/* Signals */}
         <section id="signals">
-          <ActionCenter timePeriod={timePeriod} />
+          <ActionCenter />
         </section>
 
         {/* Debrief Quality & Employee Table */}
@@ -181,7 +152,7 @@ const ManagerDashboard = () => {
               <p className="text-sm text-muted-foreground">Weekly quality scores and employee performance</p>
             </div>
           </div>
-          <EmployeeOverview timePeriod={timePeriod} periodLabel={periodLabels[timePeriod]} />
+          <EmployeeOverview />
         </section>
 
         {/* Analysis Tools */}
