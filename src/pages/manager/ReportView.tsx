@@ -27,7 +27,7 @@ import {
   ArrowDownRight
 } from "lucide-react";
 import { format } from "date-fns";
-import { da } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { NavigationMenu } from "@/components/NavigationMenu";
@@ -94,29 +94,29 @@ const generateDebriefs = (): DebriefItem[] => {
   
   // Phase 1: August-September - Primarily subsidy/reimbursement concerns (early period)
   const phase1Topics = [
-    { purpose: "Gennemgang af tilskudsregler for GLP-1 behandling", objection: "Uklarhed om regionale tilskudsregler gør det svært at vurdere, hvilke patienter der kan starte Ozempic", nextSteps: "Fremsende opdateret tilskudsoversigt" },
-    { purpose: "Diskussion af initiering af Ozempic hos type 2 diabetespatienter", objection: "Bekymring om at tilskudsklausuler begrænser muligheden for tidlig intervention med Ozempic", nextSteps: "Planlægge opfølgende møde med tilskudsspecialist" },
-    { purpose: "Introduktion til Ozempic behandlingsforløb", objection: "Regionen kræver dokumentation for metformin-svigt før Ozempic kan ordineres med tilskud", nextSteps: "Dele kliniske cases der viser dokumentationskrav" },
-    { purpose: "Møde om behandlingsalgoritme for type 2 diabetes", objection: "Usikkerhed om hvorvidt enkelttilskud kan søges ved kontraindikation for metformin", nextSteps: "Kontakte tilskudskontoret for afklaring" },
-    { purpose: "Opdatering om GLP-1 markedet", objection: "Frustation over at tilskudsreglerne varierer mellem regioner", nextSteps: "Udarbejde regional sammenligning af tilskudsregler" },
+    { purpose: "Review of reimbursement rules for GLP-1 treatment", objection: "Unclear regional reimbursement rules make it difficult to assess which patients can start Ozempic", nextSteps: "Send updated reimbursement overview" },
+    { purpose: "Discussion of Ozempic initiation in type 2 diabetes patients", objection: "Concern that reimbursement clauses limit the opportunity for early intervention with Ozempic", nextSteps: "Schedule follow-up meeting with reimbursement specialist" },
+    { purpose: "Introduction to Ozempic treatment pathway", objection: "Region requires documentation of metformin failure before Ozempic can be prescribed with reimbursement", nextSteps: "Share clinical cases showing documentation requirements" },
+    { purpose: "Meeting on treatment algorithm for type 2 diabetes", objection: "Uncertainty about whether individual reimbursement can be applied for with metformin contraindication", nextSteps: "Contact reimbursement office for clarification" },
+    { purpose: "Update on GLP-1 market", objection: "Frustration that reimbursement rules vary between regions", nextSteps: "Prepare regional comparison of reimbursement rules" },
   ];
   
   // Phase 2: October-November - Shift towards combination therapy concerns
   const phase2Topics = [
-    { purpose: "Ozempic i kombination med SGLT2-hæmmere", objection: "Usikkerhed om optimal dosering når Ozempic kombineres med andre antidiabetika", nextSteps: "Fremsende doseringsguide for kombinationsbehandling" },
-    { purpose: "Kombinationsbehandling og patientmonitorering", objection: "Bekymring om øget risiko for hypoglykæmi ved kombination med sulfonylurinstof", nextSteps: "Arrangere webinar om sikker kombinationsbehandling" },
-    { purpose: "Multidrug regime med GLP-1", objection: "Mangler erfaring med at kombinere Ozempic med insulin – hvornår justeres insulindosis?", nextSteps: "Dele protokol for insulin-justering ved GLP-1 tillæg" },
-    { purpose: "Behandlingsintensivering hos type 2 patienter", objection: "Ønsker mere data om langtidseffekt af Ozempic + SGLT2i kombination", nextSteps: "Sende relevante studier om kardiovaskulære outcomes" },
-    { purpose: "GLP-1 som tillæg til eksisterende behandling", objection: "Patienter på multiple præparater udtrykker 'pilletræthed' – hvordan motiveres de til injection?", nextSteps: "Udvikle patientvenligt materiale om ugentlig injektion" },
+    { purpose: "Ozempic in combination with SGLT2 inhibitors", objection: "Uncertainty about optimal dosing when Ozempic is combined with other antidiabetics", nextSteps: "Send dosing guide for combination therapy" },
+    { purpose: "Combination therapy and patient monitoring", objection: "Concern about increased risk of hypoglycemia when combined with sulfonylurea", nextSteps: "Arrange webinar on safe combination therapy" },
+    { purpose: "Multi-drug regimen with GLP-1", objection: "Lack of experience combining Ozempic with insulin – when should insulin dose be adjusted?", nextSteps: "Share protocol for insulin adjustment with GLP-1 addition" },
+    { purpose: "Treatment intensification in type 2 patients", objection: "Request more data on long-term effect of Ozempic + SGLT2i combination", nextSteps: "Send relevant studies on cardiovascular outcomes" },
+    { purpose: "GLP-1 as add-on to existing treatment", objection: "Patients on multiple medications express 'pill fatigue' – how to motivate them for injection?", nextSteps: "Develop patient-friendly material on weekly injection" },
   ];
   
   // Phase 3: Late November-December - Focus on patient selection and practical initiation
   const phase3Topics = [
-    { purpose: "Patientudvælgelse til Ozempic behandling", objection: "Hvilke patienter skal prioriteres når der er venteliste til diabetesambulatoriet?", nextSteps: "Udarbejde prioriteringskriterier sammen med klinikken" },
-    { purpose: "Praktisk håndtering af Ozempic opstart", objection: "GI-bivirkninger ved opstart får nogle patienter til at stoppe behandlingen for tidligt", nextSteps: "Dele tips til håndtering af opstartsbivirkninger" },
-    { purpose: "Ozempic til patienter med nyreinsufficiens", objection: "Usikkerhed om sikkerhed og effekt hos patienter med moderat nedsat nyrefunktion", nextSteps: "Gennemgå data for eGFR 30-60 populationen" },
-    { purpose: "Ældre patienter og GLP-1 behandling", objection: "Bekymring om vægttab hos ældre, skrøbelige patienter – er Ozempic passende?", nextSteps: "Diskutere individuel vurdering og monitorering" },
-    { purpose: "Opfølgning på Ozempic patienter", objection: "Mangler kapacitet til tæt opfølgning de første 3 måneder som anbefalet", nextSteps: "Foreslå digital opfølgningsløsning" },
+    { purpose: "Patient selection for Ozempic treatment", objection: "Which patients should be prioritized when there is a waitlist for the diabetes outpatient clinic?", nextSteps: "Develop prioritization criteria with the clinic" },
+    { purpose: "Practical handling of Ozempic initiation", objection: "GI side effects at initiation cause some patients to stop treatment too early", nextSteps: "Share tips for managing initiation side effects" },
+    { purpose: "Ozempic for patients with renal insufficiency", objection: "Uncertainty about safety and efficacy in patients with moderately reduced kidney function", nextSteps: "Review data for eGFR 30-60 population" },
+    { purpose: "Elderly patients and GLP-1 treatment", objection: "Concern about weight loss in elderly, frail patients – is Ozempic appropriate?", nextSteps: "Discuss individual assessment and monitoring" },
+    { purpose: "Follow-up on Ozempic patients", objection: "Lack of capacity for close follow-up during the first 3 months as recommended", nextSteps: "Suggest digital follow-up solution" },
   ];
   
   // Generate debriefs for each phase
@@ -195,30 +195,30 @@ const allDebriefs = generateDebriefs();
 const objectionCategories: ObjectionCategory[] = [
   {
     id: 'subsidy-reimbursement',
-    title: 'Tilskudsregler og regionale forskelle',
-    fullTitle: 'Bekymringer om tilskudsregler, klausuler og regionale forskelle',
-    description: 'HCP\'er udtrykker frustration over uklare eller varierende tilskudsregler mellem regioner. Dette påvirker beslutningen om at initiere Ozempic, da dokumentationskrav og godkendelsesprocesser opleves som tidskrævende.',
+    title: 'Reimbursement rules and regional differences',
+    fullTitle: 'Concerns about reimbursement rules, clauses and regional differences',
+    description: 'HCPs express frustration over unclear or varying reimbursement rules between regions. This affects the decision to initiate Ozempic, as documentation requirements and approval processes are perceived as time-consuming.',
     color: '#16a34a',
     count: 24,
     trend: 'down',
     trendPercent: 35,
     debriefs: allDebriefs.filter(d => 
-      d.objections.toLowerCase().includes('tilskud') || 
+      d.objections.toLowerCase().includes('reimbursement') || 
       d.objections.toLowerCase().includes('region') ||
-      d.objections.toLowerCase().includes('klausul')
+      d.objections.toLowerCase().includes('clause')
     ).slice(0, 24),
   },
   {
     id: 'combination-therapy',
-    title: 'Kombinationsbehandling med andre præparater',
-    fullTitle: 'Usikkerhed om kombinationsbehandling med andre antidiabetika',
-    description: 'Stigende fokus på hvordan Ozempic bedst kombineres med SGLT2-hæmmere, insulin og andre antidiabetika. HCP\'er efterspørger konkret vejledning om dosering, monitorering og håndtering af interaktioner.',
+    title: 'Combination therapy with other medications',
+    fullTitle: 'Uncertainty about combination therapy with other antidiabetics',
+    description: 'Increasing focus on how Ozempic is best combined with SGLT2 inhibitors, insulin and other antidiabetics. HCPs request concrete guidance on dosing, monitoring and handling of interactions.',
     color: '#ea580c',
     count: 26,
     trend: 'up',
     trendPercent: 62,
     debriefs: allDebriefs.filter(d => 
-      d.objections.toLowerCase().includes('kombination') || 
+      d.objections.toLowerCase().includes('combination') || 
       d.objections.toLowerCase().includes('insulin') ||
       d.objections.toLowerCase().includes('sglt2') ||
       d.objections.toLowerCase().includes('sulfonyl') ||
@@ -227,34 +227,34 @@ const objectionCategories: ObjectionCategory[] = [
   },
   {
     id: 'patient-selection',
-    title: 'Patientudvælgelse og praktisk initiering',
-    fullTitle: 'Udfordringer med patientudvælgelse og praktisk håndtering af opstart',
-    description: 'HCP\'er søger vejledning om hvilke patienter der bør prioriteres til Ozempic, samt praktisk håndtering af opstart herunder bivirkningshåndtering, monitorering og særlige patientgrupper.',
+    title: 'Patient selection and practical initiation',
+    fullTitle: 'Challenges with patient selection and practical handling of initiation',
+    description: 'HCPs seek guidance on which patients should be prioritized for Ozempic, as well as practical handling of initiation including side effect management, monitoring and special patient groups.',
     color: '#1d4ed8',
     count: 15,
     trend: 'up',
     trendPercent: 180,
     debriefs: allDebriefs.filter(d => 
       d.objections.toLowerCase().includes('patient') || 
-      d.objections.toLowerCase().includes('bivirkning') ||
-      d.objections.toLowerCase().includes('opstart') ||
-      d.objections.toLowerCase().includes('ældre') ||
-      d.objections.toLowerCase().includes('nyre')
+      d.objections.toLowerCase().includes('side effect') ||
+      d.objections.toLowerCase().includes('initiation') ||
+      d.objections.toLowerCase().includes('elderly') ||
+      d.objections.toLowerCase().includes('kidney')
     ).slice(0, 15),
   },
   {
     id: 'capacity-resources',
-    title: 'Kapacitet og ressourcer til opfølgning',
-    fullTitle: 'Begrænset kapacitet til opfølgning og monitorering',
-    description: 'Praktiske udfordringer med at følge op på patienter som anbefalet. Klinikker mangler ressourcer til tæt monitorering i opstartsfasen, hvilket påvirker villigheden til at initiere behandling.',
+    title: 'Capacity and resources for follow-up',
+    fullTitle: 'Limited capacity for follow-up and monitoring',
+    description: 'Practical challenges with following up on patients as recommended. Clinics lack resources for close monitoring during the initiation phase, which affects the willingness to initiate treatment.',
     color: '#84cc16',
     count: 5,
     trend: 'up',
     trendPercent: 25,
     debriefs: allDebriefs.filter(d => 
-      d.objections.toLowerCase().includes('kapacitet') || 
-      d.objections.toLowerCase().includes('opfølgning') ||
-      d.objections.toLowerCase().includes('venteliste')
+      d.objections.toLowerCase().includes('capacity') || 
+      d.objections.toLowerCase().includes('follow-up') ||
+      d.objections.toLowerCase().includes('waitlist')
     ).slice(0, 5),
   },
 ];
@@ -263,7 +263,7 @@ const objectionCategories: ObjectionCategory[] = [
 const topicTrendData = [
   { month: 'Aug', subsidy: 18, combination: 4, patientSelection: 2, capacity: 1, total: 25 },
   { month: 'Sep', subsidy: 14, combination: 8, patientSelection: 3, capacity: 1, total: 26 },
-  { month: 'Okt', subsidy: 8, combination: 12, patientSelection: 4, capacity: 1, total: 25 },
+  { month: 'Oct', subsidy: 8, combination: 12, patientSelection: 4, capacity: 1, total: 25 },
   { month: 'Nov', subsidy: 4, combination: 10, patientSelection: 8, capacity: 2, total: 24 },
   { month: 'Dec', subsidy: 2, combination: 6, patientSelection: 6, capacity: 2, total: 16 },
 ];
@@ -306,9 +306,9 @@ const ReportView = () => {
             </DialogHeader>
             
             <div className="space-y-6 mt-4">
-              {/* Beskrivelse */}
+              {/* Description */}
               <div>
-                <h4 className="text-sm font-medium text-muted-foreground mb-2">Beskrivelse</h4>
+                <h4 className="text-sm font-medium text-muted-foreground mb-2">Description</h4>
                 <p className="text-sm text-foreground leading-relaxed">
                   {selectedCategory.description}
                 </p>
@@ -322,18 +322,18 @@ const ReportView = () => {
                   <ArrowDownRight className="h-5 w-5 text-destructive" />
                 ) : null}
                 <span className="text-sm">
-                  {selectedCategory.trend === 'up' ? 'Stigende' : selectedCategory.trend === 'down' ? 'Faldende' : 'Stabil'} trend: {selectedCategory.trendPercent}% ændring siden periode start
+                  {selectedCategory.trend === 'up' ? 'Increasing' : selectedCategory.trend === 'down' ? 'Decreasing' : 'Stable'} trend: {selectedCategory.trendPercent}% change since period start
                 </span>
               </div>
 
-              {/* Refereret i debriefs */}
+              {/* Referenced in debriefs */}
               <div>
                 <h4 className="text-sm font-medium text-muted-foreground mb-3">
-                  Refereret i debriefs ({selectedCategory.debriefs.length})
+                  Referenced in debriefs ({selectedCategory.debriefs.length})
                 </h4>
                 
                 {selectedCategory.debriefs.length === 0 ? (
-                  <p className="text-sm text-muted-foreground italic">Ingen debriefs i denne kategori</p>
+                  <p className="text-sm text-muted-foreground italic">No debriefs in this category</p>
                 ) : (
                   <div className="space-y-3">
                     {selectedCategory.debriefs.map((debrief) => (
@@ -362,14 +362,14 @@ const ReportView = () => {
                           
                           <CollapsibleContent>
                             <div className="px-4 pb-4 space-y-4">
-                              {/* Mødedetaljer */}
+                              {/* Meeting details */}
                               <div className="bg-muted/20 rounded-lg p-4">
                                 <h5 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                                  Mødedetaljer
+                                  Meeting Details
                                 </h5>
                                 <div className="grid grid-cols-3 gap-4 text-sm">
                                   <div>
-                                    <div className="text-muted-foreground text-xs">Dato</div>
+                                    <div className="text-muted-foreground text-xs">Date</div>
                                     <div className="font-medium">{debrief.date}</div>
                                   </div>
                                   <div>
@@ -383,28 +383,28 @@ const ReportView = () => {
                                 </div>
                               </div>
 
-                              {/* Debrief indhold */}
+                              {/* Debrief content */}
                               <div>
                                 <h5 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                                  Debrief indhold
+                                  Debrief Content
                                 </h5>
                                 <div className="border rounded-lg p-4 space-y-4 bg-card">
                                   <div>
-                                    <h6 className="font-semibold text-foreground mb-1">Mødepurpose og indhold</h6>
+                                    <h6 className="font-semibold text-foreground mb-1">Meeting Purpose and Content</h6>
                                     <p className="text-sm text-muted-foreground leading-relaxed">
                                       {debrief.meetingPurpose}
                                     </p>
                                   </div>
                                   
                                   <div>
-                                    <h6 className="font-semibold text-foreground mb-1">Indvendinger vedrørende</h6>
+                                    <h6 className="font-semibold text-foreground mb-1">Objections Regarding</h6>
                                     <p className="text-sm text-muted-foreground leading-relaxed">
                                       <span className="text-primary">{debrief.objections}</span>
                                     </p>
                                   </div>
                                   
                                   <div>
-                                    <h6 className="font-semibold text-foreground mb-1">Næste opkaldsmål</h6>
+                                    <h6 className="font-semibold text-foreground mb-1">Next Call Objectives</h6>
                                     <p className="text-sm text-muted-foreground leading-relaxed">
                                       {debrief.nextSteps}
                                     </p>
@@ -453,7 +453,7 @@ const ReportView = () => {
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
         >
           <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm font-medium">Tilbage til dashboard</span>
+          <span className="text-sm font-medium">Back to dashboard</span>
         </button>
 
         {/* Compact Stats & Metadata */}
@@ -464,13 +464,13 @@ const ReportView = () => {
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
                   <span className="text-2xl font-bold text-primary">{totalDebriefs}</span>
-                  <span className="text-sm text-muted-foreground">relevante debriefs</span>
+                  <span className="text-sm text-muted-foreground">relevant debriefs</span>
                 </div>
                 <div className="h-8 w-px bg-border" />
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">af</span>
+                  <span className="text-sm text-muted-foreground">of</span>
                   <span className="text-lg font-semibold text-foreground">687</span>
-                  <span className="text-sm text-muted-foreground">debriefs total</span>
+                  <span className="text-sm text-muted-foreground">total debriefs</span>
                 </div>
               </div>
               
@@ -478,19 +478,19 @@ const ReportView = () => {
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1.5">
                   <Calendar className="h-4 w-4" />
-                  {format(data.dateRange.from, "d. MMM", { locale: da })} - {format(data.dateRange.to, "d. MMM yyyy", { locale: da })}
+                  {format(data.dateRange.from, "MMM d", { locale: enUS })} - {format(data.dateRange.to, "MMM d, yyyy", { locale: enUS })}
                 </div>
                 {data.employee === 'all' ? (
                   <Popover>
                     <PopoverTrigger asChild>
                       <button className="flex items-center gap-1.5 hover:text-foreground transition-colors">
                         <Users className="h-4 w-4" />
-                        <span>Alle ({salesReps.length})</span>
+                        <span>All ({salesReps.length})</span>
                         <ChevronDown className="h-3 w-3" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-3" align="end">
-                      <div className="text-xs font-medium text-muted-foreground mb-2">Inkluderede medarbejdere</div>
+                      <div className="text-xs font-medium text-muted-foreground mb-2">Included employees</div>
                       <div className="flex flex-wrap gap-1.5">
                         {salesReps.map((rep) => (
                           <Badge key={rep} variant="secondary" className="text-xs">{rep}</Badge>
@@ -514,20 +514,20 @@ const ReportView = () => {
         <div className="space-y-6">
           {/* Main Analysis Content */}
           <div className="space-y-6">
-            {/* Kort oversigt */}
+            {/* Brief overview */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5 text-primary" />
-                  Kort oversigt
+                  Brief Overview
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed">
-                  Analysen af {totalDebriefs} relevante debriefs viser en <span className="text-foreground font-medium">tydelig evolution i HCP-bekymringer</span> over perioden. 
-                  Indledningsvist dominerede spørgsmål om <span className="text-foreground font-medium">tilskudsregler og regionale forskelle</span>, men fokus er gradvist skiftet mod 
-                  <span className="text-foreground font-medium"> kombinationsbehandling</span> og senest <span className="text-foreground font-medium">patientudvælgelse</span>. 
-                  Dette indikerer at grundlæggende adgangsbarrierer er ved at blive adresseret, og HCP'er nu fokuserer på klinisk implementering.
+                  Analysis of {totalDebriefs} relevant debriefs shows a <span className="text-foreground font-medium">clear evolution in HCP concerns</span> over the period. 
+                  Initially, questions about <span className="text-foreground font-medium">reimbursement rules and regional differences</span> dominated, but focus has gradually shifted towards 
+                  <span className="text-foreground font-medium"> combination therapy</span> and most recently <span className="text-foreground font-medium">patient selection</span>. 
+                  This indicates that fundamental access barriers are being addressed, and HCPs are now focusing on clinical implementation.
                 </p>
               </CardContent>
             </Card>
@@ -538,100 +538,100 @@ const ReportView = () => {
                 <CardTitle>Concern Pattern Development for Ozempic Initiation</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Emnebeskrivelse */}
+                {/* Topic description */}
                 <div>
-                  <h4 className="text-sm font-semibold text-foreground mb-2">Emnebeskrivelse</h4>
+                  <h4 className="text-sm font-semibold text-foreground mb-2">Topic Description</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Over de seneste 5 måneder har vi observeret en markant ændring i de bekymringer HCP'er udtrykker ved Ozempic-initiering. 
-                    Hvor tilskuds- og regulatoriske spørgsmål tidligere fyldte mest, er disse nu afløst af mere klinisk orienterede overvejelser 
-                    omkring kombinationsbehandling og individualiseret patientudvælgelse.
+                    Over the past 5 months, we have observed a significant change in the concerns HCPs express regarding Ozempic initiation. 
+                    While reimbursement and regulatory questions previously dominated, these have now been replaced by more clinically oriented considerations 
+                    around combination therapy and individualized patient selection.
                   </p>
                 </div>
 
                 <Separator />
 
-                {/* Statistisk analyse */}
+                {/* Statistical analysis */}
                 <div>
                   <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
                     <BarChart3 className="h-4 w-4" />
-                    Statistisk analyse
+                    Statistical Analysis
                   </h4>
-                  <p className="text-sm text-muted-foreground mb-3">Udvikling baseret på {totalDebriefs} kategoriserede debriefs</p>
+                  <p className="text-sm text-muted-foreground mb-3">Development based on {totalDebriefs} categorized debriefs</p>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <TrendingDown className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
-                      <span><span className="font-medium text-foreground">Tilskudsbekymringer faldet 35%</span> – fra 18 debriefs i august til kun 2 i december. Regionale afklaringer og bedre dokumentation har reduceret usikkerheden.</span>
+                      <span><span className="font-medium text-foreground">Reimbursement concerns down 35%</span> – from 18 debriefs in August to only 2 in December. Regional clarifications and better documentation have reduced uncertainty.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                      <span><span className="font-medium text-foreground">Kombinationsbehandling steget 62%</span> – HCP'er søger nu aktivt vejledning om Ozempic sammen med SGLT2i, insulin og andre antidiabetika.</span>
+                      <span><span className="font-medium text-foreground">Combination therapy up 62%</span> – HCPs are now actively seeking guidance on Ozempic together with SGLT2i, insulin and other antidiabetics.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                      <span><span className="font-medium text-foreground">Patientudvælgelse steget 180%</span> – Nye spørgsmål om prioritering, særlige patientgrupper og praktisk opstartshåndtering dominerer nu.</span>
+                      <span><span className="font-medium text-foreground">Patient selection up 180%</span> – New questions about prioritization, special patient groups and practical initiation handling now dominate.</span>
                     </li>
                   </ul>
                 </div>
 
                 <Separator />
 
-                {/* Indsigter */}
+                {/* Insights */}
                 <div>
                   <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
                     <Lightbulb className="h-4 w-4" />
-                    Indsigter
+                    Insights
                   </h4>
                   <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
-                    Skiftet i bekymringsmønstre afspejler en modning i markedets forståelse af Ozempic og indikerer fremdrift i adoptionsrejsen.
+                    The shift in concern patterns reflects a maturation in the market's understanding of Ozempic and indicates progress in the adoption journey.
                   </p>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>
-                      <span>HCP'er bevæger sig fra "kan jeg ordinere det?" til "hvordan bruger jeg det optimalt?" – et positivt tegn på øget behandlingsvillighed.</span>
+                      <span>HCPs are moving from "can I prescribe it?" to "how do I use it optimally?" – a positive sign of increased treatment willingness.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>
-                      <span>Den stigende interesse for kombinationsbehandling tyder på, at Ozempic i stigende grad ses som en naturlig del af behandlingsarsenalet.</span>
+                      <span>The growing interest in combination therapy suggests that Ozempic is increasingly seen as a natural part of the treatment arsenal.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>
-                      <span>Fokus på patientudvælgelse og bivirkningshåndtering viser behov for mere praktisk, klinisk støttemateriale.</span>
+                      <span>Focus on patient selection and side effect management shows the need for more practical, clinical support material.</span>
                     </li>
                   </ul>
                 </div>
 
                 <Separator />
 
-                {/* Konklusion og anbefalinger */}
+                {/* Conclusion and recommendations */}
                 <div>
                   <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4" />
-                    Konklusion og anbefalinger
+                    Conclusion and Recommendations
                   </h4>
-                  <p className="text-sm text-muted-foreground mb-3">Markedet er klar til næste fase af engagement</p>
+                  <p className="text-sm text-muted-foreground mb-3">The market is ready for the next phase of engagement</p>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>
-                      <span><span className="font-medium text-foreground">Prioritér kombinationsbehandling:</span> Udvikl og distribuer konkrete doseringsguides og protokoller for Ozempic + SGLT2i/insulin.</span>
+                      <span><span className="font-medium text-foreground">Prioritize combination therapy:</span> Develop and distribute concrete dosing guides and protocols for Ozempic + SGLT2i/insulin.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>
-                      <span><span className="font-medium text-foreground">Styrk praktisk support:</span> Lav patientudvælgelsesværktøjer og tjeklister til håndtering af opstartsbivirkninger.</span>
+                      <span><span className="font-medium text-foreground">Strengthen practical support:</span> Create patient selection tools and checklists for managing initiation side effects.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>
-                      <span><span className="font-medium text-foreground">Adressér kapacitetsudfordringer:</span> Overvej digitale opfølgningsløsninger til klinikker med begrænsede ressourcer.</span>
+                      <span><span className="font-medium text-foreground">Address capacity challenges:</span> Consider digital follow-up solutions for clinics with limited resources.</span>
                     </li>
                   </ul>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Indvendinger og bekymringer - Category Cards */}
+            {/* Objections and concerns - Category Cards */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold flex items-center gap-2">
                 <AlertCircle className="h-5 w-5 text-amber-500" />
-                Indvendinger og bekymringer
+                Objections and Concerns
               </h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -666,7 +666,7 @@ const ReportView = () => {
                         <span className={category.trend === 'up' ? 'text-green-500' : category.trend === 'down' ? 'text-destructive' : 'text-muted-foreground'}>
                           {category.trend === 'up' ? '+' : category.trend === 'down' ? '-' : ''}{category.trendPercent}%
                         </span>
-                        <span className="text-muted-foreground">siden periode start</span>
+                        <span className="text-muted-foreground">since period start</span>
                       </div>
                     </CardContent>
                   </Card>
@@ -674,12 +674,12 @@ const ReportView = () => {
               </div>
             </div>
 
-            {/* Emneudvikling over tid - Full width chart section */}
+            {/* Topic development over time - Full width chart section */}
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-base">Emneudvikling over tid</CardTitle>
+                <CardTitle className="text-base">Topic Development Over Time</CardTitle>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Hvordan bekymringer skifter fra adgang til klinisk implementering
+                  How concerns shift from access to clinical implementation
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -727,7 +727,7 @@ const ReportView = () => {
                       <Area 
                         type="monotone" 
                         dataKey="subsidy" 
-                        name="Tilskud" 
+                        name="Reimbursement" 
                         stroke="#16a34a" 
                         fill="url(#colorSubsidy)" 
                         strokeWidth={2}
@@ -735,7 +735,7 @@ const ReportView = () => {
                       <Area 
                         type="monotone" 
                         dataKey="combination" 
-                        name="Kombination" 
+                        name="Combination" 
                         stroke="#ea580c" 
                         fill="url(#colorCombination)" 
                         strokeWidth={2}
@@ -751,7 +751,7 @@ const ReportView = () => {
                       <Area 
                         type="monotone" 
                         dataKey="capacity" 
-                        name="Kapacitet" 
+                        name="Capacity" 
                         stroke="#84cc16" 
                         fill="url(#colorCapacity)" 
                         strokeWidth={2}
@@ -787,7 +787,7 @@ const ReportView = () => {
                 {/* Key insight */}
                 <div className="bg-primary/5 rounded-lg p-3">
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    <span className="font-medium text-foreground">Nøgleindsigt:</span> Fokus skifter fra administrative barrierer til klinisk implementering – et positivt tegn på markedsmodning.
+                    <span className="font-medium text-foreground">Key Insight:</span> Focus shifts from administrative barriers to clinical implementation – a positive sign of market maturation.
                   </p>
                 </div>
               </CardContent>
@@ -796,7 +796,7 @@ const ReportView = () => {
             {/* Footer Actions */}
             <div className="flex items-center justify-between py-4">
               <span className="text-sm text-muted-foreground">
-                Genereret: {format(new Date(), "d. MMMM yyyy", { locale: da })}
+                Generated: {format(new Date(), "MMMM d, yyyy", { locale: enUS })}
               </span>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" className="gap-2 bg-background">
@@ -805,7 +805,7 @@ const ReportView = () => {
                 </Button>
                 <Button variant="outline" size="sm" className="gap-2 bg-background">
                   <Share2 className="h-4 w-4" />
-                  Del
+                  Share
                 </Button>
               </div>
             </div>
