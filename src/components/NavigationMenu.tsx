@@ -23,8 +23,8 @@ const kamMenuItems = [
   {
     icon: Calendar,
     label: "Field Day",
-    href: "#schedule",
-    isRoute: false
+    href: "/",
+    isRoute: true
   },
   {
     icon: Users,
