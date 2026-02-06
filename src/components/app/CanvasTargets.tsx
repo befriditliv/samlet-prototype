@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { MapPin, Navigation, User, Building2, Loader2, X, ChevronRight, Calendar, MessageCircle, Clock, ChevronLeft } from "lucide-react";
+import { MapPin, Navigation, User, Building2, Loader2, X, ChevronRight, Calendar, MessageCircle, Clock, ChevronLeft, Minus, Plus } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Calendar as CalendarPicker } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
@@ -140,7 +141,7 @@ export const CanvasTargets = () => {
   const [showActionSheet, setShowActionSheet] = useState(false);
   const [showScheduler, setShowScheduler] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  const [selectedTime, setSelectedTime] = useState<string>("09:00");
+  const [selectedTimeIndex, setSelectedTimeIndex] = useState<number>(0);
 
   const timeSlots = [
     "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
@@ -149,20 +150,22 @@ export const CanvasTargets = () => {
     "17:00", "17:30"
   ];
 
-  const getClosestTimeSlot = () => {
+  const selectedTime = timeSlots[selectedTimeIndex];
+
+  const getClosestTimeSlotIndex = () => {
     const now = new Date();
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
     
-    // Find the closest future time slot
-    for (const slot of timeSlots) {
-      const [hours, minutes] = slot.split(":").map(Number);
+    // Find the closest future time slot index
+    for (let i = 0; i < timeSlots.length; i++) {
+      const [hours, minutes] = timeSlots[i].split(":").map(Number);
       const slotMinutes = hours * 60 + minutes;
       if (slotMinutes >= currentMinutes) {
-        return slot;
+        return i;
       }
     }
-    // If current time is past all slots, return last slot
-    return timeSlots[timeSlots.length - 1];
+    // If current time is past all slots, return last slot index
+    return timeSlots.length - 1;
   };
 
   const handleOpen = () => {
@@ -185,7 +188,7 @@ export const CanvasTargets = () => {
     setShowActionSheet(false);
     setShowScheduler(true);
     setSelectedDate(new Date());
-    setSelectedTime(getClosestTimeSlot());
+    setSelectedTimeIndex(getClosestTimeSlotIndex());
   };
 
   const handleConfirmMeeting = () => {
@@ -452,27 +455,47 @@ export const CanvasTargets = () => {
                 </div>
               </div>
 
-              {/* Time picker */}
+              {/* Time picker - iOS style slider */}
               <div className="px-5 py-4">
-                <h4 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
+                <h4 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
                   <Clock className="h-4 w-4 text-primary" />
                   Select Time
                 </h4>
-                <div className="grid grid-cols-4 gap-2">
-                  {timeSlots.map((time) => (
-                    <button
-                      key={time}
-                      onClick={() => setSelectedTime(time)}
-                      className={cn(
-                        "py-2.5 px-3 rounded-xl text-sm font-medium transition-all",
-                        selectedTime === time
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted/50 text-foreground hover:bg-muted"
-                      )}
-                    >
-                      {time}
-                    </button>
-                  ))}
+                
+                {/* Large time display */}
+                <div className="flex items-center justify-center gap-4 mb-6">
+                  <button
+                    onClick={() => setSelectedTimeIndex(Math.max(0, selectedTimeIndex - 1))}
+                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors active:scale-95"
+                    disabled={selectedTimeIndex === 0}
+                  >
+                    <Minus className="h-4 w-4 text-muted-foreground" />
+                  </button>
+                  <div className="w-28 h-16 rounded-2xl bg-primary/10 border-2 border-primary/30 flex items-center justify-center">
+                    <span className="text-3xl font-bold text-primary">{selectedTime}</span>
+                  </div>
+                  <button
+                    onClick={() => setSelectedTimeIndex(Math.min(timeSlots.length - 1, selectedTimeIndex + 1))}
+                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors active:scale-95"
+                    disabled={selectedTimeIndex === timeSlots.length - 1}
+                  >
+                    <Plus className="h-4 w-4 text-muted-foreground" />
+                  </button>
+                </div>
+
+                {/* Slider */}
+                <div className="px-2">
+                  <Slider
+                    value={[selectedTimeIndex]}
+                    onValueChange={(value) => setSelectedTimeIndex(value[0])}
+                    max={timeSlots.length - 1}
+                    step={1}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between mt-2">
+                    <span className="text-xs text-muted-foreground">{timeSlots[0]}</span>
+                    <span className="text-xs text-muted-foreground">{timeSlots[timeSlots.length - 1]}</span>
+                  </div>
                 </div>
               </div>
 
