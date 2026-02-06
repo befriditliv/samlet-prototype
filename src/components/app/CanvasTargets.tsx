@@ -438,23 +438,6 @@ export const CanvasTargets = () => {
                 </div>
               </div>
 
-              {/* Date picker */}
-              <div className="px-5 py-4 border-b border-border/50">
-                <h4 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-primary" />
-                  Select Date
-                </h4>
-                <div className="flex justify-center">
-                  <CalendarPicker
-                    mode="single"
-                    selected={selectedDate}
-                    onSelect={setSelectedDate}
-                    disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
-                    className={cn("rounded-xl border border-border/50 pointer-events-auto")}
-                  />
-                </div>
-              </div>
-
               {/* Time picker - iOS style slider */}
               <div className="px-5 py-4">
                 <h4 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
