@@ -149,6 +149,22 @@ export const CanvasTargets = () => {
     "17:00", "17:30"
   ];
 
+  const getClosestTimeSlot = () => {
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    
+    // Find the closest future time slot
+    for (const slot of timeSlots) {
+      const [hours, minutes] = slot.split(":").map(Number);
+      const slotMinutes = hours * 60 + minutes;
+      if (slotMinutes >= currentMinutes) {
+        return slot;
+      }
+    }
+    // If current time is past all slots, return last slot
+    return timeSlots[timeSlots.length - 1];
+  };
+
   const handleOpen = () => {
     setIsOpen(true);
     setIsLoading(true);
@@ -169,7 +185,7 @@ export const CanvasTargets = () => {
     setShowActionSheet(false);
     setShowScheduler(true);
     setSelectedDate(new Date());
-    setSelectedTime("09:00");
+    setSelectedTime(getClosestTimeSlot());
   };
 
   const handleConfirmMeeting = () => {
