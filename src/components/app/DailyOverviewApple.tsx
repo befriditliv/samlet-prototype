@@ -6,6 +6,7 @@ import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { TaskCenter } from "./TaskCenter";
 import { HCPAssistant } from "./HCPAssistant";
 import { SyncStatus } from "./SyncStatus";
+import { CanvasTargets } from "./CanvasTargets";
 
 type MeetingStatus = "upcoming" | "in-progress" | "debrief-needed" | "debrief-submitting" | "debrief-processing" | "debrief-ready" | "debrief-failed" | "done";
 
@@ -645,6 +646,9 @@ export const DailyOverviewApple = ({
               )}
             </div>
           )}
+
+          {/* Canvas Targets Button */}
+          <CanvasTargets />
         </div>
       </div>
 
