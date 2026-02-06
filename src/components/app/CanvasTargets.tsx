@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { MapPin, Navigation, User, Building2, Loader2, X, ChevronRight, Calendar, MessageCircle } from "lucide-react";
+import { MapPin, Navigation, User, Building2, Loader2, X, ChevronRight, Calendar, MessageCircle, Clock, ChevronLeft } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Calendar as CalendarPicker } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 
 interface CanvasTarget {
@@ -135,6 +138,16 @@ export const CanvasTargets = () => {
   const [targets, setTargets] = useState<CanvasTarget[]>([]);
   const [selectedTarget, setSelectedTarget] = useState<CanvasTarget | null>(null);
   const [showActionSheet, setShowActionSheet] = useState(false);
+  const [showScheduler, setShowScheduler] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [selectedTime, setSelectedTime] = useState<string>("09:00");
+
+  const timeSlots = [
+    "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
+    "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
+    "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
+    "17:00", "17:30"
+  ];
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -152,14 +165,23 @@ export const CanvasTargets = () => {
     setShowActionSheet(true);
   };
 
-  const handleCreateMeeting = () => {
-    if (selectedTarget) {
+  const handleOpenScheduler = () => {
+    setShowActionSheet(false);
+    setShowScheduler(true);
+    setSelectedDate(new Date());
+    setSelectedTime("09:00");
+  };
+
+  const handleConfirmMeeting = () => {
+    if (selectedTarget && selectedDate) {
+      const formattedDate = format(selectedDate, "EEEE, MMMM d");
       toast({
         title: "Canvas meeting created",
-        description: `Meeting with ${selectedTarget.name} has been added to your calendar.`,
+        description: `Meeting with ${selectedTarget.name} scheduled for ${formattedDate} at ${selectedTime}.`,
       });
-      setShowActionSheet(false);
+      setShowScheduler(false);
       setIsOpen(false);
+      setSelectedTarget(null);
     }
   };
 
@@ -323,7 +345,7 @@ export const CanvasTargets = () => {
               {/* Action options */}
               <div className="space-y-3">
                 <button
-                  onClick={handleCreateMeeting}
+                  onClick={handleOpenScheduler}
                   className="w-full flex items-center gap-4 p-4 bg-primary/5 border border-primary/20 rounded-2xl text-left hover:bg-primary/10 transition-colors active:scale-[0.99]"
                 >
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -357,6 +379,103 @@ export const CanvasTargets = () => {
               >
                 Cancel
               </Button>
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
+
+      {/* Meeting Scheduler Sheet */}
+      <Sheet open={showScheduler} onOpenChange={setShowScheduler}>
+        <SheetContent side="bottom" className="h-[90vh] rounded-t-3xl px-0">
+          <SheetHeader className="px-5 pb-4 border-b border-border/50">
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => {
+                  setShowScheduler(false);
+                  setShowActionSheet(true);
+                }}
+                className="flex items-center gap-1 text-sm text-muted-foreground"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                Back
+              </button>
+              <SheetTitle className="text-base font-semibold text-foreground">Schedule Meeting</SheetTitle>
+              <div className="w-12" />
+            </div>
+          </SheetHeader>
+
+          {selectedTarget && (
+            <div className="flex-1 overflow-y-auto">
+              {/* Target info */}
+              <div className="px-5 py-4 bg-muted/30 border-b border-border/50">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <User className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground text-sm">{selectedTarget.name}</h3>
+                    <p className="text-xs text-muted-foreground">{selectedTarget.organization}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Date picker */}
+              <div className="px-5 py-4 border-b border-border/50">
+                <h4 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-primary" />
+                  Select Date
+                </h4>
+                <div className="flex justify-center">
+                  <CalendarPicker
+                    mode="single"
+                    selected={selectedDate}
+                    onSelect={setSelectedDate}
+                    disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                    className={cn("rounded-xl border border-border/50 pointer-events-auto")}
+                  />
+                </div>
+              </div>
+
+              {/* Time picker */}
+              <div className="px-5 py-4">
+                <h4 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-primary" />
+                  Select Time
+                </h4>
+                <div className="grid grid-cols-4 gap-2">
+                  {timeSlots.map((time) => (
+                    <button
+                      key={time}
+                      onClick={() => setSelectedTime(time)}
+                      className={cn(
+                        "py-2.5 px-3 rounded-xl text-sm font-medium transition-all",
+                        selectedTime === time
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted/50 text-foreground hover:bg-muted"
+                      )}
+                    >
+                      {time}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Confirm button */}
+              <div className="px-5 py-4 border-t border-border/50 bg-background sticky bottom-0">
+                <Button
+                  onClick={handleConfirmMeeting}
+                  disabled={!selectedDate}
+                  className="w-full h-12 rounded-xl text-base font-semibold"
+                >
+                  <Calendar className="h-5 w-5 mr-2" />
+                  Confirm Meeting
+                  {selectedDate && (
+                    <span className="ml-2 text-primary-foreground/80">
+                      • {format(selectedDate, "MMM d")} at {selectedTime}
+                    </span>
+                  )}
+                </Button>
+              </div>
             </div>
           )}
         </SheetContent>
