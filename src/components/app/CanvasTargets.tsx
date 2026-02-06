@@ -139,30 +139,18 @@ export const CanvasTargets = () => {
   const [selectedTarget, setSelectedTarget] = useState<CanvasTarget | null>(null);
   const [showActionSheet, setShowActionSheet] = useState(false);
   const [showScheduler, setShowScheduler] = useState(false);
-  const [selectedTime, setSelectedTime] = useState<{ hour: number; minute: number; period: "AM" | "PM" }>(() => {
+  const [selectedTime, setSelectedTime] = useState<{ hour: number; minute: number }>(() => {
     const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    return {
-      hour: hours === 0 ? 12 : hours > 12 ? hours - 12 : hours,
-      minute: minutes,
-      period: hours >= 12 ? "PM" : "AM",
-    };
+    return { hour: now.getHours(), minute: now.getMinutes() };
   });
 
   const getCurrentTimeValue = () => {
     const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    return {
-      hour: hours === 0 ? 12 : hours > 12 ? hours - 12 : hours,
-      minute: minutes,
-      period: (hours >= 12 ? "PM" : "AM") as "AM" | "PM",
-    };
+    return { hour: now.getHours(), minute: now.getMinutes() };
   };
 
   const formatSelectedTime = () => {
-    return `${selectedTime.hour}:${String(selectedTime.minute).padStart(2, "0")} ${selectedTime.period}`;
+    return `${String(selectedTime.hour).padStart(2, "0")}:${String(selectedTime.minute).padStart(2, "0")}`;
   };
 
   const handleOpen = () => {

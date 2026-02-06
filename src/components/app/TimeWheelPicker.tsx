@@ -2,12 +2,11 @@ import { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface TimeWheelPickerProps {
-  value: { hour: number; minute: number; period: "AM" | "PM" };
-  onChange: (value: { hour: number; minute: number; period: "AM" | "PM" }) => void;
+  value: { hour: number; minute: number };
+  onChange: (value: { hour: number; minute: number }) => void;
 }
 
-const ITEM_HEIGHT = 40;
-const VISIBLE_ITEMS = 5;
+const ITEM_HEIGHT = 44;
 
 const WheelColumn = ({
   items,
@@ -54,33 +53,36 @@ const WheelColumn = ({
   };
 
   return (
-    <div className="relative h-[200px] overflow-hidden">
+    <div className="relative h-[220px] overflow-hidden flex-1">
       {/* Selection highlight */}
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[40px] bg-muted/60 rounded-lg pointer-events-none z-0" />
+      <div className="absolute inset-x-2 top-1/2 -translate-y-1/2 h-[44px] bg-primary/10 rounded-xl pointer-events-none z-0" />
       
       {/* Gradient overlays */}
-      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background to-transparent pointer-events-none z-10" />
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
+      <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-background via-background/80 to-transparent pointer-events-none z-10" />
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-10" />
       
       {/* Scrollable container */}
       <div
         ref={containerRef}
-        className="h-full overflow-y-auto scrollbar-hide scroll-smooth"
+        className="h-full overflow-y-auto scrollbar-hide"
         onScroll={handleScroll}
         style={{
           paddingTop: `${ITEM_HEIGHT * 2}px`,
           paddingBottom: `${ITEM_HEIGHT * 2}px`,
+          scrollSnapType: "y mandatory",
         }}
       >
         {items.map((item, index) => (
           <div
             key={index}
             className={cn(
-              "h-[40px] flex items-center justify-center text-lg font-medium transition-all",
+              "h-[44px] flex items-center justify-center transition-all cursor-pointer",
+              "scroll-snap-align-center",
               selectedIndex === index
-                ? "text-foreground scale-110"
-                : "text-muted-foreground/50"
+                ? "text-foreground text-2xl font-semibold"
+                : "text-muted-foreground/40 text-xl"
             )}
+            style={{ scrollSnapAlign: "center" }}
             onClick={() => {
               onSelect(index);
               containerRef.current?.scrollTo({
@@ -98,57 +100,36 @@ const WheelColumn = ({
 };
 
 export const TimeWheelPicker = ({ value, onChange }: TimeWheelPickerProps) => {
-  const hours = Array.from({ length: 12 }, (_, i) => String(i + 1));
+  const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
   const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
-  const periods = ["AM", "PM"];
-
-  const hourIndex = value.hour === 12 ? 11 : value.hour - 1;
-  const minuteIndex = value.minute;
-  const periodIndex = value.period === "AM" ? 0 : 1;
 
   const formatTime = () => {
-    return `${value.hour}:${String(value.minute).padStart(2, "0")} ${value.period}`;
+    return `${String(value.hour).padStart(2, "0")}:${String(value.minute).padStart(2, "0")}`;
   };
 
   return (
     <div className="w-full">
-      {/* Header with time display */}
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-base font-medium text-foreground">Time</span>
-        <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1.5 rounded-lg">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-2 px-1">
+        <span className="text-sm font-medium text-muted-foreground">Select time</span>
+        <span className="text-sm font-semibold text-primary tabular-nums">
           {formatTime()}
         </span>
       </div>
 
       {/* Wheel picker */}
-      <div className="flex items-center justify-center gap-0 bg-card rounded-2xl py-2">
-        <div className="w-20">
-          <WheelColumn
-            items={hours}
-            selectedIndex={hourIndex}
-            onSelect={(index) =>
-              onChange({ ...value, hour: index + 1 })
-            }
-          />
-        </div>
-        <div className="w-20">
-          <WheelColumn
-            items={minutes}
-            selectedIndex={minuteIndex}
-            onSelect={(index) =>
-              onChange({ ...value, minute: index })
-            }
-          />
-        </div>
-        <div className="w-16">
-          <WheelColumn
-            items={periods}
-            selectedIndex={periodIndex}
-            onSelect={(index) =>
-              onChange({ ...value, period: index === 0 ? "AM" : "PM" })
-            }
-          />
-        </div>
+      <div className="flex items-center justify-center bg-muted/30 rounded-2xl overflow-hidden">
+        <WheelColumn
+          items={hours}
+          selectedIndex={value.hour}
+          onSelect={(index) => onChange({ ...value, hour: index })}
+        />
+        <div className="text-2xl font-semibold text-foreground">:</div>
+        <WheelColumn
+          items={minutes}
+          selectedIndex={value.minute}
+          onSelect={(index) => onChange({ ...value, minute: index })}
+        />
       </div>
     </div>
   );
