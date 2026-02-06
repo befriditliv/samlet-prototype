@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MapPin, Navigation, User, Building2, Loader2, X, ChevronRight } from "lucide-react";
+import { MapPin, Navigation, User, Building2, Loader2, X, ChevronRight, Calendar, MessageCircle } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { toast } from "@/hooks/use-toast";
 
 interface CanvasTarget {
   id: string;
@@ -132,6 +133,8 @@ export const CanvasTargets = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [targets, setTargets] = useState<CanvasTarget[]>([]);
+  const [selectedTarget, setSelectedTarget] = useState<CanvasTarget | null>(null);
+  const [showActionSheet, setShowActionSheet] = useState(false);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -142,6 +145,33 @@ export const CanvasTargets = () => {
       setTargets(mockCanvasTargets);
       setIsLoading(false);
     }, 1500);
+  };
+
+  const handleTargetClick = (target: CanvasTarget) => {
+    setSelectedTarget(target);
+    setShowActionSheet(true);
+  };
+
+  const handleCreateMeeting = () => {
+    if (selectedTarget) {
+      toast({
+        title: "Canvas meeting created",
+        description: `Meeting with ${selectedTarget.name} has been added to your calendar.`,
+      });
+      setShowActionSheet(false);
+      setIsOpen(false);
+    }
+  };
+
+  const handleAskJarvis = () => {
+    if (selectedTarget) {
+      // Dispatch global event to open Ask Jarvis
+      window.dispatchEvent(new CustomEvent('open-ask-jarvis', {
+        detail: { query: `Tell me about ${selectedTarget.name} from ${selectedTarget.organization}` }
+      }));
+      setShowActionSheet(false);
+      setIsOpen(false);
+    }
   };
 
   const getPriorityStyles = (priority: CanvasTarget["priority"]) => {
@@ -226,6 +256,7 @@ export const CanvasTargets = () => {
                 {targets.map((target, index) => (
                   <button
                     key={target.id}
+                    onClick={() => handleTargetClick(target)}
                     className="w-full p-4 bg-card border border-border/50 rounded-2xl text-left hover:border-primary/30 hover:bg-primary/5 transition-all active:scale-[0.99]"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
@@ -270,6 +301,64 @@ export const CanvasTargets = () => {
               </div>
             )}
           </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Action Sheet for selected target */}
+      <Sheet open={showActionSheet} onOpenChange={setShowActionSheet}>
+        <SheetContent side="bottom" className="rounded-t-3xl px-5 pb-8">
+          {selectedTarget && (
+            <div className="space-y-4">
+              {/* Target info header */}
+              <div className="flex items-center gap-3 pb-4 border-b border-border/50">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <User className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground">{selectedTarget.name}</h3>
+                  <p className="text-sm text-muted-foreground">{selectedTarget.specialty} • {selectedTarget.distance}</p>
+                </div>
+              </div>
+
+              {/* Action options */}
+              <div className="space-y-3">
+                <button
+                  onClick={handleCreateMeeting}
+                  className="w-full flex items-center gap-4 p-4 bg-primary/5 border border-primary/20 rounded-2xl text-left hover:bg-primary/10 transition-colors active:scale-[0.99]"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Calendar className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground">Create Canvas Meeting</h4>
+                    <p className="text-sm text-muted-foreground">Schedule a meeting with this HCP</p>
+                  </div>
+                </button>
+
+                <button
+                  onClick={handleAskJarvis}
+                  className="w-full flex items-center gap-4 p-4 bg-card border border-border/50 rounded-2xl text-left hover:bg-muted/50 transition-colors active:scale-[0.99]"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center">
+                    <MessageCircle className="h-6 w-6 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground">Ask Jarvis</h4>
+                    <p className="text-sm text-muted-foreground">Get insights about this HCP</p>
+                  </div>
+                </button>
+              </div>
+
+              {/* Cancel button */}
+              <Button
+                variant="ghost"
+                onClick={() => setShowActionSheet(false)}
+                className="w-full h-12 rounded-xl text-muted-foreground"
+              >
+                Cancel
+              </Button>
+            </div>
+          )}
         </SheetContent>
       </Sheet>
     </>
