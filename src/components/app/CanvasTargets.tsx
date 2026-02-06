@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { MapPin, Navigation, User, Building2, Loader2, X, ChevronRight, Calendar, MessageCircle, Clock, ChevronLeft, Minus, Plus } from "lucide-react";
-import { Slider } from "@/components/ui/slider";
+import { MapPin, Navigation, User, Building2, Loader2, X, ChevronRight, Calendar, MessageCircle, ChevronLeft } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Calendar as CalendarPicker } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
+import { TimeWheelPicker } from "./TimeWheelPicker";
 
 interface CanvasTarget {
   id: string;
@@ -140,32 +139,30 @@ export const CanvasTargets = () => {
   const [selectedTarget, setSelectedTarget] = useState<CanvasTarget | null>(null);
   const [showActionSheet, setShowActionSheet] = useState(false);
   const [showScheduler, setShowScheduler] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  const [selectedTimeIndex, setSelectedTimeIndex] = useState<number>(0);
-
-  const timeSlots = [
-    "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
-    "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
-    "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
-    "17:00", "17:30"
-  ];
-
-  const selectedTime = timeSlots[selectedTimeIndex];
-
-  const getClosestTimeSlotIndex = () => {
+  const [selectedTime, setSelectedTime] = useState<{ hour: number; minute: number; period: "AM" | "PM" }>(() => {
     const now = new Date();
-    const currentMinutes = now.getHours() * 60 + now.getMinutes();
-    
-    // Find the closest future time slot index
-    for (let i = 0; i < timeSlots.length; i++) {
-      const [hours, minutes] = timeSlots[i].split(":").map(Number);
-      const slotMinutes = hours * 60 + minutes;
-      if (slotMinutes >= currentMinutes) {
-        return i;
-      }
-    }
-    // If current time is past all slots, return last slot index
-    return timeSlots.length - 1;
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    return {
+      hour: hours === 0 ? 12 : hours > 12 ? hours - 12 : hours,
+      minute: minutes,
+      period: hours >= 12 ? "PM" : "AM",
+    };
+  });
+
+  const getCurrentTimeValue = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    return {
+      hour: hours === 0 ? 12 : hours > 12 ? hours - 12 : hours,
+      minute: minutes,
+      period: (hours >= 12 ? "PM" : "AM") as "AM" | "PM",
+    };
+  };
+
+  const formatSelectedTime = () => {
+    return `${selectedTime.hour}:${String(selectedTime.minute).padStart(2, "0")} ${selectedTime.period}`;
   };
 
   const handleOpen = () => {
@@ -187,16 +184,14 @@ export const CanvasTargets = () => {
   const handleOpenScheduler = () => {
     setShowActionSheet(false);
     setShowScheduler(true);
-    setSelectedDate(new Date());
-    setSelectedTimeIndex(getClosestTimeSlotIndex());
+    setSelectedTime(getCurrentTimeValue());
   };
 
   const handleConfirmMeeting = () => {
-    if (selectedTarget && selectedDate) {
-      const formattedDate = format(selectedDate, "EEEE, MMMM d");
+    if (selectedTarget) {
       toast({
         title: "Canvas meeting created",
-        description: `Meeting with ${selectedTarget.name} scheduled for ${formattedDate} at ${selectedTime}.`,
+        description: `Meeting with ${selectedTarget.name} scheduled for today at ${formatSelectedTime()}.`,
       });
       setShowScheduler(false);
       setIsOpen(false);
@@ -438,64 +433,22 @@ export const CanvasTargets = () => {
                 </div>
               </div>
 
-              {/* Time picker - iOS style slider */}
-              <div className="px-5 py-4">
-                <h4 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-primary" />
-                  Select Time
-                </h4>
-                
-                {/* Large time display */}
-                <div className="flex items-center justify-center gap-4 mb-6">
-                  <button
-                    onClick={() => setSelectedTimeIndex(Math.max(0, selectedTimeIndex - 1))}
-                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors active:scale-95"
-                    disabled={selectedTimeIndex === 0}
-                  >
-                    <Minus className="h-4 w-4 text-muted-foreground" />
-                  </button>
-                  <div className="w-28 h-16 rounded-2xl bg-primary/10 border-2 border-primary/30 flex items-center justify-center">
-                    <span className="text-3xl font-bold text-primary">{selectedTime}</span>
-                  </div>
-                  <button
-                    onClick={() => setSelectedTimeIndex(Math.min(timeSlots.length - 1, selectedTimeIndex + 1))}
-                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors active:scale-95"
-                    disabled={selectedTimeIndex === timeSlots.length - 1}
-                  >
-                    <Plus className="h-4 w-4 text-muted-foreground" />
-                  </button>
-                </div>
-
-                {/* Slider */}
-                <div className="px-2">
-                  <Slider
-                    value={[selectedTimeIndex]}
-                    onValueChange={(value) => setSelectedTimeIndex(value[0])}
-                    max={timeSlots.length - 1}
-                    step={1}
-                    className="w-full"
-                  />
-                  <div className="flex justify-between mt-2">
-                    <span className="text-xs text-muted-foreground">{timeSlots[0]}</span>
-                    <span className="text-xs text-muted-foreground">{timeSlots[timeSlots.length - 1]}</span>
-                  </div>
-                </div>
+              {/* iOS-style Time Wheel Picker */}
+              <div className="px-5 py-6">
+                <TimeWheelPicker
+                  value={selectedTime}
+                  onChange={setSelectedTime}
+                />
               </div>
 
               {/* Confirm button */}
               <div className="px-5 py-4 border-t border-border/50 bg-background sticky bottom-0">
                 <Button
                   onClick={handleConfirmMeeting}
-                  disabled={!selectedDate}
                   className="w-full h-12 rounded-xl text-base font-semibold"
                 >
                   <Calendar className="h-5 w-5 mr-2" />
-                  Confirm Meeting
-                  {selectedDate && (
-                    <span className="ml-2 text-primary-foreground/80">
-                      • {format(selectedDate, "MMM d")} at {selectedTime}
-                    </span>
-                  )}
+                  Confirm Meeting • {formatSelectedTime()}
                 </Button>
               </div>
             </div>
