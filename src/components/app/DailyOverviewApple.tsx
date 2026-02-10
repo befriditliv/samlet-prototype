@@ -1,12 +1,15 @@
 // Daily Overview Component - Mobile-first design
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { User, MessageCircle, Calendar, Bell, ChevronDown, ChevronUp, Phone, Loader2, CheckCircle2, CheckCircle, WifiOff, AlertCircle, RotateCcw, MapPin, Lightbulb } from "lucide-react";
+import { User, MessageCircle, Calendar, Bell, ChevronDown, ChevronUp, Phone, Loader2, CheckCircle2, CheckCircle, WifiOff, AlertCircle, RotateCcw, MapPin, Lightbulb, ChevronLeft, ChevronRight } from "lucide-react";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { TaskCenter } from "./TaskCenter";
 import { HCPAssistant } from "./HCPAssistant";
 import { SyncStatus } from "./SyncStatus";
 import { CanvasTargets } from "./CanvasTargets";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format, addDays, subDays } from "date-fns";
+import { enUS } from "date-fns/locale";
 
 type MeetingStatus = "upcoming" | "in-progress" | "debrief-needed" | "debrief-submitting" | "debrief-processing" | "debrief-ready" | "debrief-failed" | "done";
 
@@ -198,6 +201,8 @@ export const DailyOverviewApple = ({
   const [selectedHCP, setSelectedHCP] = useState<string>("");
   const [showBriefing, setShowBriefing] = useState(false);
   const [showCompletedMeetings, setShowCompletedMeetings] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
 
   // Apply status overrides from parent
   const meetings = baseMeetings.map(m => ({
@@ -258,11 +263,9 @@ export const DailyOverviewApple = ({
     };
   }, [expandedMeetingId]);
 
-  const todayDate = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  });
+  const displayDate = format(selectedDate, "EEEE, MMMM d", { locale: enUS });
+
+  const isToday = selectedDate.toDateString() === new Date().toDateString();
 
   const pendingDebriefCount = meetings.filter(m => m.status === "debrief-needed" || m.status === "debrief-failed").length;
 
@@ -293,7 +296,64 @@ export const DailyOverviewApple = ({
             <img src={jarvisLogo} alt="Jarvis" className="h-12 w-12" />
             <div>
               <h1 className="text-2xl font-semibold text-foreground tracking-tight">{greeting()}</h1>
-              <p className="text-sm text-muted-foreground">{todayDate}</p>
+              <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+                <PopoverTrigger asChild>
+                  <button className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+                    {displayDate}
+                    <ChevronDown className="h-3 w-3 opacity-40" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-3" align="start" sideOffset={8}>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setSelectedDate(d => subDays(d, 1))}>
+                        <ChevronLeft className="h-4 w-4" />
+                      </Button>
+                      <span className="text-sm font-medium">{format(selectedDate, "MMM d, yyyy")}</span>
+                      <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setSelectedDate(d => addDays(d, 1))}>
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <div className="flex gap-1.5 justify-center">
+                      {Array.from({ length: 7 }, (_, i) => {
+                        const day = addDays(selectedDate, i - 3);
+                        const isSelected = day.toDateString() === selectedDate.toDateString();
+                        const isTodayDot = day.toDateString() === new Date().toDateString();
+                        return (
+                          <button
+                            key={i}
+                            onClick={() => { setSelectedDate(day); setDatePickerOpen(false); }}
+                            className="flex flex-col items-center gap-1"
+                          >
+                            <span className="text-[10px] text-muted-foreground">{format(day, "EEE")}</span>
+                            <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium transition-all ${
+                              isSelected
+                                ? "bg-foreground text-background"
+                                : "text-muted-foreground hover:bg-accent"
+                            }`}>
+                              {day.getDate()}
+                            </span>
+                            {isTodayDot && !isSelected && (
+                              <div className="w-1 h-1 rounded-full bg-primary" />
+                            )}
+                            {!isTodayDot && <div className="w-1 h-1" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {!isToday && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="w-full text-xs text-primary"
+                        onClick={() => { setSelectedDate(new Date()); setDatePickerOpen(false); }}
+                      >
+                        Back to today
+                      </Button>
+                    )}
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
           <SyncStatus />
