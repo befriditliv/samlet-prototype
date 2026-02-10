@@ -410,12 +410,19 @@ export const DailyOverviewApple = ({
                   if (el) cardRefs.current.set(meeting.id, el);
                   else cardRefs.current.delete(meeting.id);
                 }}
+                className={`rounded-2xl transition-all duration-300 ${
+                  isExpanded
+                    ? "border border-primary/30 bg-card shadow-sm shadow-primary/5 ring-1 ring-primary/10"
+                    : ""
+                }`}
               >
                 <button
                   type="button"
                   onClick={() => toggleExpand(meeting.id)}
-                  className={`w-full text-left p-4 border rounded-2xl transition-all duration-300 bg-card active:scale-[0.99] ${
-                    isNextUpcoming ? "border-primary/30 bg-primary/5 ring-1 ring-primary/10" : "border-border/50"
+                  className={`w-full text-left p-4 transition-all duration-300 active:scale-[0.99] ${
+                    isExpanded
+                      ? "rounded-t-2xl"
+                      : `border rounded-2xl bg-card ${isNextUpcoming ? "border-primary/30 bg-primary/5 ring-1 ring-primary/10" : "border-border/50"}`
                   }`}
                 >
                   {/* Main content */}
@@ -545,7 +552,7 @@ export const DailyOverviewApple = ({
 
                 {/* Expanded Details */}
                 {isExpanded && hcpData && (
-                  <div className="mt-2 p-4 bg-card border border-border/50 rounded-xl animate-fade-in">
+                  <div className="px-4 pb-4 pt-2 border-t border-border/20 animate-fade-in">
                     {/* Participants section */}
                     {meeting.participants && meeting.participants.length > 1 && (
                       <div className="mb-4 pb-3 border-b border-border/30">
