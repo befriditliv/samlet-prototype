@@ -1,7 +1,7 @@
 // Daily Overview Component - Mobile-first design
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { User, MessageCircle, Calendar, Bell, ChevronDown, ChevronUp, Phone, Loader2, CheckCircle2, CheckCircle, WifiOff, AlertCircle, RotateCcw, MapPin, Lightbulb, ChevronLeft, ChevronRight } from "lucide-react";
+import { User, MessageCircle, Calendar, Bell, ChevronDown, ChevronUp, Phone, Loader2, CheckCircle2, CheckCircle, WifiOff, AlertCircle, RotateCcw, MapPin, Lightbulb, ChevronLeft, ChevronRight, StickyNote } from "lucide-react";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { TaskCenter } from "./TaskCenter";
 import { HCPAssistant } from "./HCPAssistant";
@@ -41,6 +41,7 @@ interface Meeting {
   phone?: string;
   status: "upcoming" | "in-progress" | "debrief-needed" | "debrief-submitting" | "debrief-processing" | "debrief-ready" | "debrief-failed" | "done";
   participants?: Participant[];
+  notes?: string;
 }
 
 const mockMeetings: Meeting[] = [
@@ -53,7 +54,8 @@ const mockMeetings: Meeting[] = [
     location: "Metro Medical Center",
     address: "1234 Healthcare Blvd, Suite 200",
     phone: "+45 12 34 56 78",
-    status: "debrief-ready"
+    status: "debrief-ready",
+    notes: "Discussed new cardiovascular outcome data. Dr. Johnson expressed interest in the patient adherence program. Follow-up scheduled to review formulary changes."
   },
   {
     id: "2",
@@ -62,7 +64,8 @@ const mockMeetings: Meeting[] = [
     hcpName: "Dr. Michael Chen",
     specialty: "Oncology",
     location: "City General Hospital",
-    status: "debrief-failed"
+    status: "debrief-failed",
+    notes: "Der er planlagt et opfølgende møde baseret på dagens informationer.\n\nNoter\n\nkage og frugt til 5"
   },
   {
     id: "3",
@@ -96,7 +99,8 @@ const mockMeetings: Meeting[] = [
     hcpName: "Dr. Amanda Peters",
     specialty: "Rheumatology",
     location: "Wellness Medical Group",
-    status: "done"
+    status: "done",
+    notes: "Quick check-in. All good, no changes needed."
   }
 ];
 
@@ -594,6 +598,19 @@ export const DailyOverviewApple = ({
                         ))}
                       </div>
                     </div>
+
+                    {/* Meeting Notes */}
+                    {meeting.notes && (
+                      <div className="mt-3 pt-3 border-t border-border/30">
+                        <h3 className="text-xs font-medium text-foreground mb-2 flex items-center gap-2">
+                          <StickyNote className="w-3.5 h-3.5 text-muted-foreground" />
+                          Meeting notes
+                        </h3>
+                        <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line bg-muted/30 rounded-lg p-3">
+                          {meeting.notes}
+                        </p>
+                      </div>
+                    )}
 
                     {/* Quick info badges */}
                     <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-border/30">
