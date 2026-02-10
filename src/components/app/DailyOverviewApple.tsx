@@ -582,6 +582,19 @@ export const DailyOverviewApple = ({
                       </div>
                     )}
 
+                    {/* Meeting Notes */}
+                    {meeting.notes && (
+                      <div className="mb-4 pb-3 border-b border-border/30">
+                        <h3 className="text-xs font-medium text-foreground mb-2 flex items-center gap-2">
+                          <StickyNote className="w-3.5 h-3.5 text-muted-foreground" />
+                          Meeting notes
+                        </h3>
+                        <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line bg-muted/30 rounded-lg p-3">
+                          {meeting.notes}
+                        </p>
+                      </div>
+                    )}
+
                     {/* Jarvis Recommendations */}
                     <div>
                       <h3 className="text-sm font-semibold text-foreground mb-1 flex items-center gap-2">
@@ -600,19 +613,6 @@ export const DailyOverviewApple = ({
                         ))}
                       </div>
                     </div>
-
-                    {/* Meeting Notes */}
-                    {meeting.notes && (
-                      <div className="mt-3 pt-3 border-t border-border/30">
-                        <h3 className="text-xs font-medium text-foreground mb-2 flex items-center gap-2">
-                          <StickyNote className="w-3.5 h-3.5 text-muted-foreground" />
-                          Meeting notes
-                        </h3>
-                        <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line bg-muted/30 rounded-lg p-3">
-                          {meeting.notes}
-                        </p>
-                      </div>
-                    )}
 
                     {/* Quick info badges */}
                     <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-border/30">
