@@ -241,21 +241,13 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
       {/* Current Day Header with Calendar Popover */}
       <div className="flex items-center justify-between py-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 text-muted-foreground hover:text-foreground"
-              onClick={() => setSelectedDate(addDays(selectedDate, -1))}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="ghost" className="gap-2 text-base font-semibold px-2">
-                  <span className="capitalize">{format(selectedDate, 'EEEE, d MMMM', { locale: enUS })}</span>
-                </Button>
-              </PopoverTrigger>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className="gap-2">
+                <Calendar className="h-4 w-4" />
+                <span className="capitalize">{format(selectedDate, 'EEEE, d MMMM', { locale: enUS })}</span>
+              </Button>
+            </PopoverTrigger>
             <PopoverContent className="w-auto p-4" align="start">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -327,15 +319,6 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
               </div>
             </PopoverContent>
           </Popover>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 text-muted-foreground hover:text-foreground"
-              onClick={() => setSelectedDate(addDays(selectedDate, 1))}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
           
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <span>{meetingsCount} meetings</span>
