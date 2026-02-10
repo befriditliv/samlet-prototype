@@ -79,7 +79,8 @@ const mockMeetings: Meeting[] = [
       { name: "Dr. Emily Rodriguez", specialty: "Endocrinology" },
       { name: "Dr. Thomas Baker", specialty: "Diabetology" },
       { name: "Nurse Patricia Hall", specialty: "Diabetes Care" }
-    ]
+    ],
+    notes: "Multidisciplinary session. Bring updated Wegovy dosing guidelines and patient case studies for diabetes integration discussion."
   },
   {
     id: "4",
@@ -90,7 +91,8 @@ const mockMeetings: Meeting[] = [
     location: "Central Neuroscience Clinic",
     address: "890 Brain Way, Suite 500",
     phone: "+45 87 65 43 21",
-    status: "upcoming"
+    status: "upcoming",
+    notes: "First introduction meeting. Prepare portfolio overview and explore potential collaboration angles."
   },
   {
     id: "5",
