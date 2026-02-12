@@ -443,6 +443,42 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
           </div>
         </div>
 
+        {/* Tips reminder - compact version */}
+        <div className="mb-4">
+          <div className="p-3 rounded-xl bg-primary/5 border border-primary/10">
+            <div className="flex items-start gap-3">
+              <div className="p-1.5 bg-primary/10 rounded-lg shrink-0">
+                <Lightbulb className="h-4 w-4 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-xs font-semibold text-foreground mb-1.5">Tips for a Great Debrief</h3>
+                <ul className="space-y-1 text-xs text-muted-foreground">
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Be specific about key discussion points and outcomes</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Note any objections or concerns raised</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Capture action items and follow-up commitments</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Record any materials shared or requested</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Include relevant context for future reference</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Recording area */}
         <div className="flex-1 flex flex-col items-center justify-center">
           {isPlayingQuestion ? (
