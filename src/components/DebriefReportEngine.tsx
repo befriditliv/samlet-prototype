@@ -90,10 +90,14 @@ export const DebriefReportEngine = () => {
                   <SelectValue placeholder="Activity Types" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="field-visit">Field Visit</SelectItem>
-                  <SelectItem value="virtual-meeting">Virtual Meeting</SelectItem>
-                  <SelectItem value="conference">Conference</SelectItem>
-                  <SelectItem value="lunch-learn">Lunch & Learn</SelectItem>
+                  <SelectItem value="advisory-board">Advisory board</SelectItem>
+                  <SelectItem value="clinical-consultancy-forum">Clinical consultancy forum</SelectItem>
+                  <SelectItem value="congress">Congress</SelectItem>
+                  <SelectItem value="congress-symposium-summit">Congress / Symposium / Summit</SelectItem>
+                  <SelectItem value="debrief">Debrief</SelectItem>
+                  <SelectItem value="hcp-meeting">HCP meeting (1:1 / group)</SelectItem>
+                  <SelectItem value="investigator-meeting">Investigator meeting</SelectItem>
+                  <SelectItem value="kol-meeting">KOL meeting</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -102,10 +106,14 @@ export const DebriefReportEngine = () => {
                   <SelectValue placeholder="Therapy Areas" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="diabetes">Diabetes</SelectItem>
-                  <SelectItem value="cardiovascular">Cardiovascular</SelectItem>
-                  <SelectItem value="obesity">Obesity</SelectItem>
-                  <SelectItem value="endocrinology">Endocrinology</SelectItem>
+                  <SelectItem value="account-value">Account value</SelectItem>
+                  <SelectItem value="acute-myocardial-infarction">Acute Myocardial Infarction</SelectItem>
+                  <SelectItem value="ad">AD</SelectItem>
+                  <SelectItem value="ald">ALD</SelectItem>
+                  <SelectItem value="alzheimers-disease">Alzheimer's disease</SelectItem>
+                  <SelectItem value="ascvd">ASCVD</SelectItem>
+                  <SelectItem value="ascvd-ckd">ASCVD + CKD</SelectItem>
+                  <SelectItem value="cardiovascular-disease">Cardiovascular disease</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -114,10 +122,14 @@ export const DebriefReportEngine = () => {
                   <SelectValue placeholder="HCP Types" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="physician">Physician</SelectItem>
-                  <SelectItem value="nurse-practitioner">Nurse Practitioner</SelectItem>
+                  <SelectItem value="co-investigator">Co-investigator</SelectItem>
+                  <SelectItem value="head-of-scientific-society">Head of Scientific Society</SelectItem>
+                  <SelectItem value="kol">KOL</SelectItem>
+                  <SelectItem value="nurse">Nurse</SelectItem>
                   <SelectItem value="pharmacist">Pharmacist</SelectItem>
-                  <SelectItem value="specialist">Specialist</SelectItem>
+                  <SelectItem value="physician">Physician</SelectItem>
+                  <SelectItem value="principal-investigator">Principal investigator</SelectItem>
+                  <SelectItem value="study-coordinator">Study coordinator</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -126,10 +138,14 @@ export const DebriefReportEngine = () => {
                   <SelectValue placeholder="HCP Specialties" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="endocrinology">Endocrinology</SelectItem>
+                  <SelectItem value="adult-psychiatry">Adult Psychiatry</SelectItem>
+                  <SelectItem value="anaesthetics">Anaesthetics</SelectItem>
+                  <SelectItem value="cardiologist">Cardiologist</SelectItem>
                   <SelectItem value="cardiology">Cardiology</SelectItem>
-                  <SelectItem value="primary-care">Primary Care</SelectItem>
-                  <SelectItem value="internal-medicine">Internal Medicine</SelectItem>
+                  <SelectItem value="cardiothoracic-surgery">Cardiothoracic Surgery</SelectItem>
+                  <SelectItem value="care-of-the-elderly">Care of the Elderly</SelectItem>
+                  <SelectItem value="diabetes-endocrinology">Diabetes & Endocrinology</SelectItem>
+                  <SelectItem value="diabetologist">Diabetologist</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -138,10 +154,14 @@ export const DebriefReportEngine = () => {
                   <SelectValue placeholder="Molecules" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="semaglutide">Semaglutide</SelectItem>
-                  <SelectItem value="tirzepatide">Tirzepatide</SelectItem>
-                  <SelectItem value="liraglutide">Liraglutide</SelectItem>
-                  <SelectItem value="dulaglutide">Dulaglutide</SelectItem>
+                  <SelectItem value="amycretin">Amycretin</SelectItem>
+                  <SelectItem value="belcesiran">Belcesiran</SelectItem>
+                  <SelectItem value="cagrisema">CagriSema</SelectItem>
+                  <SelectItem value="concizumab">Concizumab</SelectItem>
+                  <SelectItem value="etavopivat">Etavopivat</SelectItem>
+                  <SelectItem value="na">N/A</SelectItem>
+                  <SelectItem value="ndec">NDec</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -150,10 +170,14 @@ export const DebriefReportEngine = () => {
                   <SelectValue placeholder="Brands" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ozempic">Ozempic</SelectItem>
-                  <SelectItem value="wegovy">Wegovy</SelectItem>
-                  <SelectItem value="mounjaro">Mounjaro</SelectItem>
-                  <SelectItem value="victoza">Victoza</SelectItem>
+                  <SelectItem value="alhemo">Alhemo</SelectItem>
+                  <SelectItem value="dpp4">DPP4</SelectItem>
+                  <SelectItem value="esperoct">Esperoct</SelectItem>
+                  <SelectItem value="glp-1">GLP-1</SelectItem>
+                  <SelectItem value="glp1">GLP1</SelectItem>
+                  <SelectItem value="novopen">NovoPen</SelectItem>
+                  <SelectItem value="novopen-6">NovoPen 6</SelectItem>
+                  <SelectItem value="novopen-echo">NovoPen Echo</SelectItem>
                 </SelectContent>
               </Select>
             </div>
