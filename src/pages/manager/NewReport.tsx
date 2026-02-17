@@ -103,6 +103,13 @@ const quickReportOptions = [
     icon: Activity,
     devNote: 'DEV: Use MIP. Prompt: Analyze the last 30 days of HCP and HCO interaction data.',
   },
+  {
+    id: 'private-market-insights',
+    label: 'Private Market Insights',
+    description: 'Analysis of trends, opportunities and competitive dynamics in the private market segment',
+    icon: Info,
+    devNote: 'DEV: Use MIP. Prompt: Analyze private market interactions, trends, and competitive landscape.',
+  },
 ];
 
 const NewReport = () => {
@@ -210,6 +217,17 @@ const NewReport = () => {
           title: 'HCO/HCP Sentiment & Market Trends',
           query: 'What is the general sentiment and market trends among HCPs and HCOs?',
           dateRange: { from: new Date(2025, 9, 1), to: new Date(2025, 11, 31) },
+          product: 'All products',
+          employee: 'all'
+        }
+      });
+    } else if (reportId === 'private-market-insights') {
+      navigate('/manager/insight-report', {
+        state: {
+          reportType: 'private-market-insights',
+          title: 'Private Market Insights',
+          query: 'What are the key trends, opportunities and competitive dynamics in the private market segment?',
+          dateRange: { from: new Date(2025, 6, 1), to: new Date(2025, 11, 31) },
           product: 'All products',
           employee: 'all'
         }
