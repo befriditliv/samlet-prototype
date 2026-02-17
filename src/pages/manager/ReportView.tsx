@@ -24,7 +24,11 @@ import {
   ChevronRight,
   Eye,
   ArrowUpRight,
-  ArrowDownRight
+  ArrowDownRight,
+  GitCompareArrows,
+  Plus,
+  Minus,
+  Equal
 } from "lucide-react";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
@@ -256,6 +260,104 @@ const objectionCategories: ObjectionCategory[] = [
       d.objections.toLowerCase().includes('follow-up') ||
       d.objections.toLowerCase().includes('waitlist')
     ).slice(0, 5),
+  },
+];
+
+// Comparison data: topics with statements from Period A and Period B
+const comparisonTopics = [
+  {
+    id: 'reimbursement',
+    topic: 'Reimbursement rules and regional differences',
+    color: '#16a34a',
+    status: 'decreased' as const,
+    periodA: {
+      count: 22,
+      statements: [
+        'Unclear regional reimbursement rules make it difficult to assess which patients can start Ozempic',
+        'Concern that reimbursement clauses limit the opportunity for early intervention',
+        'Region requires documentation of metformin failure before Ozempic can be prescribed with reimbursement',
+      ],
+    },
+    periodB: {
+      count: 8,
+      statements: [
+        'Reimbursement process is now clearer but still varies by region',
+        'Documentation requirements have become more standardized',
+      ],
+    },
+  },
+  {
+    id: 'combination-therapy',
+    topic: 'Combination therapy with other medications',
+    color: '#ea580c',
+    status: 'increased' as const,
+    periodA: {
+      count: 6,
+      statements: [
+        'Initial questions about Ozempic and metformin interaction',
+      ],
+    },
+    periodB: {
+      count: 26,
+      statements: [
+        'Uncertainty about optimal dosing when Ozempic is combined with other antidiabetics',
+        'Concern about increased risk of hypoglycemia when combined with sulfonylurea',
+        'Lack of experience combining Ozempic with insulin – when should insulin dose be adjusted?',
+        'Request more data on long-term effect of Ozempic + SGLT2i combination',
+      ],
+    },
+  },
+  {
+    id: 'patient-selection',
+    topic: 'Patient selection and practical initiation',
+    color: '#1d4ed8',
+    status: 'new' as const,
+    periodA: {
+      count: 0,
+      statements: [],
+    },
+    periodB: {
+      count: 15,
+      statements: [
+        'Which patients should be prioritized when there is a waitlist for the diabetes outpatient clinic?',
+        'GI side effects at initiation cause some patients to stop treatment too early',
+        'Uncertainty about safety and efficacy in patients with moderately reduced kidney function',
+      ],
+    },
+  },
+  {
+    id: 'capacity',
+    topic: 'Capacity and resources for follow-up',
+    color: '#84cc16',
+    status: 'new' as const,
+    periodA: {
+      count: 0,
+      statements: [],
+    },
+    periodB: {
+      count: 5,
+      statements: [
+        'Lack of capacity for close follow-up during the first 3 months as recommended',
+        'Clinics need digital follow-up solutions to manage initiation phase',
+      ],
+    },
+  },
+  {
+    id: 'weight-management',
+    topic: 'Weight management expectations',
+    color: '#8b5cf6',
+    status: 'removed' as const,
+    periodA: {
+      count: 4,
+      statements: [
+        'Patients expect rapid weight loss – managing expectations is challenging',
+        'Uncertainty about long-term weight maintenance after dose stabilization',
+      ],
+    },
+    periodB: {
+      count: 0,
+      statements: [],
+    },
   },
 ];
 
@@ -531,6 +633,114 @@ const ReportView = () => {
                 </p>
               </CardContent>
             </Card>
+
+            {/* Period Comparison Section */}
+            {data.compareEnabled && data.compareDateRange && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <GitCompareArrows className="h-5 w-5 text-primary" />
+                    Period Comparison
+                  </CardTitle>
+                  <div className="flex items-center gap-3 mt-2">
+                    <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border-blue-200 dark:border-blue-800 gap-1.5">
+                      <Calendar className="h-3 w-3" />
+                      Period A: {format(data.compareDateRange.from, "MMM d", { locale: enUS })} – {format(data.compareDateRange.to, "MMM d, yyyy", { locale: enUS })}
+                    </Badge>
+                    <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 border-amber-200 dark:border-amber-800 gap-1.5">
+                      <Calendar className="h-3 w-3" />
+                      Period B: {format(data.dateRange.from, "MMM d", { locale: enUS })} – {format(data.dateRange.to, "MMM d, yyyy", { locale: enUS })}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {comparisonTopics.map((topic) => (
+                    <div key={topic.id} className="border rounded-lg overflow-hidden">
+                      {/* Topic header */}
+                      <div className="flex items-center justify-between p-4 bg-muted/30">
+                        <div className="flex items-center gap-2.5">
+                          <div className="h-3 w-3 rounded-full shrink-0" style={{ backgroundColor: topic.color }} />
+                          <h4 className="text-sm font-semibold text-foreground">{topic.topic}</h4>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {topic.status === 'new' && (
+                            <Badge className="bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400 border-green-200 dark:border-green-800 text-[10px] gap-1">
+                              <Plus className="h-3 w-3" /> New in Period B
+                            </Badge>
+                          )}
+                          {topic.status === 'removed' && (
+                            <Badge className="bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400 border-red-200 dark:border-red-800 text-[10px] gap-1">
+                              <Minus className="h-3 w-3" /> Gone in Period B
+                            </Badge>
+                          )}
+                          {topic.status === 'increased' && (
+                            <Badge className="bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400 border-amber-200 dark:border-amber-800 text-[10px] gap-1">
+                              <ArrowUpRight className="h-3 w-3" /> Increased
+                            </Badge>
+                          )}
+                          {topic.status === 'decreased' && (
+                            <Badge className="bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400 border-blue-200 dark:border-blue-800 text-[10px] gap-1">
+                              <ArrowDownRight className="h-3 w-3" /> Decreased
+                            </Badge>
+                          )}
+                          <span className="text-xs text-muted-foreground font-mono">
+                            {topic.periodA.count} → {topic.periodB.count}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Period statements */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border">
+                        {/* Period A */}
+                        <div className="p-4 space-y-2">
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+                            <span className="text-[10px] font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">Period A</span>
+                            <Badge variant="outline" className="text-[10px] ml-auto">{topic.periodA.count} mentions</Badge>
+                          </div>
+                          {topic.periodA.statements.length > 0 ? (
+                            topic.periodA.statements.map((stmt, i) => (
+                              <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                <span className="text-blue-400 mt-0.5 shrink-0">›</span>
+                                <span className="leading-relaxed">{stmt}</span>
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-xs text-muted-foreground/50 italic">No mentions in this period</p>
+                          )}
+                        </div>
+
+                        {/* Period B */}
+                        <div className="p-4 space-y-2">
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+                            <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">Period B</span>
+                            <Badge variant="outline" className="text-[10px] ml-auto">{topic.periodB.count} mentions</Badge>
+                          </div>
+                          {topic.periodB.statements.length > 0 ? (
+                            topic.periodB.statements.map((stmt, i) => (
+                              <div key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                <span className="text-amber-400 mt-0.5 shrink-0">›</span>
+                                <span className="leading-relaxed">{stmt}</span>
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-xs text-muted-foreground/50 italic">No mentions in this period</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Comparison summary */}
+                  <div className="bg-primary/5 rounded-lg p-3 mt-2">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      <span className="font-medium text-foreground">Comparison Insight:</span> Between the two periods, the conversation has shifted from access-related barriers (reimbursement) towards clinical implementation questions (combination therapy, patient selection). Two entirely new concern areas have emerged in Period B.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Hovedanalyse */}
             <Card>
