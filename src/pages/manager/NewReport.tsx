@@ -62,11 +62,18 @@ const reportCategories = [
 
 const quickReportOptions = [
   {
-    id: 'ozempic-initiation',
-    label: 'Ozempic Initiation',
-    description: 'Analysis of HCP concerns and barriers to Ozempic initiation over time',
-    icon: Stethoscope,
-    devNote: 'DEV: Use MIP with objection/concern analysis. Set current date minus 90 days for trend data.',
+    id: 'campaign-adherence',
+    label: 'Campaign Adherence',
+    description: 'Alignment between campaign messages and actual meeting conversations',
+    icon: Target,
+    devNote: 'DEV: Compare campaign prepare content vs actual debrief topics. Calculate adherence %.',
+  },
+  {
+    id: 'private-market-insights',
+    label: 'Private Market Insights',
+    description: 'Analysis of trends, opportunities and competitive dynamics in the private market segment',
+    icon: Info,
+    devNote: 'DEV: Use MIP. Prompt: Analyze private market interactions, trends, and competitive landscape.',
   },
   {
     id: 'off-label-insights',
@@ -76,18 +83,18 @@ const quickReportOptions = [
     devNote: 'DEV: Search debriefs for HCP-volunteered off-label information (e.g., Ozempic for obesity).',
   },
   {
+    id: 'ozempic-initiation',
+    label: 'Ozempic Initiation',
+    description: 'Analysis of HCP concerns and barriers to Ozempic initiation over time',
+    icon: Stethoscope,
+    devNote: 'DEV: Use MIP with objection/concern analysis. Set current date minus 90 days for trend data.',
+  },
+  {
     id: 'debrief-quality',
     label: 'Debrief Quality Report',
     description: 'Quality assessment of employee debriefs – depth, structure and actionable insights',
     icon: Users,
     devNote: 'DEV: Analyze debrief completeness, detail level, and actionability per employee.',
-  },
-  {
-    id: 'campaign-adherence',
-    label: 'Campaign Adherence',
-    description: 'Alignment between campaign messages and actual meeting conversations',
-    icon: Target,
-    devNote: 'DEV: Compare campaign prepare content vs actual debrief topics. Calculate adherence %.',
   },
   {
     id: 'high-potential-no-engagement',
@@ -102,13 +109,6 @@ const quickReportOptions = [
     description: 'Analyze overall sentiment and emerging market themes',
     icon: Activity,
     devNote: 'DEV: Use MIP. Prompt: Analyze the last 30 days of HCP and HCO interaction data.',
-  },
-  {
-    id: 'private-market-insights',
-    label: 'Private Market Insights',
-    description: 'Analysis of trends, opportunities and competitive dynamics in the private market segment',
-    icon: Info,
-    devNote: 'DEV: Use MIP. Prompt: Analyze private market interactions, trends, and competitive landscape.',
   },
 ];
 
