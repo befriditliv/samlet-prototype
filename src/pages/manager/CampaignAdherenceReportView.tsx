@@ -22,7 +22,7 @@ import {
   AlertTriangle
 } from "lucide-react";
 import { format, subDays } from "date-fns";
-import { da } from "date-fns/locale";
+
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
@@ -49,47 +49,47 @@ interface Campaign {
 const activeCampaigns: Campaign[] = [
   {
     id: 'ozempic-initiation',
-    title: 'Ozempic Initiering',
-    description: 'Fokus på at præsentere opstartsdata og adressere bekymringer ved initiering af nye patienter på Ozempic.',
+    title: 'Ozempic Initiation',
+    description: 'Focus on presenting initiation data and addressing concerns when starting new patients on Ozempic.',
     priority: 'high',
     adherenceRate: 72,
     totalMeetings: 32,
     alignedMeetings: 23,
-    startDate: 'dec. 1, 2025',
-    keywords: ['initiering', 'opstart', 'nye patienter', 'dosis', 'ozempic']
+    startDate: 'Dec 1, 2025',
+    keywords: ['initiation', 'start-up', 'new patients', 'dosing', 'ozempic']
   },
   {
     id: 'cv-outcomes',
-    title: 'Kardiovaskulære Outcomes',
-    description: 'Kommunikation af SUSTAIN-6 og SELECT data vedrørende kardiovaskulær risikoreduktion.',
+    title: 'Cardiovascular Outcomes',
+    description: 'Communication of SUSTAIN-6 and SELECT data regarding cardiovascular risk reduction.',
     priority: 'high',
     adherenceRate: 58,
     totalMeetings: 28,
     alignedMeetings: 16,
-    startDate: 'nov. 15, 2025',
-    keywords: ['kardiovaskulær', 'cv', 'sustain', 'select', 'risikoreduktion', 'hjerte']
+    startDate: 'Nov 15, 2025',
+    keywords: ['cardiovascular', 'cv', 'sustain', 'select', 'risk reduction', 'heart']
   },
   {
     id: 'patient-adherence',
     title: 'Patient Compliance',
-    description: 'Diskussion af strategier for at forbedre patienternes behandlingsadhærence og minimere drop-out.',
+    description: 'Discussion of strategies to improve patient treatment adherence and minimize drop-out.',
     priority: 'medium',
     adherenceRate: 45,
     totalMeetings: 25,
     alignedMeetings: 11,
-    startDate: 'nov. 1, 2025',
-    keywords: ['adhærence', 'compliance', 'drop-out', 'fastholdelse', 'patient']
+    startDate: 'Nov 1, 2025',
+    keywords: ['adherence', 'compliance', 'drop-out', 'retention', 'patient']
   },
   {
     id: 'weight-management',
-    title: 'Vægtstyring og Obesity',
-    description: 'Introduktion til Wegovy og diskussion af vægttabsbehandling som terapeutisk område.',
+    title: 'Weight Management & Obesity',
+    description: 'Introduction to Wegovy and discussion of weight loss treatment as a therapeutic area.',
     priority: 'low',
     adherenceRate: 31,
     totalMeetings: 22,
     alignedMeetings: 7,
-    startDate: 'okt. 20, 2025',
-    keywords: ['vægt', 'obesity', 'wegovy', 'vægttab', 'bmi']
+    startDate: 'Oct 20, 2025',
+    keywords: ['weight', 'obesity', 'wegovy', 'weight loss', 'bmi']
   }
 ];
 
@@ -143,47 +143,47 @@ const debriefExamples: DebriefExample[] = [
   {
     id: '1',
     employee: 'Lenette Skott',
-    date: 'dec. 20, 2025',
+    date: 'Dec 20, 2025',
     aligned: true,
-    campaign: 'Ozempic Initiering',
-    excerpt: 'Gennemgik initieringsdata med overlægen. Fokuserede på dosisoptrapningsalgoritmen og adresserede bekymringer om GI-bivirkninger ved opstart. Aftalt at starte 3 nye patienter med lav dosis.',
-    analysis: 'Aligned: Debrief adresserer alle nøgleelementer i kampagnen - opstartsdata, dosis og bekymringer.'
+    campaign: 'Ozempic Initiation',
+    excerpt: 'Reviewed initiation data with the chief physician. Focused on the dose escalation algorithm and addressed concerns about GI side effects at start-up. Agreed to start 3 new patients on low dose.',
+    analysis: 'Aligned: Debrief addresses all key campaign elements — initiation data, dosing, and concerns.'
   },
   {
     id: '2',
     employee: 'Christian Schmidt Larsen',
-    date: 'dec. 18, 2025',
+    date: 'Dec 18, 2025',
     aligned: true,
-    campaign: 'Kardiovaskulære Outcomes',
-    excerpt: 'Præsenterede SUSTAIN-6 data for kardiologisk team. Stor interesse for CV risikoreduktionen. De vil overveje GLP-1 til type 2 diabetes patienter med etableret hjertesygdom.',
-    analysis: 'Aligned: Specifik reference til SUSTAIN-6 og kardiovaskulær risikoreduktion matcher kampagnens fokus.'
+    campaign: 'Cardiovascular Outcomes',
+    excerpt: 'Presented SUSTAIN-6 data to the cardiology team. Strong interest in CV risk reduction. They will consider GLP-1 for type 2 diabetes patients with established heart disease.',
+    analysis: 'Aligned: Specific reference to SUSTAIN-6 and cardiovascular risk reduction matches the campaign focus.'
   },
   {
     id: '3',
     employee: 'Gitte Baker',
-    date: 'dec. 15, 2025',
+    date: 'Dec 15, 2025',
     aligned: false,
     campaign: 'Patient Compliance',
-    excerpt: 'Godt møde med praktiserende læge. Diskuterede generelt om diabetesbehandling og patientgrupper. Positivt modtaget.',
-    analysis: 'Ikke aligned: Ingen specifik reference til adhærence, fastholdelse eller drop-out strategier som defineret i kampagnen.'
+    excerpt: 'Good meeting with GP. Discussed diabetes treatment and patient groups in general. Positively received.',
+    analysis: 'Not aligned: No specific reference to adherence, retention, or drop-out strategies as defined in the campaign.'
   },
   {
     id: '4',
     employee: 'Christine Willesen',
-    date: 'dec. 12, 2025',
+    date: 'Dec 12, 2025',
     aligned: false,
-    campaign: 'Vægtstyring og Obesity',
-    excerpt: 'Møde hos diabetesklinik. Fokuserede primært på Ozempic dosering og tilskudsregler. Ingen spørgsmål fra HCP.',
-    analysis: 'Ikke aligned: Mødet handlede om Ozempic dosering, ikke vægtstyring eller Wegovy som kampagnen foreskriver.'
+    campaign: 'Weight Management & Obesity',
+    excerpt: 'Meeting at diabetes clinic. Focused primarily on Ozempic dosing and reimbursement rules. No questions from HCP.',
+    analysis: 'Not aligned: The meeting was about Ozempic dosing, not weight management or Wegovy as the campaign prescribes.'
   },
   {
     id: '5',
     employee: 'Lenette Skott',
-    date: 'dec. 10, 2025',
+    date: 'Dec 10, 2025',
     aligned: true,
     campaign: 'Patient Compliance',
-    excerpt: 'Diskuterede fastholdelsesstrategier med diabetessygeplejerske. Gennemgik tips til at håndtere bivirkninger og motivere patienter. Hun vil implementere månedlige opfølgningsopkald.',
-    analysis: 'Aligned: Fokus på fastholdelse, motivation og konkrete strategier matcher kampagnens mål.'
+    excerpt: 'Discussed retention strategies with diabetes nurse. Reviewed tips for managing side effects and motivating patients. She will implement monthly follow-up calls.',
+    analysis: 'Aligned: Focus on retention, motivation, and concrete strategies matches the campaign goals.'
   }
 ];
 
@@ -253,17 +253,17 @@ const CampaignAdherenceReportView = () => {
             className="gap-2 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
-            Tilbage
+            Back
           </Button>
           
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1.5">
               <Calendar className="h-4 w-4" />
-              {format(subDays(new Date(), 30), "d. MMM", { locale: da })} - {format(new Date(), "d. MMM yyyy", { locale: da })}
+              {format(subDays(new Date(), 30), "MMM d")} - {format(new Date(), "MMM d, yyyy")}
             </div>
             <div className="flex items-center gap-1.5">
               <Target className="h-4 w-4" />
-              {activeCampaigns.length} aktive kampagner
+              {activeCampaigns.length} active campaigns
             </div>
             <Badge variant="secondary">Last 30 Days</Badge>
           </div>
@@ -275,9 +275,9 @@ const CampaignAdherenceReportView = () => {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-foreground mb-2">Samlet Campaign Adherence</h2>
+                  <h2 className="text-2xl font-bold text-foreground mb-2">Overall Campaign Adherence</h2>
                   <p className="text-muted-foreground">
-                    {alignedMeetings} af {totalMeetings} møder alignet med aktive kampagner
+                    {alignedMeetings} of {totalMeetings} meetings aligned with active campaigns
                   </p>
                 </div>
                 <div className="text-center">
@@ -297,24 +297,24 @@ const CampaignAdherenceReportView = () => {
           <h2 className="text-2xl font-bold text-foreground mb-4">Executive Summary</h2>
           <div className="text-foreground/90 space-y-4 leading-relaxed">
             <p>
-              Over de seneste 30 dage har teamet gennemført {totalMeetings} møder, hvoraf {alignedMeetings} ({overallAdherence}%) har 
-              været aligned med de aktive kampagner. <strong>Ozempic Initiering</strong> kampagnen har den højeste adherence på 72%, 
-              mens <strong>Vægtstyring og Obesity</strong> har laveste adherence på 31%.
+              Over the past 30 days, the team completed {totalMeetings} meetings, of which {alignedMeetings} ({overallAdherence}%) were 
+              aligned with active campaigns. The <strong>Ozempic Initiation</strong> campaign has the highest adherence at 72%, 
+              while <strong>Weight Management & Obesity</strong> has the lowest at 31%.
             </p>
             <p>
-              Der ses en positiv trend i adherence over perioden, med forbedringer på tværs af alle kampagner. 
-              Dog er der fortsat et betydeligt gap mellem high-priority kampagner (72% og 58%) og lower-priority kampagner (45% og 31%).
+              A positive adherence trend is observed over the period, with improvements across all campaigns. 
+              However, there remains a significant gap between high-priority campaigns (72% and 58%) and lower-priority campaigns (45% and 31%).
             </p>
             <p>
-              <strong>Anbefaling:</strong> Øget fokus på Patient Compliance og Vægtstyring kampagnerne i kommende periode. 
-              Overvej at inkludere specifikke talking points i mødeforberedelsen for at øge alignment.
+              <strong>Recommendation:</strong> Increase focus on the Patient Compliance and Weight Management campaigns in the coming period. 
+              Consider including specific talking points in meeting preparation to boost alignment.
             </p>
           </div>
         </section>
 
         {/* Active Campaigns */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-foreground mb-4">Aktive Kampagner</h2>
+          <h2 className="text-xl font-semibold text-foreground mb-4">Active Campaigns</h2>
           <div className="space-y-2">
             {activeCampaigns.map((campaign) => (
               <Collapsible
@@ -332,7 +332,7 @@ const CampaignAdherenceReportView = () => {
                       <Target className="h-4 w-4 text-primary shrink-0" />
                       <span className="text-sm font-medium text-foreground">{campaign.title}</span>
                       <Badge className={`text-xs ${getPriorityColor(campaign.priority)}`}>
-                        {campaign.priority === 'high' ? 'Høj' : campaign.priority === 'medium' ? 'Medium' : 'Lav'} prioritet
+                        {campaign.priority === 'high' ? 'High' : campaign.priority === 'medium' ? 'Medium' : 'Low'} priority
                       </Badge>
                     </div>
                     <div className="flex items-center gap-4">
@@ -366,7 +366,7 @@ const CampaignAdherenceReportView = () => {
                     </div>
                     <div className="text-xs text-muted-foreground">
                       <Calendar className="h-3 w-3 inline mr-1" />
-                      Startet: {campaign.startDate}
+                      Started: {campaign.startDate}
                     </div>
                   </div>
                 </CollapsibleContent>
@@ -377,7 +377,7 @@ const CampaignAdherenceReportView = () => {
 
         {/* Employee Breakdown */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-foreground mb-4">Medarbejder Adherence</h2>
+          <h2 className="text-xl font-semibold text-foreground mb-4">Employee Adherence</h2>
           <div className="space-y-3">
             {employeeAdherence.map((emp) => (
               <Card key={emp.name} className="border">
@@ -389,7 +389,7 @@ const CampaignAdherenceReportView = () => {
                       </div>
                       <div>
                         <div className="font-medium text-foreground">{emp.name}</div>
-                        <div className="text-xs text-muted-foreground">{emp.meetingCount} møder</div>
+                        <div className="text-xs text-muted-foreground">{emp.meetingCount} meetings</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -425,10 +425,10 @@ const CampaignAdherenceReportView = () => {
               <div className="flex items-center justify-between p-4 rounded-lg border border-dashed hover:border-primary/50 hover:bg-muted/30 transition-colors">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <MessageSquareQuote className="h-4 w-4" />
-                  <span className="text-sm font-medium">Debrief Eksempler</span>
+                  <span className="text-sm font-medium">Debrief Examples</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span>{debriefExamples.length} eksempler</span>
+                  <span>{debriefExamples.length} examples</span>
                   {showExamples ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                 </div>
               </div>
@@ -441,7 +441,7 @@ const CampaignAdherenceReportView = () => {
                     variant={exampleFilter === 'all' ? 'default' : 'outline'}
                     onClick={() => setExampleFilter('all')}
                   >
-                    Alle
+                    All
                   </Button>
                   <Button 
                     size="sm" 
@@ -459,7 +459,7 @@ const CampaignAdherenceReportView = () => {
                     className="gap-1"
                   >
                     <XCircle className="h-3 w-3" />
-                    Ikke aligned
+                    Not aligned
                   </Button>
                 </div>
               </div>
@@ -506,7 +506,7 @@ const CampaignAdherenceReportView = () => {
         {/* Footer Actions */}
         <div className="flex items-center justify-between py-4">
           <span className="text-sm text-muted-foreground">
-            Genereret: {format(new Date(), "d. MMMM yyyy", { locale: da })}
+            Generated: {format(new Date(), "MMMM d, yyyy")}
           </span>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="gap-2 bg-background">
@@ -515,7 +515,7 @@ const CampaignAdherenceReportView = () => {
             </Button>
             <Button variant="outline" size="sm" className="gap-2 bg-background">
               <Share2 className="h-4 w-4" />
-              Del
+              Share
             </Button>
           </div>
         </div>
