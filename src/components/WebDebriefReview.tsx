@@ -51,7 +51,7 @@ const mockDebriefData = {
     description:
       "Some wording in this debrief looks very similar to earlier submissions. If this meeting had unique takeaways, adding a bit more context will make the notes more useful.",
   },
-  detailScore: 58,
+  detailScore: 42,
   purpose: "The purpose of the meeting was a constructive discussion about several medical topics, including cardiovascular disease, off-label use, and specific brands such as Ozempic, Wegovy, Rebelsus and GLP-1. Additionally, initiation and municipal subsidy plans were discussed.",
   brands: [
     {
