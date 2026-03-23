@@ -19,6 +19,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { DebriefQualitySignals } from "@/components/debrief/DebriefQualitySignals";
 
 interface DebriefReviewProps {
   meetingId: string;
@@ -45,6 +46,12 @@ const mockDebriefData = {
     "Possible off-label discussion detected - verify that the conversation stayed within approved indication",
     "Reference to competitor product without comparative data"
   ],
+  duplicateTextSignal: {
+    title: "Repeated wording detected",
+    description:
+      "Some wording in this debrief looks very similar to earlier submissions. If this meeting had unique takeaways, adding a bit more context will make the notes more useful.",
+  },
+  detailScore: 58,
   purpose: "The purpose of the meeting was a constructive discussion about several medical topics, including cardiovascular disease, off-label use, and specific brands such as Ozempic, Wegovy, Rebelsus and GLP-1. Additionally, initiation and municipal subsidy plans were discussed.",
   brands: [
     {
@@ -84,10 +91,13 @@ const mockDebriefData = {
 };
 
 export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewProps) => {
-  const [isEditing, setIsEditing] = useState(false);
   const [notes, setNotes] = useState(mockDebriefData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+  const handleImproveDetails = () => {
+    onBack();
+  };
 
   const handleApprove = async () => {
     setIsSubmitting(true);
@@ -203,6 +213,12 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
           </Card>
         )}
 
+        <DebriefQualitySignals
+          duplicateTextSignal={notes.duplicateTextSignal}
+          detailScore={notes.detailScore}
+          onImproveDetails={handleImproveDetails}
+        />
+
         {/* Purpose / Formål */}
         <Card className="p-4 border-0 bg-card rounded-xl">
           <h3 className="font-semibold text-foreground mb-2">Purpose of visit</h3>
@@ -283,7 +299,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
           )}
         </Button>
         <Button
-          onClick={() => setIsEditing(true)}
+          onClick={handleImproveDetails}
           variant="outline"
           size="lg"
           className="w-full rounded-2xl py-4 text-base font-medium border-2"
