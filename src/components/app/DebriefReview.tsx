@@ -19,7 +19,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { DebriefDetailIndicator, DuplicateTextNotice } from "@/components/debrief/DebriefQualitySignals";
+import { DebriefCoachingPrompt, DuplicateTextNotice } from "@/components/debrief/DebriefQualitySignals";
 
 interface DebriefReviewProps {
   meetingId: string;
@@ -273,7 +273,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
           })}
         </div>
 
-        <DebriefDetailIndicator detailScore={notes.detailScore} onImproveDetails={handleImproveDetails} />
+        <DebriefCoachingPrompt detailScore={notes.detailScore} onImproveDetails={handleImproveDetails} />
       </div>
 
       {/* Bottom action buttons */}

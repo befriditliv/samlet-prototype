@@ -1,38 +1,25 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { FileText, Files } from "lucide-react";
+import { Files, ListChecks } from "lucide-react";
 
 export interface DuplicateTextSignal {
   title: string;
   description: string;
 }
 
-interface DebriefDetailIndicatorProps {
+interface DebriefCoachingPromptProps {
   detailScore: number;
   onImproveDetails: () => void;
 }
 
-const getDetailLevel = (score: number) => {
-  if (score >= 75) {
-    return {
-      label: "High",
-      description: "This debrief captures clear context, outcomes, and follow-up value.",
-    };
-  }
-
-  if (score >= 45) {
-    return {
-      label: "Context-dependent",
-      description: "Some meetings are naturally brief, while others call for more detail. If this conversation had meaningful takeaways, adding a bit more context can help the next step feel clearer.",
-    };
-  }
-
-  return {
-    label: "Low",
-    description: "This debrief is short, which can be completely fine for a quick check-in. If more happened in the meeting, a little added context can make the notes more useful later.",
-  };
-};
+const coachingPrompts = [
+  "Who participated in the meeting?",
+  "What were the main topics discussed?",
+  "How did you address any questions or concerns?",
+  "Did anything from the prep notes come up?",
+  "Was a next step or next meeting agreed?",
+  "Was consent or follow-up permission confirmed?",
+];
 
 export const DuplicateTextNotice = ({
   duplicateTextSignal,
@@ -58,39 +45,43 @@ export const DuplicateTextNotice = ({
   );
 };
 
-export const DebriefDetailIndicator = ({
+export const DebriefCoachingPrompt = ({
   detailScore,
   onImproveDetails,
-}: DebriefDetailIndicatorProps) => {
-  const detailLevel = getDetailLevel(detailScore);
+}: DebriefCoachingPromptProps) => {
+  if (detailScore >= 45) {
+    return null;
+  }
 
   return (
-    <Card className="rounded-2xl border border-border/50 bg-secondary/20 p-4 shadow-none">
-      <div className="flex items-start justify-between gap-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2 text-foreground">
-            <FileText className="h-4 w-4 text-muted-foreground" />
-            <h3 className="text-sm font-medium">Level of Detail</h3>
-          </div>
-          <p className="text-sm text-muted-foreground">{detailLevel.description}</p>
+    <Card className="rounded-2xl border border-border/50 bg-secondary/15 p-4 shadow-none">
+      <div className="flex items-start gap-3">
+        <div className="rounded-xl bg-background p-2.5 text-muted-foreground">
+          <ListChecks className="h-4 w-4" />
         </div>
-        <div className="rounded-full bg-background px-2.5 py-1 text-xs font-medium text-muted-foreground">
-            {detailLevel.label}
+        <div className="space-y-1.5">
+          <h3 className="text-sm font-medium text-foreground">Helpful prompts for a stronger debrief</h3>
+          <p className="text-sm text-muted-foreground">
+            Short meetings can absolutely stay short. If more happened, these prompts can help capture the parts that make the debrief more useful.
+          </p>
         </div>
       </div>
 
-      <div className="mt-4 space-y-2">
-        <div className="flex items-center justify-between text-xs">
-          <span className="text-muted-foreground">Level of detail</span>
-          <span className="font-medium text-muted-foreground">{detailLevel.label}</span>
-        </div>
-        <Progress value={detailScore} className="h-1.5" />
-      </div>
+      <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+        {coachingPrompts.map((prompt) => (
+          <li
+            key={prompt}
+            className="rounded-xl border border-border/50 bg-background/80 px-3 py-2 text-sm text-muted-foreground"
+          >
+            {prompt}
+          </li>
+        ))}
+      </ul>
 
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-muted-foreground">Use this as a gentle prompt—add context only when the meeting actually calls for it.</p>
+        <p className="text-sm text-muted-foreground">Use what is relevant and ignore the rest.</p>
         <Button variant="outline" onClick={onImproveDetails} className="rounded-xl border-border/60 bg-background text-sm">
-          Add more detail
+          Add helpful context
         </Button>
       </div>
     </Card>
