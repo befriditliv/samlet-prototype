@@ -8,8 +8,7 @@ export interface DuplicateTextSignal {
   description: string;
 }
 
-interface DebriefQualitySignalsProps {
-  duplicateTextSignal?: DuplicateTextSignal | null;
+interface DebriefDetailIndicatorProps {
   detailScore: number;
   onImproveDetails: () => void;
 }
@@ -35,60 +34,65 @@ const getDetailLevel = (score: number) => {
   };
 };
 
-export const DebriefQualitySignals = ({
+export const DuplicateTextNotice = ({
   duplicateTextSignal,
+}: {
+  duplicateTextSignal?: DuplicateTextSignal | null;
+}) => {
+  if (!duplicateTextSignal) {
+    return null;
+  }
+
+  return (
+    <Card className="rounded-2xl border border-border/60 bg-secondary/40 p-5 shadow-none">
+      <div className="flex items-start gap-4">
+        <div className="rounded-xl bg-background p-2.5 text-muted-foreground">
+          <Files className="h-5 w-5" />
+        </div>
+        <div className="space-y-1.5">
+          <h3 className="font-semibold text-foreground">{duplicateTextSignal.title}</h3>
+          <p className="text-sm leading-relaxed text-muted-foreground">{duplicateTextSignal.description}</p>
+        </div>
+      </div>
+    </Card>
+  );
+};
+
+export const DebriefDetailIndicator = ({
   detailScore,
   onImproveDetails,
-}: DebriefQualitySignalsProps) => {
+}: DebriefDetailIndicatorProps) => {
   const detailLevel = getDetailLevel(detailScore);
 
   return (
-    <div className="space-y-4">
-      {duplicateTextSignal ? (
-        <Card className="rounded-2xl border border-border/60 bg-secondary/40 p-5 shadow-none">
-          <div className="flex items-start gap-4">
-            <div className="rounded-xl bg-background p-2.5 text-muted-foreground">
-              <Files className="h-5 w-5" />
-            </div>
-            <div className="space-y-1.5">
-              <h3 className="font-semibold text-foreground">{duplicateTextSignal.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{duplicateTextSignal.description}</p>
-            </div>
+    <Card className="rounded-2xl border border-border/50 bg-secondary/20 p-4 shadow-none">
+      <div className="flex items-start justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-foreground">
+            <FileText className="h-4 w-4 text-muted-foreground" />
+            <h3 className="text-sm font-medium">Level of Detail</h3>
           </div>
-        </Card>
-      ) : null}
-
-      <Card className="rounded-2xl border border-border/60 bg-card p-5 shadow-none">
-        <div className="flex items-start justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-foreground">
-              <FileText className="h-5 w-5 text-muted-foreground" />
-              <h3 className="font-semibold">Level of Detail</h3>
-            </div>
-            <p className="text-sm text-muted-foreground">{detailLevel.description}</p>
-          </div>
-          <div className="rounded-full bg-secondary px-3 py-1 text-sm font-medium text-foreground">
+          <p className="text-sm text-muted-foreground">{detailLevel.description}</p>
+        </div>
+        <div className="rounded-full bg-background px-2.5 py-1 text-xs font-medium text-muted-foreground">
             {detailLevel.label}
-          </div>
         </div>
+      </div>
 
-        <div className="mt-5 space-y-2">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Quality score</span>
-            <span className="font-medium text-foreground">{detailScore}/100</span>
-          </div>
-          <Progress value={detailScore} className="h-2" />
+      <div className="mt-4 space-y-2">
+        <div className="flex items-center justify-between text-xs">
+          <span className="text-muted-foreground">Detail indicator</span>
+          <span className="font-medium text-muted-foreground">{detailScore}/100</span>
         </div>
+        <Progress value={detailScore} className="h-1.5" />
+      </div>
 
-        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-muted-foreground">
-            More specificity helps with follow-up, coaching, and reporting quality.
-          </p>
-          <Button variant="outline" onClick={onImproveDetails} className="rounded-xl">
-            Add more detail
-          </Button>
-        </div>
-      </Card>
-    </div>
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-muted-foreground">Adding a little more context can make the debrief more useful.</p>
+        <Button variant="outline" onClick={onImproveDetails} className="rounded-xl border-border/60 bg-background text-sm">
+          Add more detail
+        </Button>
+      </div>
+    </Card>
   );
 };
