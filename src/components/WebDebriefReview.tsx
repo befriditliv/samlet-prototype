@@ -19,7 +19,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { DebriefDetailIndicator, DuplicateTextNotice } from "@/components/debrief/DebriefQualitySignals";
+import { DebriefCoachingPrompt, DuplicateTextNotice } from "@/components/debrief/DebriefQualitySignals";
 
 interface WebDebriefReviewProps {
   meetingId: string;
@@ -267,7 +267,7 @@ export const WebDebriefReview = ({ meetingId, onBack, onApprove }: WebDebriefRev
           })}
         </div>
 
-        <DebriefDetailIndicator detailScore={notes.detailScore} onImproveDetails={handleImproveDetails} />
+        <DebriefCoachingPrompt detailScore={notes.detailScore} onImproveDetails={handleImproveDetails} />
 
         {/* Bottom action buttons */}
         <div className="flex flex-col sm:flex-row gap-3 pt-6">
