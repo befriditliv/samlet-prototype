@@ -60,7 +60,7 @@ export const DebriefCoachingPrompt = ({
           <ListChecks className="h-4 w-4" />
         </div>
         <div className="space-y-1.5">
-          <h3 className="text-sm font-medium text-foreground">Low level of detail detected</h3>
+          <h3 className="font-semibold text-foreground">Low level of detail detected</h3>
           <p className="text-sm text-muted-foreground">
             Here are a few helpful prompts for a stronger debrief if you want to add a bit more context.
           </p>
