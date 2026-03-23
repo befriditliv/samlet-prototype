@@ -49,7 +49,7 @@ export const DebriefCoachingPrompt = ({
   detailScore,
   onImproveDetails,
 }: DebriefCoachingPromptProps) => {
-  if (detailScore >= 45) {
+  if (detailScore >= 60) {
     return null;
   }
 
