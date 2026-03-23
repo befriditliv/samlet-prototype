@@ -19,6 +19,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { DebriefQualitySignals } from "@/components/debrief/DebriefQualitySignals";
 
 interface WebDebriefReviewProps {
   meetingId: string;
@@ -45,6 +46,12 @@ const mockDebriefData = {
     "Possible off-label discussion detected - verify that the conversation stayed within approved indication",
     "Reference to competitor product without comparative data"
   ],
+  duplicateTextSignal: {
+    title: "Repeated wording detected",
+    description:
+      "Some wording in this debrief looks very similar to earlier submissions. If this meeting had unique takeaways, adding a bit more context will make the notes more useful.",
+  },
+  detailScore: 58,
   purpose: "The purpose of the meeting was a constructive discussion about several medical topics, including cardiovascular disease, off-label use, and specific brands such as Ozempic, Wegovy, Rebelsus and GLP-1. Additionally, initiation and municipal subsidy plans were discussed.",
   brands: [
     {
@@ -82,6 +89,10 @@ export const WebDebriefReview = ({ meetingId, onBack, onApprove }: WebDebriefRev
   const [notes] = useState(mockDebriefData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+  const handleImproveDetails = () => {
+    onBack();
+  };
 
   const handleApprove = async () => {
     setIsSubmitting(true);
@@ -196,6 +207,12 @@ export const WebDebriefReview = ({ meetingId, onBack, onApprove }: WebDebriefRev
           </Card>
         )}
 
+        <DebriefQualitySignals
+          duplicateTextSignal={notes.duplicateTextSignal}
+          detailScore={notes.detailScore}
+          onImproveDetails={handleImproveDetails}
+        />
+
         {/* Purpose / Formål */}
         <Card className="p-5 border border-border/50 bg-card rounded-2xl">
           <h3 className="font-semibold text-foreground mb-3">Purpose of visit</h3>
@@ -275,6 +292,7 @@ export const WebDebriefReview = ({ meetingId, onBack, onApprove }: WebDebriefRev
             )}
           </Button>
           <Button
+            onClick={handleImproveDetails}
             variant="outline"
             size="lg"
             className="flex-1 rounded-xl py-3 text-base font-medium border-2"
