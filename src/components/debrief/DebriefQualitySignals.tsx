@@ -60,9 +60,9 @@ export const DebriefCoachingPrompt = ({
           <ListChecks className="h-4 w-4" />
         </div>
         <div className="space-y-1.5">
-          <h3 className="text-sm font-medium text-foreground">Helpful prompts for a stronger debrief</h3>
+          <h3 className="text-sm font-medium text-foreground">Low level of detail detected</h3>
           <p className="text-sm text-muted-foreground">
-            Short meetings can absolutely stay short. If more happened, these prompts can help capture the parts that make the debrief more useful.
+            Here are a few helpful prompts for a stronger debrief if you want to add a bit more context.
           </p>
         </div>
       </div>
@@ -78,10 +78,12 @@ export const DebriefCoachingPrompt = ({
         ))}
       </ul>
 
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-muted-foreground">Use what is relevant and ignore the rest.</p>
-        <Button variant="outline" onClick={onImproveDetails} className="rounded-xl border-border/60 bg-background text-sm">
-          Add helpful context
+      <div className="mt-4 flex justify-end">
+        <Button
+          onClick={onImproveDetails}
+          className="rounded-xl text-sm font-medium shadow-sm"
+        >
+          Add more context
         </Button>
       </div>
     </Card>
