@@ -62,7 +62,7 @@ export const DebriefCoachingPrompt = ({
         <div className="space-y-1.5">
           <h3 className="font-semibold text-foreground">Low level of detail detected</h3>
           <p className="text-sm text-muted-foreground">
-            Here are a few helpful prompts for a stronger debrief if you want to add a bit more context.
+            Detailed debriefs create better follow-up, stronger insights, and more value over time — but some meetings are naturally brief, and that is completely fine. If there is a little more context to add, it can make the interaction more useful later on.
           </p>
         </div>
       </div>
