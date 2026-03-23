@@ -19,7 +19,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { DebriefQualitySignals } from "@/components/debrief/DebriefQualitySignals";
+import { DebriefDetailIndicator, DuplicateTextNotice } from "@/components/debrief/DebriefQualitySignals";
 
 interface DebriefReviewProps {
   meetingId: string;
@@ -213,11 +213,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
           </Card>
         )}
 
-        <DebriefQualitySignals
-          duplicateTextSignal={notes.duplicateTextSignal}
-          detailScore={notes.detailScore}
-          onImproveDetails={handleImproveDetails}
-        />
+        <DuplicateTextNotice duplicateTextSignal={notes.duplicateTextSignal} />
 
         {/* Purpose / Formål */}
         <Card className="p-4 border-0 bg-card rounded-xl">
@@ -276,6 +272,8 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
             );
           })}
         </div>
+
+        <DebriefDetailIndicator detailScore={notes.detailScore} onImproveDetails={handleImproveDetails} />
       </div>
 
       {/* Bottom action buttons */}
