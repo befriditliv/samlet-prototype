@@ -23,14 +23,14 @@ const getDetailLevel = (score: number) => {
 
   if (score >= 45) {
     return {
-      label: "Moderate",
-      description: "The essentials are there, but a bit more detail could make the meeting easier to act on.",
+      label: "Context-dependent",
+      description: "Some meetings are naturally brief, while others call for more detail. If this conversation had meaningful takeaways, adding a bit more context can help the next step feel clearer.",
     };
   }
 
   return {
     label: "Low",
-    description: "This debrief is quite brief. Adding more context, objections, or next steps would strengthen it.",
+    description: "This debrief is short, which can be completely fine for a quick check-in. If more happened in the meeting, a little added context can make the notes more useful later.",
   };
 };
 
@@ -81,14 +81,14 @@ export const DebriefDetailIndicator = ({
 
       <div className="mt-4 space-y-2">
         <div className="flex items-center justify-between text-xs">
-          <span className="text-muted-foreground">Detail indicator</span>
-          <span className="font-medium text-muted-foreground">{detailScore}/100</span>
+          <span className="text-muted-foreground">Level of detail</span>
+          <span className="font-medium text-muted-foreground">{detailLevel.label}</span>
         </div>
         <Progress value={detailScore} className="h-1.5" />
       </div>
 
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-muted-foreground">Adding a little more context can make the debrief more useful.</p>
+        <p className="text-sm text-muted-foreground">Use this as a gentle prompt—add context only when the meeting actually calls for it.</p>
         <Button variant="outline" onClick={onImproveDetails} className="rounded-xl border-border/60 bg-background text-sm">
           Add more detail
         </Button>
