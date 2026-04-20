@@ -128,6 +128,22 @@ export const ActivityOverview = () => {
             <div className="text-right">
               <div className="flex items-center gap-3 justify-end">
                 <div className="text-right">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Segment</p>
+                  <Select value={segment} onValueChange={(v) => setSegment(v as SegmentValue)}>
+                    <SelectTrigger className="h-8 w-[150px] mt-0.5 text-sm font-semibold">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SEGMENT_OPTIONS.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="h-8 w-px bg-border/50" />
+                <div className="text-right">
                   <p className="text-xs text-muted-foreground uppercase tracking-wide">Period</p>
                   <p className="text-sm font-semibold text-foreground">Last 30 days</p>
                 </div>
