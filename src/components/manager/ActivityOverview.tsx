@@ -1,16 +1,34 @@
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useInViewOnce } from "@/hooks/use-in-view";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { 
-  Users, 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Users,
   TrendingDown,
   TrendingUp,
   Calendar,
   Phone,
   Layers,
-  Globe
+  Globe,
 } from "lucide-react";
+
+type SegmentValue = "all" | "A" | "B" | "C" | "D";
+
+const SEGMENT_OPTIONS: { value: SegmentValue; label: string }[] = [
+  { value: "all", label: "All segments" },
+  { value: "A", label: "Segment A" },
+  { value: "B", label: "Segment B" },
+  { value: "C", label: "Segment C" },
+  { value: "D", label: "Segment D" },
+];
 
 // Demo data matching production
 const activityStats = {
@@ -67,6 +85,7 @@ export const ActivityOverview = () => {
     threshold: 0.2,
     rootMargin: "0px 0px -10% 0px",
   });
+  const [segment, setSegment] = useState<SegmentValue>("all");
 
   return (
     <div ref={meetingRef} className={cn(meetingInView && "animate-fade-in")}>
@@ -108,6 +127,22 @@ export const ActivityOverview = () => {
             </div>
             <div className="text-right">
               <div className="flex items-center gap-3 justify-end">
+                <div className="text-right">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Segment</p>
+                  <Select value={segment} onValueChange={(v) => setSegment(v as SegmentValue)}>
+                    <SelectTrigger className="h-8 w-[150px] mt-0.5 text-sm font-semibold">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SEGMENT_OPTIONS.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="h-8 w-px bg-border/50" />
                 <div className="text-right">
                   <p className="text-xs text-muted-foreground uppercase tracking-wide">Period</p>
                   <p className="text-sm font-semibold text-foreground">Last 30 days</p>
