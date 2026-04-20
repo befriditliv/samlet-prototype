@@ -85,6 +85,7 @@ export const ActivityOverview = () => {
     threshold: 0.2,
     rootMargin: "0px 0px -10% 0px",
   });
+  const [segment, setSegment] = useState<SegmentValue>("all");
 
   return (
     <div ref={meetingRef} className={cn(meetingInView && "animate-fade-in")}>
