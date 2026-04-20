@@ -1,16 +1,34 @@
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useInViewOnce } from "@/hooks/use-in-view";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { 
-  Users, 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Users,
   TrendingDown,
   TrendingUp,
   Calendar,
   Phone,
   Layers,
-  Globe
+  Globe,
 } from "lucide-react";
+
+type SegmentValue = "all" | "A" | "B" | "C" | "D";
+
+const SEGMENT_OPTIONS: { value: SegmentValue; label: string }[] = [
+  { value: "all", label: "All segments" },
+  { value: "A", label: "Segment A" },
+  { value: "B", label: "Segment B" },
+  { value: "C", label: "Segment C" },
+  { value: "D", label: "Segment D" },
+];
 
 // Demo data matching production
 const activityStats = {
