@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { ActivityOverview } from "@/components/manager/ActivityOverview";
 import { EmployeeOverview } from "@/components/manager/EmployeeOverview";
 import { InsightTools } from "@/components/manager/InsightTools";
-import { CoachingSuggestions } from "@/components/manager/CoachingSuggestions";
 import { ActionCenter } from "@/components/ActionCenter";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
@@ -123,11 +122,6 @@ const ManagerDashboard = () => {
       </header>
 
       <main className="container mx-auto px-6 py-12 space-y-12">
-        {/* Jarvis Coaching */}
-        <section id="coaching">
-          <CoachingSuggestions />
-        </section>
-
         {/* Activity Overview */}
         <section id="activity-overview" className="space-y-4">
           <div className="flex items-center gap-3">
