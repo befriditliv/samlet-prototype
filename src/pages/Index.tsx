@@ -5,6 +5,7 @@ import { DayCalendarView } from "@/components/DayCalendarView";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { ActionCenter } from "@/components/ActionCenter";
 import { WebDebriefReview } from "@/components/WebDebriefReview";
+import { CoachingSuggestions } from "@/components/manager/CoachingSuggestions";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
 type WebView = "dashboard" | "debrief-review";
@@ -66,6 +67,11 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-6 py-12 space-y-12">
+        {/* Jarvis Coaching */}
+        <section id="coaching">
+          <CoachingSuggestions />
+        </section>
+
         {/* Action Center - Unified Smart Lists */}
         <section>
           <ActionCenter />
