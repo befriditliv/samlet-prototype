@@ -15,6 +15,7 @@ import {
   CheckCircle,
   AlertCircle,
   Send,
+  Trash2,
   ChevronDown,
   TrendingUp
 } from "lucide-react";
@@ -65,7 +66,7 @@ const employeeData = [
     planned: 74, canvas: 21,
     completed: 88, notSent: 0, outstanding: 7,
     adherence: 93,
-    cancelled: 4,
+    cancelled: 4, deleted: 2,
     plannedThisWeek: 10, plannedNextWeek: 3,
   },
   {
@@ -73,7 +74,7 @@ const employeeData = [
     planned: 74, canvas: 27,
     completed: 101, notSent: 0, outstanding: 0,
     adherence: 100,
-    cancelled: 2,
+    cancelled: 2, deleted: 1,
     plannedThisWeek: 20, plannedNextWeek: 0,
   },
   {
@@ -81,7 +82,7 @@ const employeeData = [
     planned: 38, canvas: 31,
     completed: 62, notSent: 0, outstanding: 7,
     adherence: 90,
-    cancelled: 5,
+    cancelled: 5, deleted: 3,
     plannedThisWeek: 9, plannedNextWeek: 7,
   },
   {
@@ -89,7 +90,7 @@ const employeeData = [
     planned: 4, canvas: 0,
     completed: 3, notSent: 0, outstanding: 1,
     adherence: 75,
-    cancelled: 1,
+    cancelled: 1, deleted: 0,
     plannedThisWeek: 0, plannedNextWeek: 0,
   },
   {
@@ -97,7 +98,7 @@ const employeeData = [
     planned: 0, canvas: 0,
     completed: 0, notSent: 0, outstanding: 0,
     adherence: 0,
-    cancelled: 0,
+    cancelled: 0, deleted: 0,
     plannedThisWeek: 0, plannedNextWeek: 0,
   },
   {
@@ -105,7 +106,7 @@ const employeeData = [
     planned: 52, canvas: 18,
     completed: 64, notSent: 1, outstanding: 5,
     adherence: 89,
-    cancelled: 3,
+    cancelled: 3, deleted: 2,
     plannedThisWeek: 8, plannedNextWeek: 5,
   },
   {
@@ -113,7 +114,7 @@ const employeeData = [
     planned: 41, canvas: 22,
     completed: 55, notSent: 0, outstanding: 6,
     adherence: 87,
-    cancelled: 4,
+    cancelled: 4, deleted: 1,
     plannedThisWeek: 6, plannedNextWeek: 4,
   },
   {
@@ -121,7 +122,7 @@ const employeeData = [
     planned: 33, canvas: 12,
     completed: 38, notSent: 2, outstanding: 5,
     adherence: 80,
-    cancelled: 2,
+    cancelled: 2, deleted: 4,
     plannedThisWeek: 5, plannedNextWeek: 3,
   },
   {
@@ -129,7 +130,7 @@ const employeeData = [
     planned: 28, canvas: 9,
     completed: 30, notSent: 1, outstanding: 6,
     adherence: 78,
-    cancelled: 6,
+    cancelled: 6, deleted: 5,
     plannedThisWeek: 4, plannedNextWeek: 2,
   }
 ];
@@ -385,6 +386,10 @@ export const EmployeeOverview = () => {
                     <div className="text-xs font-normal text-muted-foreground">Last 30 days</div>
                   </th>
                   <th className="text-left py-4 px-5">
+                    <div className="text-sm font-semibold text-foreground">Deleted meetings</div>
+                    <div className="text-xs font-normal text-muted-foreground">Last 30 days</div>
+                  </th>
+                  <th className="text-left py-4 px-5">
                     <div className="text-sm font-semibold text-foreground">Planned meetings</div>
                     <div className="text-xs font-normal text-muted-foreground">This week / Next week</div>
                   </th>
@@ -458,6 +463,14 @@ export const EmployeeOverview = () => {
                           />
                         </div>
                         <span className="text-sm font-bold text-foreground w-8">{emp.cancelled}</span>
+                      </div>
+                    </td>
+                    <td className="py-4 px-5">
+                      <div className="flex items-center gap-2 text-sm">
+                        <div className={`p-0.5 rounded-full ${emp.deleted > 3 ? 'bg-destructive/10' : 'bg-muted'}`}>
+                          <Trash2 className={`h-3.5 w-3.5 ${emp.deleted > 3 ? 'text-destructive' : 'text-muted-foreground'}`} />
+                        </div>
+                        <span className="text-sm font-bold text-foreground">{emp.deleted}</span>
                       </div>
                     </td>
                     <td className="py-4 px-5">
