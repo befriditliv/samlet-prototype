@@ -1,7 +1,20 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, UserPlus, FileWarning, AlertTriangle, BellRing, ArrowRight } from "lucide-react";
+import {
+  Sparkles,
+  UserPlus,
+  FileWarning,
+  AlertTriangle,
+  BellRing,
+  ArrowRight,
+  MapPin,
+  CalendarX,
+  CalendarClock,
+  TrendingDown,
+  Target,
+  Repeat,
+} from "lucide-react";
 import { openAskJarvis } from "@/components/AskJarvis";
 
 type Suggestion = {
@@ -87,6 +100,78 @@ const suggestions: Suggestion[] = [
     meta: "Based on previous debriefs",
     cta: "View follow-up reminders",
     prompt: "Show me follow-ups due based on my previous debriefs",
+  },
+  {
+    id: "low-coverage-bricks",
+    icon: MapPin,
+    category: "Canvas coverage",
+    tone: "warning",
+    title: "3 bricks with low coverage this cycle",
+    description:
+      "Brick 21 (Aarhus N), Brick 14 (Odense C) and Brick 33 (Aalborg) are below 40% coverage. Consider planning a Canvas day to lift reach.",
+    meta: "Coverage < 40% · This cycle",
+    cta: "See bricks to prioritize",
+    prompt: "Show me bricks with low coverage I should plan Canvas activity in",
+  },
+  {
+    id: "empty-canvas-day",
+    icon: CalendarX,
+    category: "Empty calendar",
+    tone: "info",
+    title: "Friday has no planned activity",
+    description:
+      "Your calendar is empty Friday. There are 8 nearby HCPs in low-coverage bricks — a good opportunity for a Canvas round.",
+    meta: "Next 7 days · 1 open day",
+    cta: "Plan Canvas for Friday",
+    prompt: "Suggest Canvas targets for Friday based on nearby HCPs and low-coverage bricks",
+  },
+  {
+    id: "weak-week",
+    icon: CalendarClock,
+    category: "Light week ahead",
+    tone: "warning",
+    title: "Next week looks light — 6 meetings planned",
+    description:
+      "Below your usual cadence of ~14 meetings/week. Booking 4–6 more keeps momentum and supports your cycle targets.",
+    meta: "Week 20 · 60% below average",
+    cta: "See HCPs to book",
+    prompt: "Suggest HCPs I should book for next week to fill my calendar",
+  },
+  {
+    id: "declining-engagement",
+    icon: TrendingDown,
+    category: "Cooling relationships",
+    tone: "danger",
+    title: "2 key HCPs showing declining engagement",
+    description:
+      "Dr. Sørensen and Dr. Bauer have shorter meetings and fewer questions over the last 3 visits. Worth a tailored re-engagement.",
+    meta: "Trend over last 3 interactions",
+    cta: "Review engagement signals",
+    prompt: "Show HCPs with declining engagement and suggest a re-engagement angle",
+  },
+  {
+    id: "objection-pattern",
+    icon: Repeat,
+    category: "Recurring objection",
+    tone: "info",
+    title: "Same objection in 4 recent debriefs",
+    description:
+      "Concerns around reimbursement keep coming up. A quick refresh on the access talk-track could unblock several conversations.",
+    meta: "Pattern across debriefs · Last 14 days",
+    cta: "Open coaching for this objection",
+    prompt: "Help me handle the recurring reimbursement objection from recent debriefs",
+  },
+  {
+    id: "campaign-progress",
+    icon: Target,
+    category: "Campaign adherence",
+    tone: "warning",
+    title: "Behind on current campaign — 52% reached",
+    description:
+      "12 target HCPs in the cycle campaign haven't been visited yet. Prioritising them this week keeps adherence on track.",
+    meta: "Cycle campaign · 4 weeks remaining",
+    cta: "See untouched campaign targets",
+    prompt: "Show me campaign targets I haven't reached yet this cycle",
   },
 ];
 
