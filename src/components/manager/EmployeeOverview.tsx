@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useInViewOnce } from "@/hooks/use-in-view";
 import { Card, CardContent } from "@/components/ui/card";
@@ -159,6 +160,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export const EmployeeOverview = () => {
+  const navigate = useNavigate();
   const [signalFilter, setSignalFilter] = useState<string>("all");
   const [userFilter, setUserFilter] = useState<string>("all");
   const [showAll, setShowAll] = useState(false);
@@ -399,8 +401,9 @@ export const EmployeeOverview = () => {
                 {displayedEmployees.map((emp, idx) => (
                   <tr
                     key={emp.name}
+                    onClick={() => navigate(`/manager/employee/${emp.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`)}
                     className={cn(
-                      "group hover:bg-muted/30 transition-colors",
+                      "group hover:bg-muted/30 transition-colors cursor-pointer",
                       tableInView && "animate-fade-in",
                       idx !== displayedEmployees.length - 1 && "border-b border-border/50"
                     )}
