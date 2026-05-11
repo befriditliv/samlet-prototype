@@ -1,9 +1,11 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, CheckCircle, AlertCircle, Send, Trash2, Star, TrendingUp, Target, MessageSquare, BookOpen, Award } from "lucide-react";
+import { ArrowLeft, CheckCircle, AlertCircle, Send, Trash2, Star, TrendingUp, Target, MessageSquare, BookOpen, Award, Eye, Download } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { NavigationMenu } from "@/components/NavigationMenu";
@@ -24,13 +26,106 @@ const employees = [
 
 const slugify = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
-type TrainingItem = { id: string; name: string; product: string; score: number; date: string };
+type TranscriptLine = { role: "hcp" | "kam"; speaker: string; text: string };
+type TrainingItem = {
+  id: string;
+  name: string;
+  product: string;
+  score: number;
+  date: string;
+  duration: string;
+  hcpPersona: string;
+  transcript: TranscriptLine[];
+};
+
 const trainingHistory: TrainingItem[] = [
-  { id: "1", name: "Overcoming Cost Concerns", product: "Wegovy", score: 4, date: "Dec 8, 2025" },
-  { id: "2", name: "GLP-1 Efficacy Discussion", product: "Ozempic", score: 4, date: "Dec 3, 2025" },
-  { id: "3", name: "Managing Side Effect Concerns", product: "Saxenda", score: 5, date: "Nov 27, 2025" },
-  { id: "4", name: "Injection Adherence Challenge", product: "NovoPen 6", score: 3, date: "Nov 19, 2025" },
-  { id: "5", name: "Basal Insulin Optimization", product: "Tresiba", score: 4, date: "Nov 12, 2025" },
+  {
+    id: "1",
+    name: "Overcoming Cost Concerns",
+    product: "Wegovy",
+    score: 4,
+    date: "Dec 8, 2025",
+    duration: "12 min",
+    hcpPersona: "Dr. Hansen — General Practitioner",
+    transcript: [
+      { role: "hcp", speaker: "Dr. Hansen", text: "Hello, I'm Dr. Hansen. How can I help you today?" },
+      { role: "kam", speaker: "KAM", text: "Hi Dr. Hansen, thanks for taking the time. I'd like to discuss Wegovy and the SELECT data with you." },
+      { role: "hcp", speaker: "Dr. Hansen", text: "I'm interested, but honestly the cost is a real concern for most of my patients." },
+      { role: "kam", speaker: "KAM", text: "I hear you. The reimbursement criteria were updated this year — patients with a BMI above 35 and one comorbidity are now eligible. Would it help if I walked you through the documentation requirements?" },
+      { role: "hcp", speaker: "Dr. Hansen", text: "Yes, that would be useful. What about the long-term cardiovascular benefit?" },
+      { role: "kam", speaker: "KAM", text: "SELECT showed a 20% reduction in MACE over 3 years. I can share the publication and a one-pager you can use in patient conversations." },
+      { role: "hcp", speaker: "Dr. Hansen", text: "Send it over. I'll consider it for two patients I have in mind." },
+      { role: "kam", speaker: "KAM", text: "Perfect, I'll follow up by email tomorrow." },
+    ],
+  },
+  {
+    id: "2",
+    name: "GLP-1 Efficacy Discussion",
+    product: "Ozempic",
+    score: 4,
+    date: "Dec 3, 2025",
+    duration: "9 min",
+    hcpPersona: "Dr. Sørensen — Endocrinologist",
+    transcript: [
+      { role: "hcp", speaker: "Dr. Sørensen", text: "Good to see you. What's new on the GLP-1 front?" },
+      { role: "kam", speaker: "KAM", text: "I wanted to revisit the HbA1c reductions we see with Ozempic versus SGLT2s in your typical patient." },
+      { role: "hcp", speaker: "Dr. Sørensen", text: "I already use both, but I worry about GI side effects." },
+      { role: "kam", speaker: "KAM", text: "Titration is key — starting at 0.25 mg for four weeks reduces nausea dramatically in clinical practice." },
+      { role: "hcp", speaker: "Dr. Sørensen", text: "That matches my experience. What about weight outcomes?" },
+      { role: "kam", speaker: "KAM", text: "STEP-2 showed -9.6% body weight at 68 weeks. I can leave you the summary." },
+      { role: "hcp", speaker: "Dr. Sørensen", text: "Please do. I'll review with my team." },
+    ],
+  },
+  {
+    id: "3",
+    name: "Managing Side Effect Concerns",
+    product: "Saxenda",
+    score: 5,
+    date: "Nov 27, 2025",
+    duration: "14 min",
+    hcpPersona: "Dr. Lindgren — GP",
+    transcript: [
+      { role: "hcp", speaker: "Dr. Lindgren", text: "My patients complain about nausea on Saxenda. Many drop out." },
+      { role: "kam", speaker: "KAM", text: "That's a common challenge. The slow 5-week titration schedule reduces dropout by roughly 40% in real-world data." },
+      { role: "hcp", speaker: "Dr. Lindgren", text: "Do you have a patient handout I could give them?" },
+      { role: "kam", speaker: "KAM", text: "Yes — we have a titration tracker and a meal-timing guide. I'll bring physical copies next visit and email PDFs today." },
+      { role: "hcp", speaker: "Dr. Lindgren", text: "Great. I'll trial it on three patients starting next week." },
+      { role: "kam", speaker: "KAM", text: "I'll check back in four weeks to hear how they're doing." },
+    ],
+  },
+  {
+    id: "4",
+    name: "Injection Adherence Challenge",
+    product: "NovoPen 6",
+    score: 3,
+    date: "Nov 19, 2025",
+    duration: "8 min",
+    hcpPersona: "Dr. Patel — Diabetes Nurse",
+    transcript: [
+      { role: "hcp", speaker: "Dr. Patel", text: "Adherence is really the biggest issue in my clinic." },
+      { role: "kam", speaker: "KAM", text: "NovoPen 6 logs every dose automatically — patients and clinicians can both see the history." },
+      { role: "hcp", speaker: "Dr. Patel", text: "Sounds interesting, but is it covered?" },
+      { role: "kam", speaker: "KAM", text: "It is, for patients on insulin therapy. I can share the prescribing pathway." },
+      { role: "hcp", speaker: "Dr. Patel", text: "Okay, send me the details." },
+    ],
+  },
+  {
+    id: "5",
+    name: "Basal Insulin Optimization",
+    product: "Tresiba",
+    score: 4,
+    date: "Nov 12, 2025",
+    duration: "11 min",
+    hcpPersona: "Dr. Moreau — Endocrinologist",
+    transcript: [
+      { role: "hcp", speaker: "Dr. Moreau", text: "I'm comfortable with my current basal regimen. Why switch?" },
+      { role: "kam", speaker: "KAM", text: "Tresiba's flat 42-hour profile means lower nocturnal hypoglycaemia — DEVOTE showed a 53% reduction versus glargine U100." },
+      { role: "hcp", speaker: "Dr. Moreau", text: "That is meaningful. What about flexibility in dosing time?" },
+      { role: "kam", speaker: "KAM", text: "Tresiba can be dosed any time of day, with up to 8 hours of flexibility. This is particularly helpful for shift workers." },
+      { role: "hcp", speaker: "Dr. Moreau", text: "Good point. Send me the DEVOTE summary." },
+      { role: "kam", speaker: "KAM", text: "Will do — and I'll include the dosing flexibility guide as well." },
+    ],
+  },
 ];
 
 const trainingScores = [
@@ -53,6 +148,7 @@ const renderStars = (score: number) => (
 const EmployeeDetail = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
+  const [openScenario, setOpenScenario] = useState<TrainingItem | null>(null);
 
   const employee = useMemo(() => employees.find((e) => slugify(e.name) === slug), [slug]);
 
@@ -68,6 +164,35 @@ const EmployeeDetail = () => {
   }
 
   const initials = employee.name.split(" ").map((p) => p[0]).join("").slice(0, 2);
+
+  const formatTranscript = (item: TrainingItem) => {
+    const header = [
+      `Scenario: ${item.name}`,
+      `Product: ${item.product}`,
+      `HCP persona: ${item.hcpPersona}`,
+      `KAM: ${employee.name}`,
+      `Date: ${item.date}`,
+      `Duration: ${item.duration}`,
+      `Score: ${item.score}/5`,
+      "",
+      "--- Transcript ---",
+      "",
+    ].join("\n");
+    const body = item.transcript.map((l) => `${l.speaker}: ${l.text}`).join("\n\n");
+    return `${header}${body}\n`;
+  };
+
+  const handleDownload = (item: TrainingItem) => {
+    const blob = new Blob([formatTranscript(item)], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${slugify(employee.name)}-${slugify(item.name)}-transcript.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-background">
@@ -230,6 +355,7 @@ const EmployeeDetail = () => {
                     <th className="text-left py-4 px-5 text-sm font-semibold text-foreground">Product</th>
                     <th className="text-left py-4 px-5 text-sm font-semibold text-foreground">Date</th>
                     <th className="text-left py-4 px-5 text-sm font-semibold text-foreground">Score</th>
+                    <th className="text-right py-4 px-5 text-sm font-semibold text-foreground">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -239,6 +365,16 @@ const EmployeeDetail = () => {
                       <td className="py-4 px-5 text-muted-foreground">{t.product}</td>
                       <td className="py-4 px-5 text-muted-foreground">{t.date}</td>
                       <td className="py-4 px-5">{renderStars(t.score)}</td>
+                      <td className="py-4 px-5">
+                        <div className="flex items-center justify-end gap-2">
+                          <Button variant="outline" size="sm" onClick={() => setOpenScenario(t)} className="gap-1.5">
+                            <Eye className="h-3.5 w-3.5" /> View
+                          </Button>
+                          <Button variant="ghost" size="sm" onClick={() => handleDownload(t)} className="gap-1.5">
+                            <Download className="h-3.5 w-3.5" /> Download
+                          </Button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -247,6 +383,49 @@ const EmployeeDetail = () => {
           </Card>
         </section>
       </main>
+
+      <Dialog open={!!openScenario} onOpenChange={(o) => !o && setOpenScenario(null)}>
+        <DialogContent className="max-w-2xl">
+          {openScenario && (
+            <>
+              <DialogHeader>
+                <DialogTitle>{openScenario.name}</DialogTitle>
+                <DialogDescription>
+                  {openScenario.hcpPersona} · {openScenario.product} · {openScenario.date} · {openScenario.duration}
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="flex items-center justify-between gap-3 -mt-2">
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-primary/10 text-primary border-0">Score {openScenario.score}/5</Badge>
+                  {renderStars(openScenario.score)}
+                </div>
+                <Button size="sm" variant="outline" onClick={() => handleDownload(openScenario)} className="gap-1.5">
+                  <Download className="h-3.5 w-3.5" /> Download transcript
+                </Button>
+              </div>
+
+              <ScrollArea className="h-[420px] pr-4 mt-2">
+                <div className="space-y-3">
+                  {openScenario.transcript.map((line, i) => (
+                    <div key={i} className={cn("flex gap-3", line.role === "kam" ? "flex-row-reverse" : "flex-row")}>
+                      <div className={cn(
+                        "rounded-2xl px-4 py-2.5 max-w-[80%] text-sm",
+                        line.role === "kam"
+                          ? "bg-primary text-primary-foreground rounded-br-sm"
+                          : "bg-muted text-foreground rounded-bl-sm"
+                      )}>
+                        <div className="text-xs font-semibold opacity-80 mb-1">{line.speaker}</div>
+                        <div className="leading-relaxed">{line.text}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
