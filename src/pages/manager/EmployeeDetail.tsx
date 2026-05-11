@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, CheckCircle, AlertCircle, Send, Trash2, Star, TrendingUp, Target, MessageSquare, BookOpen, Award, Eye, Download } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { NavigationMenu } from "@/components/NavigationMenu";
@@ -149,6 +150,7 @@ const EmployeeDetail = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
   const [openScenario, setOpenScenario] = useState<TrainingItem | null>(null);
+  const [timeframe, setTimeframe] = useState<string>("30d");
 
   const employee = useMemo(() => employees.find((e) => slugify(e.name) === slug), [slug]);
 
@@ -164,6 +166,19 @@ const EmployeeDetail = () => {
   }
 
   const initials = employee.name.split(" ").map((p) => p[0]).join("").slice(0, 2);
+
+  const timeframes: Record<string, { label: string; multiplier: number }> = {
+    "7d": { label: "Last 7 days", multiplier: 0.25 },
+    "30d": { label: "Last 30 days", multiplier: 1 },
+    "90d": { label: "Last 90 days", multiplier: 2.85 },
+    "6m": { label: "Last 6 months", multiplier: 5.6 },
+    "12m": { label: "Last 12 months", multiplier: 11.2 },
+    "ytd": { label: "Year to date", multiplier: 10.5 },
+  };
+  const tf = timeframes[timeframe];
+  const scale = (n: number) => Math.round(n * tf.multiplier);
+  // Adherence percentage doesn't scale with time — keep as-is
+  const scaledAdherence = employee.adherence;
 
   const formatTranscript = (item: TrainingItem) => {
     const header = [
@@ -233,41 +248,53 @@ const EmployeeDetail = () => {
 
         {/* General data */}
         <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-lg bg-primary/10"><BookOpen className="h-5 w-5 text-primary" /></div>
-            <div>
-              <h3 className="text-xl font-bold text-foreground">General performance</h3>
-              <p className="text-sm text-muted-foreground">Last 30 days</p>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-lg bg-primary/10"><BookOpen className="h-5 w-5 text-primary" /></div>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">General performance</h3>
+                <p className="text-sm text-muted-foreground">{tf.label}</p>
+              </div>
             </div>
+            <Select value={timeframe} onValueChange={setTimeframe}>
+              <SelectTrigger className="h-9 w-44 bg-muted/50 border-0">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(timeframes).map(([key, t]) => (
+                  <SelectItem key={key} value={key}>{t.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Card className="border-0 bg-gradient-to-br from-card to-card/80 shadow-sm">
               <CardContent className="p-5">
                 <p className="text-xs uppercase tracking-wide text-muted-foreground">Meetings</p>
-                <p className="text-2xl font-bold text-foreground mt-1">{employee.planned + employee.canvas}</p>
-                <p className="text-xs text-muted-foreground mt-1">{employee.planned} planned · {employee.canvas} canvas</p>
+                <p className="text-2xl font-bold text-foreground mt-1">{scale(employee.planned + employee.canvas)}</p>
+                <p className="text-xs text-muted-foreground mt-1">{scale(employee.planned)} planned · {scale(employee.canvas)} canvas</p>
               </CardContent>
             </Card>
             <Card className="border-0 bg-gradient-to-br from-card to-card/80 shadow-sm">
               <CardContent className="p-5">
                 <p className="text-xs uppercase tracking-wide text-muted-foreground">Debrief adherence</p>
-                <p className="text-2xl font-bold text-foreground mt-1">{employee.adherence}%</p>
-                <p className="text-xs text-muted-foreground mt-1">{employee.completed} debriefs completed</p>
+                <p className="text-2xl font-bold text-foreground mt-1">{scaledAdherence}%</p>
+                <p className="text-xs text-muted-foreground mt-1">{scale(employee.completed)} debriefs completed</p>
               </CardContent>
             </Card>
             <Card className="border-0 bg-gradient-to-br from-card to-card/80 shadow-sm">
               <CardContent className="p-5">
                 <p className="text-xs uppercase tracking-wide text-muted-foreground">Cancelled</p>
-                <p className="text-2xl font-bold text-foreground mt-1">{employee.cancelled}</p>
-                <p className="text-xs text-muted-foreground mt-1">Last 30 days</p>
+                <p className="text-2xl font-bold text-foreground mt-1">{scale(employee.cancelled)}</p>
+                <p className="text-xs text-muted-foreground mt-1">{tf.label}</p>
               </CardContent>
             </Card>
             <Card className="border-0 bg-gradient-to-br from-card to-card/80 shadow-sm">
               <CardContent className="p-5">
                 <p className="text-xs uppercase tracking-wide text-muted-foreground">Deleted</p>
-                <p className="text-2xl font-bold text-foreground mt-1">{employee.deleted}</p>
-                <p className="text-xs text-muted-foreground mt-1">Last 30 days</p>
+                <p className="text-2xl font-bold text-foreground mt-1">{scale(employee.deleted)}</p>
+                <p className="text-xs text-muted-foreground mt-1">{tf.label}</p>
               </CardContent>
             </Card>
           </div>
@@ -278,21 +305,21 @@ const EmployeeDetail = () => {
                 <div className="p-2 rounded-lg bg-primary/10"><CheckCircle className="h-4 w-4 text-primary" /></div>
                 <div>
                   <p className="text-sm text-muted-foreground">Completed debriefs</p>
-                  <p className="font-semibold text-foreground">{employee.completed}</p>
+                  <p className="font-semibold text-foreground">{scale(employee.completed)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-amber-500/10"><Send className="h-4 w-4 text-amber-500" /></div>
                 <div>
                   <p className="text-sm text-muted-foreground">Not sent</p>
-                  <p className="font-semibold text-foreground">{employee.notSent}</p>
+                  <p className="font-semibold text-foreground">{scale(employee.notSent)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-destructive/10"><AlertCircle className="h-4 w-4 text-destructive" /></div>
                 <div>
                   <p className="text-sm text-muted-foreground">Outstanding</p>
-                  <p className="font-semibold text-foreground">{employee.outstanding}</p>
+                  <p className="font-semibold text-foreground">{scale(employee.outstanding)}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -313,7 +340,7 @@ const EmployeeDetail = () => {
                 <div className="p-2 rounded-lg bg-muted"><Trash2 className="h-4 w-4 text-muted-foreground" /></div>
                 <div>
                   <p className="text-sm text-muted-foreground">Deleted meetings</p>
-                  <p className="font-semibold text-foreground">{employee.deleted}</p>
+                  <p className="font-semibold text-foreground">{scale(employee.deleted)}</p>
                 </div>
               </div>
             </CardContent>
