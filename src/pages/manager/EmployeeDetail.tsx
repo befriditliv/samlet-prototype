@@ -7,6 +7,7 @@ import { ArrowLeft, CheckCircle, AlertCircle, Send, Trash2, Star, TrendingUp, Ta
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { NavigationMenu } from "@/components/NavigationMenu";
@@ -28,6 +29,13 @@ const employees = [
 const slugify = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 type TranscriptLine = { role: "hcp" | "kam"; speaker: string; text: string };
+type Assessment = {
+  rating: "Excellent" | "Good" | "Average" | "Needs work";
+  strengths: string[];
+  improvements: string[];
+  recommendation: string;
+  breakdown: { label: string; score: number }[];
+};
 type TrainingItem = {
   id: string;
   name: string;
@@ -37,6 +45,7 @@ type TrainingItem = {
   duration: string;
   hcpPersona: string;
   transcript: TranscriptLine[];
+  assessment: Assessment;
 };
 
 const trainingHistory: TrainingItem[] = [
@@ -58,6 +67,26 @@ const trainingHistory: TrainingItem[] = [
       { role: "hcp", speaker: "Dr. Hansen", text: "Send it over. I'll consider it for two patients I have in mind." },
       { role: "kam", speaker: "KAM", text: "Perfect, I'll follow up by email tomorrow." },
     ],
+    assessment: {
+      rating: "Good",
+      strengths: [
+        "Clearly explained the updated reimbursement criteria.",
+        "Used SELECT trial data confidently to support the cardiovascular benefit.",
+        "Closed with a concrete follow-up commitment.",
+      ],
+      improvements: [
+        "Did not fully explore the HCP's patient profile before presenting data.",
+        "Could have asked open questions to uncover additional concerns.",
+      ],
+      recommendation:
+        "Spend more time discovering the HCP's specific patient mix before presenting clinical data. Tailor reimbursement examples to those patients.",
+      breakdown: [
+        { label: "Company knowledge", score: 4 },
+        { label: "Product knowledge", score: 4.5 },
+        { label: "Objection handling", score: 3.5 },
+        { label: "Communication", score: 4 },
+      ],
+    },
   },
   {
     id: "2",
@@ -76,6 +105,25 @@ const trainingHistory: TrainingItem[] = [
       { role: "kam", speaker: "KAM", text: "STEP-2 showed -9.6% body weight at 68 weeks. I can leave you the summary." },
       { role: "hcp", speaker: "Dr. Sørensen", text: "Please do. I'll review with my team." },
     ],
+    assessment: {
+      rating: "Good",
+      strengths: [
+        "Addressed GI side effects directly with a practical titration recommendation.",
+        "Referenced STEP-2 data accurately.",
+      ],
+      improvements: [
+        "Did not probe how the HCP currently selects between GLP-1 and SGLT2.",
+        "Missed a chance to discuss combination therapy.",
+      ],
+      recommendation:
+        "Use a discovery question early to map current prescribing logic, then position data against that context.",
+      breakdown: [
+        { label: "Company knowledge", score: 4 },
+        { label: "Product knowledge", score: 4.5 },
+        { label: "Objection handling", score: 4 },
+        { label: "Communication", score: 4 },
+      ],
+    },
   },
   {
     id: "3",
@@ -93,6 +141,25 @@ const trainingHistory: TrainingItem[] = [
       { role: "hcp", speaker: "Dr. Lindgren", text: "Great. I'll trial it on three patients starting next week." },
       { role: "kam", speaker: "KAM", text: "I'll check back in four weeks to hear how they're doing." },
     ],
+    assessment: {
+      rating: "Excellent",
+      strengths: [
+        "Empathetic acknowledgement of the dropout problem.",
+        "Offered concrete, ready-to-use patient support materials.",
+        "Set a precise follow-up timeline.",
+      ],
+      improvements: [
+        "Could quantify expected outcomes in more patient-friendly terms.",
+      ],
+      recommendation:
+        "Keep this approach. Add one simple patient-language analogy when describing titration benefits.",
+      breakdown: [
+        { label: "Company knowledge", score: 5 },
+        { label: "Product knowledge", score: 5 },
+        { label: "Objection handling", score: 5 },
+        { label: "Communication", score: 4.5 },
+      ],
+    },
   },
   {
     id: "4",
@@ -109,6 +176,26 @@ const trainingHistory: TrainingItem[] = [
       { role: "kam", speaker: "KAM", text: "It is, for patients on insulin therapy. I can share the prescribing pathway." },
       { role: "hcp", speaker: "Dr. Patel", text: "Okay, send me the details." },
     ],
+    assessment: {
+      rating: "Average",
+      strengths: [
+        "Identified the core challenge quickly.",
+        "Mentioned reimbursement when asked.",
+      ],
+      improvements: [
+        "Conversation was short and product-focused rather than patient-focused.",
+        "Did not demonstrate or describe the dose-logging workflow.",
+        "No clear next step beyond sending information.",
+      ],
+      recommendation:
+        "Use a clinical example or short demo to bring the dose-logging feature to life, and end with a specific commitment (call, visit, patient referral).",
+      breakdown: [
+        { label: "Company knowledge", score: 3 },
+        { label: "Product knowledge", score: 3.5 },
+        { label: "Objection handling", score: 2.5 },
+        { label: "Communication", score: 3 },
+      ],
+    },
   },
   {
     id: "5",
@@ -126,6 +213,24 @@ const trainingHistory: TrainingItem[] = [
       { role: "hcp", speaker: "Dr. Moreau", text: "Good point. Send me the DEVOTE summary." },
       { role: "kam", speaker: "KAM", text: "Will do — and I'll include the dosing flexibility guide as well." },
     ],
+    assessment: {
+      rating: "Good",
+      strengths: [
+        "Directly addressed the 'why switch' objection with DEVOTE data.",
+        "Linked dosing flexibility to a real patient need (shift workers).",
+      ],
+      improvements: [
+        "Could have asked which patient types the HCP currently struggles with on glargine.",
+      ],
+      recommendation:
+        "Open with a discovery question about hypoglycaemia experience to make the DEVOTE data feel personally relevant.",
+      breakdown: [
+        { label: "Company knowledge", score: 4 },
+        { label: "Product knowledge", score: 4.5 },
+        { label: "Objection handling", score: 4 },
+        { label: "Communication", score: 4 },
+      ],
+    },
   },
 ];
 
@@ -189,6 +294,20 @@ const EmployeeDetail = () => {
       `Date: ${item.date}`,
       `Duration: ${item.duration}`,
       `Score: ${item.score}/5`,
+      `Overall: ${item.assessment.rating}`,
+      "",
+      "--- Assessment ---",
+      "",
+      "What went well:",
+      ...item.assessment.strengths.map((s) => `- ${s}`),
+      "",
+      "What could be improved:",
+      ...item.assessment.improvements.map((s) => `- ${s}`),
+      "",
+      `Recommendation: ${item.assessment.recommendation}`,
+      "",
+      "Score breakdown:",
+      ...item.assessment.breakdown.map((b) => `- ${b.label}: ${b.score}/5`),
       "",
       "--- Transcript ---",
       "",
@@ -412,7 +531,7 @@ const EmployeeDetail = () => {
       </main>
 
       <Dialog open={!!openScenario} onOpenChange={(o) => !o && setOpenScenario(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-3xl">
           {openScenario && (
             <>
               <DialogHeader>
@@ -424,7 +543,7 @@ const EmployeeDetail = () => {
 
               <div className="flex items-center justify-between gap-3 -mt-2">
                 <div className="flex items-center gap-2">
-                  <Badge className="bg-primary/10 text-primary border-0">Score {openScenario.score}/5</Badge>
+                  <Badge className="bg-primary/10 text-primary border-0">{openScenario.assessment.rating}</Badge>
                   {renderStars(openScenario.score)}
                 </div>
                 <Button size="sm" variant="outline" onClick={() => handleDownload(openScenario)} className="gap-1.5">
@@ -432,23 +551,98 @@ const EmployeeDetail = () => {
                 </Button>
               </div>
 
-              <ScrollArea className="h-[420px] pr-4 mt-2">
-                <div className="space-y-3">
-                  {openScenario.transcript.map((line, i) => (
-                    <div key={i} className={cn("flex gap-3", line.role === "kam" ? "flex-row-reverse" : "flex-row")}>
-                      <div className={cn(
-                        "rounded-2xl px-4 py-2.5 max-w-[80%] text-sm",
-                        line.role === "kam"
-                          ? "bg-primary text-primary-foreground rounded-br-sm"
-                          : "bg-muted text-foreground rounded-bl-sm"
-                      )}>
-                        <div className="text-xs font-semibold opacity-80 mb-1">{line.speaker}</div>
-                        <div className="leading-relaxed">{line.text}</div>
+              <Tabs defaultValue="assessment" className="mt-2">
+                <TabsList className="grid grid-cols-2 w-full">
+                  <TabsTrigger value="assessment">Assessment</TabsTrigger>
+                  <TabsTrigger value="transcript">Transcript</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="assessment" className="mt-4">
+                  <ScrollArea className="h-[460px] pr-4">
+                    <div className="space-y-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <Card className="border-0 bg-success/5">
+                          <CardContent className="p-4">
+                            <div className="flex items-center gap-2 mb-3">
+                              <CheckCircle className="h-4 w-4 text-success" />
+                              <h4 className="font-semibold text-foreground text-sm">What went well</h4>
+                            </div>
+                            <ul className="space-y-2">
+                              {openScenario.assessment.strengths.map((s, i) => (
+                                <li key={i} className="flex gap-2 text-sm text-foreground">
+                                  <CheckCircle className="h-3.5 w-3.5 text-success shrink-0 mt-0.5" />
+                                  <span className="leading-relaxed">{s}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </CardContent>
+                        </Card>
+                        <Card className="border-0 bg-destructive/5">
+                          <CardContent className="p-4">
+                            <div className="flex items-center gap-2 mb-3">
+                              <AlertCircle className="h-4 w-4 text-destructive" />
+                              <h4 className="font-semibold text-foreground text-sm">What could be improved</h4>
+                            </div>
+                            <ul className="space-y-2">
+                              {openScenario.assessment.improvements.map((s, i) => (
+                                <li key={i} className="flex gap-2 text-sm text-foreground">
+                                  <AlertCircle className="h-3.5 w-3.5 text-destructive shrink-0 mt-0.5" />
+                                  <span className="leading-relaxed">{s}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </CardContent>
+                        </Card>
+                      </div>
+
+                      <Card className="border-0 bg-primary/5">
+                        <CardContent className="p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Target className="h-4 w-4 text-primary" />
+                            <h4 className="font-semibold text-foreground text-sm">Recommendation</h4>
+                          </div>
+                          <p className="text-sm text-foreground leading-relaxed">{openScenario.assessment.recommendation}</p>
+                        </CardContent>
+                      </Card>
+
+                      <div>
+                        <h4 className="font-semibold text-foreground text-sm mb-3">Score breakdown</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                          {openScenario.assessment.breakdown.map((b) => (
+                            <div key={b.label} className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/40">
+                              <span className="text-sm text-foreground">{b.label}</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold text-foreground">{b.score.toFixed(1)}</span>
+                                {renderStars(Math.round(b.score))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </ScrollArea>
+                  </ScrollArea>
+                </TabsContent>
+
+                <TabsContent value="transcript" className="mt-4">
+                  <ScrollArea className="h-[460px] pr-4">
+                    <div className="space-y-3">
+                      {openScenario.transcript.map((line, i) => (
+                        <div key={i} className={cn("flex gap-3", line.role === "kam" ? "flex-row-reverse" : "flex-row")}>
+                          <div className={cn(
+                            "rounded-2xl px-4 py-2.5 max-w-[80%] text-sm",
+                            line.role === "kam"
+                              ? "bg-primary text-primary-foreground rounded-br-sm"
+                              : "bg-muted text-foreground rounded-bl-sm"
+                          )}>
+                            <div className="text-xs font-semibold opacity-80 mb-1">{line.speaker}</div>
+                            <div className="leading-relaxed">{line.text}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                </TabsContent>
+              </Tabs>
             </>
           )}
         </DialogContent>
