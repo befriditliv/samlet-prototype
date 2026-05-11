@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, CheckCircle, AlertCircle, Send, Trash2, Star, TrendingUp, Target, MessageSquare, BookOpen, Award, Eye, Download } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { NavigationMenu } from "@/components/NavigationMenu";
@@ -149,6 +150,7 @@ const EmployeeDetail = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
   const [openScenario, setOpenScenario] = useState<TrainingItem | null>(null);
+  const [timeframe, setTimeframe] = useState<string>("30d");
 
   const employee = useMemo(() => employees.find((e) => slugify(e.name) === slug), [slug]);
 
@@ -164,6 +166,19 @@ const EmployeeDetail = () => {
   }
 
   const initials = employee.name.split(" ").map((p) => p[0]).join("").slice(0, 2);
+
+  const timeframes: Record<string, { label: string; multiplier: number }> = {
+    "7d": { label: "Last 7 days", multiplier: 0.25 },
+    "30d": { label: "Last 30 days", multiplier: 1 },
+    "90d": { label: "Last 90 days", multiplier: 2.85 },
+    "6m": { label: "Last 6 months", multiplier: 5.6 },
+    "12m": { label: "Last 12 months", multiplier: 11.2 },
+    "ytd": { label: "Year to date", multiplier: 10.5 },
+  };
+  const tf = timeframes[timeframe];
+  const scale = (n: number) => Math.round(n * tf.multiplier);
+  // Adherence percentage doesn't scale with time — keep as-is
+  const scaledAdherence = employee.adherence;
 
   const formatTranscript = (item: TrainingItem) => {
     const header = [
