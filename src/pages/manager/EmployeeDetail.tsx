@@ -1,9 +1,11 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, CheckCircle, AlertCircle, Send, Trash2, Star, TrendingUp, Target, MessageSquare, BookOpen, Award } from "lucide-react";
+import { ArrowLeft, CheckCircle, AlertCircle, Send, Trash2, Star, TrendingUp, Target, MessageSquare, BookOpen, Award, Eye, Download } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { HcpSearch } from "@/components/HcpSearch";
 import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { NavigationMenu } from "@/components/NavigationMenu";
@@ -24,13 +26,106 @@ const employees = [
 
 const slugify = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
-type TrainingItem = { id: string; name: string; product: string; score: number; date: string };
+type TranscriptLine = { role: "hcp" | "kam"; speaker: string; text: string };
+type TrainingItem = {
+  id: string;
+  name: string;
+  product: string;
+  score: number;
+  date: string;
+  duration: string;
+  hcpPersona: string;
+  transcript: TranscriptLine[];
+};
+
 const trainingHistory: TrainingItem[] = [
-  { id: "1", name: "Overcoming Cost Concerns", product: "Wegovy", score: 4, date: "Dec 8, 2025" },
-  { id: "2", name: "GLP-1 Efficacy Discussion", product: "Ozempic", score: 4, date: "Dec 3, 2025" },
-  { id: "3", name: "Managing Side Effect Concerns", product: "Saxenda", score: 5, date: "Nov 27, 2025" },
-  { id: "4", name: "Injection Adherence Challenge", product: "NovoPen 6", score: 3, date: "Nov 19, 2025" },
-  { id: "5", name: "Basal Insulin Optimization", product: "Tresiba", score: 4, date: "Nov 12, 2025" },
+  {
+    id: "1",
+    name: "Overcoming Cost Concerns",
+    product: "Wegovy",
+    score: 4,
+    date: "Dec 8, 2025",
+    duration: "12 min",
+    hcpPersona: "Dr. Hansen — General Practitioner",
+    transcript: [
+      { role: "hcp", speaker: "Dr. Hansen", text: "Hello, I'm Dr. Hansen. How can I help you today?" },
+      { role: "kam", speaker: "KAM", text: "Hi Dr. Hansen, thanks for taking the time. I'd like to discuss Wegovy and the SELECT data with you." },
+      { role: "hcp", speaker: "Dr. Hansen", text: "I'm interested, but honestly the cost is a real concern for most of my patients." },
+      { role: "kam", speaker: "KAM", text: "I hear you. The reimbursement criteria were updated this year — patients with a BMI above 35 and one comorbidity are now eligible. Would it help if I walked you through the documentation requirements?" },
+      { role: "hcp", speaker: "Dr. Hansen", text: "Yes, that would be useful. What about the long-term cardiovascular benefit?" },
+      { role: "kam", speaker: "KAM", text: "SELECT showed a 20% reduction in MACE over 3 years. I can share the publication and a one-pager you can use in patient conversations." },
+      { role: "hcp", speaker: "Dr. Hansen", text: "Send it over. I'll consider it for two patients I have in mind." },
+      { role: "kam", speaker: "KAM", text: "Perfect, I'll follow up by email tomorrow." },
+    ],
+  },
+  {
+    id: "2",
+    name: "GLP-1 Efficacy Discussion",
+    product: "Ozempic",
+    score: 4,
+    date: "Dec 3, 2025",
+    duration: "9 min",
+    hcpPersona: "Dr. Sørensen — Endocrinologist",
+    transcript: [
+      { role: "hcp", speaker: "Dr. Sørensen", text: "Good to see you. What's new on the GLP-1 front?" },
+      { role: "kam", speaker: "KAM", text: "I wanted to revisit the HbA1c reductions we see with Ozempic versus SGLT2s in your typical patient." },
+      { role: "hcp", speaker: "Dr. Sørensen", text: "I already use both, but I worry about GI side effects." },
+      { role: "kam", speaker: "KAM", text: "Titration is key — starting at 0.25 mg for four weeks reduces nausea dramatically in clinical practice." },
+      { role: "hcp", speaker: "Dr. Sørensen", text: "That matches my experience. What about weight outcomes?" },
+      { role: "kam", speaker: "KAM", text: "STEP-2 showed -9.6% body weight at 68 weeks. I can leave you the summary." },
+      { role: "hcp", speaker: "Dr. Sørensen", text: "Please do. I'll review with my team." },
+    ],
+  },
+  {
+    id: "3",
+    name: "Managing Side Effect Concerns",
+    product: "Saxenda",
+    score: 5,
+    date: "Nov 27, 2025",
+    duration: "14 min",
+    hcpPersona: "Dr. Lindgren — GP",
+    transcript: [
+      { role: "hcp", speaker: "Dr. Lindgren", text: "My patients complain about nausea on Saxenda. Many drop out." },
+      { role: "kam", speaker: "KAM", text: "That's a common challenge. The slow 5-week titration schedule reduces dropout by roughly 40% in real-world data." },
+      { role: "hcp", speaker: "Dr. Lindgren", text: "Do you have a patient handout I could give them?" },
+      { role: "kam", speaker: "KAM", text: "Yes — we have a titration tracker and a meal-timing guide. I'll bring physical copies next visit and email PDFs today." },
+      { role: "hcp", speaker: "Dr. Lindgren", text: "Great. I'll trial it on three patients starting next week." },
+      { role: "kam", speaker: "KAM", text: "I'll check back in four weeks to hear how they're doing." },
+    ],
+  },
+  {
+    id: "4",
+    name: "Injection Adherence Challenge",
+    product: "NovoPen 6",
+    score: 3,
+    date: "Nov 19, 2025",
+    duration: "8 min",
+    hcpPersona: "Dr. Patel — Diabetes Nurse",
+    transcript: [
+      { role: "hcp", speaker: "Dr. Patel", text: "Adherence is really the biggest issue in my clinic." },
+      { role: "kam", speaker: "KAM", text: "NovoPen 6 logs every dose automatically — patients and clinicians can both see the history." },
+      { role: "hcp", speaker: "Dr. Patel", text: "Sounds interesting, but is it covered?" },
+      { role: "kam", speaker: "KAM", text: "It is, for patients on insulin therapy. I can share the prescribing pathway." },
+      { role: "hcp", speaker: "Dr. Patel", text: "Okay, send me the details." },
+    ],
+  },
+  {
+    id: "5",
+    name: "Basal Insulin Optimization",
+    product: "Tresiba",
+    score: 4,
+    date: "Nov 12, 2025",
+    duration: "11 min",
+    hcpPersona: "Dr. Moreau — Endocrinologist",
+    transcript: [
+      { role: "hcp", speaker: "Dr. Moreau", text: "I'm comfortable with my current basal regimen. Why switch?" },
+      { role: "kam", speaker: "KAM", text: "Tresiba's flat 42-hour profile means lower nocturnal hypoglycaemia — DEVOTE showed a 53% reduction versus glargine U100." },
+      { role: "hcp", speaker: "Dr. Moreau", text: "That is meaningful. What about flexibility in dosing time?" },
+      { role: "kam", speaker: "KAM", text: "Tresiba can be dosed any time of day, with up to 8 hours of flexibility. This is particularly helpful for shift workers." },
+      { role: "hcp", speaker: "Dr. Moreau", text: "Good point. Send me the DEVOTE summary." },
+      { role: "kam", speaker: "KAM", text: "Will do — and I'll include the dosing flexibility guide as well." },
+    ],
+  },
 ];
 
 const trainingScores = [
