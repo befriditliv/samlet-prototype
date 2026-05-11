@@ -355,6 +355,7 @@ const EmployeeDetail = () => {
                     <th className="text-left py-4 px-5 text-sm font-semibold text-foreground">Product</th>
                     <th className="text-left py-4 px-5 text-sm font-semibold text-foreground">Date</th>
                     <th className="text-left py-4 px-5 text-sm font-semibold text-foreground">Score</th>
+                    <th className="text-right py-4 px-5 text-sm font-semibold text-foreground">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -364,6 +365,16 @@ const EmployeeDetail = () => {
                       <td className="py-4 px-5 text-muted-foreground">{t.product}</td>
                       <td className="py-4 px-5 text-muted-foreground">{t.date}</td>
                       <td className="py-4 px-5">{renderStars(t.score)}</td>
+                      <td className="py-4 px-5">
+                        <div className="flex items-center justify-end gap-2">
+                          <Button variant="outline" size="sm" onClick={() => setOpenScenario(t)} className="gap-1.5">
+                            <Eye className="h-3.5 w-3.5" /> View
+                          </Button>
+                          <Button variant="ghost" size="sm" onClick={() => handleDownload(t)} className="gap-1.5">
+                            <Download className="h-3.5 w-3.5" /> Download
+                          </Button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -372,6 +383,49 @@ const EmployeeDetail = () => {
           </Card>
         </section>
       </main>
+
+      <Dialog open={!!openScenario} onOpenChange={(o) => !o && setOpenScenario(null)}>
+        <DialogContent className="max-w-2xl">
+          {openScenario && (
+            <>
+              <DialogHeader>
+                <DialogTitle>{openScenario.name}</DialogTitle>
+                <DialogDescription>
+                  {openScenario.hcpPersona} · {openScenario.product} · {openScenario.date} · {openScenario.duration}
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="flex items-center justify-between gap-3 -mt-2">
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-primary/10 text-primary border-0">Score {openScenario.score}/5</Badge>
+                  {renderStars(openScenario.score)}
+                </div>
+                <Button size="sm" variant="outline" onClick={() => handleDownload(openScenario)} className="gap-1.5">
+                  <Download className="h-3.5 w-3.5" /> Download transcript
+                </Button>
+              </div>
+
+              <ScrollArea className="h-[420px] pr-4 mt-2">
+                <div className="space-y-3">
+                  {openScenario.transcript.map((line, i) => (
+                    <div key={i} className={cn("flex gap-3", line.role === "kam" ? "flex-row-reverse" : "flex-row")}>
+                      <div className={cn(
+                        "rounded-2xl px-4 py-2.5 max-w-[80%] text-sm",
+                        line.role === "kam"
+                          ? "bg-primary text-primary-foreground rounded-br-sm"
+                          : "bg-muted text-foreground rounded-bl-sm"
+                      )}>
+                        <div className="text-xs font-semibold opacity-80 mb-1">{line.speaker}</div>
+                        <div className="leading-relaxed">{line.text}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
