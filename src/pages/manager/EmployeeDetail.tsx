@@ -148,6 +148,7 @@ const renderStars = (score: number) => (
 const EmployeeDetail = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
+  const [openScenario, setOpenScenario] = useState<TrainingItem | null>(null);
 
   const employee = useMemo(() => employees.find((e) => slugify(e.name) === slug), [slug]);
 
@@ -163,6 +164,35 @@ const EmployeeDetail = () => {
   }
 
   const initials = employee.name.split(" ").map((p) => p[0]).join("").slice(0, 2);
+
+  const formatTranscript = (item: TrainingItem) => {
+    const header = [
+      `Scenario: ${item.name}`,
+      `Product: ${item.product}`,
+      `HCP persona: ${item.hcpPersona}`,
+      `KAM: ${employee.name}`,
+      `Date: ${item.date}`,
+      `Duration: ${item.duration}`,
+      `Score: ${item.score}/5`,
+      "",
+      "--- Transcript ---",
+      "",
+    ].join("\n");
+    const body = item.transcript.map((l) => `${l.speaker}: ${l.text}`).join("\n\n");
+    return `${header}${body}\n`;
+  };
+
+  const handleDownload = (item: TrainingItem) => {
+    const blob = new Blob([formatTranscript(item)], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${slugify(employee.name)}-${slugify(item.name)}-transcript.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-background">
