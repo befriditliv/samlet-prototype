@@ -22,7 +22,7 @@ const AppNoteDetail = () => {
     return (
       <div className="min-h-[100dvh] bg-background flex flex-col items-center justify-center gap-3 px-6">
         <p className="text-muted-foreground">Summary not found.</p>
-        <Button variant="outline" onClick={() => navigate("/app/profil")}>Back to profile</Button>
+        <Button variant="outline" onClick={() => navigate("/app/note")}>Back to notes</Button>
       </div>
     );
   }
