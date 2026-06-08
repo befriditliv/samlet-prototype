@@ -124,9 +124,24 @@ const AppNoteDetail = () => {
             <Clock className="h-3.5 w-3.5" /> {note.date} · {note.time} · {note.duration}
           </span>
         </div>
-        <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full">
-          {note.matchedMeeting}
-        </p>
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          {isMatched ? (
+            <button
+              onClick={() => setMatchOpen(true)}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full active:scale-95 transition-transform"
+            >
+              <Link2 className="h-3 w-3" /> {matchedLabel}
+              <span className="text-primary/60">· Rematch</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => setMatchOpen(true)}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-secondary px-2.5 py-1 rounded-full active:scale-95 transition-transform"
+            >
+              <Link2 className="h-3 w-3" /> Match to a meeting
+            </button>
+          )}
+        </div>
         {(submitted || note.submitted) && (
           <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 bg-emerald-500/10 px-2.5 py-1 rounded-full ml-2">
             <Check className="h-3 w-3" /> In IO Engage
