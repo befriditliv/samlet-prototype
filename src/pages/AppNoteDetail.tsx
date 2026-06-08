@@ -1,10 +1,19 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ChevronLeft, Pencil, Play, Send, Check, Clock, Building2, X } from "lucide-react";
+import { ChevronLeft, Pencil, Play, Send, Check, Clock, Building2, X, Link2, CalendarClock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerClose,
+} from "@/components/ui/drawer";
 import { toast } from "@/hooks/use-toast";
-import { noteAiSummaries } from "@/data/noteAiSummaries";
+import { noteAiSummaries, candidateMeetings } from "@/data/noteAiSummaries";
 
 const AppNoteDetail = () => {
   const { id } = useParams();
@@ -17,6 +26,8 @@ const AppNoteDetail = () => {
   const [keyPoints, setKeyPoints] = useState((note?.keyPoints ?? []).join("\n"));
   const [actions, setActions] = useState((note?.actions ?? []).join("\n"));
   const [submitted, setSubmitted] = useState(false);
+  const [matchedLabel, setMatchedLabel] = useState(note?.matchedMeeting ?? "");
+  const [matchOpen, setMatchOpen] = useState(false);
 
   if (!note) {
     return (
@@ -35,6 +46,25 @@ const AppNoteDetail = () => {
       description: "Your meeting note has been pushed to IO Engage.",
     });
   };
+
+  const handleRematch = (meetingTime: string | null) => {
+    setMatchOpen(false);
+    if (meetingTime) {
+      setMatchedLabel(`Matched to your ${meetingTime} meeting`);
+      toast({
+        title: "Meeting rematched",
+        description: `This summary is now linked to your ${meetingTime} meeting.`,
+      });
+    } else {
+      setMatchedLabel("");
+      toast({
+        title: "Match removed",
+        description: "This summary is no longer linked to a meeting.",
+      });
+    }
+  };
+
+  const isMatched = Boolean(matchedLabel);
 
   return (
     <div className="min-h-[100dvh] bg-background pb-24">
@@ -94,9 +124,24 @@ const AppNoteDetail = () => {
             <Clock className="h-3.5 w-3.5" /> {note.date} · {note.time} · {note.duration}
           </span>
         </div>
-        <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full">
-          {note.matchedMeeting}
-        </p>
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          {isMatched ? (
+            <button
+              onClick={() => setMatchOpen(true)}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full active:scale-95 transition-transform"
+            >
+              <Link2 className="h-3 w-3" /> {matchedLabel}
+              <span className="text-primary/60">· Rematch</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => setMatchOpen(true)}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-secondary px-2.5 py-1 rounded-full active:scale-95 transition-transform"
+            >
+              <Link2 className="h-3 w-3" /> Match to a meeting
+            </button>
+          )}
+        </div>
         {(submitted || note.submitted) && (
           <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 bg-emerald-500/10 px-2.5 py-1 rounded-full ml-2">
             <Check className="h-3 w-3" /> In IO Engage
@@ -214,6 +259,57 @@ const AppNoteDetail = () => {
           </Button>
         </div>
       )}
+
+      {/* Match / rematch meeting drawer */}
+      <Drawer open={matchOpen} onOpenChange={setMatchOpen}>
+        <DrawerContent>
+          <div className="mx-auto w-full max-w-lg">
+            <DrawerHeader className="text-left">
+              <DrawerTitle>{isMatched ? "Rematch meeting" : "Match to a meeting"}</DrawerTitle>
+              <DrawerDescription>
+                Link this summary to the right meeting from your calendar.
+              </DrawerDescription>
+            </DrawerHeader>
+
+            <div className="px-4 pb-2 space-y-2 max-h-[50vh] overflow-y-auto">
+              {candidateMeetings.map((m) => {
+                const active = matchedLabel === `Matched to your ${m.time} meeting`;
+                return (
+                  <button
+                    key={m.id}
+                    onClick={() => handleRematch(m.time)}
+                    className={`w-full flex items-center gap-3 rounded-xl border px-3 py-3 text-left transition-colors ${
+                      active ? "border-primary bg-primary/5" : "border-border bg-card active:bg-secondary"
+                    }`}
+                  >
+                    <span className="h-9 w-9 rounded-full bg-secondary flex items-center justify-center shrink-0">
+                      <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-sm font-medium text-foreground">{m.time}</span>
+                      <span className="block text-xs text-muted-foreground truncate">
+                        {m.hcp} · {m.hco}
+                      </span>
+                    </span>
+                    {active && <Check className="h-4 w-4 text-primary shrink-0" />}
+                  </button>
+                );
+              })}
+            </div>
+
+            <DrawerFooter>
+              {isMatched && (
+                <Button variant="ghost" className="text-destructive" onClick={() => handleRematch(null)}>
+                  Remove match
+                </Button>
+              )}
+              <DrawerClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 };
