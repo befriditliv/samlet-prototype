@@ -1,4 +1,4 @@
-import { Home, MessageCircle, Mic } from "lucide-react";
+import { Home, MessageCircle, Mic, CircleUserRound } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export const BottomNav = () => {
@@ -9,11 +9,13 @@ export const BottomNav = () => {
     { id: "home" as const, path: "/app", label: "Home", icon: Home },
     { id: "jarvis" as const, path: "/app/jarvis", label: "Ask Jarvis", icon: MessageCircle },
     { id: "note" as const, path: "/app/note", label: "Note", icon: Mic },
+    { id: "profile" as const, path: "/app/settings", label: "Profile", icon: CircleUserRound },
   ];
 
   const getActiveTab = () => {
     if (location.pathname === "/app/jarvis") return "jarvis";
     if (location.pathname.startsWith("/app/note")) return "note";
+    if (location.pathname.startsWith("/app/settings")) return "profile";
     return "home";
   };
 
