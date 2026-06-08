@@ -274,10 +274,21 @@ const AppNoteDetail = () => {
       {/* Submit bar — only when editing notes */}
       {tab === "notes" && isEditing && (
         <div className="fixed bottom-0 left-0 right-0 z-30 p-4 border-t border-border bg-background/95 backdrop-blur-lg pb-safe">
-          <Button onClick={handleSubmit} className="w-full max-w-lg mx-auto flex gap-2 rounded-xl h-12">
-            <Send className="h-4 w-4" />
-            Submit to IO Engage
-          </Button>
+          {isMatched ? (
+            <Button onClick={handleSubmit} className="w-full max-w-lg mx-auto flex gap-2 rounded-xl h-12">
+              <Send className="h-4 w-4" />
+              Submit to IO Engage
+            </Button>
+          ) : (
+            <Button
+              onClick={() => setMatchOpen(true)}
+              variant="outline"
+              className="w-full max-w-lg mx-auto flex gap-2 rounded-xl h-12 border-amber-500/40 text-amber-700"
+            >
+              <Link2 className="h-4 w-4" />
+              Match a meeting to submit
+            </Button>
+          )}
         </div>
       )}
 
