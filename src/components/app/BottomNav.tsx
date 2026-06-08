@@ -1,4 +1,4 @@
-import { Home, MessageCircle, StickyNote } from "lucide-react";
+import { Home, MessageCircle, NotepadText } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export const BottomNav = () => {
