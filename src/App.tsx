@@ -23,6 +23,7 @@ import Login from "./pages/Login";
 import AppIndex from "./pages/AppIndex";
 import AppJarvis from "./pages/AppJarvis";
 import AppProfile from "./pages/AppProfile";
+import AppNoteDetail from "./pages/AppNoteDetail";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
             <Route path="/app" element={<ProtectedRoute><AppIndex /></ProtectedRoute>} />
             <Route path="/app/jarvis" element={<ProtectedRoute><AppJarvis /></ProtectedRoute>} />
             <Route path="/app/profil" element={<ProtectedRoute><AppProfile /></ProtectedRoute>} />
+            <Route path="/app/note/:id" element={<ProtectedRoute><AppNoteDetail /></ProtectedRoute>} />
             <Route path="/manager" element={<ProtectedRoute><ManagerDashboard /></ProtectedRoute>} />
             <Route path="/manager/new-report" element={<ProtectedRoute><NewReport /></ProtectedRoute>} />
             <Route path="/manager/report" element={<ProtectedRoute><ReportView /></ProtectedRoute>} />
