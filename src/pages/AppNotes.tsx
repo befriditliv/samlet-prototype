@@ -1,7 +1,7 @@
 import { BottomNav } from "@/components/app/BottomNav";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, ChevronRight, FileText } from "lucide-react";
+import { ChevronRight, FileText } from "lucide-react";
 import { noteAiSummaries } from "@/data/noteAiSummaries";
 
 const AppNotes = () => {
