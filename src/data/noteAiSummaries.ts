@@ -23,6 +23,23 @@ export interface NoteSummary {
   submitted?: boolean;
 }
 
+export interface CalendarMeeting {
+  id: string;
+  time: string;
+  hcp: string;
+  hco: string;
+}
+
+// Mock calendar meetings the summary can be matched / rematched to
+export const candidateMeetings: CalendarMeeting[] = [
+  { id: "m1", time: "8:00 AM", hcp: "Dr. Michael Chen", hco: "Riverside Endocrinology" },
+  { id: "m2", time: "9:30 AM", hcp: "Dr. Amanda Foster", hco: "City Medical Center" },
+  { id: "m3", time: "11:00 AM", hcp: "Dr. James Park", hco: "Lakeview Family Practice" },
+  { id: "m4", time: "1:45 PM", hcp: "Dr. Laura Martinez", hco: "Central Diabetes Institute" },
+  { id: "m5", time: "2:30 PM", hcp: "Dr. Sarah Williams", hco: "Northside Cardiology" },
+  { id: "m6", time: "4:00 PM", hcp: "Dr. Emily Roberts", hco: "Westend Weight Clinic" },
+];
+
 export const noteAiSummaries: NoteSummary[] = [
   {
     id: "1",
