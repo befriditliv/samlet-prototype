@@ -210,6 +210,7 @@ export const DailyOverviewApple = ({
   const [showCompletedMeetings, setShowCompletedMeetings] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [datePickerOpen, setDatePickerOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Apply status overrides from parent
   const meetings = baseMeetings.map(m => ({
