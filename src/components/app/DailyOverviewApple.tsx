@@ -1,7 +1,8 @@
 // Daily Overview Component - Mobile-first design
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, MessageCircle, Calendar, Bell, ChevronDown, ChevronUp, Phone, Loader2, CheckCircle2, CheckCircle, WifiOff, AlertCircle, RotateCcw, MapPin, Lightbulb, ChevronLeft, ChevronRight, StickyNote } from "lucide-react";
+import { User, MessageCircle, Calendar, Bell, ChevronDown, ChevronUp, Phone, Loader2, CheckCircle2, CheckCircle, WifiOff, AlertCircle, RotateCcw, MapPin, Lightbulb, ChevronLeft, ChevronRight, StickyNote, Settings } from "lucide-react";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { TaskCenter } from "./TaskCenter";
 import { HCPAssistant } from "./HCPAssistant";
@@ -209,6 +210,7 @@ export const DailyOverviewApple = ({
   const [showCompletedMeetings, setShowCompletedMeetings] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [datePickerOpen, setDatePickerOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Apply status overrides from parent
   const meetings = baseMeetings.map(m => ({
@@ -362,7 +364,16 @@ export const DailyOverviewApple = ({
               </Popover>
             </div>
           </div>
-          <SyncStatus />
+          <div className="flex items-center gap-1">
+            <SyncStatus />
+            <button
+              onClick={() => navigate("/app/settings")}
+              aria-label="Settings"
+              className="h-9 w-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent active:scale-95 transition-all"
+            >
+              <Settings className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </div>
 
