@@ -1,12 +1,10 @@
 import { BottomNav } from "@/components/app/BottomNav";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
-import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Sparkles, ChevronRight, FileText } from "lucide-react";
 import { noteAiSummaries } from "@/data/noteAiSummaries";
 
-const AppProfile = () => {
-  const { logout } = useAuth();
+const AppNotes = () => {
   const navigate = useNavigate();
 
   return (
@@ -16,43 +14,14 @@ const AppProfile = () => {
         <div className="flex items-center gap-4">
           <img src={jarvisLogo} alt="Jarvis" className="h-12 w-12" />
           <div>
-            <h1 className="text-2xl font-semibold text-foreground tracking-tight">Profile</h1>
-            <p className="text-sm text-muted-foreground">Your settings</p>
+            <h1 className="text-2xl font-semibold text-foreground tracking-tight">Note</h1>
+            <p className="text-sm text-muted-foreground">AI notes from your meetings</p>
           </div>
         </div>
       </div>
 
       {/* Content */}
       <div className="px-4 space-y-4">
-        <div className="p-4 bg-card rounded-xl border border-border/40">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center">
-              <span className="text-xl font-semibold text-primary">JD</span>
-            </div>
-            <div>
-              <h2 className="font-semibold text-foreground">John Doe</h2>
-              <p className="text-sm text-muted-foreground">jdoe@novonordisk.com</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-4 bg-card rounded-xl border border-border/40">
-          <div className="space-y-3">
-            <button className="w-full text-left py-3 text-sm text-foreground border-b border-border/30">
-              Notifications
-            </button>
-            <button className="w-full text-left py-3 text-sm text-foreground border-b border-border/30">
-              Support
-            </button>
-            <button 
-              onClick={logout}
-              className="w-full text-left py-3 text-sm text-destructive"
-            >
-              Log out
-            </button>
-          </div>
-        </div>
-
         {/* Note AI Section */}
         <div className="pt-2">
           <div className="flex items-center gap-2 mb-3">
@@ -98,4 +67,4 @@ const AppProfile = () => {
   );
 };
 
-export default AppProfile;
+export default AppNotes;
