@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ChevronLeft, Pencil, Play, Send, Check, Clock, Building2, X, Link2, CalendarClock } from "lucide-react";
+import { ChevronLeft, Pencil, Play, Send, Check, Clock, Building2, X, Link2, CalendarClock, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
