@@ -1,7 +1,7 @@
 import { BottomNav } from "@/components/app/BottomNav";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, ChevronRight, FileText } from "lucide-react";
+import { ChevronRight, FileText } from "lucide-react";
 import { noteAiSummaries } from "@/data/noteAiSummaries";
 
 const AppNotes = () => {
@@ -25,9 +25,6 @@ const AppNotes = () => {
         {/* Note AI Section */}
         <div className="pt-2">
           <div className="flex items-center gap-2 mb-3">
-            <div className="h-7 w-7 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Sparkles className="h-4 w-4 text-primary" />
-            </div>
             <div>
               <h2 className="text-base font-semibold text-foreground leading-none">Note AI</h2>
               <p className="text-xs text-muted-foreground mt-0.5">
