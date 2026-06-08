@@ -369,9 +369,9 @@ export const DailyOverviewApple = ({
             <button
               onClick={() => navigate("/app/settings")}
               aria-label="Settings"
-              className="h-9 w-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent active:scale-95 transition-all"
+              className="h-8 w-8 rounded-full flex items-center justify-center text-muted-foreground/60 hover:text-foreground hover:bg-accent active:scale-95 transition-all"
             >
-              <Settings className="h-5 w-5" />
+              <SlidersHorizontal className="h-[18px] w-[18px]" />
             </button>
           </div>
         </div>
