@@ -364,7 +364,16 @@ export const DailyOverviewApple = ({
               </Popover>
             </div>
           </div>
-          <SyncStatus />
+          <div className="flex items-center gap-1">
+            <SyncStatus />
+            <button
+              onClick={() => navigate("/app/settings")}
+              aria-label="Settings"
+              className="h-9 w-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-accent active:scale-95 transition-all"
+            >
+              <Settings className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </div>
 
