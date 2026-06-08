@@ -1,10 +1,19 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ChevronLeft, Pencil, Play, Send, Check, Clock, Building2, X } from "lucide-react";
+import { ChevronLeft, Pencil, Play, Send, Check, Clock, Building2, X, Link2, CalendarClock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerClose,
+} from "@/components/ui/drawer";
 import { toast } from "@/hooks/use-toast";
-import { noteAiSummaries } from "@/data/noteAiSummaries";
+import { noteAiSummaries, candidateMeetings } from "@/data/noteAiSummaries";
 
 const AppNoteDetail = () => {
   const { id } = useParams();
@@ -17,6 +26,8 @@ const AppNoteDetail = () => {
   const [keyPoints, setKeyPoints] = useState((note?.keyPoints ?? []).join("\n"));
   const [actions, setActions] = useState((note?.actions ?? []).join("\n"));
   const [submitted, setSubmitted] = useState(false);
+  const [matchedLabel, setMatchedLabel] = useState(note?.matchedMeeting ?? "");
+  const [matchOpen, setMatchOpen] = useState(false);
 
   if (!note) {
     return (
@@ -35,6 +46,25 @@ const AppNoteDetail = () => {
       description: "Your meeting note has been pushed to IO Engage.",
     });
   };
+
+  const handleRematch = (meetingTime: string | null) => {
+    setMatchOpen(false);
+    if (meetingTime) {
+      setMatchedLabel(`Matched to your ${meetingTime} meeting`);
+      toast({
+        title: "Meeting rematched",
+        description: `This summary is now linked to your ${meetingTime} meeting.`,
+      });
+    } else {
+      setMatchedLabel("");
+      toast({
+        title: "Match removed",
+        description: "This summary is no longer linked to a meeting.",
+      });
+    }
+  };
+
+  const isMatched = Boolean(matchedLabel);
 
   return (
     <div className="min-h-[100dvh] bg-background pb-24">
