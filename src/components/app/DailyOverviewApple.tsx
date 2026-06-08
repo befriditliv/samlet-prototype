@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, MessageCircle, Calendar, Bell, ChevronDown, ChevronUp, Phone, Loader2, CheckCircle2, CheckCircle, WifiOff, AlertCircle, RotateCcw, MapPin, Lightbulb, ChevronLeft, ChevronRight, StickyNote, SlidersHorizontal } from "lucide-react";
+import { User, MessageCircle, Calendar, Bell, ChevronDown, ChevronUp, Phone, Loader2, CheckCircle2, CheckCircle, WifiOff, AlertCircle, RotateCcw, MapPin, Lightbulb, ChevronLeft, ChevronRight, StickyNote, Cog } from "lucide-react";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { TaskCenter } from "./TaskCenter";
 import { HCPAssistant } from "./HCPAssistant";
@@ -371,7 +371,7 @@ export const DailyOverviewApple = ({
               aria-label="Settings"
               className="h-8 w-8 rounded-full flex items-center justify-center text-muted-foreground/60 hover:text-foreground hover:bg-accent active:scale-95 transition-all"
             >
-              <SlidersHorizontal className="h-[18px] w-[18px]" />
+              <Cog className="h-[18px] w-[18px]" />
             </button>
           </div>
         </div>
