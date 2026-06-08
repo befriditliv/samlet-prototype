@@ -259,6 +259,57 @@ const AppNoteDetail = () => {
           </Button>
         </div>
       )}
+
+      {/* Match / rematch meeting drawer */}
+      <Drawer open={matchOpen} onOpenChange={setMatchOpen}>
+        <DrawerContent>
+          <div className="mx-auto w-full max-w-lg">
+            <DrawerHeader className="text-left">
+              <DrawerTitle>{isMatched ? "Rematch meeting" : "Match to a meeting"}</DrawerTitle>
+              <DrawerDescription>
+                Link this summary to the right meeting from your calendar.
+              </DrawerDescription>
+            </DrawerHeader>
+
+            <div className="px-4 pb-2 space-y-2 max-h-[50vh] overflow-y-auto">
+              {candidateMeetings.map((m) => {
+                const active = matchedLabel === `Matched to your ${m.time} meeting`;
+                return (
+                  <button
+                    key={m.id}
+                    onClick={() => handleRematch(m.time)}
+                    className={`w-full flex items-center gap-3 rounded-xl border px-3 py-3 text-left transition-colors ${
+                      active ? "border-primary bg-primary/5" : "border-border bg-card active:bg-secondary"
+                    }`}
+                  >
+                    <span className="h-9 w-9 rounded-full bg-secondary flex items-center justify-center shrink-0">
+                      <CalendarClock className="h-4 w-4 text-muted-foreground" />
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-sm font-medium text-foreground">{m.time}</span>
+                      <span className="block text-xs text-muted-foreground truncate">
+                        {m.hcp} · {m.hco}
+                      </span>
+                    </span>
+                    {active && <Check className="h-4 w-4 text-primary shrink-0" />}
+                  </button>
+                );
+              })}
+            </div>
+
+            <DrawerFooter>
+              {isMatched && (
+                <Button variant="ghost" className="text-destructive" onClick={() => handleRematch(null)}>
+                  Remove match
+                </Button>
+              )}
+              <DrawerClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 };
