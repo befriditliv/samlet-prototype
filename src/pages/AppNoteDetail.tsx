@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ChevronLeft, Pencil, Play, Send, Check, Clock, Building2, X, Link2, CalendarClock } from "lucide-react";
+import { ChevronLeft, Pencil, Play, Send, Check, Clock, Building2, X, Link2, CalendarClock, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -136,9 +136,9 @@ const AppNoteDetail = () => {
           ) : (
             <button
               onClick={() => setMatchOpen(true)}
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-secondary px-2.5 py-1 rounded-full active:scale-95 transition-transform"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-700 bg-amber-500/10 px-2.5 py-1 rounded-full active:scale-95 transition-transform"
             >
-              <Link2 className="h-3 w-3" /> Match to a meeting
+              <span className="h-2 w-2 rounded-full bg-amber-500" /> Not matched · tap to match
             </button>
           )}
         </div>
@@ -146,6 +146,27 @@ const AppNoteDetail = () => {
           <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 bg-emerald-500/10 px-2.5 py-1 rounded-full ml-2">
             <Check className="h-3 w-3" /> In IO Engage
           </p>
+        )}
+
+        {!isMatched && (
+          <div className="mt-3 flex items-start gap-2.5 rounded-xl border border-amber-500/30 bg-amber-500/5 px-3 py-2.5">
+            <AlertCircle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-foreground">Not submitted to IO Engage</p>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                We couldn't automatically match this note to a meeting, so we don't know where to file
+                it. Match it to a meeting to enable submission.
+              </p>
+              <Button
+                size="sm"
+                variant="outline"
+                className="mt-2 h-8 rounded-lg border-amber-500/40 text-amber-700 hover:bg-amber-500/10"
+                onClick={() => setMatchOpen(true)}
+              >
+                <Link2 className="h-3.5 w-3.5" /> Match to a meeting
+              </Button>
+            </div>
+          </div>
         )}
       </div>
 
@@ -253,10 +274,21 @@ const AppNoteDetail = () => {
       {/* Submit bar — only when editing notes */}
       {tab === "notes" && isEditing && (
         <div className="fixed bottom-0 left-0 right-0 z-30 p-4 border-t border-border bg-background/95 backdrop-blur-lg pb-safe">
-          <Button onClick={handleSubmit} className="w-full max-w-lg mx-auto flex gap-2 rounded-xl h-12">
-            <Send className="h-4 w-4" />
-            Submit to IO Engage
-          </Button>
+          {isMatched ? (
+            <Button onClick={handleSubmit} className="w-full max-w-lg mx-auto flex gap-2 rounded-xl h-12">
+              <Send className="h-4 w-4" />
+              Submit to IO Engage
+            </Button>
+          ) : (
+            <Button
+              onClick={() => setMatchOpen(true)}
+              variant="outline"
+              className="w-full max-w-lg mx-auto flex gap-2 rounded-xl h-12 border-amber-500/40 text-amber-700"
+            >
+              <Link2 className="h-4 w-4" />
+              Match a meeting to submit
+            </Button>
+          )}
         </div>
       )}
 

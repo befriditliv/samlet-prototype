@@ -78,7 +78,7 @@ export const noteAiSummaries: NoteSummary[] = [
     date: "Mon, Jun 8 '26",
     time: "8:15 AM",
     duration: "12 min",
-    matchedMeeting: "Matched to your 8:00 AM meeting",
+    matchedMeeting: "",
     summary:
       "Discussion centered on current formulary positioning and how prior-authorization friction is affecting new patient starts in the practice.",
     keyPoints: [
@@ -171,7 +171,7 @@ export const noteAiSummaries: NoteSummary[] = [
     date: "Thu, Jun 4 '26",
     time: "10:30 AM",
     duration: "14 min",
-    matchedMeeting: "Matched to your 10:30 AM meeting",
+    matchedMeeting: "",
     summary:
       "Pediatric-focused discussion on flexible dosing and family education for younger patients managing type 1 diabetes.",
     keyPoints: [
