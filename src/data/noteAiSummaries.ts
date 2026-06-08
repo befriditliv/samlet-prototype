@@ -171,7 +171,7 @@ export const noteAiSummaries: NoteSummary[] = [
     date: "Thu, Jun 4 '26",
     time: "10:30 AM",
     duration: "14 min",
-    matchedMeeting: "Matched to your 10:30 AM meeting",
+    matchedMeeting: "",
     summary:
       "Pediatric-focused discussion on flexible dosing and family education for younger patients managing type 1 diabetes.",
     keyPoints: [
