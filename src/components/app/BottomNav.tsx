@@ -8,7 +8,7 @@ export const BottomNav = () => {
   const tabs = [
     { id: "home" as const, path: "/app", label: "Home", icon: Home },
     { id: "jarvis" as const, path: "/app/jarvis", label: "Ask Jarvis", icon: MessageCircle },
-    { id: "note" as const, path: "/app/note", label: "Note", icon: NotepadText },
+    { id: "note" as const, path: "/app/note", label: "Note", icon: Mic },
   ];
 
   const getActiveTab = () => {
