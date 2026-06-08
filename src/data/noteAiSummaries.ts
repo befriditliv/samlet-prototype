@@ -78,7 +78,7 @@ export const noteAiSummaries: NoteSummary[] = [
     date: "Mon, Jun 8 '26",
     time: "8:15 AM",
     duration: "12 min",
-    matchedMeeting: "Matched to your 8:00 AM meeting",
+    matchedMeeting: "",
     summary:
       "Discussion centered on current formulary positioning and how prior-authorization friction is affecting new patient starts in the practice.",
     keyPoints: [
