@@ -289,7 +289,7 @@ export const DailyOverviewApple = ({
   };
 
   return (
-    <div className="app-shell relative min-h-screen bg-[hsl(210_40%_99%)] dark:bg-background pb-24 sm:border-x sm:border-border/50 overflow-hidden">
+    <div className="app-shell relative min-h-screen bg-white dark:bg-background pb-24 sm:border-x sm:border-border/50 overflow-hidden">
       {/* Faint cool light so the frosted glass has something to refract */}
       <div className="pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 h-72 w-72 rounded-full bg-primary/[0.07] blur-3xl" />
       {/* Header - unified premium */}
