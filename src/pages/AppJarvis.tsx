@@ -75,9 +75,6 @@ const AppJarvis = () => {
         {responses.length === 0 && !isLoading && (
           <div className="pt-4">
             {/* Suggestions */}
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3 px-1">
-              Quick suggestions
-            </p>
             <div className="space-y-3">
               {querySuggestions.map((suggestion) => {
                 const config = categoryConfig[suggestion.category];

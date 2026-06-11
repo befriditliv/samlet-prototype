@@ -270,7 +270,6 @@ export const HCPAssistant = ({ isOpen, onClose, hcpName, showBriefing = false }:
 
                 {/* Quick Query Suggestions */}
                 <div className="space-y-2 max-w-sm mx-auto">
-                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">Quick suggestions</p>
                   {querySuggestions.map((suggestion) => {
                     const config = categoryConfig[suggestion.category];
                     const Icon = config.icon;
