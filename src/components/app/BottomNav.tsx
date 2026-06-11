@@ -22,8 +22,8 @@ export const BottomNav = () => {
   const activeTab = getActiveTab();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-t border-border/40 pb-safe">
-      <div className="flex items-center justify-around h-14 max-w-lg mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-2xl border-t border-border/40 pb-safe shadow-[0_-8px_30px_-12px_hsl(222_47%_11%/0.12)]">
+      <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -32,12 +32,18 @@ export const BottomNav = () => {
             <button
               key={tab.id}
               onClick={() => navigate(tab.path)}
-              className={`flex flex-col items-center justify-center flex-1 h-full min-w-[64px] transition-colors active:scale-95 ${
+              className={`flex flex-col items-center justify-center flex-1 h-full min-w-[64px] gap-1 transition-all active:scale-95 ${
                 isActive ? "text-primary" : "text-muted-foreground"
               }`}
             >
-              <Icon className={`h-5 w-5 ${isActive ? "stroke-[2.5px]" : ""}`} />
-              <span className={`text-[10px] mt-0.5 ${isActive ? "font-semibold" : "font-medium"}`}>
+              <span
+                className={`flex items-center justify-center rounded-xl transition-all duration-300 ${
+                  isActive ? "bg-primary/10 px-3 py-1" : "px-3 py-1"
+                }`}
+              >
+                <Icon className={`h-[22px] w-[22px] ${isActive ? "stroke-[2.5px]" : ""}`} />
+              </span>
+              <span className={`text-[10px] leading-none ${isActive ? "font-bold" : "font-medium"}`}>
                 {tab.label}
               </span>
             </button>

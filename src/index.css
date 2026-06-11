@@ -119,3 +119,31 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  :root {
+    /* Premium elevation system for the mobile app */
+    --shadow-soft: 0 1px 2px hsl(222 47% 11% / 0.04), 0 12px 32px -16px hsl(222 47% 11% / 0.14);
+    --shadow-float: 0 6px 16px -6px hsl(217 91% 40% / 0.12), 0 22px 50px -18px hsl(217 91% 30% / 0.22);
+    --shadow-pill: 0 1px 2px hsl(222 47% 11% / 0.06);
+  }
+
+  .dark {
+    --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.3), 0 12px 32px -16px hsl(0 0% 0% / 0.5);
+    --shadow-float: 0 6px 16px -6px hsl(0 0% 0% / 0.4), 0 22px 50px -18px hsl(217 91% 10% / 0.6);
+    --shadow-pill: 0 1px 2px hsl(0 0% 0% / 0.4);
+  }
+}
+
+@layer components {
+  /* Resting elevated surface */
+  .app-card {
+    @apply rounded-3xl bg-card border border-border/60;
+    box-shadow: var(--shadow-soft);
+  }
+  /* Highlighted / next-up surface */
+  .app-card-float {
+    @apply rounded-3xl bg-card border border-primary/20;
+    box-shadow: var(--shadow-float);
+  }
+}

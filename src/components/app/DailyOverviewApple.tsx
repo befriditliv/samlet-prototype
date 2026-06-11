@@ -296,17 +296,17 @@ export const DailyOverviewApple = ({
   };
 
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className="min-h-screen bg-background pb-24">
       {/* Header - Super clean */}
-      <div className="px-5 pt-6 pb-4 bg-gradient-to-b from-primary/[0.03] to-background">
+      <div className="px-6 pt-8 pb-5 bg-gradient-to-b from-primary/[0.05] to-background">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <img src={jarvisLogo} alt="Jarvis" className="h-12 w-12" />
-            <div>
-              <h1 className="text-2xl font-semibold text-foreground tracking-tight">{greeting()}</h1>
+            <img src={jarvisLogo} alt="Jarvis" className="h-11 w-11 rounded-2xl shadow-[var(--shadow-soft)]" />
+            <div className="space-y-0.5">
+              <h1 className="text-[26px] leading-tight font-bold text-foreground tracking-tight">{greeting()}</h1>
               <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                 <PopoverTrigger asChild>
-                  <button className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+                  <button className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
                     {displayDate}
                     <ChevronDown className="h-3 w-3 opacity-40" />
                   </button>
@@ -371,26 +371,26 @@ export const DailyOverviewApple = ({
       </div>
 
       {/* Stats bar */}
-      <div className="px-4 pb-3 flex items-center gap-3">
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full">
-          <Calendar className="h-3.5 w-3.5 text-primary" />
-          <span className="text-xs font-medium text-primary">{meetings.length} meetings</span>
+      <div className="px-6 pb-4 flex items-center gap-2">
+        <div className="flex items-center gap-2 px-3.5 py-2 bg-primary/10 border border-primary/15 rounded-full">
+          <Calendar className="h-4 w-4 text-primary" />
+          <span className="text-xs font-semibold text-primary">{meetings.length} meetings</span>
         </div>
         {pendingDebriefCount > 0 && (
           <button
             onClick={scrollToFirstPending}
-            className="flex items-center gap-2 px-3 py-1.5 bg-destructive/10 rounded-full active:scale-95 transition-transform"
+            className="flex items-center gap-2 px-3.5 py-2 bg-destructive/10 border border-destructive/15 rounded-full active:scale-95 transition-transform"
           >
-            <Bell className="h-3.5 w-3.5 text-destructive" />
-            <span className="text-xs font-medium text-destructive">{pendingDebriefCount} need debrief</span>
+            <Bell className="h-4 w-4 text-destructive" />
+            <span className="text-xs font-semibold text-destructive">{pendingDebriefCount} need debrief</span>
           </button>
         )}
       </div>
 
       {/* Content */}
-      <div className="px-4 py-4">
-        <div className="space-y-3">
-          <h2 className="text-base font-semibold text-foreground">Today's schedule</h2>
+      <div className="px-5 py-4">
+        <div className="space-y-4">
+          <h2 className="text-lg font-bold text-foreground tracking-tight">Today's schedule</h2>
 
           {/* Timeline container */}
           <div className="relative" ref={containerRef}>
@@ -406,7 +406,7 @@ export const DailyOverviewApple = ({
             />
 
             {/* Meetings */}
-            <div className="space-y-3 pl-3">
+            <div className="space-y-4 pl-3">
           {activeMeetings.map((meeting) => {
             const isNextUpcoming = meeting.id === nextUpcomingId;
             const hcpData = mockHCPData[meeting.hcpName];
@@ -420,35 +420,35 @@ export const DailyOverviewApple = ({
                   if (el) cardRefs.current.set(meeting.id, el);
                   else cardRefs.current.delete(meeting.id);
                 }}
-                className={`rounded-2xl transition-all duration-300 ${
-                  isExpanded
-                    ? "border border-primary/30 bg-card shadow-sm shadow-primary/5 ring-1 ring-primary/10"
-                    : ""
+                className={`transition-all duration-300 ${
+                  isExpanded ? "app-card-float" : ""
                 }`}
               >
                 <button
                   type="button"
                   onClick={() => toggleExpand(meeting.id)}
-                  className={`w-full text-left p-4 transition-all duration-300 active:scale-[0.99] ${
+                  className={`w-full text-left p-5 transition-all duration-300 active:scale-[0.99] ${
                     isExpanded
-                      ? "rounded-t-2xl"
-                      : `border rounded-2xl bg-card ${isNextUpcoming ? "border-primary/30 bg-primary/5 ring-1 ring-primary/10" : "border-border/50"}`
+                      ? "rounded-t-3xl"
+                      : isNextUpcoming
+                        ? "app-card-float"
+                        : "app-card"
                   }`}
                 >
                   {/* Main content */}
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-4">
                     {/* Time column */}
-                    <div className="text-center min-w-[48px]">
-                      <div className="font-semibold text-foreground text-sm">{meeting.time}</div>
-                      <div className="text-[10px] text-muted-foreground">{meeting.duration}</div>
+                    <div className="text-center min-w-[52px]">
+                      <div className="font-bold text-foreground text-lg leading-none tracking-tight">{meeting.time}</div>
+                      <div className="text-[10px] font-medium text-muted-foreground mt-1">{meeting.duration}</div>
                     </div>
 
                     {/* Avatar and info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <div className="relative flex-shrink-0">
-                          <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center">
-                            <User className="h-4 w-4 text-primary" />
+                          <div className="w-10 h-10 bg-secondary/60 border border-border/60 rounded-full flex items-center justify-center">
+                            <User className="h-5 w-5 text-primary/70" />
                           </div>
                           {meeting.participants && meeting.participants.length > 1 && (
                             <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-[10px] font-semibold shadow-sm">
@@ -457,7 +457,7 @@ export const DailyOverviewApple = ({
                           )}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-semibold text-foreground text-sm leading-snug truncate">{meeting.hcpName}</h3>
+                          <h3 className="font-bold text-foreground text-sm leading-snug truncate">{meeting.hcpName}</h3>
                           <p className="text-xs text-muted-foreground truncate">{meeting.location}</p>
                         </div>
                       </div>
@@ -465,7 +465,7 @@ export const DailyOverviewApple = ({
                   </div>
 
                   {/* Status row */}
-                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-border/30">
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/40">
                     <div className="flex items-center gap-2">
                       {meeting.status === "debrief-submitting" && (
                         <div className="flex items-center gap-2 px-2.5 py-1 bg-muted/50 rounded-lg">
@@ -480,18 +480,18 @@ export const DailyOverviewApple = ({
                         </div>
                       )}
                       {meeting.status === "debrief-failed" && (
-                        <div className="flex items-center gap-2 px-2.5 py-1.5 border border-destructive/30 rounded-full">
-                          <AlertCircle className="h-3 w-3 text-destructive" />
-                          <span className="text-[11px] font-medium text-destructive">Failed</span>
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-destructive/10 rounded-lg">
+                          <AlertCircle className="h-3.5 w-3.5 text-destructive" />
+                          <span className="text-[11px] font-bold text-destructive uppercase tracking-wide">Failed</span>
                         </div>
                       )}
                       {meeting.status === "debrief-needed" && (
-                        <span className="text-[11px] font-medium text-destructive">Needs debrief</span>
+                        <span className="text-[11px] font-bold text-destructive">Needs debrief</span>
                       )}
                       {meeting.status === "debrief-ready" && (
-                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 border border-primary/20 rounded-full">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 rounded-lg">
                           <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                          <span className="text-xs font-medium text-primary">Ready for review</span>
+                          <span className="text-[11px] font-bold text-primary">Ready for review</span>
                         </div>
                       )}
                       {meeting.status === "upcoming" && (
@@ -531,7 +531,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebriefReview(meeting.id)}
                           size="sm"
-                          className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-medium px-4 py-1.5 h-8"
+                          className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-primary/20"
                         >
                           <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
                           Review
@@ -541,7 +541,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           size="sm"
-                          className="rounded-xl bg-destructive hover:bg-destructive/90 text-xs font-medium px-3 py-1.5 h-8"
+                          className="rounded-xl bg-destructive hover:bg-destructive/90 text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-destructive/20"
                         >
                           Debrief
                         </Button>
@@ -550,7 +550,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           size="sm"
-                          className="rounded-full bg-destructive hover:bg-destructive/90 text-white text-xs font-medium px-4 py-1.5 h-8"
+                          className="rounded-xl bg-destructive hover:bg-destructive/90 text-white text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-destructive/20"
                         >
                           <RotateCcw className="h-3 w-3 mr-1.5" />
                           Redo
@@ -599,44 +599,49 @@ export const DailyOverviewApple = ({
                       </div>
                     )}
 
-                    {/* Jarvis Recommendations */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-foreground mb-1 flex items-center gap-2">
-                        <Lightbulb className="w-4 h-4 text-primary" />
-                        Jarvis recommended actions
-                      </h3>
-                      <p className="text-xs text-muted-foreground mb-3">Personalized recommendations for your upcoming conversation</p>
-                      <div className="space-y-3">
-                        {hcpData.importantPoints.map((point, idx) => (
-                          <div key={idx} className="flex items-start gap-3">
-                            <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                            <div>
-                              <p className="text-sm text-foreground leading-relaxed">{point.description}</p>
+                    {/* Jarvis Recommendations - premium accent card */}
+                    <div className="relative overflow-hidden rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/[0.06] to-primary/[0.01] p-4">
+                      <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-br from-primary/20 to-transparent rounded-full -mr-14 -mt-14 blur-2xl pointer-events-none" />
+                      <div className="relative">
+                        <h3 className="text-sm font-bold text-foreground mb-1 flex items-center gap-2">
+                          <span className="p-1.5 bg-primary rounded-lg flex items-center justify-center">
+                            <Lightbulb className="w-3.5 h-3.5 text-primary-foreground" />
+                          </span>
+                          Jarvis recommended actions
+                        </h3>
+                        <p className="text-xs text-muted-foreground mb-4 mt-1">Personalized recommendations for your upcoming conversation</p>
+                        <div className="space-y-3">
+                          {hcpData.importantPoints.map((point, idx) => (
+                            <div key={idx} className="flex items-start gap-3">
+                              <span className="mt-0.5 shrink-0 w-4 h-4 rounded-full bg-primary/15 flex items-center justify-center">
+                                <CheckCircle className="w-3 h-3 text-primary" />
+                              </span>
+                              <p className="text-xs font-medium text-foreground leading-relaxed">{point.description}</p>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                          ))}
+                        </div>
 
-                    {/* Quick info badges */}
-                    <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-border/30">
-                      <span className={`text-[10px] font-medium px-2 py-1 rounded-md ${
-                        hcpData.accessLevel === "High" ? "bg-green-100 text-green-700" :
-                        hcpData.accessLevel === "Medium" ? "bg-yellow-100 text-yellow-700" :
-                        "bg-red-100 text-red-700"
-                      }`}>
-                        {hcpData.accessLevel} access
-                      </span>
-                      <span className={`text-[10px] font-medium px-2 py-1 rounded-md ${
-                        hcpData.consentStatus === "OPT IN" ? "bg-green-100 text-green-700" :
-                        hcpData.consentStatus === "OPT OUT" ? "bg-red-100 text-red-700" :
-                        "bg-gray-100 text-gray-700"
-                      }`}>
-                        {hcpData.consentStatus}
-                      </span>
-                      <span className="text-[10px] font-medium px-2 py-1 rounded-md bg-muted text-muted-foreground">
-                        {hcpData.daysSinceLastInteraction} days since last
-                      </span>
+                        {/* Quick info badges */}
+                        <div className="flex flex-wrap gap-2 mt-4">
+                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md ${
+                            hcpData.accessLevel === "High" ? "bg-success/10 text-success" :
+                            hcpData.accessLevel === "Medium" ? "bg-warning/10 text-warning" :
+                            "bg-destructive/10 text-destructive"
+                          }`}>
+                            {hcpData.accessLevel} access
+                          </span>
+                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md ${
+                            hcpData.consentStatus === "OPT IN" ? "bg-success/10 text-success" :
+                            hcpData.consentStatus === "OPT OUT" ? "bg-destructive/10 text-destructive" :
+                            "bg-muted text-muted-foreground"
+                          }`}>
+                            {hcpData.consentStatus}
+                          </span>
+                          <span className="text-[10px] font-bold px-2.5 py-1 rounded-md bg-muted text-muted-foreground">
+                            {hcpData.daysSinceLastInteraction} days since last
+                          </span>
+                        </div>
+                      </div>
                     </div>
 
                     {/* Action buttons */}
@@ -648,7 +653,7 @@ export const DailyOverviewApple = ({
                           setHcpAssistantOpen(true);
                         }}
                         variant="outline"
-                        className="flex-1 rounded-xl text-sm font-medium h-10 gap-1.5"
+                        className="flex-1 rounded-xl text-sm font-bold h-11 gap-1.5 border-border/70"
                       >
                         <MessageCircle className="h-4 w-4" />
                         More info
@@ -657,7 +662,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           variant="outline"
-                          className="flex-1 rounded-xl text-sm font-medium h-10 text-muted-foreground border-muted-foreground/30"
+                          className="flex-1 rounded-xl text-sm font-bold h-11 text-muted-foreground border-muted-foreground/30"
                         >
                           <RotateCcw className="h-4 w-4 mr-1.5" />
                           Redo Debrief
@@ -665,7 +670,7 @@ export const DailyOverviewApple = ({
                       ) : meeting.status === "debrief-failed" ? (
                         <Button
                           onClick={() => onDebrief(meeting.id)}
-                          className="flex-1 rounded-xl bg-destructive hover:bg-destructive/90 text-destructive-foreground text-sm font-medium h-10"
+                          className="flex-1 rounded-xl bg-destructive hover:bg-destructive/90 text-destructive-foreground text-sm font-bold h-11 shadow-lg shadow-destructive/20"
                         >
                           <RotateCcw className="h-4 w-4 mr-1.5" />
                           Redo
@@ -673,7 +678,7 @@ export const DailyOverviewApple = ({
                       ) : (
                         <Button
                           onClick={() => onDebrief(meeting.id)}
-                          className="flex-1 rounded-xl bg-primary hover:bg-primary/90 text-sm font-medium h-10"
+                          className="flex-1 rounded-xl bg-primary hover:bg-primary/90 text-sm font-bold h-11 shadow-lg shadow-primary/20"
                         >
                           Debrief
                         </Button>
