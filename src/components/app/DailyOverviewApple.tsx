@@ -406,7 +406,7 @@ export const DailyOverviewApple = ({
             />
 
             {/* Meetings */}
-            <div className="space-y-3 pl-3">
+            <div className="space-y-4 pl-3">
           {activeMeetings.map((meeting) => {
             const isNextUpcoming = meeting.id === nextUpcomingId;
             const hcpData = mockHCPData[meeting.hcpName];
@@ -420,35 +420,35 @@ export const DailyOverviewApple = ({
                   if (el) cardRefs.current.set(meeting.id, el);
                   else cardRefs.current.delete(meeting.id);
                 }}
-                className={`rounded-2xl transition-all duration-300 ${
-                  isExpanded
-                    ? "border border-primary/30 bg-card shadow-sm shadow-primary/5 ring-1 ring-primary/10"
-                    : ""
+                className={`transition-all duration-300 ${
+                  isExpanded ? "app-card-float" : ""
                 }`}
               >
                 <button
                   type="button"
                   onClick={() => toggleExpand(meeting.id)}
-                  className={`w-full text-left p-4 transition-all duration-300 active:scale-[0.99] ${
+                  className={`w-full text-left p-5 transition-all duration-300 active:scale-[0.99] ${
                     isExpanded
-                      ? "rounded-t-2xl"
-                      : `border rounded-2xl bg-card ${isNextUpcoming ? "border-primary/30 bg-primary/5 ring-1 ring-primary/10" : "border-border/50"}`
+                      ? "rounded-t-3xl"
+                      : isNextUpcoming
+                        ? "app-card-float"
+                        : "app-card"
                   }`}
                 >
                   {/* Main content */}
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-4">
                     {/* Time column */}
-                    <div className="text-center min-w-[48px]">
-                      <div className="font-semibold text-foreground text-sm">{meeting.time}</div>
-                      <div className="text-[10px] text-muted-foreground">{meeting.duration}</div>
+                    <div className="text-center min-w-[52px]">
+                      <div className="font-bold text-foreground text-lg leading-none tracking-tight">{meeting.time}</div>
+                      <div className="text-[10px] font-medium text-muted-foreground mt-1">{meeting.duration}</div>
                     </div>
 
                     {/* Avatar and info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <div className="relative flex-shrink-0">
-                          <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center">
-                            <User className="h-4 w-4 text-primary" />
+                          <div className="w-10 h-10 bg-secondary/60 border border-border/60 rounded-full flex items-center justify-center">
+                            <User className="h-4.5 w-4.5 text-primary/70" />
                           </div>
                           {meeting.participants && meeting.participants.length > 1 && (
                             <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-[10px] font-semibold shadow-sm">
@@ -457,7 +457,7 @@ export const DailyOverviewApple = ({
                           )}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-semibold text-foreground text-sm leading-snug truncate">{meeting.hcpName}</h3>
+                          <h3 className="font-bold text-foreground text-sm leading-snug truncate">{meeting.hcpName}</h3>
                           <p className="text-xs text-muted-foreground truncate">{meeting.location}</p>
                         </div>
                       </div>
@@ -465,7 +465,7 @@ export const DailyOverviewApple = ({
                   </div>
 
                   {/* Status row */}
-                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-border/30">
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/40">
                     <div className="flex items-center gap-2">
                       {meeting.status === "debrief-submitting" && (
                         <div className="flex items-center gap-2 px-2.5 py-1 bg-muted/50 rounded-lg">
