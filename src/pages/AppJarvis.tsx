@@ -137,8 +137,9 @@ const AppJarvis = () => {
       </div>
 
       {/* Chat Input */}
-      <div className="fixed bottom-16 left-0 right-0 px-5 pb-3 pt-3 bg-background/70 backdrop-blur-2xl border-t border-border/50">
-        <div className="flex items-center gap-2 max-w-lg mx-auto bg-card rounded-2xl border border-border/60 shadow-[var(--shadow-soft)] p-1.5 pl-4">
+      <div className="fixed bottom-16 left-0 right-0">
+        <div className="app-shell-bar px-5 pb-3 pt-3 bg-background/70 backdrop-blur-2xl border-t border-border/50 sm:border-x sm:border-border/50">
+          <div className="flex items-center gap-2 bg-card rounded-2xl border border-border/60 shadow-[var(--shadow-soft)] p-1.5 pl-4">
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
