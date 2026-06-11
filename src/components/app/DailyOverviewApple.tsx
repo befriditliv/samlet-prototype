@@ -289,7 +289,12 @@ export const DailyOverviewApple = ({
   };
 
   return (
-    <div className="app-shell min-h-screen bg-background pb-24 sm:border-x sm:border-border/50">
+    <div className="app-shell relative min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 dark:from-background dark:via-primary/10 dark:to-background pb-24 sm:border-x sm:border-border/50 overflow-hidden">
+      {/* Ambient color orbs so the liquid-glass cards have light to refract */}
+      <div className="pointer-events-none absolute -top-10 -right-12 h-60 w-60 rounded-full bg-primary/25 blur-3xl" />
+      <div className="pointer-events-none absolute top-1/3 -left-16 h-56 w-56 rounded-full bg-indigo-400/25 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-32 -right-10 h-52 w-52 rounded-full bg-sky-400/25 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-10 left-1/4 h-44 w-44 rounded-full bg-violet-400/20 blur-3xl" />
       {/* Header - unified premium */}
       <AppHeader
         title="Today's schedule"
@@ -389,7 +394,7 @@ export const DailyOverviewApple = ({
                   else cardRefs.current.delete(meeting.id);
                 }}
                 className={`transition-all duration-300 ${
-                  isExpanded ? "app-card-float" : ""
+                  isExpanded ? "app-card-glass-float" : ""
                 }`}
               >
                 <button
@@ -399,8 +404,8 @@ export const DailyOverviewApple = ({
                     isExpanded
                       ? "rounded-t-3xl"
                       : isNextUpcoming
-                        ? "app-card-float"
-                        : "app-card"
+                        ? "app-card-glass-float"
+                        : "app-card-glass"
                   }`}
                 >
                   {/* Main content */}
