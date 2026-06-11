@@ -480,18 +480,18 @@ export const DailyOverviewApple = ({
                         </div>
                       )}
                       {meeting.status === "debrief-failed" && (
-                        <div className="flex items-center gap-2 px-2.5 py-1.5 border border-destructive/30 rounded-full">
-                          <AlertCircle className="h-3 w-3 text-destructive" />
-                          <span className="text-[11px] font-medium text-destructive">Failed</span>
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-destructive/10 rounded-lg">
+                          <AlertCircle className="h-3.5 w-3.5 text-destructive" />
+                          <span className="text-[11px] font-bold text-destructive uppercase tracking-wide">Failed</span>
                         </div>
                       )}
                       {meeting.status === "debrief-needed" && (
-                        <span className="text-[11px] font-medium text-destructive">Needs debrief</span>
+                        <span className="text-[11px] font-bold text-destructive">Needs debrief</span>
                       )}
                       {meeting.status === "debrief-ready" && (
-                        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/5 border border-primary/20 rounded-full">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 rounded-lg">
                           <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                          <span className="text-xs font-medium text-primary">Ready for review</span>
+                          <span className="text-[11px] font-bold text-primary">Ready for review</span>
                         </div>
                       )}
                       {meeting.status === "upcoming" && (
@@ -531,7 +531,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebriefReview(meeting.id)}
                           size="sm"
-                          className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-medium px-4 py-1.5 h-8"
+                          className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-primary/20"
                         >
                           <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
                           Review
@@ -541,7 +541,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           size="sm"
-                          className="rounded-xl bg-destructive hover:bg-destructive/90 text-xs font-medium px-3 py-1.5 h-8"
+                          className="rounded-xl bg-destructive hover:bg-destructive/90 text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-destructive/20"
                         >
                           Debrief
                         </Button>
@@ -550,7 +550,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           size="sm"
-                          className="rounded-full bg-destructive hover:bg-destructive/90 text-white text-xs font-medium px-4 py-1.5 h-8"
+                          className="rounded-xl bg-destructive hover:bg-destructive/90 text-white text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-destructive/20"
                         >
                           <RotateCcw className="h-3 w-3 mr-1.5" />
                           Redo
