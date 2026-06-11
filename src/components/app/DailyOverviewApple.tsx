@@ -289,7 +289,11 @@ export const DailyOverviewApple = ({
   };
 
   return (
-    <div className="app-shell min-h-screen bg-background pb-24 sm:border-x sm:border-border/50">
+    <div className="app-shell relative min-h-screen bg-gradient-to-b from-background via-primary/[0.04] to-background pb-24 sm:border-x sm:border-border/50 overflow-hidden">
+      {/* Ambient color orbs so the liquid-glass cards have light to refract */}
+      <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+      <div className="pointer-events-none absolute top-1/3 -left-20 h-52 w-52 rounded-full bg-indigo-400/10 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-24 right-0 h-48 w-48 rounded-full bg-sky-400/10 blur-3xl" />
       {/* Header - unified premium */}
       <AppHeader
         title="Today's schedule"
