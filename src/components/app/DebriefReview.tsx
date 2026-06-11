@@ -125,7 +125,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
   const hasComplianceIssues = (notes.complianceIssues?.length ?? 0) > 0;
 
   return (
-    <div className="app-shell min-h-screen bg-background flex flex-col animate-fade-in sm:border-x-2 sm:border-white/50">
+    <div className="app-shell min-h-screen bg-background flex flex-col animate-fade-in sm:border-x-2 sm:border-border/50">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-white border-b border-border shadow-sm">
         <div className="px-4 sm:px-6 py-4">
@@ -278,7 +278,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
 
       {/* Bottom action buttons */}
       <div className="fixed bottom-0 left-0 right-0 z-10 pb-safe">
-        <div className="app-shell-bar p-4 space-y-3 border-t border-border sm:border-x-2 sm:border-white/50 bg-background/95 backdrop-blur-lg">
+        <div className="app-shell-bar p-4 space-y-3 border-t border-border sm:border-x-2 sm:border-border/50 bg-background/95 backdrop-blur-lg">
           <Button
             onClick={handleApprove}
             disabled={isSubmitting}

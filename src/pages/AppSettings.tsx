@@ -7,7 +7,7 @@ const AppSettings = () => {
   const { logout } = useAuth();
 
   return (
-    <div className="app-shell min-h-[100dvh] bg-background pb-24 sm:border-x-2 sm:border-white/50">
+    <div className="app-shell min-h-[100dvh] bg-background pb-24 sm:border-x-2 sm:border-border/50">
       <AppHeader title="Profile" subtitle="Your profile & preferences" />
 
       {/* Content */}
