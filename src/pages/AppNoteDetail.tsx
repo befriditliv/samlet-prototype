@@ -69,7 +69,7 @@ const AppNoteDetail = () => {
   return (
     <div className="app-shell min-h-[100dvh] bg-background pb-24 sm:border-x sm:border-border/50">
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-lg border-b border-border/40">
+      <div className="sticky top-0 z-20 bg-white border-b border-border shadow-sm">
         <div className="flex items-center justify-between px-4 pt-4 pb-2">
           <button
             onClick={() => navigate(-1)}
