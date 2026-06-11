@@ -23,7 +23,7 @@ export const BottomNav = () => {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 pb-safe">
-      <div className="app-shell-bar flex items-center justify-around h-16 px-2 bg-background/70 backdrop-blur-2xl border-t border-border/40 sm:border-x-2 sm:border-border/40 shadow-[0_-8px_30px_-12px_hsl(222_47%_11%/0.12)]">
+      <div className="app-shell-bar flex items-center justify-around h-16 px-2 bg-white border-t border-border/40 sm:border-x-2 sm:border-border/40 shadow-[0_-8px_30px_-12px_hsl(222_47%_11%/0.12)]">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
