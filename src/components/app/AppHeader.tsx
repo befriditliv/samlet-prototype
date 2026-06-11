@@ -42,7 +42,7 @@ export const AppHeader = ({ title, subtitle, onBack, right, children }: AppHeade
               {title}
             </h1>
             {typeof subtitle === "string" ? (
-              <span className="inline-flex items-center -ml-2.5 rounded-full bg-secondary/70 px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+              <span className="inline-flex items-center -ml-1.5 rounded-full bg-secondary/70 px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
                 {subtitle}
               </span>
             ) : (
