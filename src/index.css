@@ -146,4 +146,16 @@ All colors MUST be HSL.
     @apply rounded-3xl bg-card border border-primary/20;
     box-shadow: var(--shadow-float);
   }
+  /* Centered mobile-app column so the layout never stretches edge-to-edge
+     on large / high-resolution screens. */
+  .app-shell {
+    @apply relative mx-auto w-full;
+    max-width: 30rem;
+  }
+  /* Same width used for fixed bars (bottom nav, chat input) which escape the
+     .app-shell container because they are position: fixed. */
+  .app-shell-bar {
+    @apply mx-auto w-full;
+    max-width: 30rem;
+  }
 }
