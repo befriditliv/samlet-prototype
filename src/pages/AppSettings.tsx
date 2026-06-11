@@ -1,14 +1,13 @@
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 import { AppHeader } from "@/components/app/AppHeader";
+import { BottomNav } from "@/components/app/BottomNav";
 
 const AppSettings = () => {
   const { logout } = useAuth();
-  const navigate = useNavigate();
 
   return (
-    <div className="min-h-[100dvh] bg-background pb-10">
-      <AppHeader title="Settings" subtitle="Your profile & preferences" onBack={() => navigate(-1)} />
+    <div className="min-h-[100dvh] bg-background pb-20">
+      <AppHeader title="Settings" subtitle="Your profile & preferences" />
 
       {/* Content */}
       <div className="px-4 space-y-4">
@@ -41,6 +40,8 @@ const AppSettings = () => {
           </div>
         </div>
       </div>
+
+      <BottomNav />
     </div>
   );
 };
