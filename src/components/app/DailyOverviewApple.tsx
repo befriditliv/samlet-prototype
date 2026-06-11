@@ -362,45 +362,6 @@ export const DailyOverviewApple = ({
           </Popover>
         }
       >
-        {/* Day summary — frosted glass status bar */}
-        <button
-          type="button"
-          onClick={pendingDebriefCount > 0 ? scrollToFirstPending : undefined}
-          className={`w-full mt-5 flex items-center gap-3 p-1.5 pr-4 text-left bg-card/70 backdrop-blur-xl border border-border/60 rounded-3xl shadow-[var(--shadow-soft)] transition-transform ${
-            pendingDebriefCount > 0 ? "active:scale-[0.99] cursor-pointer" : "cursor-default"
-          }`}
-        >
-          {/* Icon cluster */}
-          <div className="flex -space-x-2 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-primary/10 border-2 border-card flex items-center justify-center text-primary">
-              <Calendar className="h-5 w-5" />
-            </div>
-            {pendingDebriefCount > 0 && (
-              <div className="w-10 h-10 rounded-full bg-amber-500/10 border-2 border-card flex items-center justify-center text-amber-600">
-                <PenLine className="h-5 w-5" />
-              </div>
-            )}
-          </div>
-
-          {/* Copy */}
-          <div className="flex-1 min-w-0">
-            <p className="text-[13px] font-semibold text-foreground leading-tight">
-              {meetings.length} meetings scheduled today
-            </p>
-            {pendingDebriefCount > 0 ? (
-              <p className="text-[11px] font-medium text-amber-600 flex items-center gap-1.5 mt-0.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-                {pendingDebriefCount} pending debrief{pendingDebriefCount > 1 ? "s" : ""} need{pendingDebriefCount > 1 ? "" : "s"} action
-              </p>
-            ) : (
-              <p className="text-[11px] font-medium text-muted-foreground mt-0.5">You're all caught up</p>
-            )}
-          </div>
-
-          {pendingDebriefCount > 0 && (
-            <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" />
-          )}
-        </button>
       </AppHeader>
 
       {/* Content */}
