@@ -211,7 +211,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
                 <div>
-                  <h1 className="text-xl font-semibold text-foreground">Debrief</h1>
+                  <h1 className="text-xl font-bold text-foreground tracking-tight">Debrief</h1>
                   <p className="text-sm text-muted-foreground">Dr. Sarah Johnson</p>
                 </div>
               </div>
@@ -268,9 +268,9 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
           ) : (
             <>
               {/* Tips & Best Practices Info Box */}
-              <Card className="p-6 shadow-sm border-0 bg-gradient-to-br from-primary/5 to-primary/10 backdrop-blur-sm">
+              <Card className="p-6 border border-border/60 bg-secondary/40 shadow-[var(--shadow-soft)] rounded-2xl">
                 <div className="flex items-start gap-4">
-                  <div className="p-2 bg-primary/10 rounded-lg">
+                  <div className="p-2 bg-primary/10 rounded-xl">
                     <Lightbulb className="h-5 w-5 text-primary" />
                   </div>
                   <div className="flex-1">
@@ -325,7 +325,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
     return (
       <div className="min-h-screen bg-background flex flex-col animate-fade-in">
         {/* Header */}
-        <div className="px-4 sm:px-6 py-4 border-b border-border/30">
+        <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl px-4 sm:px-6 py-4 border-b border-border/50">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
@@ -336,17 +336,17 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="flex-1">
-              <h1 className="text-lg font-semibold text-foreground">Meeting debrief</h1>
+              <h1 className="text-lg font-bold text-foreground tracking-tight">Meeting debrief</h1>
               <p className="text-xs text-muted-foreground">Dr. Sarah Johnson • 2026-01-16</p>
             </div>
           </div>
         </div>
 
-        {/* Status badge */}
+      {/* Status badge */}
         <div className="px-6 pt-4 flex justify-end">
-          <div className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-full text-sm font-medium">
-            <CheckCircle className="h-4 w-4" />
-            Failed
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-muted/60 text-muted-foreground rounded-full text-xs font-medium">
+            <AlertCircle className="h-3.5 w-3.5" />
+            Sync failed
           </div>
         </div>
 
@@ -371,7 +371,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
           <Button
             onClick={handleRetryDebrief}
             size="lg"
-            className="w-full bg-destructive hover:bg-destructive/90 text-white rounded-2xl py-4 text-base font-semibold"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl py-4 text-base font-semibold shadow-[var(--shadow-soft)]"
           >
             <RotateCcw className="h-5 w-5 mr-2" />
             Redo Debrief
@@ -393,7 +393,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Minimal Header */}
-      <div className="px-4 sm:px-6 py-4 border-b border-border/30">
+      <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl px-4 sm:px-6 py-4 border-b border-border/50">
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
@@ -404,7 +404,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex-1 min-w-0">
-            <h1 className="text-lg font-semibold text-foreground truncate">Voice Debrief</h1>
+            <h1 className="text-lg font-bold text-foreground tracking-tight truncate">Voice debrief</h1>
             <p className="text-xs text-muted-foreground truncate">Dr. Sarah Johnson</p>
           </div>
           {/* Question indicator */}

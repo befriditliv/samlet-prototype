@@ -17,7 +17,7 @@ interface AppHeaderProps {
  */
 export const AppHeader = ({ title, subtitle, onBack, right, children }: AppHeaderProps) => {
   return (
-    <header className="sticky top-0 z-40 px-6 pt-7 pb-4 bg-background/80 backdrop-blur-2xl">
+    <header className="sticky top-0 z-40 px-6 pt-7 pb-4 bg-background/70 backdrop-blur-2xl border-b border-border/50">
       {onBack && (
         <button
           onClick={onBack}
@@ -29,17 +29,22 @@ export const AppHeader = ({ title, subtitle, onBack, right, children }: AppHeade
       )}
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-4 min-w-0">
-          <img
-            src={jarvisLogo}
-            alt="Jarvis"
-            className="h-11 w-11 rounded-2xl shadow-[var(--shadow-soft)] shrink-0"
-          />
-          <div className="min-w-0 space-y-0.5">
+          <div className="relative shrink-0">
+            <div className="absolute inset-0 -m-1.5 rounded-[1.4rem] bg-primary/10 blur-md" aria-hidden />
+            <img
+              src={jarvisLogo}
+              alt="Jarvis"
+              className="relative h-12 w-12 rounded-[1.1rem] shadow-[var(--shadow-soft)] ring-1 ring-white/40"
+            />
+          </div>
+          <div className="min-w-0 space-y-1">
             <h1 className="text-2xl leading-tight font-bold text-foreground tracking-tight truncate">
               {title}
             </h1>
             {typeof subtitle === "string" ? (
-              <p className="text-sm font-medium text-muted-foreground truncate">{subtitle}</p>
+              <span className="inline-flex items-center rounded-full bg-secondary/70 px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+                {subtitle}
+              </span>
             ) : (
               subtitle
             )}

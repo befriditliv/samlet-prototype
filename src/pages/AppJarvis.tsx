@@ -76,22 +76,19 @@ const AppJarvis = () => {
           <div className="pt-8">
             {/* Hero */}
             <div className="flex flex-col items-center text-center mb-8">
-              <div className="relative mb-5">
-                <div className="absolute inset-0 -m-3 bg-primary/20 rounded-3xl blur-2xl" />
-                <img
-                  src={jarvisLogo}
-                  alt="Jarvis"
-                  className="relative h-16 w-16 rounded-3xl shadow-[var(--shadow-float)]"
-                />
-              </div>
+              <img
+                src={jarvisLogo}
+                alt="Jarvis"
+                className="h-16 w-16 rounded-[1.4rem] shadow-[var(--shadow-soft)] ring-1 ring-white/40 mb-5"
+              />
               <h3 className="text-xl font-bold text-foreground tracking-tight">How can I help?</h3>
-              <p className="text-sm font-medium text-muted-foreground mt-1">
+              <p className="text-sm text-muted-foreground mt-1">
                 Ask anything about your accounts, schedule or territory.
               </p>
             </div>
 
             {/* Suggestions */}
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3 px-1">
               Quick suggestions
             </p>
             <div className="space-y-3">
@@ -104,11 +101,11 @@ const AppJarvis = () => {
                     onClick={() => handleSendQuery(suggestion.text)}
                     className="app-card w-full p-4 flex items-center gap-3.5 text-left active:scale-[0.99] transition-transform"
                   >
-                    <div className={`shrink-0 h-10 w-10 rounded-xl flex items-center justify-center ${config.bg}`}>
+                    <div className={`shrink-0 h-10 w-10 rounded-2xl flex items-center justify-center ${config.bg}`}>
                       <Icon className={`h-5 w-5 ${config.color}`} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold text-foreground leading-tight">{suggestion.text}</p>
+                      <p className="text-sm font-semibold text-foreground leading-tight">{suggestion.text}</p>
                       <p className="text-xs text-muted-foreground mt-0.5 truncate">{suggestion.hint}</p>
                     </div>
                     <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
@@ -123,7 +120,7 @@ const AppJarvis = () => {
           {responses.map((response, index) => (
             <div key={index} className="space-y-3 animate-slide-up">
               <div className="flex justify-end">
-                <div className="max-w-[80%] px-4 py-2.5 bg-primary text-primary-foreground rounded-2xl rounded-br-md shadow-lg shadow-primary/20">
+                <div className="max-w-[80%] px-4 py-2.5 bg-primary text-primary-foreground rounded-2xl rounded-br-md shadow-[var(--shadow-soft)]">
                   <p className="text-sm font-medium">{response.query}</p>
                 </div>
               </div>
@@ -132,7 +129,7 @@ const AppJarvis = () => {
                 <img src={jarvisLogo} alt="Jarvis" className="w-8 h-8 rounded-xl shadow-[var(--shadow-soft)] flex-shrink-0" />
                 <div className="app-card flex-1 p-4">
                   <p className="text-sm text-foreground leading-relaxed">{response.response}</p>
-                  <p className="text-[11px] text-muted-foreground mt-2">
+                  <p className="text-xs text-muted-foreground mt-2">
                     {response.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </p>
                 </div>
@@ -153,8 +150,8 @@ const AppJarvis = () => {
       </div>
 
       {/* Chat Input */}
-      <div className="fixed bottom-16 left-0 right-0 px-5 pb-3 pt-2 bg-gradient-to-t from-background via-background to-transparent">
-        <div className="flex items-center gap-2 max-w-lg mx-auto bg-card rounded-2xl border border-border/60 shadow-[var(--shadow-float)] p-1.5 pl-4">
+      <div className="fixed bottom-16 left-0 right-0 px-5 pb-3 pt-3 bg-background/70 backdrop-blur-2xl border-t border-border/50">
+        <div className="flex items-center gap-2 max-w-lg mx-auto bg-card rounded-2xl border border-border/60 shadow-[var(--shadow-soft)] p-1.5 pl-4">
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -167,7 +164,7 @@ const AppJarvis = () => {
             onClick={() => handleSendQuery()}
             disabled={!query.trim() || isLoading}
             size="icon"
-            className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground h-10 w-10 shrink-0 shadow-lg shadow-primary/20 disabled:shadow-none"
+            className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground h-10 w-10 shrink-0 shadow-[var(--shadow-soft)] disabled:shadow-none"
           >
             <Send className="h-4 w-4" />
           </Button>

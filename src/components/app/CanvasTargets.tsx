@@ -201,11 +201,11 @@ export const CanvasTargets = () => {
   const getPriorityStyles = (priority: CanvasTarget["priority"]) => {
     switch (priority) {
       case "high":
-        return "bg-primary/10 text-primary border-primary/20";
+        return "bg-primary/10 text-primary";
       case "medium":
-        return "bg-amber-500/10 text-amber-600 border-amber-500/20";
+        return "bg-muted/60 text-muted-foreground";
       case "low":
-        return "bg-muted text-muted-foreground border-border";
+        return "bg-muted/60 text-muted-foreground";
     }
   };
 
@@ -216,10 +216,10 @@ export const CanvasTargets = () => {
         <Button
           onClick={handleOpen}
           variant="outline"
-          className="w-full h-14 rounded-2xl border-dashed border-2 border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50 transition-all group"
+          className="w-full h-16 rounded-3xl border border-border/60 bg-card hover:bg-secondary/40 transition-all group shadow-[var(--shadow-soft)]"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+            <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center transition-colors">
               <Navigation className="h-5 w-5 text-primary" />
             </div>
             <div className="text-left">
@@ -281,12 +281,12 @@ export const CanvasTargets = () => {
                   <button
                     key={target.id}
                     onClick={() => handleTargetClick(target)}
-                    className="w-full p-4 bg-card border border-border/50 rounded-2xl text-left hover:border-primary/30 hover:bg-primary/5 transition-all active:scale-[0.99]"
+                    className="w-full p-4 app-card text-left hover:bg-secondary/40 transition-all active:scale-[0.99]"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
                     <div className="flex items-start gap-3">
                       {/* Avatar */}
-                      <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                         <User className="h-5 w-5 text-primary" />
                       </div>
 
@@ -297,7 +297,7 @@ export const CanvasTargets = () => {
                             <h3 className="font-semibold text-foreground text-sm truncate">{target.name}</h3>
                             <p className="text-xs text-muted-foreground">{target.specialty}</p>
                           </div>
-                          <div className="flex items-center gap-1.5 px-2 py-1 bg-muted rounded-lg flex-shrink-0">
+                          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted/60 rounded-full flex-shrink-0">
                             <MapPin className="h-3 w-3 text-muted-foreground" />
                             <span className="text-xs font-medium text-muted-foreground">{target.distance}</span>
                           </div>
@@ -311,10 +311,10 @@ export const CanvasTargets = () => {
 
                         {/* Bottom row */}
                         <div className="flex items-center justify-between mt-3 pt-2 border-t border-border/30">
-                          <span className={`text-[10px] font-medium px-2 py-1 rounded-md border ${getPriorityStyles(target.priority)}`}>
+                          <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${getPriorityStyles(target.priority)}`}>
                             {target.priority.charAt(0).toUpperCase() + target.priority.slice(1)} priority
                           </span>
-                          <span className="text-[10px] text-muted-foreground">
+                          <span className="text-xs text-muted-foreground">
                             {target.lastVisit ? `Last visit: ${target.lastVisit}` : "Never visited"}
                           </span>
                         </div>

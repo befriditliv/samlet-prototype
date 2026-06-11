@@ -127,7 +127,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
   return (
     <div className="min-h-screen bg-background flex flex-col animate-fade-in">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-background border-b border-border/30">
+      <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl border-b border-border/50">
         <div className="px-4 sm:px-6 py-4">
           <div className="flex items-center gap-3">
             <Button
@@ -139,7 +139,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="flex-1 min-w-0">
-              <h1 className="text-lg font-semibold text-foreground tracking-tight">Meeting debrief</h1>
+              <h1 className="text-lg font-bold text-foreground tracking-tight">Meeting debrief</h1>
               <p className="text-xs text-muted-foreground truncate">{notes.meeting.hcpName} · {notes.meeting.date}</p>
             </div>
 
@@ -194,16 +194,16 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
 
         {/* Compliance Warning - Yellow box at top if issues detected */}
         {hasComplianceIssues && (
-          <Card className="p-4 border-0 bg-amber-100 dark:bg-amber-900/30 rounded-xl">
+          <Card className="p-4 border border-amber-500/20 bg-amber-500/10 rounded-2xl">
             <div className="flex items-start gap-3">
-              <div className="p-2 bg-amber-500/20 rounded-lg">
+              <div className="p-2 bg-amber-500/15 rounded-xl">
                 <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-1">Compliance warning</h3>
+                <h3 className="font-semibold text-foreground mb-1">Compliance warning</h3>
                 <ul className="space-y-1">
                   {notes.complianceIssues.map((issue, index) => (
-                    <li key={index} className="text-sm text-amber-700 dark:text-amber-300">
+                    <li key={index} className="text-sm text-muted-foreground">
                       • {issue}
                     </li>
                   ))}
@@ -216,7 +216,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
         <DuplicateTextNotice duplicateTextSignal={notes.duplicateTextSignal} />
 
         {/* Purpose / Formål */}
-        <Card className="p-4 border-0 bg-card rounded-xl">
+        <Card className="p-4 border border-border/60 bg-card rounded-2xl shadow-[var(--shadow-soft)]">
           <h3 className="font-semibold text-foreground mb-2">Purpose of visit</h3>
           <p className="text-sm text-muted-foreground leading-relaxed">
             {notes.purpose}
@@ -225,15 +225,15 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
 
         {/* Brand Notes - Each brand in its own box */}
         <div className="space-y-3">
-          <h3 className="text-sm font-medium text-muted-foreground px-1">Activity Overview</h3>
+          <h3 className="text-sm font-medium text-muted-foreground px-1">Activity overview</h3>
 
           {notes.brands?.map((brandNote, index) => {
             const hasContent = (brandNote.activities?.length ?? 0) > 0 || (brandNote.reactions?.length ?? 0) > 0;
 
             return (
-              <Card key={index} className="p-4 border-0 bg-card rounded-xl">
+              <Card key={index} className="p-4 border border-border/60 bg-card rounded-2xl shadow-[var(--shadow-soft)]">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="px-2.5 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-lg">
+                  <span className="px-2.5 py-1 bg-primary/10 text-primary text-sm font-semibold rounded-full">
                     {brandNote.brand}
                   </span>
                 </div>
@@ -257,7 +257,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
                         <ul className="space-y-1.5">
                           {brandNote.reactions.map((reaction, reactIndex) => (
                             <li key={reactIndex} className="flex items-start gap-2 text-sm text-foreground">
-                              <span className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-2 flex-shrink-0" />
+                              <span className="w-1.5 h-1.5 bg-muted-foreground/50 rounded-full mt-2 flex-shrink-0" />
                               <span>{reaction}</span>
                             </li>
                           ))}
