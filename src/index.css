@@ -126,31 +126,61 @@ All colors MUST be HSL.
     --shadow-soft: 0 1px 2px hsl(222 47% 11% / 0.04), 0 12px 32px -16px hsl(222 47% 11% / 0.14);
     --shadow-float: 0 6px 16px -6px hsl(217 91% 40% / 0.12), 0 22px 50px -18px hsl(217 91% 30% / 0.22);
     --shadow-pill: 0 1px 2px hsl(222 47% 11% / 0.06);
+    /* Glass system: translucent surfaces, glossy highlight, frost blur */
+    --glass-surface: 0 0% 100% / 0.55;
+    --glass-surface-strong: 0 0% 100% / 0.7;
+    --glass-highlight: 0 0% 100% / 0.85;
+    --glass-border: 0 0% 100% / 0.6;
+    --glass-blur: 20px;
   }
 
   .dark {
     --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.3), 0 12px 32px -16px hsl(0 0% 0% / 0.5);
     --shadow-float: 0 6px 16px -6px hsl(0 0% 0% / 0.4), 0 22px 50px -18px hsl(217 91% 10% / 0.6);
     --shadow-pill: 0 1px 2px hsl(0 0% 0% / 0.4);
+    --glass-surface: 217 33% 17% / 0.55;
+    --glass-surface-strong: 217 33% 17% / 0.7;
+    --glass-highlight: 210 40% 98% / 0.12;
+    --glass-border: 210 40% 98% / 0.12;
+    --glass-blur: 20px;
   }
 }
 
 @layer components {
-  /* Resting elevated surface */
+  /* Resting elevated surface — frosted glass */
   .app-card {
-    @apply rounded-3xl bg-card border border-border/60;
-    box-shadow: var(--shadow-soft);
+    @apply rounded-3xl;
+    background-color: hsl(var(--glass-surface));
+    border: 1px solid hsl(var(--glass-border));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    box-shadow: var(--shadow-soft), inset 0 1px 0 hsl(var(--glass-highlight));
   }
-  /* Highlighted / next-up surface */
+  /* Highlighted / next-up surface — brighter glass */
   .app-card-float {
-    @apply rounded-3xl bg-card border border-primary/20;
-    box-shadow: var(--shadow-float);
+    @apply rounded-3xl;
+    background-color: hsl(var(--glass-surface-strong));
+    border: 1px solid hsl(var(--glass-border));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(200%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(200%);
+    box-shadow: var(--shadow-float), inset 0 1px 0 hsl(var(--glass-highlight));
   }
   /* Centered mobile-app column so the layout never stretches edge-to-edge
      on large / high-resolution screens. */
   .app-shell {
     @apply relative mx-auto w-full;
     max-width: 30rem;
+  }
+  /* Soft pale aurora backdrop so the frosted glass has bright light to
+     refract. Higher specificity (body .app-shell) intentionally overrides the
+     flat `bg-background` utility, scoped to the mobile app only. */
+  body .app-shell {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(60% 45% at 8% 0%, hsl(217 91% 60% / 0.14), transparent 70%),
+      radial-gradient(55% 40% at 100% 10%, hsl(190 90% 65% / 0.14), transparent 70%),
+      radial-gradient(75% 55% at 50% 100%, hsl(255 90% 72% / 0.12), transparent 70%);
+    background-attachment: fixed;
   }
   /* Same width used for fixed bars (bottom nav, chat input) which escape the
      .app-shell container because they are position: fixed. */
