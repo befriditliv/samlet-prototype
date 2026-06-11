@@ -201,11 +201,11 @@ export const CanvasTargets = () => {
   const getPriorityStyles = (priority: CanvasTarget["priority"]) => {
     switch (priority) {
       case "high":
-        return "bg-primary/10 text-primary border-primary/20";
+        return "bg-primary/10 text-primary";
       case "medium":
-        return "bg-amber-500/10 text-amber-600 border-amber-500/20";
+        return "bg-muted/60 text-muted-foreground";
       case "low":
-        return "bg-muted text-muted-foreground border-border";
+        return "bg-muted/60 text-muted-foreground";
     }
   };
 
