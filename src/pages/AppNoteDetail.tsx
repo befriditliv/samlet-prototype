@@ -31,7 +31,7 @@ const AppNoteDetail = () => {
 
   if (!note) {
     return (
-      <div className="app-shell min-h-[100dvh] bg-background flex flex-col items-center justify-center gap-3 px-6 sm:border-x sm:border-border/50">
+      <div className="app-shell min-h-[100dvh] bg-background flex flex-col items-center justify-center gap-3 px-6 sm:border-x-2 sm:border-white/50">
         <p className="text-muted-foreground">Summary not found.</p>
         <Button variant="outline" onClick={() => navigate("/app/note")}>Back to notes</Button>
       </div>
@@ -67,7 +67,7 @@ const AppNoteDetail = () => {
   const isMatched = Boolean(matchedLabel);
 
   return (
-    <div className="app-shell min-h-[100dvh] bg-background pb-24 sm:border-x sm:border-border/50">
+    <div className="app-shell min-h-[100dvh] bg-background pb-24 sm:border-x-2 sm:border-white/50">
       {/* Header */}
       <div className="sticky top-0 z-20 bg-white border-b border-border shadow-sm">
         <div className="flex items-center justify-between px-4 pt-4 pb-2">
