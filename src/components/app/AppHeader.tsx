@@ -28,7 +28,20 @@ export const AppHeader = ({ title, subtitle, onBack, right, children }: AppHeade
         </button>
       )}
       <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-4 min-w-0">
+        <div className="min-w-0 space-y-1">
+          <h1 className="text-2xl leading-tight font-bold text-foreground tracking-tight truncate">
+            {title}
+          </h1>
+          {typeof subtitle === "string" ? (
+            <span className="inline-flex items-center -ml-1.5 rounded-full bg-secondary/70 px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+              {subtitle}
+            </span>
+          ) : (
+            subtitle
+          )}
+        </div>
+        <div className="flex items-center gap-1 shrink-0">
+          {right}
           <div className="relative shrink-0">
             <div className="absolute inset-0 -m-1.5 rounded-[1.4rem] bg-primary/10 blur-md" aria-hidden />
             <img
@@ -37,20 +50,7 @@ export const AppHeader = ({ title, subtitle, onBack, right, children }: AppHeade
               className="relative h-12 w-12 rounded-[1.1rem] shadow-[var(--shadow-soft)] ring-1 ring-white/40"
             />
           </div>
-          <div className="min-w-0 space-y-1">
-            <h1 className="text-2xl leading-tight font-bold text-foreground tracking-tight truncate">
-              {title}
-            </h1>
-            {typeof subtitle === "string" ? (
-              <span className="inline-flex items-center -ml-1.5 rounded-full bg-secondary/70 px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
-                {subtitle}
-              </span>
-            ) : (
-              subtitle
-            )}
-          </div>
         </div>
-        {right && <div className="flex items-center gap-1 shrink-0">{right}</div>}
       </div>
       {children}
     </header>
