@@ -67,7 +67,7 @@ const AppJarvis = () => {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-background flex flex-col">
+    <div className="app-shell min-h-[100dvh] bg-background flex flex-col sm:border-x sm:border-border/50">
       <AppHeader title="Ask Jarvis" subtitle="Ask about anything" />
 
       {/* Chat Content */}

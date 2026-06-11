@@ -12,7 +12,7 @@ const AppNotes = () => {
     .filter((n) => !n.matchedMeeting).length;
 
   return (
-    <div className="min-h-[100dvh] bg-background pb-20">
+    <div className="app-shell min-h-[100dvh] bg-background pb-20 sm:border-x sm:border-border/50">
       <AppHeader title="Note" subtitle="AI notes from your meetings" />
 
       {/* Content */}
