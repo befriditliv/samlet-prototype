@@ -299,7 +299,7 @@ export const DailyOverviewApple = ({
     <div className="min-h-screen bg-background pb-24">
       {/* Header - unified premium */}
       <AppHeader
-        title={greeting()}
+        title="Today's schedule"
         right={<SyncStatus />}
         subtitle={
           <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
@@ -367,8 +367,6 @@ export const DailyOverviewApple = ({
       {/* Content */}
       <div className="px-5 py-4">
         <div className="space-y-4">
-          <h2 className="text-lg font-bold text-foreground tracking-tight">Today's schedule</h2>
-
           {/* Timeline container */}
           <div className="relative" ref={containerRef}>
             {/* Selection indicator - floating blue bar */}
