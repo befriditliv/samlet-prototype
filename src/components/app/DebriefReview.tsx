@@ -277,12 +277,12 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
       </div>
 
       {/* Bottom action buttons */}
-      <div className="fixed bottom-0 left-0 right-0 px-6 pb-8 pt-4 space-y-3 bg-background border-t border-border/30">
+      <div className="fixed bottom-0 left-0 right-0 p-4 space-y-3 border-t border-border bg-background/95 backdrop-blur-lg pb-safe">
         <Button
           onClick={handleApprove}
           disabled={isSubmitting}
           size="lg"
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl py-4 text-base font-semibold disabled:opacity-70"
+          className="w-full max-w-lg mx-auto bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl py-4 text-base font-semibold disabled:opacity-70"
         >
           {isSubmitting ? (
             <>
@@ -300,7 +300,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
           onClick={handleImproveDetails}
           variant="outline"
           size="lg"
-          className="w-full rounded-2xl py-4 text-base font-medium border-2"
+          className="w-full max-w-lg mx-auto rounded-2xl py-4 text-base font-medium border-2"
         >
           <Edit3 className="h-5 w-5 mr-2" />
           Edit notes
