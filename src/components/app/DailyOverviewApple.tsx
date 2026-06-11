@@ -393,7 +393,7 @@ export const DailyOverviewApple = ({
                   else cardRefs.current.delete(meeting.id);
                 }}
                 className={`transition-all duration-300 ${
-                  isExpanded ? "app-card-float" : ""
+                  isExpanded ? "app-card-glass-float" : ""
                 }`}
               >
                 <button
@@ -403,8 +403,8 @@ export const DailyOverviewApple = ({
                     isExpanded
                       ? "rounded-t-3xl"
                       : isNextUpcoming
-                        ? "app-card-float"
-                        : "app-card"
+                        ? "app-card-glass-float"
+                        : "app-card-glass"
                   }`}
                 >
                   {/* Main content */}
