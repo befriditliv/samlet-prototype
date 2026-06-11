@@ -234,15 +234,15 @@ export const CanvasTargets = () => {
       {/* Canvas Targets Sheet */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl px-0">
-          <SheetHeader className="px-5 pb-4 border-b border-border/50">
+          <SheetHeader className="px-5 pb-4 border-b border-border/50 space-y-0 text-left">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                   <Navigation className="h-5 w-5 text-primary" />
                 </div>
-                <div>
-                  <SheetTitle className="text-lg font-semibold text-foreground">Canvas Targets</SheetTitle>
-                  <p className="text-xs text-muted-foreground">HCPs near your current location</p>
+                <div className="flex flex-col justify-center">
+                  <SheetTitle className="text-lg font-semibold text-foreground leading-tight">Canvas Targets</SheetTitle>
+                  <p className="text-xs text-muted-foreground leading-tight mt-0.5">HCPs near your current location</p>
                 </div>
               </div>
               <button
