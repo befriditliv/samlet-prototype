@@ -448,7 +448,7 @@ export const DailyOverviewApple = ({
                       <div className="flex items-center gap-2">
                         <div className="relative flex-shrink-0">
                           <div className="w-10 h-10 bg-secondary/60 border border-border/60 rounded-full flex items-center justify-center">
-                            <User className="h-4.5 w-4.5 text-primary/70" />
+                            <User className="h-5 w-5 text-primary/70" />
                           </div>
                           {meeting.participants && meeting.participants.length > 1 && (
                             <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-[10px] font-semibold shadow-sm">
