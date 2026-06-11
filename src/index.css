@@ -126,44 +126,68 @@ All colors MUST be HSL.
     --shadow-soft: 0 1px 2px hsl(222 47% 11% / 0.04), 0 12px 32px -16px hsl(222 47% 11% / 0.14);
     --shadow-float: 0 6px 16px -6px hsl(217 91% 40% / 0.12), 0 22px 50px -18px hsl(217 91% 30% / 0.22);
     --shadow-pill: 0 1px 2px hsl(222 47% 11% / 0.06);
-    /* Glass system: translucent surfaces, glossy highlight, frost blur */
-    --glass-surface: 0 0% 100% / 0.55;
-    --glass-surface-strong: 0 0% 100% / 0.7;
-    --glass-highlight: 0 0% 100% / 0.85;
-    --glass-border: 0 0% 100% / 0.6;
-    --glass-blur: 20px;
+    /* Glass system: translucent surfaces, glossy highlight, frost blur.
+       Surfaces are deliberately quite see-through so the colourful aurora
+       behind them is visibly blurred & refracted — that is what reads as
+       real glass rather than flat white. */
+    --glass-surface: 0 0% 100% / 0.38;
+    --glass-surface-strong: 0 0% 100% / 0.52;
+    --glass-highlight: 0 0% 100% / 0.9;
+    --glass-border: 0 0% 100% / 0.7;
+    --glass-blur: 26px;
   }
 
   .dark {
     --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.3), 0 12px 32px -16px hsl(0 0% 0% / 0.5);
     --shadow-float: 0 6px 16px -6px hsl(0 0% 0% / 0.4), 0 22px 50px -18px hsl(217 91% 10% / 0.6);
     --shadow-pill: 0 1px 2px hsl(0 0% 0% / 0.4);
-    --glass-surface: 217 33% 17% / 0.55;
-    --glass-surface-strong: 217 33% 17% / 0.7;
-    --glass-highlight: 210 40% 98% / 0.12;
-    --glass-border: 210 40% 98% / 0.12;
-    --glass-blur: 20px;
+    --glass-surface: 217 33% 17% / 0.45;
+    --glass-surface-strong: 217 33% 17% / 0.6;
+    --glass-highlight: 210 40% 98% / 0.14;
+    --glass-border: 210 40% 98% / 0.14;
+    --glass-blur: 26px;
   }
 }
 
 @layer components {
-  /* Resting elevated surface — frosted glass */
+  /* Resting elevated surface — frosted glass.
+     A diagonal white sheen (background-image) sits on top of the translucent
+     base to give a glossy, reflective "pane of glass" look, while the
+     backdrop-filter blurs the aurora behind it. */
   .app-card {
     @apply rounded-3xl;
     background-color: hsl(var(--glass-surface));
+    background-image: linear-gradient(
+      135deg,
+      hsl(0 0% 100% / 0.55) 0%,
+      hsl(0 0% 100% / 0.12) 42%,
+      hsl(0 0% 100% / 0.04) 100%
+    );
     border: 1px solid hsl(var(--glass-border));
-    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-    backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-    box-shadow: var(--shadow-soft), inset 0 1px 0 hsl(var(--glass-highlight));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(190%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(190%);
+    box-shadow:
+      var(--shadow-soft),
+      inset 0 1px 0 hsl(var(--glass-highlight)),
+      inset 0 0 0 1px hsl(0 0% 100% / 0.2);
   }
-  /* Highlighted / next-up surface — brighter glass */
+  /* Highlighted / next-up surface — brighter, glossier glass */
   .app-card-float {
     @apply rounded-3xl;
     background-color: hsl(var(--glass-surface-strong));
+    background-image: linear-gradient(
+      135deg,
+      hsl(0 0% 100% / 0.7) 0%,
+      hsl(0 0% 100% / 0.18) 45%,
+      hsl(0 0% 100% / 0.06) 100%
+    );
     border: 1px solid hsl(var(--glass-border));
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(200%);
     backdrop-filter: blur(var(--glass-blur)) saturate(200%);
-    box-shadow: var(--shadow-float), inset 0 1px 0 hsl(var(--glass-highlight));
+    box-shadow:
+      var(--shadow-float),
+      inset 0 1px 0 hsl(var(--glass-highlight)),
+      inset 0 0 0 1px hsl(0 0% 100% / 0.25);
   }
   /* Centered mobile-app column so the layout never stretches edge-to-edge
      on large / high-resolution screens. */
@@ -171,15 +195,19 @@ All colors MUST be HSL.
     @apply relative mx-auto w-full;
     max-width: 30rem;
   }
-  /* Soft pale aurora backdrop so the frosted glass has bright light to
-     refract. Higher specificity (body .app-shell) intentionally overrides the
-     flat `bg-background` utility, scoped to the mobile app only. */
+  /* Pale aurora backdrop so the frosted glass has bright, colourful light to
+     refract. The blobs are stronger and spread across the column so there is
+     always something visible *through* each translucent card — without that
+     contrast, the blur has nothing to work with and the cards read as flat
+     white. Scoped to the mobile app only. */
   body .app-shell {
     background-color: hsl(var(--background));
     background-image:
-      radial-gradient(60% 45% at 8% 0%, hsl(217 91% 60% / 0.14), transparent 70%),
-      radial-gradient(55% 40% at 100% 10%, hsl(190 90% 65% / 0.14), transparent 70%),
-      radial-gradient(75% 55% at 50% 100%, hsl(255 90% 72% / 0.12), transparent 70%);
+      radial-gradient(50% 32% at 6% 4%, hsl(217 91% 62% / 0.4), transparent 72%),
+      radial-gradient(46% 30% at 98% 12%, hsl(190 90% 60% / 0.36), transparent 72%),
+      radial-gradient(52% 34% at 92% 58%, hsl(268 85% 70% / 0.34), transparent 72%),
+      radial-gradient(58% 38% at 8% 70%, hsl(150 75% 58% / 0.28), transparent 72%),
+      radial-gradient(70% 46% at 50% 102%, hsl(330 85% 72% / 0.3), transparent 72%);
     background-attachment: fixed;
   }
   /* Same width used for fixed bars (bottom nav, chat input) which escape the
