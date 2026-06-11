@@ -3,11 +3,11 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { User, MessageCircle, Calendar, Bell, ChevronDown, ChevronUp, Phone, Loader2, CheckCircle2, CheckCircle, WifiOff, AlertCircle, RotateCcw, MapPin, Lightbulb, ChevronLeft, ChevronRight, StickyNote } from "lucide-react";
-import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { TaskCenter } from "./TaskCenter";
 import { HCPAssistant } from "./HCPAssistant";
 import { SyncStatus } from "./SyncStatus";
 import { CanvasTargets } from "./CanvasTargets";
+import { AppHeader } from "./AppHeader";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format, addDays, subDays } from "date-fns";
 import { enUS } from "date-fns/locale";
@@ -297,14 +297,12 @@ export const DailyOverviewApple = ({
 
   return (
     <div className="min-h-screen bg-background pb-24">
-      {/* Header - Super clean */}
-      <div className="px-6 pt-8 pb-5 bg-gradient-to-b from-primary/[0.05] to-background">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <img src={jarvisLogo} alt="Jarvis" className="h-11 w-11 rounded-2xl shadow-[var(--shadow-soft)]" />
-            <div className="space-y-0.5">
-              <h1 className="text-[26px] leading-tight font-bold text-foreground tracking-tight">{greeting()}</h1>
-              <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+      {/* Header - unified premium */}
+      <AppHeader
+        title={greeting()}
+        right={<SyncStatus />}
+        subtitle={
+          <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                 <PopoverTrigger asChild>
                   <button className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
                     {displayDate}
@@ -361,31 +359,26 @@ export const DailyOverviewApple = ({
                     )}
                   </div>
                 </PopoverContent>
-              </Popover>
-            </div>
+          </Popover>
+        }
+      >
+        {/* Stats chips */}
+        <div className="flex items-center gap-2 mt-5">
+          <div className="flex items-center gap-2 px-3.5 py-2 bg-primary/10 border border-primary/15 rounded-full">
+            <Calendar className="h-4 w-4 text-primary" />
+            <span className="text-xs font-semibold text-primary">{meetings.length} meetings</span>
           </div>
-          <div className="flex items-center gap-1">
-            <SyncStatus />
-          </div>
+          {pendingDebriefCount > 0 && (
+            <button
+              onClick={scrollToFirstPending}
+              className="flex items-center gap-2 px-3.5 py-2 bg-destructive/10 border border-destructive/15 rounded-full active:scale-95 transition-transform"
+            >
+              <Bell className="h-4 w-4 text-destructive" />
+              <span className="text-xs font-semibold text-destructive">{pendingDebriefCount} need debrief</span>
+            </button>
+          )}
         </div>
-      </div>
-
-      {/* Stats bar */}
-      <div className="px-6 pb-4 flex items-center gap-2">
-        <div className="flex items-center gap-2 px-3.5 py-2 bg-primary/10 border border-primary/15 rounded-full">
-          <Calendar className="h-4 w-4 text-primary" />
-          <span className="text-xs font-semibold text-primary">{meetings.length} meetings</span>
-        </div>
-        {pendingDebriefCount > 0 && (
-          <button
-            onClick={scrollToFirstPending}
-            className="flex items-center gap-2 px-3.5 py-2 bg-destructive/10 border border-destructive/15 rounded-full active:scale-95 transition-transform"
-          >
-            <Bell className="h-4 w-4 text-destructive" />
-            <span className="text-xs font-semibold text-destructive">{pendingDebriefCount} need debrief</span>
-          </button>
-        )}
-      </div>
+      </AppHeader>
 
       {/* Content */}
       <div className="px-5 py-4">
