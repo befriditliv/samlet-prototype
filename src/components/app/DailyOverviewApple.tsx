@@ -8,6 +8,7 @@ import { TaskCenter } from "./TaskCenter";
 import { HCPAssistant } from "./HCPAssistant";
 import { SyncStatus } from "./SyncStatus";
 import { CanvasTargets } from "./CanvasTargets";
+import { AppHeader } from "./AppHeader";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format, addDays, subDays } from "date-fns";
 import { enUS } from "date-fns/locale";
