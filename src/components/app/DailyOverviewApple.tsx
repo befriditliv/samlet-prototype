@@ -653,7 +653,7 @@ export const DailyOverviewApple = ({
                           setHcpAssistantOpen(true);
                         }}
                         variant="outline"
-                        className="flex-1 rounded-xl text-sm font-medium h-10 gap-1.5"
+                        className="flex-1 rounded-xl text-sm font-bold h-11 gap-1.5 border-border/70"
                       >
                         <MessageCircle className="h-4 w-4" />
                         More info
@@ -662,7 +662,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           variant="outline"
-                          className="flex-1 rounded-xl text-sm font-medium h-10 text-muted-foreground border-muted-foreground/30"
+                          className="flex-1 rounded-xl text-sm font-bold h-11 text-muted-foreground border-muted-foreground/30"
                         >
                           <RotateCcw className="h-4 w-4 mr-1.5" />
                           Redo Debrief
@@ -670,7 +670,7 @@ export const DailyOverviewApple = ({
                       ) : meeting.status === "debrief-failed" ? (
                         <Button
                           onClick={() => onDebrief(meeting.id)}
-                          className="flex-1 rounded-xl bg-destructive hover:bg-destructive/90 text-destructive-foreground text-sm font-medium h-10"
+                          className="flex-1 rounded-xl bg-destructive hover:bg-destructive/90 text-destructive-foreground text-sm font-bold h-11 shadow-lg shadow-destructive/20"
                         >
                           <RotateCcw className="h-4 w-4 mr-1.5" />
                           Redo
@@ -678,7 +678,7 @@ export const DailyOverviewApple = ({
                       ) : (
                         <Button
                           onClick={() => onDebrief(meeting.id)}
-                          className="flex-1 rounded-xl bg-primary hover:bg-primary/90 text-sm font-medium h-10"
+                          className="flex-1 rounded-xl bg-primary hover:bg-primary/90 text-sm font-bold h-11 shadow-lg shadow-primary/20"
                         >
                           Debrief
                         </Button>
