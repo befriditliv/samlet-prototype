@@ -342,11 +342,11 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
           </div>
         </div>
 
-        {/* Status badge */}
+      {/* Status badge */}
         <div className="px-6 pt-4 flex justify-end">
-          <div className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-full text-sm font-medium">
-            <CheckCircle className="h-4 w-4" />
-            Failed
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-muted/60 text-muted-foreground rounded-full text-xs font-medium">
+            <AlertCircle className="h-3.5 w-3.5" />
+            Sync failed
           </div>
         </div>
 
@@ -371,7 +371,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
           <Button
             onClick={handleRetryDebrief}
             size="lg"
-            className="w-full bg-destructive hover:bg-destructive/90 text-white rounded-2xl py-4 text-base font-semibold"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl py-4 text-base font-semibold shadow-[var(--shadow-soft)]"
           >
             <RotateCcw className="h-5 w-5 mr-2" />
             Redo Debrief
