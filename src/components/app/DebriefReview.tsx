@@ -127,7 +127,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
   return (
     <div className="min-h-screen bg-background flex flex-col animate-fade-in">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-background border-b border-border/30">
+      <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl border-b border-border/50">
         <div className="px-4 sm:px-6 py-4">
           <div className="flex items-center gap-3">
             <Button
@@ -139,7 +139,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="flex-1 min-w-0">
-              <h1 className="text-lg font-semibold text-foreground tracking-tight">Meeting debrief</h1>
+              <h1 className="text-lg font-bold text-foreground tracking-tight">Meeting debrief</h1>
               <p className="text-xs text-muted-foreground truncate">{notes.meeting.hcpName} · {notes.meeting.date}</p>
             </div>
 
