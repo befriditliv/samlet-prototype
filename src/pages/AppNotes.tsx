@@ -19,15 +19,6 @@ const AppNotes = () => {
       <div className="px-4 space-y-4">
         {/* Note AI Section */}
         <div className="pt-2">
-          <div className="flex items-center gap-2 mb-3">
-            <div>
-              <h2 className="text-base font-semibold text-foreground leading-none">Note AI</h2>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Recorded meetings, transcribed into ready-to-use notes
-              </p>
-            </div>
-          </div>
-
           <div className="app-card divide-y divide-border/40 overflow-hidden">
             <div className="flex items-center justify-between px-4 pt-3 pb-2">
               <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
