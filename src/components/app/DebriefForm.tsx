@@ -211,7 +211,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
                 <div>
-                  <h1 className="text-xl font-semibold text-foreground">Debrief</h1>
+                  <h1 className="text-xl font-bold text-foreground tracking-tight">Debrief</h1>
                   <p className="text-sm text-muted-foreground">Dr. Sarah Johnson</p>
                 </div>
               </div>
