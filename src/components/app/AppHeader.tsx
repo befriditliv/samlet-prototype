@@ -17,7 +17,7 @@ interface AppHeaderProps {
  */
 export const AppHeader = ({ title, subtitle, onBack, right, children }: AppHeaderProps) => {
   return (
-    <header className="px-6 pt-8 pb-5 bg-gradient-to-b from-primary/[0.05] to-background">
+    <header className="sticky top-0 z-40 px-6 pt-7 pb-4 bg-background/80 backdrop-blur-2xl">
       {onBack && (
         <button
           onClick={onBack}
@@ -35,7 +35,7 @@ export const AppHeader = ({ title, subtitle, onBack, right, children }: AppHeade
             className="h-11 w-11 rounded-2xl shadow-[var(--shadow-soft)] shrink-0"
           />
           <div className="min-w-0 space-y-0.5">
-            <h1 className="text-[26px] leading-tight font-bold text-foreground tracking-tight truncate">
+            <h1 className="text-2xl leading-tight font-bold text-foreground tracking-tight truncate">
               {title}
             </h1>
             {typeof subtitle === "string" ? (

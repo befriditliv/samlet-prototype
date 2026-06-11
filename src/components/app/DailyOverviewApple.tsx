@@ -416,8 +416,8 @@ export const DailyOverviewApple = ({
                   <div className="flex items-start gap-4">
                     {/* Time column */}
                     <div className="text-center min-w-[52px]">
-                      <div className="font-bold text-foreground text-lg leading-none tracking-tight">{meeting.time}</div>
-                      <div className="text-[10px] font-medium text-muted-foreground mt-1">{meeting.duration}</div>
+                      <div className="font-bold text-foreground text-base leading-none tracking-tight">{meeting.time}</div>
+                      <div className="text-xs font-medium text-muted-foreground mt-1">{meeting.duration}</div>
                     </div>
 
                     {/* Avatar and info */}
@@ -434,7 +434,7 @@ export const DailyOverviewApple = ({
                           )}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-bold text-foreground text-sm leading-snug truncate">{meeting.hcpName}</h3>
+                          <h3 className="font-semibold text-foreground text-sm leading-snug truncate">{meeting.hcpName}</h3>
                           <p className="text-xs text-muted-foreground truncate">{meeting.location}</p>
                         </div>
                       </div>
@@ -445,35 +445,38 @@ export const DailyOverviewApple = ({
                   <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/40">
                     <div className="flex items-center gap-2">
                       {meeting.status === "debrief-submitting" && (
-                        <div className="flex items-center gap-2 px-2.5 py-1 bg-muted/50 rounded-lg">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted/60 rounded-full">
                           <WifiOff className="h-3 w-3 text-muted-foreground animate-pulse" />
-                          <span className="text-[11px] font-medium text-muted-foreground">Syncing...</span>
+                          <span className="text-xs font-medium text-muted-foreground">Syncing</span>
                         </div>
                       )}
                       {meeting.status === "debrief-processing" && (
-                        <div className="flex items-center gap-2 px-2.5 py-1 bg-primary/10 rounded-lg">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 rounded-full">
                           <Loader2 className="h-3 w-3 text-primary animate-spin" />
-                          <span className="text-[11px] font-medium text-primary">Processing...</span>
+                          <span className="text-xs font-medium text-primary">Processing</span>
                         </div>
                       )}
                       {meeting.status === "debrief-failed" && (
-                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-destructive/10 rounded-lg">
-                          <AlertCircle className="h-3.5 w-3.5 text-destructive" />
-                          <span className="text-[11px] font-bold text-destructive uppercase tracking-wide">Failed</span>
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted/60 rounded-full">
+                          <AlertCircle className="h-3.5 w-3.5 text-muted-foreground" />
+                          <span className="text-xs font-medium text-muted-foreground">Sync failed</span>
                         </div>
                       )}
                       {meeting.status === "debrief-needed" && (
-                        <span className="text-[11px] font-bold text-destructive">Needs debrief</span>
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 rounded-full">
+                          <span className="block w-1.5 h-1.5 rounded-full bg-primary" />
+                          <span className="text-xs font-medium text-primary">Needs debrief</span>
+                        </div>
                       )}
                       {meeting.status === "debrief-ready" && (
-                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 rounded-lg">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 rounded-full">
                           <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                          <span className="text-[11px] font-bold text-primary">Ready for review</span>
+                          <span className="text-xs font-medium text-primary">Ready for review</span>
                         </div>
                       )}
                       {meeting.status === "upcoming" && (
                         <div className="flex items-center gap-2">
-                          <span className={`text-[11px] font-medium ${isNextUpcoming ? "text-primary" : "text-muted-foreground"}`}>
+                          <span className={`text-xs font-medium ${isNextUpcoming ? "text-primary" : "text-muted-foreground"}`}>
                             {isNextUpcoming ? "Next meeting" : "Upcoming"}
                           </span>
                           {meeting.address && (
@@ -482,7 +485,7 @@ export const DailyOverviewApple = ({
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium text-muted-foreground hover:text-primary bg-muted/50 hover:bg-primary/10 rounded-md transition-colors"
+                              className="flex items-center gap-1 px-2 py-0.5 text-xs font-medium text-muted-foreground hover:text-primary bg-muted/60 hover:bg-primary/10 rounded-full transition-colors"
                             >
                               <MapPin className="h-3 w-3" />
                               Directions
@@ -492,7 +495,7 @@ export const DailyOverviewApple = ({
                             <a
                               href={`tel:${meeting.phone}`}
                               onClick={(e) => e.stopPropagation()}
-                              className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium text-muted-foreground hover:text-primary bg-muted/50 hover:bg-primary/10 rounded-md transition-colors"
+                              className="flex items-center gap-1 px-2 py-0.5 text-xs font-medium text-muted-foreground hover:text-primary bg-muted/60 hover:bg-primary/10 rounded-full transition-colors"
                             >
                               <Phone className="h-3 w-3" />
                               Call
@@ -508,7 +511,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebriefReview(meeting.id)}
                           size="sm"
-                          className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-primary/20"
+                          className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold px-5 py-1.5 h-9 shadow-[var(--shadow-soft)]"
                         >
                           <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
                           Review
@@ -518,7 +521,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           size="sm"
-                          className="rounded-xl bg-destructive hover:bg-destructive/90 text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-destructive/20"
+                          className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold px-5 py-1.5 h-9 shadow-[var(--shadow-soft)]"
                         >
                           Debrief
                         </Button>
@@ -527,7 +530,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           size="sm"
-                          className="rounded-xl bg-destructive hover:bg-destructive/90 text-white text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-destructive/20"
+                          className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold px-5 py-1.5 h-9 shadow-[var(--shadow-soft)]"
                         >
                           <RotateCcw className="h-3 w-3 mr-1.5" />
                           Redo
@@ -577,10 +580,9 @@ export const DailyOverviewApple = ({
                     )}
 
                     {/* Jarvis Recommendations - premium accent card */}
-                    <div className="relative overflow-hidden rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/[0.06] to-primary/[0.01] p-4">
-                      <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-br from-primary/20 to-transparent rounded-full -mr-14 -mt-14 blur-2xl pointer-events-none" />
+                    <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-secondary/40 p-4">
                       <div className="relative">
-                        <h3 className="text-sm font-bold text-foreground mb-1 flex items-center gap-2">
+                        <h3 className="text-sm font-semibold text-foreground mb-1 flex items-center gap-2">
                           <span className="p-1.5 bg-primary rounded-lg flex items-center justify-center">
                             <Lightbulb className="w-3.5 h-3.5 text-primary-foreground" />
                           </span>
@@ -593,28 +595,20 @@ export const DailyOverviewApple = ({
                               <span className="mt-0.5 shrink-0 w-4 h-4 rounded-full bg-primary/15 flex items-center justify-center">
                                 <CheckCircle className="w-3 h-3 text-primary" />
                               </span>
-                              <p className="text-xs font-medium text-foreground leading-relaxed">{point.description}</p>
+                              <p className="text-xs text-foreground leading-relaxed">{point.description}</p>
                             </div>
                           ))}
                         </div>
 
                         {/* Quick info badges */}
                         <div className="flex flex-wrap gap-2 mt-4">
-                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md ${
-                            hcpData.accessLevel === "High" ? "bg-success/10 text-success" :
-                            hcpData.accessLevel === "Medium" ? "bg-warning/10 text-warning" :
-                            "bg-destructive/10 text-destructive"
-                          }`}>
+                          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-muted/60 text-muted-foreground">
                             {hcpData.accessLevel} access
                           </span>
-                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md ${
-                            hcpData.consentStatus === "OPT IN" ? "bg-success/10 text-success" :
-                            hcpData.consentStatus === "OPT OUT" ? "bg-destructive/10 text-destructive" :
-                            "bg-muted text-muted-foreground"
-                          }`}>
+                          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-muted/60 text-muted-foreground">
                             {hcpData.consentStatus}
                           </span>
-                          <span className="text-[10px] font-bold px-2.5 py-1 rounded-md bg-muted text-muted-foreground">
+                          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-muted/60 text-muted-foreground">
                             {hcpData.daysSinceLastInteraction} days since last
                           </span>
                         </div>
@@ -630,7 +624,7 @@ export const DailyOverviewApple = ({
                           setHcpAssistantOpen(true);
                         }}
                         variant="outline"
-                        className="flex-1 rounded-xl text-sm font-bold h-11 gap-1.5 border-border/70"
+                        className="flex-1 rounded-full text-sm font-semibold h-11 gap-1.5 border-border/70 bg-transparent"
                       >
                         <MessageCircle className="h-4 w-4" />
                         More info
@@ -639,7 +633,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           variant="outline"
-                          className="flex-1 rounded-xl text-sm font-bold h-11 text-muted-foreground border-muted-foreground/30"
+                          className="flex-1 rounded-full text-sm font-semibold h-11 text-muted-foreground border-border/70 bg-transparent"
                         >
                           <RotateCcw className="h-4 w-4 mr-1.5" />
                           Redo Debrief
@@ -647,7 +641,7 @@ export const DailyOverviewApple = ({
                       ) : meeting.status === "debrief-failed" ? (
                         <Button
                           onClick={() => onDebrief(meeting.id)}
-                          className="flex-1 rounded-xl bg-destructive hover:bg-destructive/90 text-destructive-foreground text-sm font-bold h-11 shadow-lg shadow-destructive/20"
+                          className="flex-1 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold h-11 shadow-[var(--shadow-soft)]"
                         >
                           <RotateCcw className="h-4 w-4 mr-1.5" />
                           Redo
@@ -655,7 +649,7 @@ export const DailyOverviewApple = ({
                       ) : (
                         <Button
                           onClick={() => onDebrief(meeting.id)}
-                          className="flex-1 rounded-xl bg-primary hover:bg-primary/90 text-sm font-bold h-11 shadow-lg shadow-primary/20"
+                          className="flex-1 rounded-full bg-primary hover:bg-primary/90 text-sm font-semibold h-11 shadow-[var(--shadow-soft)]"
                         >
                           Debrief
                         </Button>
