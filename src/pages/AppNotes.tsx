@@ -1,5 +1,5 @@
 import { BottomNav } from "@/components/app/BottomNav";
-import jarvisLogo from "@/assets/jarvis-logo.svg";
+import { AppHeader } from "@/components/app/AppHeader";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight, FileText, AlertCircle } from "lucide-react";
 import { noteAiSummaries } from "@/data/noteAiSummaries";
@@ -13,16 +13,7 @@ const AppNotes = () => {
 
   return (
     <div className="min-h-[100dvh] bg-background pb-20">
-      {/* Header */}
-      <div className="px-5 pt-6 pb-4 bg-gradient-to-b from-primary/[0.03] to-background">
-        <div className="flex items-center gap-4">
-          <img src={jarvisLogo} alt="Jarvis" className="h-12 w-12" />
-          <div>
-            <h1 className="text-2xl font-semibold text-foreground tracking-tight">Note</h1>
-            <p className="text-sm text-muted-foreground">AI notes from your meetings</p>
-          </div>
-        </div>
-      </div>
+      <AppHeader title="Note" subtitle="AI notes from your meetings" />
 
       {/* Content */}
       <div className="px-4 space-y-4">
