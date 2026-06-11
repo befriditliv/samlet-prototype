@@ -603,21 +603,13 @@ export const DailyOverviewApple = ({
 
                         {/* Quick info badges */}
                         <div className="flex flex-wrap gap-2 mt-4">
-                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md ${
-                            hcpData.accessLevel === "High" ? "bg-success/10 text-success" :
-                            hcpData.accessLevel === "Medium" ? "bg-warning/10 text-warning" :
-                            "bg-destructive/10 text-destructive"
-                          }`}>
+                          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-muted/60 text-muted-foreground">
                             {hcpData.accessLevel} access
                           </span>
-                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md ${
-                            hcpData.consentStatus === "OPT IN" ? "bg-success/10 text-success" :
-                            hcpData.consentStatus === "OPT OUT" ? "bg-destructive/10 text-destructive" :
-                            "bg-muted text-muted-foreground"
-                          }`}>
+                          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-muted/60 text-muted-foreground">
                             {hcpData.consentStatus}
                           </span>
-                          <span className="text-[10px] font-bold px-2.5 py-1 rounded-md bg-muted text-muted-foreground">
+                          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-muted/60 text-muted-foreground">
                             {hcpData.daysSinceLastInteraction} days since last
                           </span>
                         </div>
