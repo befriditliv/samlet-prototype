@@ -196,7 +196,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
 
   if (phase === 'template') {
     return (
-      <div className="min-h-screen bg-background animate-fade-in">
+      <div className="app-shell min-h-screen bg-background animate-fade-in sm:border-x sm:border-border/50">
         {/* Header */}
         <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-xl border-b border-border/50">
           <div className="px-6 py-4">
@@ -323,7 +323,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
   // Failed Phase
   if (phase === 'failed') {
     return (
-      <div className="min-h-screen bg-background flex flex-col animate-fade-in">
+      <div className="app-shell min-h-screen bg-background flex flex-col animate-fade-in sm:border-x sm:border-border/50">
         {/* Header */}
         <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl px-4 sm:px-6 py-4 border-b border-border/50">
           <div className="flex items-center gap-3">
@@ -391,7 +391,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
 
   // Debrief Phase - Question-based flow
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="app-shell min-h-screen bg-background flex flex-col sm:border-x sm:border-border/50">
       {/* Minimal Header */}
       <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl px-4 sm:px-6 py-4 border-b border-border/50">
         <div className="flex items-center gap-3">

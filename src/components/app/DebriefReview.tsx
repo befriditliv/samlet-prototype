@@ -125,7 +125,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
   const hasComplianceIssues = (notes.complianceIssues?.length ?? 0) > 0;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col animate-fade-in">
+    <div className="app-shell min-h-screen bg-background flex flex-col animate-fade-in sm:border-x sm:border-border/50">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl border-b border-border/50">
         <div className="px-4 sm:px-6 py-4">
