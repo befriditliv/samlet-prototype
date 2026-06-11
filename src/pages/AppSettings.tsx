@@ -1,7 +1,6 @@
-import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { AppHeader } from "@/components/app/AppHeader";
 
 const AppSettings = () => {
   const { logout } = useAuth();
@@ -9,23 +8,7 @@ const AppSettings = () => {
 
   return (
     <div className="min-h-[100dvh] bg-background pb-10">
-      {/* Header */}
-      <div className="px-5 pt-6 pb-4 bg-gradient-to-b from-primary/[0.03] to-background">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-1 text-sm text-muted-foreground mb-4 active:scale-95 transition-transform"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          Back
-        </button>
-        <div className="flex items-center gap-4">
-          <img src={jarvisLogo} alt="Jarvis" className="h-12 w-12" />
-          <div>
-            <h1 className="text-2xl font-semibold text-foreground tracking-tight">Settings</h1>
-            <p className="text-sm text-muted-foreground">Your profile & preferences</p>
-          </div>
-        </div>
-      </div>
+      <AppHeader title="Settings" subtitle="Your profile & preferences" onBack={() => navigate(-1)} />
 
       {/* Content */}
       <div className="px-4 space-y-4">
