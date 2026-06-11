@@ -73,14 +73,9 @@ const AppJarvis = () => {
       {/* Chat Content */}
       <div className="flex-1 overflow-y-auto px-5 pb-40 pt-2">
         {responses.length === 0 && !isLoading && (
-          <div className="pt-8">
-            {/* Hero */}
-            <div className="flex flex-col items-center text-center mb-8">
-              <img
-                src={jarvisLogo}
-                alt="Jarvis"
-                className="h-16 w-16 rounded-[1.4rem] shadow-[var(--shadow-soft)] ring-1 ring-white/40 mb-5"
-              />
+          <div className="pt-4">
+            {/* Heading */}
+            <div className="mb-5">
               <h3 className="text-xl font-bold text-foreground tracking-tight">How can I help?</h3>
               <p className="text-sm text-muted-foreground mt-1">
                 Ask anything about your accounts, schedule or territory.
