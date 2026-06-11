@@ -17,6 +17,7 @@ interface AppHeaderProps {
  * optional back action, an optional right slot and optional content below.
  */
 export const AppHeader = ({ title, subtitle, onBack, right, children }: AppHeaderProps) => {
+  const navigate = useNavigate();
   return (
     <header className="px-6 pt-7 pb-4 bg-white border-b border-border shadow-sm">
       {onBack && (
