@@ -277,13 +277,6 @@ export const DailyOverviewApple = ({
 
   const pendingDebriefCount = meetings.filter(m => m.status === "debrief-needed" || m.status === "debrief-failed").length;
 
-  const greeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "Good morning";
-    if (hour < 17) return "Good afternoon";
-    return "Good evening";
-  };
-
   const scrollToFirstPending = () => {
     const firstPending = activeMeetings.find(m => m.status === "debrief-needed" || m.status === "debrief-failed");
     if (firstPending) {
