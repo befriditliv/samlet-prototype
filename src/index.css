@@ -171,17 +171,16 @@ All colors MUST be HSL.
     @apply relative mx-auto w-full;
     max-width: 30rem;
   }
-  /* Soft pale aurora behind the app so the glass has light to refract. */
-  .app-shell::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-      radial-gradient(60% 50% at 12% 0%, hsl(217 91% 60% / 0.12), transparent 70%),
-      radial-gradient(55% 45% at 100% 12%, hsl(190 90% 70% / 0.12), transparent 70%),
-      radial-gradient(70% 60% at 50% 100%, hsl(250 90% 75% / 0.1), transparent 70%);
+  /* Soft pale aurora backdrop so the frosted glass has bright light to
+     refract. Higher specificity (body .app-shell) intentionally overrides the
+     flat `bg-background` utility, scoped to the mobile app only. */
+  body .app-shell {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(60% 45% at 8% 0%, hsl(217 91% 60% / 0.14), transparent 70%),
+      radial-gradient(55% 40% at 100% 10%, hsl(190 90% 65% / 0.14), transparent 70%),
+      radial-gradient(75% 55% at 50% 100%, hsl(255 90% 72% / 0.12), transparent 70%);
+    background-attachment: fixed;
   }
   /* Same width used for fixed bars (bottom nav, chat input) which escape the
      .app-shell container because they are position: fixed. */
