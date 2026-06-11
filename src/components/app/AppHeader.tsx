@@ -43,11 +43,11 @@ export const AppHeader = ({ title, subtitle, onBack, right, children }: AppHeade
         <div className="flex items-center gap-1 shrink-0">
           {right}
           <div className="relative shrink-0">
-            <div className="absolute inset-0 -m-1.5 rounded-[1.4rem] bg-primary/10 blur-md" aria-hidden />
+            <div className="absolute inset-0 -m-2 rounded-[1.6rem] bg-primary/10 blur-md" aria-hidden />
             <img
               src={jarvisLogo}
               alt="Jarvis"
-              className="relative h-12 w-12 rounded-[1.1rem] shadow-[var(--shadow-soft)] ring-1 ring-white/40"
+              className="relative h-14 w-14 rounded-[1.25rem] shadow-[var(--shadow-soft)] ring-1 ring-white/40"
             />
           </div>
         </div>
