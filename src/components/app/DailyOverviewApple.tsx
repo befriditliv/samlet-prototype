@@ -445,35 +445,38 @@ export const DailyOverviewApple = ({
                   <div className="flex items-center justify-between mt-4 pt-4 border-t border-border/40">
                     <div className="flex items-center gap-2">
                       {meeting.status === "debrief-submitting" && (
-                        <div className="flex items-center gap-2 px-2.5 py-1 bg-muted/50 rounded-lg">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted/60 rounded-full">
                           <WifiOff className="h-3 w-3 text-muted-foreground animate-pulse" />
-                          <span className="text-[11px] font-medium text-muted-foreground">Syncing...</span>
+                          <span className="text-xs font-medium text-muted-foreground">Syncing</span>
                         </div>
                       )}
                       {meeting.status === "debrief-processing" && (
-                        <div className="flex items-center gap-2 px-2.5 py-1 bg-primary/10 rounded-lg">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 rounded-full">
                           <Loader2 className="h-3 w-3 text-primary animate-spin" />
-                          <span className="text-[11px] font-medium text-primary">Processing...</span>
+                          <span className="text-xs font-medium text-primary">Processing</span>
                         </div>
                       )}
                       {meeting.status === "debrief-failed" && (
-                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-destructive/10 rounded-lg">
-                          <AlertCircle className="h-3.5 w-3.5 text-destructive" />
-                          <span className="text-[11px] font-bold text-destructive uppercase tracking-wide">Failed</span>
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-muted/60 rounded-full">
+                          <AlertCircle className="h-3.5 w-3.5 text-muted-foreground" />
+                          <span className="text-xs font-medium text-muted-foreground">Sync failed</span>
                         </div>
                       )}
                       {meeting.status === "debrief-needed" && (
-                        <span className="text-[11px] font-bold text-destructive">Needs debrief</span>
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 rounded-full">
+                          <span className="block w-1.5 h-1.5 rounded-full bg-primary" />
+                          <span className="text-xs font-medium text-primary">Needs debrief</span>
+                        </div>
                       )}
                       {meeting.status === "debrief-ready" && (
-                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 rounded-lg">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 rounded-full">
                           <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                          <span className="text-[11px] font-bold text-primary">Ready for review</span>
+                          <span className="text-xs font-medium text-primary">Ready for review</span>
                         </div>
                       )}
                       {meeting.status === "upcoming" && (
                         <div className="flex items-center gap-2">
-                          <span className={`text-[11px] font-medium ${isNextUpcoming ? "text-primary" : "text-muted-foreground"}`}>
+                          <span className={`text-xs font-medium ${isNextUpcoming ? "text-primary" : "text-muted-foreground"}`}>
                             {isNextUpcoming ? "Next meeting" : "Upcoming"}
                           </span>
                           {meeting.address && (
@@ -482,7 +485,7 @@ export const DailyOverviewApple = ({
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium text-muted-foreground hover:text-primary bg-muted/50 hover:bg-primary/10 rounded-md transition-colors"
+                              className="flex items-center gap-1 px-2 py-0.5 text-xs font-medium text-muted-foreground hover:text-primary bg-muted/60 hover:bg-primary/10 rounded-full transition-colors"
                             >
                               <MapPin className="h-3 w-3" />
                               Directions
@@ -492,7 +495,7 @@ export const DailyOverviewApple = ({
                             <a
                               href={`tel:${meeting.phone}`}
                               onClick={(e) => e.stopPropagation()}
-                              className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-medium text-muted-foreground hover:text-primary bg-muted/50 hover:bg-primary/10 rounded-md transition-colors"
+                              className="flex items-center gap-1 px-2 py-0.5 text-xs font-medium text-muted-foreground hover:text-primary bg-muted/60 hover:bg-primary/10 rounded-full transition-colors"
                             >
                               <Phone className="h-3 w-3" />
                               Call
