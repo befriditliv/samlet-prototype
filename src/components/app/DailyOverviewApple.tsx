@@ -599,44 +599,49 @@ export const DailyOverviewApple = ({
                       </div>
                     )}
 
-                    {/* Jarvis Recommendations */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-foreground mb-1 flex items-center gap-2">
-                        <Lightbulb className="w-4 h-4 text-primary" />
-                        Jarvis recommended actions
-                      </h3>
-                      <p className="text-xs text-muted-foreground mb-3">Personalized recommendations for your upcoming conversation</p>
-                      <div className="space-y-3">
-                        {hcpData.importantPoints.map((point, idx) => (
-                          <div key={idx} className="flex items-start gap-3">
-                            <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                            <div>
-                              <p className="text-sm text-foreground leading-relaxed">{point.description}</p>
+                    {/* Jarvis Recommendations - premium accent card */}
+                    <div className="relative overflow-hidden rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/[0.06] to-primary/[0.01] p-4">
+                      <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-br from-primary/20 to-transparent rounded-full -mr-14 -mt-14 blur-2xl pointer-events-none" />
+                      <div className="relative">
+                        <h3 className="text-sm font-bold text-foreground mb-1 flex items-center gap-2">
+                          <span className="p-1.5 bg-primary rounded-lg flex items-center justify-center">
+                            <Lightbulb className="w-3.5 h-3.5 text-primary-foreground" />
+                          </span>
+                          Jarvis recommended actions
+                        </h3>
+                        <p className="text-xs text-muted-foreground mb-4 mt-1">Personalized recommendations for your upcoming conversation</p>
+                        <div className="space-y-3">
+                          {hcpData.importantPoints.map((point, idx) => (
+                            <div key={idx} className="flex items-start gap-3">
+                              <span className="mt-0.5 shrink-0 w-4 h-4 rounded-full bg-primary/15 flex items-center justify-center">
+                                <CheckCircle className="w-3 h-3 text-primary" />
+                              </span>
+                              <p className="text-xs font-medium text-foreground leading-relaxed">{point.description}</p>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                          ))}
+                        </div>
 
-                    {/* Quick info badges */}
-                    <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-border/30">
-                      <span className={`text-[10px] font-medium px-2 py-1 rounded-md ${
-                        hcpData.accessLevel === "High" ? "bg-green-100 text-green-700" :
-                        hcpData.accessLevel === "Medium" ? "bg-yellow-100 text-yellow-700" :
-                        "bg-red-100 text-red-700"
-                      }`}>
-                        {hcpData.accessLevel} access
-                      </span>
-                      <span className={`text-[10px] font-medium px-2 py-1 rounded-md ${
-                        hcpData.consentStatus === "OPT IN" ? "bg-green-100 text-green-700" :
-                        hcpData.consentStatus === "OPT OUT" ? "bg-red-100 text-red-700" :
-                        "bg-gray-100 text-gray-700"
-                      }`}>
-                        {hcpData.consentStatus}
-                      </span>
-                      <span className="text-[10px] font-medium px-2 py-1 rounded-md bg-muted text-muted-foreground">
-                        {hcpData.daysSinceLastInteraction} days since last
-                      </span>
+                        {/* Quick info badges */}
+                        <div className="flex flex-wrap gap-2 mt-4">
+                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md ${
+                            hcpData.accessLevel === "High" ? "bg-success/10 text-success" :
+                            hcpData.accessLevel === "Medium" ? "bg-warning/10 text-warning" :
+                            "bg-destructive/10 text-destructive"
+                          }`}>
+                            {hcpData.accessLevel} access
+                          </span>
+                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md ${
+                            hcpData.consentStatus === "OPT IN" ? "bg-success/10 text-success" :
+                            hcpData.consentStatus === "OPT OUT" ? "bg-destructive/10 text-destructive" :
+                            "bg-muted text-muted-foreground"
+                          }`}>
+                            {hcpData.consentStatus}
+                          </span>
+                          <span className="text-[10px] font-bold px-2.5 py-1 rounded-md bg-muted text-muted-foreground">
+                            {hcpData.daysSinceLastInteraction} days since last
+                          </span>
+                        </div>
+                      </div>
                     </div>
 
                     {/* Action buttons */}
