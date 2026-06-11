@@ -74,14 +74,6 @@ const AppJarvis = () => {
       <div className="flex-1 overflow-y-auto px-5 pb-40 pt-2">
         {responses.length === 0 && !isLoading && (
           <div className="pt-4">
-            {/* Heading */}
-            <div className="mb-5">
-              <h3 className="text-xl font-bold text-foreground tracking-tight">How can I help?</h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                Ask anything about your accounts, schedule or territory.
-              </p>
-            </div>
-
             {/* Suggestions */}
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3 px-1">
               Quick suggestions
