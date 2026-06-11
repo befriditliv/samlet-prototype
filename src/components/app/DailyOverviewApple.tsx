@@ -289,7 +289,7 @@ export const DailyOverviewApple = ({
   };
 
   return (
-    <div className="app-shell min-h-screen bg-background pb-24 sm:border-x-2 sm:border-white/50">
+    <div className="app-shell min-h-screen bg-background pb-24 sm:border-x-2 sm:border-border/50">
       {/* Header - unified premium */}
       <AppHeader
         title="Today's schedule"
