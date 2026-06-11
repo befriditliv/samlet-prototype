@@ -304,7 +304,7 @@ export const DailyOverviewApple = ({
         subtitle={
           <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                 <PopoverTrigger asChild>
-                  <button className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+                  <button className="inline-flex items-center gap-1 rounded-full bg-secondary/70 px-2.5 py-0.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
                     {displayDate}
                     <ChevronDown className="h-3 w-3 opacity-40" />
                   </button>
