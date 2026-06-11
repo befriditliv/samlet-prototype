@@ -17,7 +17,7 @@ interface AppHeaderProps {
  */
 export const AppHeader = ({ title, subtitle, onBack, right, children }: AppHeaderProps) => {
   return (
-    <header className="sticky top-0 z-40 px-6 pt-7 pb-4 bg-white border-b-2 border-primary">
+    <header className="sticky top-0 z-40 px-6 pt-7 pb-4 bg-white border-b border-border shadow-sm">
       {onBack && (
         <button
           onClick={onBack}
