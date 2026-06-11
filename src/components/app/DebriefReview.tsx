@@ -127,7 +127,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
   return (
     <div className="app-shell min-h-screen bg-background flex flex-col animate-fade-in sm:border-x sm:border-border/50">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl border-b border-border/50">
+      <div className="sticky top-0 z-10 bg-white border-b border-border shadow-sm">
         <div className="px-4 sm:px-6 py-4">
           <div className="flex items-center gap-3">
             <Button
