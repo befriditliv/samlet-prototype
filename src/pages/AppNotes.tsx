@@ -12,13 +12,13 @@ const AppNotes = () => {
     .filter((n) => !n.matchedMeeting).length;
 
   return (
-    <div className="app-shell min-h-[100dvh] bg-background pb-20 sm:border-x sm:border-border/50">
+    <div className="app-shell min-h-[100dvh] bg-background pb-24 sm:border-x sm:border-border/50">
       <AppHeader title="Note" subtitle="AI notes from your meetings" />
 
       {/* Content */}
-      <div className="px-4 space-y-4">
+      <div className="px-4 pt-4 space-y-4">
         {/* Note AI Section */}
-        <div className="pt-2">
+        <div>
           <div className="app-card divide-y divide-border/40 overflow-hidden">
             <div className="flex items-center justify-between px-4 pt-3 pb-2">
               <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">

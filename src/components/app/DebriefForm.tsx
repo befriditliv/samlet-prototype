@@ -198,7 +198,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
     return (
       <div className="app-shell min-h-screen bg-background animate-fade-in sm:border-x sm:border-border/50">
         {/* Header */}
-        <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-xl border-b border-border/50">
+        <div className="sticky top-0 z-10 bg-white border-b border-border shadow-sm">
           <div className="px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
@@ -325,7 +325,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
     return (
       <div className="app-shell min-h-screen bg-background flex flex-col animate-fade-in sm:border-x sm:border-border/50">
         {/* Header */}
-        <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl px-4 sm:px-6 py-4 border-b border-border/50">
+        <div className="sticky top-0 z-10 bg-white px-4 sm:px-6 py-4 border-b border-border shadow-sm">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
@@ -393,7 +393,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
   return (
     <div className="app-shell min-h-screen bg-background flex flex-col sm:border-x sm:border-border/50">
       {/* Minimal Header */}
-      <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl px-4 sm:px-6 py-4 border-b border-border/50">
+      <div className="sticky top-0 z-10 bg-white px-4 sm:px-6 py-4 border-b border-border shadow-sm">
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
