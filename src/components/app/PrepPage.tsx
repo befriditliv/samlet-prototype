@@ -98,7 +98,7 @@ export const PrepPage = ({ meetingId, onBack, onStartMeeting }: PrepPageProps) =
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="app-shell min-h-screen bg-background pb-24 sm:border-x sm:border-border/50">
+    <div className="app-shell min-h-screen bg-background pb-24 sm:border-x-2 sm:border-white/50">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
         <div className="px-4 py-3">

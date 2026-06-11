@@ -67,7 +67,7 @@ const AppJarvis = () => {
   };
 
   return (
-    <div className="app-shell min-h-[100dvh] bg-background flex flex-col sm:border-x sm:border-border/50">
+    <div className="app-shell min-h-[100dvh] bg-background flex flex-col sm:border-x-2 sm:border-white/50">
       <AppHeader title="Ask Jarvis" subtitle="Ask about anything" />
 
       {/* Chat Content */}
@@ -135,7 +135,7 @@ const AppJarvis = () => {
 
       {/* Chat Input */}
       <div className="fixed bottom-16 left-0 right-0">
-        <div className="app-shell-bar px-5 pb-3 pt-3 bg-background/70 backdrop-blur-2xl border-t border-border/50 sm:border-x sm:border-border/50">
+        <div className="app-shell-bar px-5 pb-3 pt-3 bg-background/70 backdrop-blur-2xl border-t border-border/50 sm:border-x-2 sm:border-white/50">
           <div className="flex items-center gap-2 bg-card rounded-2xl border border-border/60 shadow-[var(--shadow-soft)] p-1.5 pl-4">
           <Input
             value={query}
