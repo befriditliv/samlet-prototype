@@ -216,10 +216,10 @@ export const CanvasTargets = () => {
         <Button
           onClick={handleOpen}
           variant="outline"
-          className="w-full h-14 rounded-2xl border-dashed border-2 border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50 transition-all group"
+          className="w-full h-16 rounded-3xl border border-border/60 bg-card hover:bg-secondary/40 transition-all group shadow-[var(--shadow-soft)]"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+            <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center transition-colors">
               <Navigation className="h-5 w-5 text-primary" />
             </div>
             <div className="text-left">
