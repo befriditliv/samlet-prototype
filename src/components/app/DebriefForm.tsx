@@ -393,7 +393,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Minimal Header */}
-      <div className="px-4 sm:px-6 py-4 border-b border-border/30">
+      <div className="sticky top-0 z-10 bg-background/70 backdrop-blur-xl px-4 sm:px-6 py-4 border-b border-border/50">
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
@@ -404,7 +404,7 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex-1 min-w-0">
-            <h1 className="text-lg font-semibold text-foreground truncate">Voice Debrief</h1>
+            <h1 className="text-lg font-bold text-foreground tracking-tight truncate">Voice debrief</h1>
             <p className="text-xs text-muted-foreground truncate">Dr. Sarah Johnson</p>
           </div>
           {/* Question indicator */}
