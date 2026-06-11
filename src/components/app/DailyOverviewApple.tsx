@@ -296,17 +296,17 @@ export const DailyOverviewApple = ({
   };
 
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className="min-h-screen bg-background pb-24">
       {/* Header - Super clean */}
-      <div className="px-5 pt-6 pb-4 bg-gradient-to-b from-primary/[0.03] to-background">
+      <div className="px-6 pt-8 pb-5 bg-gradient-to-b from-primary/[0.05] to-background">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <img src={jarvisLogo} alt="Jarvis" className="h-12 w-12" />
-            <div>
-              <h1 className="text-2xl font-semibold text-foreground tracking-tight">{greeting()}</h1>
+            <img src={jarvisLogo} alt="Jarvis" className="h-11 w-11 rounded-2xl shadow-[var(--shadow-soft)]" />
+            <div className="space-y-0.5">
+              <h1 className="text-[26px] leading-tight font-bold text-foreground tracking-tight">{greeting()}</h1>
               <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                 <PopoverTrigger asChild>
-                  <button className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+                  <button className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
                     {displayDate}
                     <ChevronDown className="h-3 w-3 opacity-40" />
                   </button>
@@ -371,26 +371,26 @@ export const DailyOverviewApple = ({
       </div>
 
       {/* Stats bar */}
-      <div className="px-4 pb-3 flex items-center gap-3">
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full">
-          <Calendar className="h-3.5 w-3.5 text-primary" />
-          <span className="text-xs font-medium text-primary">{meetings.length} meetings</span>
+      <div className="px-6 pb-4 flex items-center gap-2">
+        <div className="flex items-center gap-2 px-3.5 py-2 bg-primary/10 border border-primary/15 rounded-full">
+          <Calendar className="h-4 w-4 text-primary" />
+          <span className="text-xs font-semibold text-primary">{meetings.length} meetings</span>
         </div>
         {pendingDebriefCount > 0 && (
           <button
             onClick={scrollToFirstPending}
-            className="flex items-center gap-2 px-3 py-1.5 bg-destructive/10 rounded-full active:scale-95 transition-transform"
+            className="flex items-center gap-2 px-3.5 py-2 bg-destructive/10 border border-destructive/15 rounded-full active:scale-95 transition-transform"
           >
-            <Bell className="h-3.5 w-3.5 text-destructive" />
-            <span className="text-xs font-medium text-destructive">{pendingDebriefCount} need debrief</span>
+            <Bell className="h-4 w-4 text-destructive" />
+            <span className="text-xs font-semibold text-destructive">{pendingDebriefCount} need debrief</span>
           </button>
         )}
       </div>
 
       {/* Content */}
-      <div className="px-4 py-4">
-        <div className="space-y-3">
-          <h2 className="text-base font-semibold text-foreground">Today's schedule</h2>
+      <div className="px-5 py-4">
+        <div className="space-y-4">
+          <h2 className="text-lg font-bold text-foreground tracking-tight">Today's schedule</h2>
 
           {/* Timeline container */}
           <div className="relative" ref={containerRef}>
