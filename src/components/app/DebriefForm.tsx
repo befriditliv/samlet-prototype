@@ -268,9 +268,9 @@ export const DebriefForm = ({ meetingId, onBack, onSave }: DebriefFormProps) => 
           ) : (
             <>
               {/* Tips & Best Practices Info Box */}
-              <Card className="p-6 shadow-sm border-0 bg-gradient-to-br from-primary/5 to-primary/10 backdrop-blur-sm">
+              <Card className="p-6 border border-border/60 bg-secondary/40 shadow-[var(--shadow-soft)] rounded-2xl">
                 <div className="flex items-start gap-4">
-                  <div className="p-2 bg-primary/10 rounded-lg">
+                  <div className="p-2 bg-primary/10 rounded-xl">
                     <Lightbulb className="h-5 w-5 text-primary" />
                   </div>
                   <div className="flex-1">
