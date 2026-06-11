@@ -580,10 +580,9 @@ export const DailyOverviewApple = ({
                     )}
 
                     {/* Jarvis Recommendations - premium accent card */}
-                    <div className="relative overflow-hidden rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/[0.06] to-primary/[0.01] p-4">
-                      <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-br from-primary/20 to-transparent rounded-full -mr-14 -mt-14 blur-2xl pointer-events-none" />
+                    <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-secondary/40 p-4">
                       <div className="relative">
-                        <h3 className="text-sm font-bold text-foreground mb-1 flex items-center gap-2">
+                        <h3 className="text-sm font-semibold text-foreground mb-1 flex items-center gap-2">
                           <span className="p-1.5 bg-primary rounded-lg flex items-center justify-center">
                             <Lightbulb className="w-3.5 h-3.5 text-primary-foreground" />
                           </span>
@@ -596,7 +595,7 @@ export const DailyOverviewApple = ({
                               <span className="mt-0.5 shrink-0 w-4 h-4 rounded-full bg-primary/15 flex items-center justify-center">
                                 <CheckCircle className="w-3 h-3 text-primary" />
                               </span>
-                              <p className="text-xs font-medium text-foreground leading-relaxed">{point.description}</p>
+                              <p className="text-xs text-foreground leading-relaxed">{point.description}</p>
                             </div>
                           ))}
                         </div>
