@@ -416,8 +416,8 @@ export const DailyOverviewApple = ({
                   <div className="flex items-start gap-4">
                     {/* Time column */}
                     <div className="text-center min-w-[52px]">
-                      <div className="font-bold text-foreground text-lg leading-none tracking-tight">{meeting.time}</div>
-                      <div className="text-[10px] font-medium text-muted-foreground mt-1">{meeting.duration}</div>
+                      <div className="font-bold text-foreground text-base leading-none tracking-tight">{meeting.time}</div>
+                      <div className="text-xs font-medium text-muted-foreground mt-1">{meeting.duration}</div>
                     </div>
 
                     {/* Avatar and info */}
@@ -434,7 +434,7 @@ export const DailyOverviewApple = ({
                           )}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h3 className="font-bold text-foreground text-sm leading-snug truncate">{meeting.hcpName}</h3>
+                          <h3 className="font-semibold text-foreground text-sm leading-snug truncate">{meeting.hcpName}</h3>
                           <p className="text-xs text-muted-foreground truncate">{meeting.location}</p>
                         </div>
                       </div>
