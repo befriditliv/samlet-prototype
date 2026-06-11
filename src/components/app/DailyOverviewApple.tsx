@@ -511,7 +511,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebriefReview(meeting.id)}
                           size="sm"
-                          className="rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-primary/20"
+                          className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold px-5 py-1.5 h-9 shadow-[var(--shadow-soft)]"
                         >
                           <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
                           Review
@@ -521,7 +521,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           size="sm"
-                          className="rounded-xl bg-destructive hover:bg-destructive/90 text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-destructive/20"
+                          className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold px-5 py-1.5 h-9 shadow-[var(--shadow-soft)]"
                         >
                           Debrief
                         </Button>
@@ -530,7 +530,7 @@ export const DailyOverviewApple = ({
                         <Button
                           onClick={() => onDebrief(meeting.id)}
                           size="sm"
-                          className="rounded-xl bg-destructive hover:bg-destructive/90 text-white text-xs font-bold px-5 py-1.5 h-9 shadow-lg shadow-destructive/20"
+                          className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold px-5 py-1.5 h-9 shadow-[var(--shadow-soft)]"
                         >
                           <RotateCcw className="h-3 w-3 mr-1.5" />
                           Redo
