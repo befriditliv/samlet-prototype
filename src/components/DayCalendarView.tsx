@@ -437,7 +437,15 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
 
                   {/* Doctor Info */}
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold mb-1">{meeting.doctorName}</h3>
+                    <h3
+                      className="text-lg font-semibold mb-1 cursor-pointer hover:text-primary transition-colors"
+                      onClick={() => {
+                        const hcpId = hcpNameToId[meeting.doctorName];
+                        if (hcpId) navigate(`/hcp/${hcpId}`);
+                      }}
+                    >
+                      {meeting.doctorName}
+                    </h3>
                     <p className="text-muted-foreground">{meeting.specialty}</p>
                   </div>
 
