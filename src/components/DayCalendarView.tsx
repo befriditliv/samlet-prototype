@@ -13,9 +13,9 @@ import { openAskJarvis } from "./AskJarvis";
 import { getCompassMovement, getCompassGuidance, trendLabel } from "@/data/customerCompass";
 
 const hcpNameToId: Record<string, string> = {
-  "Dr. Sarah Johnson": "1",
-  "Dr. Michael Chen": "2",
-  "Dr. Emily Rodriguez": "3",
+  "Dr. Sarah Johnson": "aaaa2222-2222-2222-2222-222222222222",
+  "Dr. Michael Chen": "aaaa3333-3333-3333-3333-333333333333",
+  "Dr. Emily Rodriguez": "aaaa4444-4444-4444-4444-444444444444",
 };
 
 type MeetingStatus = "next-call" | "needs-debrief" | "upcoming" | "debrief-processing" | "debrief-ready" | "done";
