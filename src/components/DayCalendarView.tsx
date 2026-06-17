@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, User, MapPin, MessageCircle, ChevronUp, Lightbulb, Calendar, AlertCircle, Loader2, CheckCircle2, Navigation, Compass, ArrowRight } from "lucide-react";
@@ -10,6 +11,12 @@ import { enUS } from "date-fns/locale";
 import { WebDebriefDialog } from "./WebDebriefDialog";
 import { openAskJarvis } from "./AskJarvis";
 import { getCompassMovement, getCompassGuidance, trendLabel } from "@/data/customerCompass";
+
+const hcpNameToId: Record<string, string> = {
+  "Dr. Sarah Johnson": "1",
+  "Dr. Michael Chen": "2",
+  "Dr. Emily Rodriguez": "3",
+};
 
 type MeetingStatus = "next-call" | "needs-debrief" | "upcoming" | "debrief-processing" | "debrief-ready" | "done";
 
@@ -79,6 +86,7 @@ const mockMeetings: Meeting[] = [
 ];
 
 export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: DayCalendarViewProps) => {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 10, 24)); // Nov 24, 2024
   const [expandedMeetings, setExpandedMeetings] = useState<string[]>([]);
   const [outstandingDialogOpen, setOutstandingDialogOpen] = useState(false);
@@ -429,7 +437,15 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
 
                   {/* Doctor Info */}
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold mb-1">{meeting.doctorName}</h3>
+                    <h3
+                      className="text-lg font-semibold mb-1 cursor-pointer hover:text-primary transition-colors"
+                      onClick={() => {
+                        const hcpId = hcpNameToId[meeting.doctorName];
+                        if (hcpId) navigate(`/hcp/${hcpId}`);
+                      }}
+                    >
+                      {meeting.doctorName}
+                    </h3>
                     <p className="text-muted-foreground">{meeting.specialty}</p>
                   </div>
 
