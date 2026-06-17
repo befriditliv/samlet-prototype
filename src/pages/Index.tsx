@@ -66,11 +66,6 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-6 py-12 space-y-12">
-        {/* Customer Compass changes */}
-        <section id="customer-compass">
-          <CustomerCompassSignals />
-        </section>
-
         {/* Action Center - Unified Smart Lists */}
         <section>
           <ActionCenter />
