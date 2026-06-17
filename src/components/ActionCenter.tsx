@@ -2,15 +2,18 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
-import { 
-  Clock, 
-  TrendingDown, 
-  ShieldAlert, 
+import {
+  Clock,
+  TrendingDown,
+  ShieldAlert,
   UserX,
   Building2,
-  ChevronRight
+  ChevronRight,
+  TrendingUp,
+  Compass
 } from "lucide-react";
 import { format, subDays } from "date-fns";
+import { getCompassMovement, trendLabel } from "@/data/customerCompass";
 
 type SignalSeverity = 'critical' | 'warning' | 'info';
 
