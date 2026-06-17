@@ -147,17 +147,21 @@ export default function HcpDetail() {
             <div className="flex items-start justify-between">
               <div>
                 <h2 className="text-xl font-semibold text-card-foreground mb-3">{hcp.name}</h2>
-                <div className="flex flex-wrap gap-2">
+                <div className="mb-3">
                   <CustomerCompassBadge movement={getCompassMovement(hcp.name)} />
+                </div>
+                <div className="flex flex-wrap gap-2">
                   <Badge variant="default">{hcp.title}</Badge>
                   {hcp.access_level && (
                     <Badge variant="secondary">{hcp.access_level}</Badge>
                   )}
-                  {hcp.segments?.map((segment) => (
-                    <Badge key={segment} variant="outline" className="bg-warning/10 text-warning border-warning/20">
-                      {segment}
-                    </Badge>
-                  ))}
+                  {hcp.segments
+                    ?.filter((segment) => !["High Value", "Clinical Trials"].includes(segment))
+                    .map((segment) => (
+                      <Badge key={segment} variant="outline" className="bg-warning/10 text-warning border-warning/20">
+                        {segment}
+                      </Badge>
+                    ))}
                   {hcp.marketing_consent && (
                     <Badge variant="outline" className="bg-success/10 text-success border-success/20">
                       ✓ Consent
