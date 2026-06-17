@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, User, MapPin, MessageCircle, ChevronUp, Lightbulb, Calendar, AlertCircle, Loader2, CheckCircle2, Navigation, Compass, ArrowRight } from "lucide-react";
@@ -10,6 +11,12 @@ import { enUS } from "date-fns/locale";
 import { WebDebriefDialog } from "./WebDebriefDialog";
 import { openAskJarvis } from "./AskJarvis";
 import { getCompassMovement, getCompassGuidance, trendLabel } from "@/data/customerCompass";
+
+const hcpNameToId: Record<string, string> = {
+  "Dr. Sarah Johnson": "1",
+  "Dr. Michael Chen": "2",
+  "Dr. Emily Rodriguez": "3",
+};
 
 type MeetingStatus = "next-call" | "needs-debrief" | "upcoming" | "debrief-processing" | "debrief-ready" | "done";
 
