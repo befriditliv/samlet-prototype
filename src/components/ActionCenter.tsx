@@ -2,15 +2,18 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
-import { 
-  Clock, 
-  TrendingDown, 
-  ShieldAlert, 
+import {
+  Clock,
+  TrendingDown,
+  ShieldAlert,
   UserX,
   Building2,
-  ChevronRight
+  ChevronRight,
+  TrendingUp,
+  Compass
 } from "lucide-react";
 import { format, subDays } from "date-fns";
+import { getCompassMovement } from "@/data/customerCompass";
 
 type SignalSeverity = 'critical' | 'warning' | 'info';
 
@@ -93,6 +96,18 @@ export const ActionCenter = () => {
         .select('*', { count: 'exact', head: true })
         .in('tier', ['Tier A', 'Tier B', 'A', 'B']);
 
+      const ccHcpNames = [
+        "Dr. Sarah Johnson",
+        "Dr. Michael Chen",
+        "Dr. Emily Rodriguez",
+        "Dr. Lindgren",
+        "Dr. Patel",
+        "Dr. Sørensen",
+      ];
+      const ccChanges = ccHcpNames.map((n) => getCompassMovement(n));
+      const ccPositive = ccChanges.filter((c) => c.trend === "positive").length;
+      const ccNegative = ccChanges.filter((c) => c.trend === "negative").length;
+
       const signalCards: SignalCard[] = [
         {
           id: 'overdue',
@@ -143,6 +158,26 @@ export const ActionCenter = () => {
           icon: <Building2 className="h-4 w-4" />,
           filterParam: 'high-value',
           entityType: 'hco'
+        },
+        {
+          id: 'cc-positive',
+          title: 'Positive CC moves',
+          description: 'Customer Compass improvements',
+          count: ccPositive,
+          severity: 'info',
+          icon: <TrendingUp className="h-4 w-4" />,
+          filterParam: 'cc-positive',
+          entityType: 'hcp'
+        },
+        {
+          id: 'cc-negative',
+          title: 'Negative CC moves',
+          description: 'Customer Compass declines',
+          count: ccNegative,
+          severity: ccNegative > 0 ? 'critical' : 'info',
+          icon: <Compass className="h-4 w-4" />,
+          filterParam: 'cc-negative',
+          entityType: 'hcp'
         }
       ];
 
