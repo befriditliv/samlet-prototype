@@ -149,11 +149,6 @@ export default function HcoDetail() {
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="default">{hco.organization_type}</Badge>
                   <Badge variant="secondary">{hco.access_level}</Badge>
-                  {hco.segments?.map((segment) => (
-                    <Badge key={segment} variant="outline" className="bg-warning/10 text-warning border-warning/20">
-                      {segment}
-                    </Badge>
-                  ))}
                   {hco.tier && (
                     <Badge variant="outline" className="bg-accent text-accent-foreground">
                       Tier {hco.tier}
