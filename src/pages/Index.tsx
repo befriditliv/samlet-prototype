@@ -5,7 +5,6 @@ import { DayCalendarView } from "@/components/DayCalendarView";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { ActionCenter } from "@/components/ActionCenter";
 import { WebDebriefReview } from "@/components/WebDebriefReview";
-import { CustomerCompassSignals } from "@/components/CustomerCompassSignals";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
 type WebView = "dashboard" | "debrief-review";
