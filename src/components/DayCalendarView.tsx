@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, User, MapPin, MessageCircle, ChevronUp, Lightbulb, Calendar, AlertCircle, Loader2, CheckCircle2, Navigation } from "lucide-react";
+import { ChevronLeft, ChevronRight, User, MapPin, MessageCircle, ChevronUp, Lightbulb, Calendar, AlertCircle, Loader2, CheckCircle2, Navigation, Compass, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -9,6 +9,7 @@ import { format, addDays, startOfWeek, addWeeks, getWeek } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { WebDebriefDialog } from "./WebDebriefDialog";
 import { openAskJarvis } from "./AskJarvis";
+import { getCompassMovement, getCompassGuidance, trendLabel } from "@/data/customerCompass";
 
 type MeetingStatus = "next-call" | "needs-debrief" | "upcoming" | "debrief-processing" | "debrief-ready" | "done";
 
