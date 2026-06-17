@@ -13,7 +13,7 @@ import {
   Compass
 } from "lucide-react";
 import { format, subDays } from "date-fns";
-import { getCompassMovement, trendLabel } from "@/data/customerCompass";
+import { getCompassMovement } from "@/data/customerCompass";
 
 type SignalSeverity = 'critical' | 'warning' | 'info';
 
