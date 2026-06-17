@@ -1,5 +1,6 @@
-import { Sparkles, MessageSquare, Globe, Users, Calendar, TrendingUp } from "lucide-react";
+import { Sparkles, MessageSquare, Globe, Users, Calendar, TrendingUp, Compass, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { getCompassMovement, getCompassGuidance, trendLabel } from "@/data/customerCompass";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
 interface AIInsightsSectionProps {
@@ -62,6 +63,15 @@ export const AIInsightsSection = ({ entityType, entityName }: AIInsightsSectionP
     ? generateHcoInsights(entityName) 
     : generateHcpInsights(entityName);
 
+  const compass = entityType === 'hcp' ? getCompassMovement(entityName) : null;
+  const compassGuidance = compass ? getCompassGuidance(compass) : null;
+  const compassTone =
+    compass?.trend === "positive"
+      ? "border-success/20 bg-success/5"
+      : compass?.trend === "negative"
+        ? "border-destructive/20 bg-destructive/5"
+        : "border-border bg-muted/30";
+
   return (
     <Card className="p-6 bg-gradient-to-br from-card via-card to-primary/5 border-primary/10">
       {/* Header */}
@@ -99,6 +109,42 @@ export const AIInsightsSection = ({ entityType, entityName }: AIInsightsSectionP
             {insights.introduction}
           </p>
         </div>
+
+        {/* Customer Compass (HCP only) */}
+        {entityType === 'hcp' && compass && compassGuidance && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 rounded-md bg-primary/10">
+                <Compass className="h-4 w-4 text-primary" />
+              </div>
+              <h4 className="font-medium text-card-foreground">Customer Compass</h4>
+            </div>
+            <div className={`ml-8 rounded-xl border p-4 ${compassTone}`}>
+              <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-foreground">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: compass.from.color }} />
+                  {compass.from.name}
+                </span>
+                <ArrowRight className="h-3.5 w-3.5 text-muted-foreground" />
+                <span className="inline-flex items-center gap-1.5 font-semibold">
+                  <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: compass.to.color }} />
+                  {compass.to.name}
+                </span>
+                <span className="text-xs text-muted-foreground">· {trendLabel(compass.trend)} · {compass.changedAt}</span>
+              </div>
+              <div className="mt-3 space-y-2">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground/70">What happened</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{compassGuidance.whatHappened}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground/70">Suggested action</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{compassGuidance.whatToDo}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {entityType === 'hco' ? (
           <>
