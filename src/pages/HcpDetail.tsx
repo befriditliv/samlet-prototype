@@ -10,6 +10,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useToast } from "@/hooks/use-toast";
 import { AIInsightsSection } from "@/components/AIInsightsSection";
 import { InteractionsList } from "@/components/InteractionsList";
+import { CustomerCompassBadge } from "@/components/CustomerCompassBadge";
+import { getCompassMovement } from "@/data/customerCompass";
 
 interface HCP {
   id: string;
@@ -146,6 +148,7 @@ export default function HcpDetail() {
               <div>
                 <h2 className="text-xl font-semibold text-card-foreground mb-3">{hcp.name}</h2>
                 <div className="flex flex-wrap gap-2">
+                  <CustomerCompassBadge movement={getCompassMovement(hcp.name)} />
                   <Badge variant="default">{hcp.title}</Badge>
                   {hcp.access_level && (
                     <Badge variant="secondary">{hcp.access_level}</Badge>
