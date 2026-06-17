@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, User, MapPin, MessageCircle, ChevronUp, Lightbulb, Calendar, AlertCircle, Loader2, CheckCircle2, Navigation } from "lucide-react";
+import { ChevronLeft, ChevronRight, User, MapPin, MessageCircle, ChevronUp, Lightbulb, Calendar, AlertCircle, Loader2, CheckCircle2, Navigation, Compass, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -9,6 +9,7 @@ import { format, addDays, startOfWeek, addWeeks, getWeek } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { WebDebriefDialog } from "./WebDebriefDialog";
 import { openAskJarvis } from "./AskJarvis";
+import { getCompassMovement, getCompassGuidance, trendLabel } from "@/data/customerCompass";
 
 type MeetingStatus = "next-call" | "needs-debrief" | "upcoming" | "debrief-processing" | "debrief-ready" | "done";
 
@@ -493,6 +494,45 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
                       <p className="text-sm text-muted-foreground mb-4">
                         Personalized recommendations for your upcoming call
                       </p>
+                      {/* Customer Compass change */}
+                      {(() => {
+                        const m = getCompassMovement(meeting.doctorName);
+                        const g = getCompassGuidance(m);
+                        const tone =
+                          m.trend === "positive"
+                            ? "border-success/20 bg-success/5"
+                            : m.trend === "negative"
+                              ? "border-destructive/20 bg-destructive/5"
+                              : "border-border bg-muted/30";
+                        return (
+                          <div className={`mb-4 rounded-xl border p-4 ${tone}`}>
+                            <div className="mb-2 flex flex-wrap items-center gap-2">
+                              <div className="flex items-center gap-1.5 text-sm font-semibold">
+                                <Compass className="h-4 w-4 text-primary" />
+                                Customer Compass
+                              </div>
+                              <span className="inline-flex items-center gap-1 text-sm">
+                                <span className="h-2 w-2 rounded-full" style={{ backgroundColor: m.from.color }} />
+                                {m.from.name}
+                              </span>
+                              <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                              <span className="inline-flex items-center gap-1 text-sm font-semibold">
+                                <span className="h-2 w-2 rounded-full" style={{ backgroundColor: m.to.color }} />
+                                {m.to.name}
+                              </span>
+                              <span className="text-xs text-muted-foreground">· {trendLabel(m.trend)}</span>
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              <span className="font-medium text-foreground">What happened: </span>
+                              {g.whatHappened}
+                            </p>
+                            <p className="mt-1 text-sm text-muted-foreground">
+                              <span className="font-medium text-foreground">What to do: </span>
+                              {g.whatToDo}
+                            </p>
+                          </div>
+                        );
+                      })()}
                       <ul className="space-y-3">
                         {meeting.recommendations.map((rec, idx) => (
                           <li key={idx} className="flex items-start gap-3">
@@ -518,10 +558,16 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground mb-1">Segmentation</div>
-                        <div className="font-semibold text-amber-600 dark:text-amber-400">
-                          {meeting.metrics.segmentation}
-                        </div>
+                        <div className="text-sm text-muted-foreground mb-1">Customer Compass</div>
+                        {(() => {
+                          const m = getCompassMovement(meeting.doctorName);
+                          return (
+                            <div className="flex items-center gap-1.5 font-semibold">
+                              <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: m.to.color }} />
+                              {m.to.name}
+                            </div>
+                          );
+                        })()}
                       </div>
                       <div>
                         <div className="text-sm text-muted-foreground mb-1">Days since Engagement</div>
