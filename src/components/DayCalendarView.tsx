@@ -86,6 +86,7 @@ const mockMeetings: Meeting[] = [
 ];
 
 export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: DayCalendarViewProps) => {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 10, 24)); // Nov 24, 2024
   const [expandedMeetings, setExpandedMeetings] = useState<string[]>([]);
   const [outstandingDialogOpen, setOutstandingDialogOpen] = useState(false);
