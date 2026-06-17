@@ -110,6 +110,26 @@ export const ActionCenter = () => {
 
       const signalCards: SignalCard[] = [
         {
+          id: 'cc-negative',
+          title: 'Negative CC moves',
+          description: 'Customer Compass declines',
+          count: ccNegative,
+          severity: ccNegative > 0 ? 'critical' : 'info',
+          icon: <Compass className="h-4 w-4" />,
+          filterParam: 'cc-negative',
+          entityType: 'hcp'
+        },
+        {
+          id: 'cc-positive',
+          title: 'Positive CC moves',
+          description: 'Customer Compass improvements',
+          count: ccPositive,
+          severity: 'info',
+          icon: <TrendingUp className="h-4 w-4" />,
+          filterParam: 'cc-positive',
+          entityType: 'hcp'
+        },
+        {
           id: 'overdue',
           title: 'Overdue for contact',
           description: '30+ days since last meeting',
@@ -158,31 +178,17 @@ export const ActionCenter = () => {
           icon: <Building2 className="h-4 w-4" />,
           filterParam: 'high-value',
           entityType: 'hco'
-        },
-        {
-          id: 'cc-positive',
-          title: 'Positive CC moves',
-          description: 'Customer Compass improvements',
-          count: ccPositive,
-          severity: 'info',
-          icon: <TrendingUp className="h-4 w-4" />,
-          filterParam: 'cc-positive',
-          entityType: 'hcp'
-        },
-        {
-          id: 'cc-negative',
-          title: 'Negative CC moves',
-          description: 'Customer Compass declines',
-          count: ccNegative,
-          severity: ccNegative > 0 ? 'critical' : 'info',
-          icon: <Compass className="h-4 w-4" />,
-          filterParam: 'cc-negative',
-          entityType: 'hcp'
         }
       ];
 
       const severityOrder = { critical: 0, warning: 1, info: 2 };
+      const ccOrder: Record<string, number> = { 'cc-negative': 0, 'cc-positive': 1 };
       signalCards.sort((a, b) => {
+        const aCc = ccOrder[a.id];
+        const bCc = ccOrder[b.id];
+        if (aCc !== undefined && bCc !== undefined) return aCc - bCc;
+        if (aCc !== undefined) return -1;
+        if (bCc !== undefined) return 1;
         if (a.count === 0 && b.count === 0) return 0;
         if (a.count === 0) return 1;
         if (b.count === 0) return -1;
