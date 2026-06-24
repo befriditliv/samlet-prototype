@@ -8,9 +8,9 @@ interface CustomerCompassBadgeProps {
 }
 
 const trendStyles = {
-  positive: "border-success/30 bg-success/10 text-success",
-  negative: "border-destructive/30 bg-destructive/10 text-destructive",
-  neutral: "border-border bg-muted text-muted-foreground",
+  positive: "border-success/40 bg-success/10",
+  negative: "border-destructive/40 bg-destructive/10",
+  neutral: "border-border bg-muted",
 } as const;
 
 const TrendIcon = ({ trend }: { trend: CompassMovement["trend"] }) => {
@@ -24,7 +24,7 @@ export const CustomerCompassBadge = ({ movement, className }: CustomerCompassBad
   return (
     <div
       className={cn(
-        "inline-flex flex-col gap-1.5 rounded-lg border px-3 py-2",
+        "inline-flex flex-col gap-1.5 rounded-lg border px-3 py-2 text-foreground",
         trendStyles[trend],
         className,
       )}
@@ -34,21 +34,21 @@ export const CustomerCompassBadge = ({ movement, className }: CustomerCompassBad
         <TrendIcon trend={trend} />
         Customer Compass
       </div>
-      <div className="flex items-center gap-2 text-sm font-medium">
-        <div className="flex flex-col items-start gap-0.5">
-          <span className="text-[9px] uppercase tracking-wider opacity-60">Prev.</span>
-          <span className="inline-flex items-center gap-1.5 text-xs opacity-80">
-            <span className="h-2.5 w-2.5 rounded-full ring-1 ring-current/20" style={{ backgroundColor: from.color }} />
-            {from.name}
-          </span>
+      <div className="flex items-center gap-2">
+        <div
+          className="flex flex-col items-start gap-0.5 rounded-md border-l-4 px-2.5 py-1 bg-background/60"
+          style={{ borderLeftColor: from.color }}
+        >
+          <span className="text-[9px] font-semibold uppercase tracking-wider opacity-60">Prev.</span>
+          <span className="text-xs font-medium opacity-80">{from.name}</span>
         </div>
-        <ArrowRight className="h-3.5 w-3.5 opacity-50 shrink-0" />
-        <div className="flex flex-col items-start gap-0.5">
-          <span className="text-[9px] uppercase tracking-wider opacity-80">New</span>
-          <span className="inline-flex items-center gap-1.5 text-xs font-semibold">
-            <span className="h-2.5 w-2.5 rounded-full ring-1 ring-current/20" style={{ backgroundColor: to.color }} />
-            {to.name}
-          </span>
+        <ArrowRight className="h-4 w-4 opacity-50 shrink-0 text-foreground" />
+        <div
+          className="flex flex-col items-start gap-0.5 rounded-md border-l-4 px-2.5 py-1 bg-background/80"
+          style={{ borderLeftColor: to.color }}
+        >
+          <span className="text-[9px] font-semibold uppercase tracking-wider opacity-80">New</span>
+          <span className="text-xs font-semibold">{to.name}</span>
         </div>
       </div>
     </div>
