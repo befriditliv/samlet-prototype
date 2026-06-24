@@ -24,27 +24,33 @@ export const CustomerCompassBadge = ({ movement, className }: CustomerCompassBad
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium",
+        "inline-flex flex-col gap-1.5 rounded-lg border px-3 py-2",
         trendStyles[trend],
         className,
       )}
       title={`Customer Compass — ${trendLabel(trend)}`}
     >
-      <TrendIcon trend={trend} />
-      <span className="text-[10px] font-semibold uppercase tracking-wide opacity-70">
+      <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide opacity-70">
+        <TrendIcon trend={trend} />
         Customer Compass
-      </span>
-      <span className="flex items-center gap-1.5">
-        <span className="inline-flex items-center gap-1">
-          <span className="h-2 w-2 rounded-full" style={{ backgroundColor: from.color }} />
-          {from.name}
-        </span>
-        <ArrowRight className="h-3 w-3 opacity-60" />
-        <span className="inline-flex items-center gap-1 font-semibold">
-          <span className="h-2 w-2 rounded-full" style={{ backgroundColor: to.color }} />
-          {to.name}
-        </span>
-      </span>
+      </div>
+      <div className="flex items-center gap-2 text-sm font-medium">
+        <div className="flex flex-col items-start gap-0.5">
+          <span className="text-[9px] uppercase tracking-wider opacity-60">Prev.</span>
+          <span className="inline-flex items-center gap-1.5 text-xs opacity-80">
+            <span className="h-2.5 w-2.5 rounded-full ring-1 ring-current/20" style={{ backgroundColor: from.color }} />
+            {from.name}
+          </span>
+        </div>
+        <ArrowRight className="h-3.5 w-3.5 opacity-50 shrink-0" />
+        <div className="flex flex-col items-start gap-0.5">
+          <span className="text-[9px] uppercase tracking-wider opacity-80">New</span>
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold">
+            <span className="h-2.5 w-2.5 rounded-full ring-1 ring-current/20" style={{ backgroundColor: to.color }} />
+            {to.name}
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
