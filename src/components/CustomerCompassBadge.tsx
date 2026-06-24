@@ -36,11 +36,13 @@ export const CustomerCompassBadge = ({ movement, className }: CustomerCompassBad
       </span>
       <span className="flex items-center gap-1.5">
         <span className="inline-flex items-center gap-1">
+          <span className="text-[9px] font-semibold uppercase tracking-wide opacity-60">Prev</span>
           <span className="h-2 w-2 rounded-full" style={{ backgroundColor: from.color }} />
           {from.name}
         </span>
         <ArrowRight className="h-3 w-3 opacity-60" />
         <span className="inline-flex items-center gap-1 font-semibold">
+          <span className="text-[9px] font-semibold uppercase tracking-wide opacity-60">New</span>
           <span className="h-2 w-2 rounded-full" style={{ backgroundColor: to.color }} />
           {to.name}
         </span>
