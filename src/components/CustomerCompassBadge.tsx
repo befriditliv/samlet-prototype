@@ -8,9 +8,9 @@ interface CustomerCompassBadgeProps {
 }
 
 const trendStyles = {
-  positive: "border-success/40 bg-success/10",
-  negative: "border-destructive/40 bg-destructive/10",
-  neutral: "border-border bg-muted",
+  positive: "border-success/40 bg-success/10 text-success",
+  negative: "border-destructive/40 bg-destructive/10 text-destructive",
+  neutral: "border-border bg-muted text-muted-foreground",
 } as const;
 
 const TrendIcon = ({ trend }: { trend: CompassMovement["trend"] }) => {
