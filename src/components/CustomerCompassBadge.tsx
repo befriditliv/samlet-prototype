@@ -7,12 +7,6 @@ interface CustomerCompassBadgeProps {
   className?: string;
 }
 
-const trendStyles = {
-  positive: "border-l-success/60 bg-success/[0.04]",
-  negative: "border-l-destructive/60 bg-destructive/[0.04]",
-  neutral: "border-l-border bg-muted/30",
-} as const;
-
 const trendText = {
   positive: "text-success",
   negative: "text-destructive",
@@ -30,17 +24,16 @@ export const CustomerCompassBadge = ({ movement, className }: CustomerCompassBad
   return (
     <div
       className={cn(
-        "inline-block rounded-lg border border-border/60 border-l-4 p-3 shadow-sm",
-        trendStyles[trend],
+        "inline-flex flex-col gap-2 rounded-xl border border-border/60 bg-card p-3 shadow-sm",
         className,
       )}
       title={`Customer Compass — ${trendLabel(trend)}`}
     >
-      <div className="flex items-center gap-2 mb-2.5">
+      <div className="flex items-center gap-2">
         <span className={cn("flex items-center justify-center rounded-full p-1", trendText[trend])}>
           <TrendIcon trend={trend} />
         </span>
-        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
           Customer Compass
         </span>
         <span className={cn("ml-auto text-[10px] font-medium uppercase tracking-wide", trendText[trend])}>
@@ -48,28 +41,26 @@ export const CustomerCompassBadge = ({ movement, className }: CustomerCompassBad
         </span>
       </div>
 
-      <div className="flex items-stretch gap-2">
-        <div className="flex-1 rounded-md border border-border/60 bg-background/80 p-2.5">
-          <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground mb-1">
+      <div className="flex items-center gap-3">
+        <div className="min-w-0">
+          <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
             Previous
           </div>
-          <div className="flex items-center gap-1.5 text-sm font-medium text-foreground">
-            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: from.color }} />
-            {from.name}
+          <div className="mt-0.5 flex items-center gap-1.5 text-sm font-medium text-foreground">
+            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: from.color }} />
+            <span className="truncate">{from.name}</span>
           </div>
         </div>
 
-        <div className="flex items-center justify-center">
-          <ArrowRight className="h-4 w-4 text-muted-foreground" />
-        </div>
+        <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" />
 
-        <div className="flex-1 rounded-md border border-border/60 bg-background/80 p-2.5">
-          <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground mb-1">
+        <div className="min-w-0">
+          <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
             New
           </div>
-          <div className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
-            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: to.color }} />
-            {to.name}
+          <div className="mt-0.5 flex items-center gap-1.5 text-sm font-semibold text-foreground">
+            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: to.color }} />
+            <span className="truncate">{to.name}</span>
           </div>
         </div>
       </div>
