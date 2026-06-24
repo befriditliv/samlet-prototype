@@ -163,7 +163,7 @@ export default function HcpDetail() {
                     </Badge>
                   )}
                 </div>
-                <div className="mt-3">
+                <div className="mt-3 max-w-md">
                   <CustomerCompassBadge movement={getCompassMovement(hcp.name)} />
                 </div>
               </div>
