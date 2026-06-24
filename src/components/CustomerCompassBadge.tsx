@@ -21,7 +21,6 @@ const TrendIcon = ({ trend }: { trend: CompassMovement["trend"] }) => {
 
 export const CustomerCompassBadge = ({ movement, className }: CustomerCompassBadgeProps) => {
   const { from, to, trend } = movement;
-  const isSame = from.name === to.name;
   return (
     <div
       className={cn(
