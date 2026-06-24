@@ -8,9 +8,9 @@ interface CustomerCompassBadgeProps {
 }
 
 const trendStyles = {
-  positive: "border-success/40 bg-success/10",
-  negative: "border-destructive/40 bg-destructive/10",
-  neutral: "border-border bg-muted",
+  positive: "border-success/30 bg-success/10 text-success",
+  negative: "border-destructive/30 bg-destructive/10 text-destructive",
+  neutral: "border-border bg-muted text-muted-foreground",
 } as const;
 
 const TrendIcon = ({ trend }: { trend: CompassMovement["trend"] }) => {
@@ -24,33 +24,27 @@ export const CustomerCompassBadge = ({ movement, className }: CustomerCompassBad
   return (
     <div
       className={cn(
-        "inline-flex flex-col gap-1.5 rounded-lg border px-3 py-2 text-foreground",
+        "inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium",
         trendStyles[trend],
         className,
       )}
       title={`Customer Compass — ${trendLabel(trend)}`}
     >
-      <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide opacity-70">
-        <TrendIcon trend={trend} />
+      <TrendIcon trend={trend} />
+      <span className="text-[10px] font-semibold uppercase tracking-wide opacity-70">
         Customer Compass
-      </div>
-      <div className="flex items-center gap-2">
-        <div
-          className="flex flex-col items-start gap-0.5 rounded-md border-l-4 px-2.5 py-1 bg-background/60"
-          style={{ borderLeftColor: from.color }}
-        >
-          <span className="text-[9px] font-semibold uppercase tracking-wider opacity-60">Prev.</span>
-          <span className="text-xs font-medium opacity-80">{from.name}</span>
-        </div>
-        <ArrowRight className="h-4 w-4 opacity-50 shrink-0 text-foreground" />
-        <div
-          className="flex flex-col items-start gap-0.5 rounded-md border-l-4 px-2.5 py-1 bg-background/80"
-          style={{ borderLeftColor: to.color }}
-        >
-          <span className="text-[9px] font-semibold uppercase tracking-wider opacity-80">New</span>
-          <span className="text-xs font-semibold">{to.name}</span>
-        </div>
-      </div>
+      </span>
+      <span className="flex items-center gap-1.5">
+        <span className="inline-flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full" style={{ backgroundColor: from.color }} />
+          {from.name}
+        </span>
+        <ArrowRight className="h-3 w-3 opacity-60" />
+        <span className="inline-flex items-center gap-1 font-semibold">
+          <span className="h-2 w-2 rounded-full" style={{ backgroundColor: to.color }} />
+          {to.name}
+        </span>
+      </span>
     </div>
   );
 };
