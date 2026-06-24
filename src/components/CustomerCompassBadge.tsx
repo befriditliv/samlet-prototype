@@ -24,46 +24,38 @@ export const CustomerCompassBadge = ({ movement, className }: CustomerCompassBad
   return (
     <div
       className={cn(
-        "inline-flex flex-col gap-2 rounded-xl border border-border/60 bg-card p-3 shadow-sm",
+        "inline-flex items-center gap-4 rounded-xl border border-border/50 bg-card px-4 py-2.5",
         className,
       )}
       title={`Customer Compass — ${trendLabel(trend)}`}
     >
-      <div className="flex items-center gap-2">
-        <span className={cn("flex items-center justify-center rounded-full p-1", trendText[trend])}>
-          <TrendIcon trend={trend} />
-        </span>
-        <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-          Customer Compass
-        </span>
-        <span className={cn("ml-auto text-[10px] font-medium uppercase tracking-wide", trendText[trend])}>
-          {trendLabel(trend)}
-        </span>
-      </div>
+      <span className={cn("shrink-0", trendText[trend])}>
+        <TrendIcon trend={trend} />
+      </span>
 
       <div className="flex items-center gap-3">
-        <div className="min-w-0">
-          <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-            Previous
-          </div>
-          <div className="mt-0.5 flex items-center gap-1.5 text-sm font-medium text-foreground">
+        <div className="flex flex-col">
+          <span className="text-[9px] font-semibold uppercase tracking-wide text-muted-foreground">Previous</span>
+          <span className="mt-0.5 flex items-center gap-1.5 text-sm font-medium text-foreground">
             <span className="h-2 w-2 rounded-full" style={{ backgroundColor: from.color }} />
-            <span className="truncate">{from.name}</span>
-          </div>
+            {from.name}
+          </span>
         </div>
 
         <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" />
 
-        <div className="min-w-0">
-          <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-            New
-          </div>
-          <div className="mt-0.5 flex items-center gap-1.5 text-sm font-semibold text-foreground">
+        <div className="flex flex-col">
+          <span className="text-[9px] font-semibold uppercase tracking-wide text-muted-foreground">New</span>
+          <span className="mt-0.5 flex items-center gap-1.5 text-sm font-semibold text-foreground">
             <span className="h-2 w-2 rounded-full" style={{ backgroundColor: to.color }} />
-            <span className="truncate">{to.name}</span>
-          </div>
+            {to.name}
+          </span>
         </div>
       </div>
+
+      <span className={cn("ml-1 text-[10px] font-medium uppercase tracking-wide", trendText[trend])}>
+        {trendLabel(trend)}
+      </span>
     </div>
   );
 };
