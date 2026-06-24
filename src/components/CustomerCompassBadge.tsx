@@ -24,7 +24,7 @@ export const CustomerCompassBadge = ({ movement, className }: CustomerCompassBad
   return (
     <div
       className={cn(
-        "inline-flex flex-col gap-1.5 rounded-lg border px-3 py-2",
+        "inline-flex flex-col gap-1.5 rounded-lg border px-3 py-2 text-foreground",
         trendStyles[trend],
         className,
       )}
