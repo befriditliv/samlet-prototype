@@ -80,12 +80,12 @@ const quickReportOptions = [
     label: 'Off-Label Information Insights',
     description: 'Find debriefs where HCPs have unsolicited shared information about off-label prescription',
     icon: AlertTriangle,
-    devNote: 'DEV: Search debriefs for HCP-volunteered off-label information (e.g., Ozempic for obesity).',
+    devNote: 'DEV: Search debriefs for HCP-volunteered off-label information (e.g., Dose 1 for obesity).',
   },
   {
-    id: 'ozempic-initiation',
-    label: 'Ozempic Initiation',
-    description: 'Analysis of HCP concerns and barriers to Ozempic initiation over time',
+    id: 'dose-1-initiation',
+    label: 'Dose 1 Initiation',
+    description: 'Analysis of HCP concerns and barriers to Dose 1 initiation over time',
     icon: Stethoscope,
     devNote: 'DEV: Use MIP with objection/concern analysis. Set current date minus 90 days for trend data.',
   },
@@ -188,14 +188,14 @@ const NewReport = () => {
     toast.success(`${reportLabel} generated successfully`);
     
     // Route to specific report views based on report type
-    if (reportId === 'ozempic-initiation') {
+    if (reportId === 'dose-1-initiation') {
       navigate('/manager/insight-report', {
         state: {
-          reportType: 'ozempic-initiation',
-          title: 'Ozempic Initiation Insights',
-          query: 'What are HCPs saying regarding Ozempic initiation?',
+          reportType: 'dose-1-initiation',
+          title: 'Dose 1 Initiation Insights',
+          query: 'What are HCPs saying regarding Dose 1 initiation?',
           dateRange: { from: new Date(2025, 6, 1), to: new Date(2025, 11, 31) },
-          product: 'Ozempic',
+          product: 'Dose 1',
           employee: 'all'
         }
       });
@@ -204,9 +204,9 @@ const NewReport = () => {
         state: {
           reportType: 'off-label-insights',
           title: 'Off-Label Information Insights',
-          query: 'Which HCPs have unsolicited mentioned off-label prescription of Ozempic?',
+          query: 'Which HCPs have unsolicited mentioned off-label prescription of Dose 1?',
           dateRange: { from: new Date(2025, 0, 1), to: new Date(2025, 11, 31) },
-          product: 'Ozempic',
+          product: 'Dose 1',
           employee: 'all'
         }
       });
@@ -451,7 +451,7 @@ const NewReport = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All products</SelectItem>
-                      <SelectItem value="ozempic">Ozempic</SelectItem>
+                      <SelectItem value="dose-1">Dose 1</SelectItem>
                       <SelectItem value="wegovy">Wegovy</SelectItem>
                       <SelectItem value="victoza">Victoza</SelectItem>
                       <SelectItem value="rybelsus">Rybelsus</SelectItem>
@@ -602,7 +602,7 @@ const NewReport = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All products</SelectItem>
-                      <SelectItem value="ozempic">Ozempic</SelectItem>
+                      <SelectItem value="dose-1">Dose 1</SelectItem>
                       <SelectItem value="wegovy">Wegovy</SelectItem>
                       <SelectItem value="victoza">Victoza</SelectItem>
                       <SelectItem value="rybelsus">Rybelsus</SelectItem>
@@ -667,7 +667,7 @@ const NewReport = () => {
               <div className="space-y-2">
                 <Label className="text-xs text-muted-foreground">What insights are you looking for?</Label>
                 <Input
-                  placeholder="e.g., What are the main barriers to Ozempic adoption?"
+                  placeholder="e.g., What are the main barriers to Dose 1 adoption?"
                   value={customQuery}
                   onChange={(e) => setCustomQuery(e.target.value)}
                   className="h-12"

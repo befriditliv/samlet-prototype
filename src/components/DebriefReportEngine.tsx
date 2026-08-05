@@ -17,7 +17,7 @@ interface InsightFilter {
   dateTo: string;
 }
 export const DebriefReportEngine = () => {
-  const [searchQuery, setSearchQuery] = useState("What are HCP reactions to Ozempic initiation data?");
+  const [searchQuery, setSearchQuery] = useState("What are HCP reactions to Dose 1 initiation data?");
   const [showAdvanced, setShowAdvanced] = useState(true);
   const [filters, setFilters] = useState<InsightFilter>({
     activityType: "",
@@ -220,7 +220,7 @@ export const DebriefReportEngine = () => {
               {results} meeting notes analyzed
             </Badge>
             <p className="text-sm text-muted-foreground">
-              Insights generated from employee interactions with HCPs regarding Ozempic initiation
+              Insights generated from employee interactions with HCPs regarding Dose 1 initiation
             </p>
           </div>}
       </CardContent>

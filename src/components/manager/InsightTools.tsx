@@ -51,23 +51,23 @@ interface SavedReport {
 const mockReports: SavedReport[] = [
   {
     id: "0",
-    title: "Ozempic Initiation Insights",
+    title: "Dose 1 Initiation Insights",
     createdAt: new Date("2025-12-20T10:15:00"),
     dateRange: { from: new Date("2025-07-01"), to: new Date("2025-12-31") },
     employee: "all",
-    product: "ozempic",
+    product: "dose-1",
     type: "insight",
-    summary: "Generelt er der en overvægt af rapporter, der indikerer, at der ikke er mødt indvendinger vedrørende opstart af Ozempic-patienter.",
+    summary: "Generelt er der en overvægt af rapporter, der indikerer, at der ikke er mødt indvendinger vedrørende opstart af Dose 1-patienter.",
   },
   {
     id: "1",
-    title: "Ozempic Initiation Barriers",
+    title: "Dose 1 Initiation Barriers",
     createdAt: new Date("2025-12-18T13:08:28"),
     dateRange: { from: subDays(new Date(), 30), to: new Date() },
     employee: "all",
-    product: "ozempic",
+    product: "dose-1",
     type: "initiation-barriers",
-    summary: "A decline in Ozempic initiation has been observed, indicating hesitancy among GPs regarding dosing protocols.",
+    summary: "A decline in Dose 1 initiation has been observed, indicating hesitancy among GPs regarding dosing protocols.",
   },
   {
     id: "2",
@@ -103,7 +103,7 @@ export const InsightTools = () => {
       navigate('/manager/insight-report', {
         state: {
           title: report.title,
-          query: "What are the main barriers to Ozempic initiation?",
+          query: "What are the main barriers to Dose 1 initiation?",
           dateRange: report.dateRange,
           product: report.product,
           employee: report.employee,
