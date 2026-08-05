@@ -41,35 +41,35 @@ interface InsightCategory {
   impact: 'positive' | 'neutral' | 'negative';
 }
 
-// Ozempic Initiation categories
-const ozempicCategories: InsightCategory[] = [
+// Dose 1 Initiation categories
+const dose1Categories: InsightCategory[] = [
   { 
     id: '1', 
-    title: 'No objections when initiating Ozempic', 
+    title: 'No objections when initiating Dose 1', 
     count: 111,
     impact: 'positive',
-    description: 'A large portion of HCPs have not reported any objections when initiating Ozempic patients. Many HCPs have mentioned that there are no specific objections or concerns regarding Ozempic initiation, and some have even expressed positive interest in the treatment.'
+    description: 'A large portion of HCPs have not reported any objections when initiating Dose 1 patients. Many HCPs have mentioned that there are no specific objections or concerns regarding Dose 1 initiation, and some have even expressed positive interest in the treatment.'
   },
   { 
     id: '2', 
     title: 'Interest in follow-up and additional information', 
     count: 39,
     impact: 'positive',
-    description: 'There is general interest among HCPs for follow-up and additional information about Ozempic. Some HCPs have expressed interest in follow-up appointments about treatment plans, and there is also interest in materials about hypoglycemia and organ protection.'
+    description: 'There is general interest among HCPs for follow-up and additional information about Dose 1. Some HCPs have expressed interest in follow-up appointments about treatment plans, and there is also interest in materials about hypoglycemia and organ protection.'
   },
   { 
     id: '3', 
     title: 'Questions and need for clarification', 
     count: 35,
     impact: 'neutral',
-    description: 'Several HCPs have asked questions and expressed the need for clarification regarding Ozempic. There are many questions about the dosing algorithm, including the use of 8 doses and 2 mg.'
+    description: 'Several HCPs have asked questions and expressed the need for clarification regarding Dose 1. There are many questions about the dosing algorithm, including the use of 8 doses and 2 mg.'
   },
   { 
     id: '4', 
     title: 'Concerns and objections at initiation', 
     count: 20,
     impact: 'negative',
-    description: 'Several HCPs have expressed concerns and objections when initiating Ozempic. Some of the concerns stem from regional requirements to first try DPP-4 inhibitors.'
+    description: 'Several HCPs have expressed concerns and objections when initiating Dose 1. Some of the concerns stem from regional requirements to first try DPP-4 inhibitors.'
   },
 ];
 
@@ -138,10 +138,10 @@ const sentimentCategories: InsightCategory[] = [
 const offLabelCategories: InsightCategory[] = [
   { 
     id: 'ol1', 
-    title: 'Off-label prescription of Ozempic for obesity', 
+    title: 'Off-label prescription of Dose 1 for obesity', 
     count: 28,
     impact: 'neutral',
-    description: 'HCPs have unsolicited mentioned that they prescribe Ozempic to patients with severe obesity, even though it is not the approved indication. Several mention the price difference to Wegovy as the reason.'
+    description: 'HCPs have unsolicited mentioned that they prescribe Dose 1 to patients with severe obesity, even though it is not the approved indication. Several mention the price difference to Wegovy as the reason.'
   },
   { 
     id: 'ol2', 
@@ -155,42 +155,42 @@ const offLabelCategories: InsightCategory[] = [
     title: 'Price differences mentioned as motivation', 
     count: 18,
     impact: 'neutral',
-    description: 'HCPs have spontaneously mentioned that Ozempic 1.0mg is significantly cheaper than Wegovy and has the same effect, as justification for off-label use.'
+    description: 'HCPs have spontaneously mentioned that Dose 1 1.0mg is significantly cheaper than Wegovy and has the same effect, as justification for off-label use.'
   },
   { 
     id: 'ol4', 
     title: 'Patient demand drives decision', 
     count: 9,
     impact: 'neutral',
-    description: 'Some HCPs mention that patients themselves request Ozempic for weight loss after hearing about it from friends or media.'
+    description: 'Some HCPs mention that patients themselves request Dose 1 for weight loss after hearing about it from friends or media.'
   },
 ];
 
 // Statements for off-label report
 const offLabelStatementsByCategory: Record<string, Statement[]> = {
   'ol1': generateStatements('ol1', 28, [
-    'The physician unsolicited mentioned that they have started prescribing Ozempic 1.0mg for severe obesity at the clinic.',
-    'The HCP said that several patients receive Ozempic off-label for weight loss with good results.',
-    'During the conversation, the physician mentioned that they use Ozempic for obese patients without diabetes.',
-    'The clinic\'s practice now includes Ozempic for pure obesity treatment, the HCP explained.',
-    'The physician spontaneously stated that they prescribe Ozempic off-label as it is cheaper than Wegovy.',
+    'The physician unsolicited mentioned that they have started prescribing Dose 1 1.0mg for severe obesity at the clinic.',
+    'The HCP said that several patients receive Dose 1 off-label for weight loss with good results.',
+    'During the conversation, the physician mentioned that they use Dose 1 for obese patients without diabetes.',
+    'The clinic\'s practice now includes Dose 1 for pure obesity treatment, the HCP explained.',
+    'The physician spontaneously stated that they prescribe Dose 1 off-label as it is cheaper than Wegovy.',
   ]),
   'ol2': generateStatements('ol2', 12, [
-    'The clinic has established a regular practice to offer Ozempic to obese patients.',
-    'The HCP described their systematic approach to off-label prescription of Ozempic.',
-    'The physician explained that all doctors at the clinic now use Ozempic for obesity.',
-    'The clinic has had internal discussions and decided to offer Ozempic off-label.',
+    'The clinic has established a regular practice to offer Dose 1 to obese patients.',
+    'The HCP described their systematic approach to off-label prescription of Dose 1.',
+    'The physician explained that all doctors at the clinic now use Dose 1 for obesity.',
+    'The clinic has had internal discussions and decided to offer Dose 1 off-label.',
   ]),
   'ol3': generateStatements('ol3', 18, [
-    'The physician mentioned that Ozempic 1.0mg is significantly cheaper than Wegovy and has the same effect.',
-    'The HCP highlighted the price advantage of Ozempic over Wegovy for obesity treatment.',
-    'Price is the primary reason for choosing Ozempic over Wegovy, explained the physician.',
-    'Patients prefer Ozempic due to lower out-of-pocket costs, said the HCP.',
+    'The physician mentioned that Dose 1 1.0mg is significantly cheaper than Wegovy and has the same effect.',
+    'The HCP highlighted the price advantage of Dose 1 over Wegovy for obesity treatment.',
+    'Price is the primary reason for choosing Dose 1 over Wegovy, explained the physician.',
+    'Patients prefer Dose 1 due to lower out-of-pocket costs, said the HCP.',
   ]),
   'ol4': generateStatements('ol4', 9, [
-    'Patients come asking specifically for Ozempic for weight loss, said the physician.',
-    'The HCP mentioned increased patient demand for Ozempic after media coverage.',
-    'Many patients have heard about Ozempic from friends and want to try it, said the physician.',
+    'Patients come asking specifically for Dose 1 for weight loss, said the physician.',
+    'The HCP mentioned increased patient demand for Dose 1 after media coverage.',
+    'Many patients have heard about Dose 1 from friends and want to try it, said the physician.',
   ]),
 };
 
@@ -227,34 +227,34 @@ const sentimentStatementsByCategory: Record<string, Statement[]> = {
   ]),
 };
 
-// Statements for ozempic report
-const ozempicStatementsByCategory: Record<string, Statement[]> = {
+// Statements for dose-1 report
+const dose1StatementsByCategory: Record<string, Statement[]> = {
   '1': generateStatements('1', 111, [
-    'No objections were mentioned by HCPs regarding initiation of Ozempic patients.',
-    'The HCP had no objections or concerns about starting Ozempic.',
-    'Positive reception of Ozempic as first choice.',
+    'No objections were mentioned by HCPs regarding initiation of Dose 1 patients.',
+    'The HCP had no objections or concerns about starting Dose 1.',
+    'Positive reception of Dose 1 as first choice.',
     'No concerns at initiation – the patient was motivated.',
     'Unproblematic initiation, HCP was already familiar with the product.',
     'Good experience with previous patients, no reservations.',
-    'HCP expressed confidence in Ozempic as a treatment choice.',
+    'HCP expressed confidence in Dose 1 as a treatment choice.',
   ]),
   '2': generateStatements('2', 39, [
     'There is interest in more knowledge about Score2 diabetes and hypoglycemia.',
-    'Want materials on organ protection with Ozempic.',
+    'Want materials on organ protection with Dose 1.',
     'Interest in follow-up appointment about treatment plans.',
     'Would like more data on long-term effects.',
     'Requesting patient-friendly information materials.',
   ]),
   '3': generateStatements('3', 35, [
     'Patients express concern about dosing algorithms, including the use of 8 doses and 2 mg.',
-    'Questions about requirements for trying antidiabetics before Ozempic.',
+    'Questions about requirements for trying antidiabetics before Dose 1.',
     'Uncertainty about dose escalation in elderly patients.',
     'Questions about the algorithm for switching from insulin.',
     'Need for clarification on combination with other preparations.',
   ]),
   '4': generateStatements('4', 20, [
     'Objections were raised about the region\'s clause interpretation in connection with initiation.',
-    'Concern about switching well-treated insulin patients to Ozempic.',
+    'Concern about switching well-treated insulin patients to Dose 1.',
     'Regional requirements for DPP-4 trial first create frustration.',
     'Concern about GI side effects in vulnerable patients.',
   ]),
@@ -268,11 +268,11 @@ const InsightReportView = () => {
   const [showStatements, setShowStatements] = useState(false);
 
   const data: InsightReportData = reportData || {
-    reportType: 'ozempic-initiation',
-    title: "Ozempic Initiation Insights",
-    query: "hvad siger hcperne ift. ozempic initiering",
+    reportType: 'dose-1-initiation',
+    title: "Dose 1 Initiation Insights",
+    query: "hvad siger hcperne ift. dose-1 initiering",
     dateRange: { from: new Date(2025, 6, 1), to: new Date(2025, 11, 31) },
-    product: "Ozempic",
+    product: "Dose 1",
     employee: "all"
   };
 
@@ -284,13 +284,13 @@ const InsightReportView = () => {
     ? offLabelCategories 
     : isSentimentReport 
       ? sentimentCategories 
-      : ozempicCategories;
+      : dose1Categories;
   
   const statementsByCategory = isOffLabelReport 
     ? offLabelStatementsByCategory 
     : isSentimentReport 
       ? sentimentStatementsByCategory 
-      : ozempicStatementsByCategory;
+      : dose1StatementsByCategory;
   
   const allStatements = Object.values(statementsByCategory).flat();
 
@@ -393,7 +393,7 @@ const InsightReportView = () => {
             {isOffLabelReport ? (
               <>
                 <p>
-                  This report identifies debriefs where HCPs have unsolicited shared information about off-label prescription of Ozempic for the treatment of severe obesity. A total of {totalStatements} observations have been recorded in the period where HCPs have mentioned off-label practices without this being initiated by the employee.
+                  This report identifies debriefs where HCPs have unsolicited shared information about off-label prescription of Dose 1 for the treatment of severe obesity. A total of {totalStatements} observations have been recorded in the period where HCPs have mentioned off-label practices without this being initiated by the employee.
                 </p>
                 <p>
                   <strong>Important:</strong> In accordance with guidelines, employees have not facilitated or promoted dialogue about off-label prescription. It is clearly stated in all records that it was the physician who unsolicited mentioned off-label practices, and that the employee steered the conversation back to the meeting's original purpose.
@@ -411,10 +411,10 @@ const InsightReportView = () => {
             ) : (
               <>
                 <p>
-                  In the period from late August to December 2025, there have been a number of debates and observations regarding the initiation of Ozempic patients among HCPs, primarily in general practice. Generally, there is an overweight of reports indicating that no objections were encountered regarding the initiation of Ozempic patients. This has been mentioned repeatedly by both nurses and physicians, suggesting a general acceptance of the product.
+                  In the period from late August to December 2025, there have been a number of debates and observations regarding the initiation of Dose 1 patients among HCPs, primarily in general practice. Generally, there is an overweight of reports indicating that no objections were encountered regarding the initiation of Dose 1 patients. This has been mentioned repeatedly by both nurses and physicians, suggesting a general acceptance of the product.
                 </p>
                 <p>
-                  However, concerns and objections have also been raised in certain cases. Some HCPs have expressed concern about switching well-treated insulin patients to Ozempic, especially when their HbA1c levels are satisfactory. Pressure from regions and fear of complicating treatments have also been mentioned, as well as frustration with the subsidy clause.
+                  However, concerns and objections have also been raised in certain cases. Some HCPs have expressed concern about switching well-treated insulin patients to Dose 1, especially when their HbA1c levels are satisfactory. Pressure from regions and fear of complicating treatments have also been mentioned, as well as frustration with the subsidy clause.
                 </p>
               </>
             )}
