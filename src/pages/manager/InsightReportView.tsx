@@ -42,7 +42,7 @@ interface InsightCategory {
 }
 
 // Dose 1 Initiation categories
-const dose-1Categories: InsightCategory[] = [
+const dose1Categories: InsightCategory[] = [
   { 
     id: '1', 
     title: 'No objections when initiating Dose 1', 
@@ -228,7 +228,7 @@ const sentimentStatementsByCategory: Record<string, Statement[]> = {
 };
 
 // Statements for dose-1 report
-const dose-1StatementsByCategory: Record<string, Statement[]> = {
+const dose1StatementsByCategory: Record<string, Statement[]> = {
   '1': generateStatements('1', 111, [
     'No objections were mentioned by HCPs regarding initiation of Dose 1 patients.',
     'The HCP had no objections or concerns about starting Dose 1.',
@@ -284,13 +284,13 @@ const InsightReportView = () => {
     ? offLabelCategories 
     : isSentimentReport 
       ? sentimentCategories 
-      : dose-1Categories;
+      : dose1Categories;
   
   const statementsByCategory = isOffLabelReport 
     ? offLabelStatementsByCategory 
     : isSentimentReport 
       ? sentimentStatementsByCategory 
-      : dose-1StatementsByCategory;
+      : dose1StatementsByCategory;
   
   const allStatements = Object.values(statementsByCategory).flat();
 
