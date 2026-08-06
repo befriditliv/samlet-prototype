@@ -100,24 +100,24 @@ const generateStatements = (categoryId: string, count: number, quotes: string[])
 const sentimentCategories: InsightCategory[] = [
   { 
     id: 's1', 
-    title: 'Generally positive sentiment towards our company products', 
+    title: 'Generally positive sentiment towards Dose 1', 
     count: 87,
     impact: 'positive',
-    description: 'The majority of HCPs express satisfaction with our company\'s product portfolio and support. Particularly good experience with GLP-1 products and the value of clinical support materials is mentioned.'
+    description: 'The majority of HCPs express satisfaction with Dose 1 and the clinical support around it. Emergency departments in particular highlight the ATLAS trial data and easy-to-use treatment pathways.'
   },
   { 
     id: 's2', 
-    title: 'Increasing interest in weight loss treatment', 
+    title: 'Increasing interest in non-surgical appendicitis management', 
     count: 64,
     impact: 'positive',
-    description: 'Significantly increased focus on weight loss treatment among HCPs. Several are requesting information about Wegovy and discussing patient groups that could benefit from the treatment.'
+    description: 'Clearly increased focus on non-surgical management of uncomplicated appendicitis. Several HCPs request patient-selection criteria and follow-up protocols for Dose 1.'
   },
   { 
     id: 's3', 
     title: 'Concerns about availability and supply security', 
     count: 42,
     impact: 'negative',
-    description: 'Several HCPs and HCOs express frustration over delivery challenges. This affects their willingness to initiate new patients on certain products.'
+    description: 'Several HCPs and HCOs express frustration over delivery challenges for Dose 1. This affects their willingness to start new patients on the non-surgical pathway.'
   },
   { 
     id: 's4', 
@@ -128,10 +128,10 @@ const sentimentCategories: InsightCategory[] = [
   },
   { 
     id: 's5', 
-    title: 'Competitive pressure from biosimilars', 
+    title: 'Surgical pathway remains the default at some sites', 
     count: 18,
     impact: 'negative',
-    description: 'Some HCOs mention price pressure from biosimilars and generic alternatives. This primarily affects the insulin market and requires clear value communication.'
+    description: 'Some HCOs report that surgical teams still default to appendectomy. This requires clearer communication of Dose 1 outcome data and cost-of-care benefits.'
   },
 ];
 
@@ -198,22 +198,22 @@ const offLabelStatementsByCategory: Record<string, Statement[]> = {
 // Statements for sentiment report
 const sentimentStatementsByCategory: Record<string, Statement[]> = {
   's1': generateStatements('s1', 87, [
-    'Very satisfied with our company\'s products and the support we receive.',
-    'GLP-1 treatment has changed our approach to type 2 diabetes.',
-    'Good clinical material that is easy to use in everyday practice.',
-    'Patients respond well to the treatment.',
+    'Very satisfied with Dose 1 and the support we receive.',
+    'Dose 1 has changed how we manage uncomplicated appendicitis.',
+    'Good clinical material that is easy to use in the emergency department.',
+    'Patients respond well to the treatment and recover quickly.',
     'Appreciate the personal contact with the KAM.',
   ]),
   's2': generateStatements('s2', 64, [
-    'Seeing great interest from patients regarding weight loss treatment.',
-    'Want more knowledge about Wegovy and indications.',
-    'Weight loss has become a central topic in consultations.',
-    'Requesting guidelines for patient selection for weight loss treatment.',
+    'Seeing great interest from patients in avoiding appendix surgery.',
+    'Want more knowledge about Dose 1 and the approved indication.',
+    'Non-surgical management has become a central topic on the ward.',
+    'Requesting guidelines for patient selection for Dose 1.',
   ]),
   's3': generateStatements('s3', 42, [
-    'Supply uncertainty makes it difficult to start new patients.',
+    'Supply uncertainty makes it difficult to start new patients on Dose 1.',
     'Patients are frustrated about lack of availability.',
-    'We have had to postpone initiation due to delivery problems.',
+    'We have had to postpone treatment due to delivery problems.',
     'Want better communication about expected delivery time.',
   ]),
   's4': generateStatements('s4', 31, [
@@ -222,9 +222,9 @@ const sentimentStatementsByCategory: Record<string, Statement[]> = {
     'Digital access to product information would save time.',
   ]),
   's5': generateStatements('s5', 18, [
-    'We see price pressure from biosimilars in the insulin area.',
-    'The region is pushing for cheaper alternatives.',
-    'Need for clear communication of added value.',
+    'Our surgeons still default to appendectomy in most cases.',
+    'The department wants more outcome data before changing pathway.',
+    'Need for clear communication of added value versus surgery.',
   ]),
 };
 
@@ -404,10 +404,10 @@ const InsightReportView = () => {
             ) : isSentimentReport ? (
               <>
                 <p>
-                  The analysis of HCP and HCO interactions from October to December 2025 shows an overall positive sentiment towards our company's product portfolio. GLP-1 products in particular are well received, and there is a significantly increasing interest in weight loss treatment among healthcare professionals.
+                  The analysis of HCP and HCO interactions from October to December 2025 shows an overall positive sentiment towards Dose 1. The ATLAS outcome data is well received, and there is significantly increasing interest in non-surgical management of uncomplicated appendicitis among healthcare professionals.
                 </p>
                 <p>
-                  However, challenges related to product availability and supply security have been identified, which affect HCPs' willingness to initiate new patients. Additionally, there is an increasing desire for digital communication channels and more flexible contact options.
+                  However, challenges related to product availability and supply security have been identified, which affect HCPs' willingness to start new patients. Additionally, there is an increasing desire for digital communication channels and more flexible contact options.
                 </p>
               </>
             ) : (
