@@ -48,26 +48,26 @@ interface Campaign {
 
 const activeCampaigns: Campaign[] = [
   {
-    id: 'ozempic-initiation',
-    title: 'Ozempic Initiation',
-    description: 'Focus on presenting initiation data and addressing concerns when starting new patients on Ozempic.',
+    id: 'dose1-initiation',
+    title: 'Dose 1 Initiation',
+    description: 'Focus on presenting initiation data and addressing concerns when starting new patients on Dose 1.',
     priority: 'high',
     adherenceRate: 72,
     totalMeetings: 32,
     alignedMeetings: 23,
     startDate: 'Dec 1, 2025',
-    keywords: ['initiation', 'start-up', 'new patients', 'dosing', 'ozempic']
+    keywords: ['initiation', 'start-up', 'new patients', 'dosing', 'dose 1']
   },
   {
     id: 'cv-outcomes',
     title: 'Cardiovascular Outcomes',
-    description: 'Communication of SUSTAIN-6 and SELECT data regarding cardiovascular risk reduction.',
+    description: 'Communication of ATLAS-6 and HORIZON data regarding cardiovascular risk reduction.',
     priority: 'high',
     adherenceRate: 58,
     totalMeetings: 28,
     alignedMeetings: 16,
     startDate: 'Nov 15, 2025',
-    keywords: ['cardiovascular', 'cv', 'sustain', 'select', 'risk reduction', 'heart']
+    keywords: ['cardiovascular', 'cv', 'atlas', 'horizon', 'risk reduction', 'heart']
   },
   {
     id: 'patient-adherence',
@@ -81,15 +81,15 @@ const activeCampaigns: Campaign[] = [
     keywords: ['adherence', 'compliance', 'drop-out', 'retention', 'patient']
   },
   {
-    id: 'weight-management',
-    title: 'Weight Management & Obesity',
-    description: 'Introduction to Wegovy and discussion of weight loss treatment as a therapeutic area.',
+    id: 'appendicitis',
+    title: 'Appendicitis Management',
+    description: 'Introduction to Dose 1 for appendicitis and discussion of the therapeutic area.',
     priority: 'low',
     adherenceRate: 31,
     totalMeetings: 22,
     alignedMeetings: 7,
     startDate: 'Oct 20, 2025',
-    keywords: ['weight', 'obesity', 'wegovy', 'weight loss', 'bmi']
+    keywords: ['appendicitis', 'appendix', 'dose 1', 'inflammation', 'surgery avoidance']
   }
 ];
 
@@ -103,28 +103,28 @@ interface EmployeeAdherence {
 
 const employeeAdherence: EmployeeAdherence[] = [
   {
-    name: 'Lenette Skott',
+    name: 'Anna Petersen',
     overallAdherence: 83,
     meetingCount: 6,
-    campaignBreakdown: { 'ozempic-initiation': 100, 'cv-outcomes': 80, 'patient-adherence': 50, 'weight-management': 0 }
+    campaignBreakdown: { 'dose1-initiation': 100, 'cv-outcomes': 80, 'patient-adherence': 50, 'appendicitis': 0 }
   },
   {
-    name: 'Gitte Baker',
+    name: 'Maria Lund',
     overallAdherence: 70,
     meetingCount: 10,
-    campaignBreakdown: { 'ozempic-initiation': 80, 'cv-outcomes': 60, 'patient-adherence': 40, 'weight-management': 20 }
+    campaignBreakdown: { 'dose1-initiation': 80, 'cv-outcomes': 60, 'patient-adherence': 40, 'appendicitis': 20 }
   },
   {
-    name: 'Christian Schmidt Larsen',
+    name: 'Thomas Berg',
     overallAdherence: 62,
     meetingCount: 8,
-    campaignBreakdown: { 'ozempic-initiation': 75, 'cv-outcomes': 50, 'patient-adherence': 50, 'weight-management': 25 }
+    campaignBreakdown: { 'dose1-initiation': 75, 'cv-outcomes': 50, 'patient-adherence': 50, 'appendicitis': 25 }
   },
   {
-    name: 'Christine Willesen',
+    name: 'Sofia Vester',
     overallAdherence: 56,
     meetingCount: 5,
-    campaignBreakdown: { 'ozempic-initiation': 60, 'cv-outcomes': 40, 'patient-adherence': 40, 'weight-management': 20 }
+    campaignBreakdown: { 'dose1-initiation': 60, 'cv-outcomes': 40, 'patient-adherence': 40, 'appendicitis': 20 }
   }
 ];
 
@@ -142,25 +142,25 @@ interface DebriefExample {
 const debriefExamples: DebriefExample[] = [
   {
     id: '1',
-    employee: 'Lenette Skott',
+    employee: 'Anna Petersen',
     date: 'Dec 20, 2025',
     aligned: true,
-    campaign: 'Ozempic Initiation',
+    campaign: 'Dose 1 Initiation',
     excerpt: 'Reviewed initiation data with the chief physician. Focused on the dose escalation algorithm and addressed concerns about GI side effects at start-up. Agreed to start 3 new patients on low dose.',
     analysis: 'Aligned: Debrief addresses all key campaign elements — initiation data, dosing, and concerns.'
   },
   {
     id: '2',
-    employee: 'Christian Schmidt Larsen',
+    employee: 'Thomas Berg',
     date: 'Dec 18, 2025',
     aligned: true,
     campaign: 'Cardiovascular Outcomes',
-    excerpt: 'Presented SUSTAIN-6 data to the cardiology team. Strong interest in CV risk reduction. They will consider GLP-1 for type 2 diabetes patients with established heart disease.',
-    analysis: 'Aligned: Specific reference to SUSTAIN-6 and cardiovascular risk reduction matches the campaign focus.'
+    excerpt: 'Presented ATLAS-6 data to the cardiology team. Strong interest in CV risk reduction. They will consider Dose 1 for type 2 diabetes patients with established heart disease.',
+    analysis: 'Aligned: Specific reference to ATLAS-6 and cardiovascular risk reduction matches the campaign focus.'
   },
   {
     id: '3',
-    employee: 'Gitte Baker',
+    employee: 'Maria Lund',
     date: 'Dec 15, 2025',
     aligned: false,
     campaign: 'Patient Compliance',
@@ -169,16 +169,16 @@ const debriefExamples: DebriefExample[] = [
   },
   {
     id: '4',
-    employee: 'Christine Willesen',
+    employee: 'Sofia Vester',
     date: 'Dec 12, 2025',
     aligned: false,
-    campaign: 'Weight Management & Obesity',
-    excerpt: 'Meeting at diabetes clinic. Focused primarily on Ozempic dosing and reimbursement rules. No questions from HCP.',
-    analysis: 'Not aligned: The meeting was about Ozempic dosing, not weight management or Wegovy as the campaign prescribes.'
+    campaign: 'Appendicitis Management',
+    excerpt: 'Meeting at the clinic. Focused primarily on Dose 1 dosing and reimbursement rules. No questions from HCP.',
+    analysis: 'Not aligned: The meeting was about general dosing, not appendicitis treatment with Dose 1 as the campaign prescribes.'
   },
   {
     id: '5',
-    employee: 'Lenette Skott',
+    employee: 'Anna Petersen',
     date: 'Dec 10, 2025',
     aligned: true,
     campaign: 'Patient Compliance',
@@ -298,15 +298,15 @@ const CampaignAdherenceReportView = () => {
           <div className="text-foreground/90 space-y-4 leading-relaxed">
             <p>
               Over the past 30 days, the team completed {totalMeetings} meetings, of which {alignedMeetings} ({overallAdherence}%) were 
-              aligned with active campaigns. The <strong>Ozempic Initiation</strong> campaign has the highest adherence at 72%, 
-              while <strong>Weight Management & Obesity</strong> has the lowest at 31%.
+              aligned with active campaigns. The <strong>Dose 1 Initiation</strong> campaign has the highest adherence at 72%, 
+              while <strong>Appendicitis Management</strong> has the lowest at 31%.
             </p>
             <p>
               A positive adherence trend is observed over the period, with improvements across all campaigns. 
               However, there remains a significant gap between high-priority campaigns (72% and 58%) and lower-priority campaigns (45% and 31%).
             </p>
             <p>
-              <strong>Recommendation:</strong> Increase focus on the Patient Compliance and Weight Management campaigns in the coming period. 
+              <strong>Recommendation:</strong> Increase focus on the Patient Compliance and Appendicitis Management campaigns in the coming period. 
               Consider including specific talking points in meeting preparation to boost alignment.
             </p>
           </div>
