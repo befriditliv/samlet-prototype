@@ -80,7 +80,7 @@ const quickReportOptions = [
     label: 'Off-Label Information Insights',
     description: 'Find debriefs where HCPs have unsolicited shared information about off-label prescription',
     icon: AlertTriangle,
-    devNote: 'DEV: Search debriefs for HCP-volunteered off-label information (e.g., Dose 1 for obesity).',
+    devNote: 'DEV: Search debriefs for HCP-volunteered off-label information (e.g., Dose 1 for appendicitis).',
   },
   {
     id: 'dose-1-initiation',
