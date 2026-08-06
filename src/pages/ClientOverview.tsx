@@ -432,7 +432,7 @@ const ClientOverview = () => {
                           Filter {entityType === 'hcp' ? 'HCPs' : 'HCOs'} by distance, meetings, persona and more.
                         </p>
                         <div className="space-y-2">
-                          {['Maximum distance', 'Last meeting', 'Future meetings', 'Region', 'Target class: Insulin', 'Target class: GLP1', 'Target class: Obesity', 'Target class: Account value', 'Type', 'Responsible agent'].map(filter => <div key={filter} className="flex items-center justify-between py-2 border-b last:border-0">
+                          {['Maximum distance', 'Last meeting', 'Future meetings', 'Region', 'Target class: Dose 1', 'Target class: Acute surgery', 'Target class: Emergency medicine', 'Target class: Account value', 'Type', 'Responsible agent'].map(filter => <div key={filter} className="flex items-center justify-between py-2 border-b last:border-0">
                               <div className="flex items-center gap-2">
                                 <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
                                 <span className="text-sm">{filter}</span>

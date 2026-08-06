@@ -142,27 +142,27 @@ export const HCPAssistant = ({ isOpen, onClose, hcpName, showBriefing = false }:
 
   const BriefingContent = ({ name }: { name: string }) => (
     <div className="text-sm text-card-foreground leading-relaxed space-y-3">
-      <p>Metro Medical Center is a cardiology clinic with 12 specialists. {name} leads the heart failure clinic.</p>
+      <p>Metro Medical Center is an acute care hospital with 12 specialists. {name} leads the acute abdomen unit.</p>
 
       <div>
         <p className="font-medium mb-1">Last meeting (Jan 7)</p>
-        <p className="text-muted-foreground">Phone call about Wegovy and patient adherence. Good dialogue, wants follow-up on CARDIAC-ADVANCE.</p>
+        <p className="text-muted-foreground">Phone call about Dose 1 patient selection in uncomplicated appendicitis. Good dialogue, wants follow-up on ATLAS recurrence data.</p>
       </div>
 
       <div>
         <p className="font-medium mb-1">Key people</p>
         <ul className="text-muted-foreground space-y-0.5">
-          <li>• {name} – Lead, heart failure</li>
-          <li>• Dr. Hansen – Diabetes, OPT IN</li>
+          <li>• {name} – Lead, acute abdomen unit</li>
+          <li>• Dr. Hansen – Surgery, prefers appendectomy, OPT IN</li>
         </ul>
       </div>
 
       <div>
         <p className="font-medium mb-1">Recent activity</p>
         <ul className="text-muted-foreground space-y-0.5">
-          <li>• Opened 3 newsletters (SGLT2)</li>
+          <li>• Opened 3 newsletters (Dose 1 pathway)</li>
           <li>• Downloaded 2 whitepapers</li>
-          <li>• Attended webinar about Wegovy SELECT (Dec)</li>
+          <li>• Attended webinar about ATLAS 12-month results (Dec)</li>
         </ul>
       </div>
 

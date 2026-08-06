@@ -1,4 +1,4 @@
-// Customer Compass — Novo DK segmentation add-on model.
+// Customer Compass — segmentation add-on model.
 // Categories are ranked 1 (healthiest) → 10 (lost). Movement toward a lower
 // rank is a positive development, toward a higher rank is negative.
 

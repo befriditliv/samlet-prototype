@@ -10,52 +10,52 @@ interface AIInsightsSectionProps {
 
 // Dummy insights data - in production this would come from AI generation
 const generateHcoInsights = (name: string) => ({
-  summary: `${name} is a healthcare organization focusing on type 2 diabetes and obesity treatment. The latest meeting was on January 26, 2026 regarding Ozempic and Tresiba. 2 out of 3 HCPs have given consent, with Helle being the most digitally active. No scheduled meetings, but future conversations could focus on Ozempic and Wegovy. 51.6% of patients in the region receive organ-protective treatment.`,
-  introduction: `${name} is a clinical practice that focuses on treating type 2 diabetes and obesity. The latest communication with the organization included a meeting on January 26, 2026 about products such as Ozempic and Tresiba. Digital engagement shows that 2 out of 3 HCPs have given marketing consent, with Helle being the most active. HCPs have shown interest in GLP-1 and obesity, and there are no scheduled meetings, but future conversations could focus on Ozempic and Wegovy. In the region, 51.6% of patients with type 2 diabetes receive organ-protective treatment, which is on par with the regional average.`,
-  latestCommunication: `The most recent interaction with the organization took place on January 26, 2026, where a meeting was held focusing on products such as Ozempic and Tresiba. Discussions have over time covered new DES guidelines, combination therapy for type 2 diabetes, and optimization of patient guidance when using Wegovy. Emphasis has been placed on retaining patients in treatment for obesity and introduction of Sundvægt. Future goals include following up on feedback from physicians and preparing an experience meeting about guidelines.`,
-  digitalEngagement: `2 out of 3 HCPs have given marketing consent. Helle Bruun has been the most active in terms of digital engagement. She has had several digital interactions via our web portal, including visits to pages and videos related to "Digital Engagement" and "Masterclass". On September 10, 2025, she visited several pages and watched videos related to "Digital Engagement" and "Masterclass". On August 11, 2025, she visited pages about "Masterclass" for nurses in Sønderborg, showing interest in our educational material. Anne Mette Brødbæk has been the least active, as there have been no digital interactions with the HCP within the last 6 months.`,
+  summary: `${name} is a healthcare organization treating acute and recurrent appendicitis. The latest meeting was on January 26, 2026 regarding Dose 1 and the non-surgical care pathway. 2 out of 3 HCPs have given consent, with the lead surgical nurse being the most digitally active. No scheduled meetings, but future conversations could focus on Dose 1 eligibility criteria and after-hours protocols. 51.6% of uncomplicated appendicitis cases in the region are now managed non-surgically.`,
+  introduction: `${name} is a clinical practice managing acute abdominal presentations, with appendicitis as a core caseload. The latest communication included a meeting on January 26, 2026 about Dose 1 and how it fits alongside laparoscopic appendectomy. Digital engagement shows 2 out of 3 HCPs have given marketing consent. HCPs have shown interest in non-surgical resolution and recurrence rates, and there are no scheduled meetings, but future conversations could focus on Dose 1 patient selection. In the region, 51.6% of uncomplicated cases are treated non-surgically, on par with the regional average.`,
+  latestCommunication: `The most recent interaction took place on January 26, 2026, where a meeting was held focusing on Dose 1. Discussions have over time covered updated acute abdomen guidelines, imaging confirmation before Dose 1 initiation, and how to counsel patients who expect surgery. Emphasis has been placed on 12-month recurrence data from the ATLAS trial and on reducing theatre time during weekend admissions. Future goals include following up on surgeon feedback and preparing a case-based experience meeting.`,
+  digitalEngagement: `2 out of 3 HCPs have given marketing consent. The lead acute-care physician has been the most active, with several interactions via our web portal, including pages and videos on "Dose 1 Patient Selection" and "Non-Surgical Appendicitis Masterclass". On September 10, 2025, they viewed the ATLAS 12-month recurrence webinar. On August 11, 2025, they visited pages about the emergency department protocol pack. The third HCP has been the least active, with no digital interactions in the last 6 months.`,
   hcpInsights: [
     {
-      title: "Focus on GLP-1 and Obesity",
-      content: "All HCPs have shown interest in GLP-1 and obesity, with Ozempic and Wegovy as central products. Discussions have often focused on intensification of T2D treatment and weight maintenance."
+      title: "Surgical Preference vs. Dose 1",
+      content: "Two of three HCPs still default to appendectomy for uncomplicated cases, citing certainty of outcome. Discussions have focused on which patients can safely start Dose 1 and how to escalate if symptoms persist beyond 24 hours."
     },
     {
       title: "Interactions and Consent",
-      content: "Michael Bruun has given marketing consent, while Helle Bruun has shown interest in educational material without consent. Anne Mette Brødbæk has also given consent and focuses on GLP-1 and obesity."
+      content: "The acute-care lead has given marketing consent and requests ATLAS subgroup data. The surgical lead has engaged with educational material without consent. The third HCP has consent but low activity."
     },
     {
       title: "Future Meetings and Activities",
-      content: "There are no scheduled meetings with the HCPs, but future conversations could focus on Ozempic and Wegovy. Michael Bruun should be reminded about the upcoming masterclass in Silkeborg."
+      content: "There are no scheduled meetings, but future conversations could focus on the Dose 1 emergency department protocol and recurrence follow-up. The surgical lead should be reminded about the upcoming appendicitis masterclass."
     }
   ],
-  diabetesStats: `In the region, 51.6% of patients with type 2 diabetes and cardiovascular disease receive organ-protective treatment with GLP-1 or SGLT-2, which is on par with the regional average. This proportion has increased from 45.3% over the past quarters. The proportion of patients with type 2 diabetes who achieve stable blood sugar control is 45.6%, which is above the regional level and has shown positive development from 40.9%. Recommend that the organization prioritize improved treatment approach to enhance patient outcomes and maintain good blood sugar control.`
+  regionalStats: `In the region, 51.6% of uncomplicated appendicitis cases are managed non-surgically, on par with the regional average and up from 45.3% over the past quarters. 45.6% of Dose 1 treated patients avoid readmission at 12 months, which is above the regional level and up from 40.9%. Recommend that the organization formalize a written eligibility checklist to improve patient selection and reduce escalation to surgery.`
 });
 
 const generateHcpInsights = (name: string) => ({
-  summary: `${name} focuses on type 2 diabetes and metabolic diseases. Recent interactions have shown strong interest in GLP-1 therapies, particularly Ozempic for weight management. Digital engagement has increased by 34% this quarter, with particular interest in clinical guidelines and case studies. Next recommended action: Follow up on Wegovy dosing questions from last meeting.`,
-  introduction: `${name} is a key healthcare professional specializing in endocrinology and diabetes care. Recent engagement patterns show a clear focus on GLP-1 agonists and their applications in type 2 diabetes management. The HCP has demonstrated receptiveness to new clinical data, particularly regarding cardiovascular outcomes in diabetes patients. Marketing consent has been obtained, enabling continued digital engagement.`,
+  summary: `${name} focuses on acute abdominal care and appendicitis management. Recent interactions show growing but cautious interest in Dose 1 as a non-surgical option for uncomplicated cases. Digital engagement has increased by 34% this quarter, with particular interest in ATLAS trial data and eligibility criteria. Next recommended action: follow up on the recurrence questions raised in the last meeting.`,
+  introduction: `${name} is a key healthcare professional in acute surgery and emergency medicine. Recent engagement patterns show a clear focus on when Dose 1 can safely replace appendectomy in uncomplicated appendicitis. The HCP has been receptive to clinical data but remains surgically inclined for patients with appendicoliths or delayed presentation. Marketing consent has been obtained, enabling continued digital engagement.`,
   clinicalInterests: [
     {
-      title: "GLP-1 Therapy Optimization",
-      content: "Strong interest in optimizing GLP-1 therapy for patients with type 2 diabetes, particularly focusing on Ozempic titration protocols and managing patient expectations during the initiation phase."
+      title: "Dose 1 Patient Selection",
+      content: "Strong interest in defining which uncomplicated appendicitis patients are suitable for Dose 1, particularly around imaging confirmation, symptom duration under 48 hours, and exclusion of perforation."
     },
     {
-      title: "Weight Management Integration",
-      content: "Actively exploring the integration of weight management strategies with diabetes care, showing particular interest in Wegovy for patients with obesity and metabolic syndrome."
+      title: "Recurrence and Follow-Up",
+      content: "Actively reviewing 12-month recurrence data from the ATLAS trial and asking how follow-up should be organised when patients are discharged without surgery."
     },
     {
-      title: "Cardiovascular Risk Reduction",
-      content: "Recent discussions have emphasized the importance of cardiovascular risk reduction in diabetic patients, with questions about SGLT-2 inhibitor combinations."
+      title: "Surgical Preference and Team Alignment",
+      content: "Notes internal disagreement in the department: several colleagues prefer laparoscopic appendectomy for certainty. Interested in a shared protocol so escalation criteria are unambiguous on night shifts."
     }
   ],
-  engagementPattern: `This HCP shows high digital engagement with our content platform. Over the past 6 months, they have viewed 12 clinical articles, attended 3 virtual webinars, and downloaded 5 patient education materials. Peak engagement occurs mid-week, with preference for video content and interactive case studies. Email open rate is 78%, significantly above average.`,
+  engagementPattern: `This HCP shows high digital engagement with our content platform. Over the past 6 months, they have viewed 12 clinical articles, attended 3 virtual webinars, and downloaded 5 patient education materials on the non-surgical pathway. Peak engagement occurs mid-week, with preference for video content and interactive case studies. Email open rate is 78%, significantly above average.`,
   recommendations: [
-    "Schedule follow-up meeting to discuss new Ozempic real-world evidence data",
-    "Share updated patient initiation guide for GLP-1 therapies",
-    "Invite to upcoming regional diabetes symposium",
-    "Provide access to new weight management clinical decision tool"
+    "Schedule follow-up meeting to discuss new Dose 1 real-world evidence on recurrence",
+    "Share the updated Dose 1 initiation and escalation checklist for the emergency department",
+    "Invite to the upcoming regional acute abdomen symposium",
+    "Provide access to the Dose 1 patient selection decision tool"
   ],
-  patientProfile: `Based on interaction history, this HCP manages approximately 200-250 patients with type 2 diabetes annually. Patient population skews toward those with multiple comorbidities including hypertension and dyslipidemia. Estimated 40% of patients could benefit from GLP-1 therapy optimization.`
+  patientProfile: `Based on interaction history, this HCP manages approximately 200-250 suspected appendicitis presentations annually. The population skews toward adults aged 18-45 presenting via the emergency department, with a meaningful share arriving late in the evening. Estimated 40% of cases are uncomplicated and could be eligible for Dose 1 rather than immediate surgery.`
 });
 
 export const AIInsightsSection = ({ entityType, entityName }: AIInsightsSectionProps) => {
@@ -192,16 +192,16 @@ export const AIInsightsSection = ({ entityType, entityName }: AIInsightsSectionP
               </div>
             </div>
 
-            {/* Diabetes Stats */}
+            {/* Regional Stats */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 rounded-md bg-primary/10">
                   <TrendingUp className="h-4 w-4 text-primary" />
                 </div>
-                <h4 className="font-medium text-card-foreground">Regional Diabetes Statistics</h4>
+                <h4 className="font-medium text-card-foreground">Regional Appendicitis Statistics</h4>
               </div>
               <p className="text-sm text-muted-foreground pl-8 leading-relaxed">
-                {(insights as ReturnType<typeof generateHcoInsights>).diabetesStats}
+                {(insights as ReturnType<typeof generateHcoInsights>).regionalStats}
               </p>
             </div>
           </>
