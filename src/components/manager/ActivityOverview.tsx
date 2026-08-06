@@ -156,6 +156,9 @@ export const ActivityOverview = () => {
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground mt-1">Total Interactions</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {prev.label}: <span className="font-medium text-foreground">{prev.totalInteractions}</span>
+                </p>
               </div>
             </div>
             <div className="text-right">
@@ -225,6 +228,7 @@ export const ActivityOverview = () => {
             <div className="text-3xl font-bold tracking-tight mb-2">
               <AnimatedNumber value={activityStats.meetings.total} animate={meetingInView} />
             </div>
+            <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.meetings}</span></p>
             <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
               <span>{activityStats.meetings.physical} physical</span>
               <span>{activityStats.meetings.virtual} virtual</span>
@@ -258,6 +262,7 @@ export const ActivityOverview = () => {
             <div className="text-3xl font-bold tracking-tight mb-2">
               <AnimatedNumber value={activityStats.events.total} animate={meetingInView} />
             </div>
+            <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.events}</span></p>
             <div className="flex flex-wrap gap-x-2 gap-y-1 text-xs text-muted-foreground">
               <span>{activityStats.events.breakdown.education} education</span>
               <span>·</span>
@@ -287,6 +292,7 @@ export const ActivityOverview = () => {
             <div className="text-3xl font-bold tracking-tight mb-2">
               <AnimatedNumber value={activityStats.phoneCalls.total} animate={meetingInView} />
             </div>
+            <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.phoneCalls}</span></p>
             <p className="text-xs text-muted-foreground">
               Outbound HCP calls
             </p>
@@ -314,6 +320,7 @@ export const ActivityOverview = () => {
             <div className="text-3xl font-bold tracking-tight mb-2">
               <AnimatedNumber value={activityStats.digital.total} animate={meetingInView} />
             </div>
+            <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.digital}</span></p>
             <div className="flex flex-wrap gap-x-2 gap-y-1 text-xs text-muted-foreground">
               <span>{activityStats.digital.breakdown.email} email</span>
               <span>·</span>
