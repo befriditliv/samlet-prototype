@@ -99,10 +99,10 @@ const generateStatements = (categoryId: string, count: number, quotes: string[])
 const sentimentCategories: InsightCategory[] = [
   { 
     id: 's1', 
-    title: 'Generally positive sentiment towards Novo Nordisk products', 
+    title: 'Generally positive sentiment towards our company products', 
     count: 87,
     impact: 'positive',
-    description: 'The majority of HCPs express satisfaction with Novo Nordisk\'s product portfolio and support. Particularly good experience with GLP-1 products and the value of clinical support materials is mentioned.'
+    description: 'The majority of HCPs express satisfaction with our company\'s product portfolio and support. Particularly good experience with GLP-1 products and the value of clinical support materials is mentioned.'
   },
   { 
     id: 's2', 
@@ -138,66 +138,66 @@ const sentimentCategories: InsightCategory[] = [
 const offLabelCategories: InsightCategory[] = [
   { 
     id: 'ol1', 
-    title: 'Off-label prescription of Dose 1 for obesity', 
+    title: 'Off-label use of Dose 1 for appendicitis', 
     count: 28,
     impact: 'neutral',
-    description: 'HCPs have unsolicited mentioned that they prescribe Dose 1 to patients with severe obesity, even though it is not the approved indication. Several mention the price difference to Wegovy as the reason.'
+    description: 'HCPs have unsolicited mentioned that they use Dose 1 to treat uncomplicated appendicitis, even though it is not the approved indication. Several point to avoided surgery as the reason.'
   },
   { 
     id: 'ol2', 
     title: 'Clinics with systematic off-label practice', 
     count: 12,
     impact: 'neutral',
-    description: 'Some clinics have established a regular practice for off-label prescription. The HCPs themselves brought this up during conversations about patient pathways.'
+    description: 'Some clinics have established a regular practice for off-label use in appendicitis. The HCPs themselves brought this up during conversations about patient pathways.'
   },
   { 
     id: 'ol3', 
-    title: 'Price differences mentioned as motivation', 
+    title: 'Avoided surgery mentioned as motivation', 
     count: 18,
     impact: 'neutral',
-    description: 'HCPs have spontaneously mentioned that Dose 1 1.0mg is significantly cheaper than Wegovy and has the same effect, as justification for off-label use.'
+    description: 'HCPs have spontaneously mentioned that Dose 1 resolves inflammation in uncomplicated appendicitis and spares patients an appendectomy, as justification for off-label use.'
   },
   { 
     id: 'ol4', 
     title: 'Patient demand drives decision', 
     count: 9,
     impact: 'neutral',
-    description: 'Some HCPs mention that patients themselves request Dose 1 for weight loss after hearing about it from friends or media.'
+    description: 'Some HCPs mention that patients themselves request Dose 1 for appendicitis to avoid surgery after hearing about it from other patients or media.'
   },
 ];
 
 // Statements for off-label report
 const offLabelStatementsByCategory: Record<string, Statement[]> = {
   'ol1': generateStatements('ol1', 28, [
-    'The physician unsolicited mentioned that they have started prescribing Dose 1 1.0mg for severe obesity at the clinic.',
-    'The HCP said that several patients receive Dose 1 off-label for weight loss with good results.',
-    'During the conversation, the physician mentioned that they use Dose 1 for obese patients without diabetes.',
-    'The clinic\'s practice now includes Dose 1 for pure obesity treatment, the HCP explained.',
-    'The physician spontaneously stated that they prescribe Dose 1 off-label as it is cheaper than Wegovy.',
+    'The physician unsolicited mentioned that they have started using Dose 1 for uncomplicated appendicitis at the clinic.',
+    'The HCP said that several appendicitis patients receive Dose 1 off-label with good results.',
+    'During the conversation, the physician mentioned that they use Dose 1 for early-stage appendicitis instead of surgery.',
+    'The clinic\'s practice now includes Dose 1 for appendicitis management, the HCP explained.',
+    'The physician spontaneously stated that they use Dose 1 off-label because recovery is faster than after surgery.',
   ]),
   'ol2': generateStatements('ol2', 12, [
-    'The clinic has established a regular practice to offer Dose 1 to obese patients.',
-    'The HCP described their systematic approach to off-label prescription of Dose 1.',
-    'The physician explained that all doctors at the clinic now use Dose 1 for obesity.',
-    'The clinic has had internal discussions and decided to offer Dose 1 off-label.',
+    'The clinic has established a regular practice to offer Dose 1 to appendicitis patients.',
+    'The HCP described their systematic approach to off-label use of Dose 1 in appendicitis.',
+    'The physician explained that all doctors at the clinic now consider Dose 1 before an appendectomy.',
+    'The clinic has had internal discussions and decided to offer Dose 1 off-label for appendicitis.',
   ]),
   'ol3': generateStatements('ol3', 18, [
-    'The physician mentioned that Dose 1 1.0mg is significantly cheaper than Wegovy and has the same effect.',
-    'The HCP highlighted the price advantage of Dose 1 over Wegovy for obesity treatment.',
-    'Price is the primary reason for choosing Dose 1 over Wegovy, explained the physician.',
-    'Patients prefer Dose 1 due to lower out-of-pocket costs, said the HCP.',
+    'The physician mentioned that Dose 1 resolves the inflammation and spares the patient an operation.',
+    'The HCP highlighted the shorter recovery time compared with appendectomy as the key advantage.',
+    'Avoiding surgery is the primary reason for choosing Dose 1 in appendicitis, explained the physician.',
+    'Patients prefer Dose 1 because they avoid hospital admission, said the HCP.',
   ]),
   'ol4': generateStatements('ol4', 9, [
-    'Patients come asking specifically for Dose 1 for weight loss, said the physician.',
-    'The HCP mentioned increased patient demand for Dose 1 after media coverage.',
-    'Many patients have heard about Dose 1 from friends and want to try it, said the physician.',
+    'Patients come asking specifically for Dose 1 to avoid appendix surgery, said the physician.',
+    'The HCP mentioned increased patient demand for Dose 1 in appendicitis after media coverage.',
+    'Many patients have heard about Dose 1 from others and want to try it before surgery, said the physician.',
   ]),
 };
 
 // Statements for sentiment report
 const sentimentStatementsByCategory: Record<string, Statement[]> = {
   's1': generateStatements('s1', 87, [
-    'Very satisfied with Novo Nordisk\'s products and the support we receive.',
+    'Very satisfied with our company\'s products and the support we receive.',
     'GLP-1 treatment has changed our approach to type 2 diabetes.',
     'Good clinical material that is easy to use in everyday practice.',
     'Patients respond well to the treatment.',
@@ -393,7 +393,7 @@ const InsightReportView = () => {
             {isOffLabelReport ? (
               <>
                 <p>
-                  This report identifies debriefs where HCPs have unsolicited shared information about off-label prescription of Dose 1 for the treatment of severe obesity. A total of {totalStatements} observations have been recorded in the period where HCPs have mentioned off-label practices without this being initiated by the employee.
+                  This report identifies debriefs where HCPs have unsolicited shared information about off-label use of Dose 1 for the treatment of appendicitis. A total of {totalStatements} observations have been recorded in the period where HCPs have mentioned off-label practices without this being initiated by the employee.
                 </p>
                 <p>
                   <strong>Important:</strong> In accordance with guidelines, employees have not facilitated or promoted dialogue about off-label prescription. It is clearly stated in all records that it was the physician who unsolicited mentioned off-label practices, and that the employee steered the conversation back to the meeting's original purpose.
@@ -402,7 +402,7 @@ const InsightReportView = () => {
             ) : isSentimentReport ? (
               <>
                 <p>
-                  The analysis of HCP and HCO interactions from October to December 2025 shows an overall positive sentiment towards Novo Nordisk's product portfolio. GLP-1 products in particular are well received, and there is a significantly increasing interest in weight loss treatment among healthcare professionals.
+                  The analysis of HCP and HCO interactions from October to December 2025 shows an overall positive sentiment towards our company's product portfolio. GLP-1 products in particular are well received, and there is a significantly increasing interest in weight loss treatment among healthcare professionals.
                 </p>
                 <p>
                   However, challenges related to product availability and supply security have been identified, which affect HCPs' willingness to initiate new patients. Additionally, there is an increasing desire for digital communication channels and more flexible contact options.
