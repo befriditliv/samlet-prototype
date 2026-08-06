@@ -143,16 +143,16 @@ export const ActivityOverview = () => {
                   </span>
                   <div className={cn(
                     "flex items-center gap-1 text-sm font-medium px-2.5 py-1 rounded-full",
-                    activityStats.totalInteractions.trend < 0 
+                    trends.totalInteractions < 0 
                       ? "bg-destructive/10 text-destructive" 
                       : "bg-green-500/10 text-green-600"
                   )}>
-                    {activityStats.totalInteractions.trend < 0 ? (
+                    {trends.totalInteractions < 0 ? (
                       <TrendingDown className="h-4 w-4" />
                     ) : (
                       <TrendingUp className="h-4 w-4" />
                     )}
-                    <span>{activityStats.totalInteractions.trend > 0 ? "+" : ""}{activityStats.totalInteractions.trend}%</span>
+                    <span>{trends.totalInteractions > 0 ? "+" : ""}{trends.totalInteractions}%</span>
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground mt-1">Total Interactions</p>
@@ -203,12 +203,12 @@ export const ActivityOverview = () => {
               </div>
               <div className={cn(
                 "flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full",
-                activityStats.meetings.trend < 0 
+                trends.meetings < 0 
                   ? "bg-destructive/10 text-destructive" 
                   : "bg-green-500/10 text-green-600"
               )}>
-                {activityStats.meetings.trend < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
-                <span>{activityStats.meetings.trend > 0 ? "+" : ""}{activityStats.meetings.trend}%</span>
+                {trends.meetings < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
+                <span>{trends.meetings > 0 ? "+" : ""}{trends.meetings}%</span>
               </div>
             </div>
             <div className="text-3xl font-bold tracking-tight mb-2">
@@ -236,12 +236,12 @@ export const ActivityOverview = () => {
               </div>
               <div className={cn(
                 "flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full",
-                activityStats.events.trend < 0 
+                trends.events < 0 
                   ? "bg-destructive/10 text-destructive" 
                   : "bg-green-500/10 text-green-600"
               )}>
-                {activityStats.events.trend < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
-                <span>{activityStats.events.trend > 0 ? "+" : ""}{activityStats.events.trend}%</span>
+                {trends.events < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
+                <span>{trends.events > 0 ? "+" : ""}{trends.events}%</span>
               </div>
             </div>
             <div className="text-3xl font-bold tracking-tight mb-2">
@@ -265,12 +265,12 @@ export const ActivityOverview = () => {
               </div>
               <div className={cn(
                 "flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full",
-                activityStats.phoneCalls.trend < 0 
+                trends.phoneCalls < 0 
                   ? "bg-destructive/10 text-destructive" 
                   : "bg-green-500/10 text-green-600"
               )}>
-                {activityStats.phoneCalls.trend < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
-                <span>{activityStats.phoneCalls.trend > 0 ? "+" : ""}{activityStats.phoneCalls.trend}%</span>
+                {trends.phoneCalls < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
+                <span>{trends.phoneCalls > 0 ? "+" : ""}{trends.phoneCalls}%</span>
               </div>
             </div>
             <div className="text-3xl font-bold tracking-tight mb-2">
@@ -292,12 +292,12 @@ export const ActivityOverview = () => {
               </div>
               <div className={cn(
                 "flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full",
-                activityStats.digital.trend < 0 
+                trends.digital < 0 
                   ? "bg-destructive/10 text-destructive" 
                   : "bg-green-500/10 text-green-600"
               )}>
-                {activityStats.digital.trend < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
-                <span>{activityStats.digital.trend > 0 ? "+" : ""}{activityStats.digital.trend}%</span>
+                {trends.digital < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
+                <span>{trends.digital > 0 ? "+" : ""}{trends.digital}%</span>
               </div>
             </div>
             <div className="text-3xl font-bold tracking-tight mb-2">
