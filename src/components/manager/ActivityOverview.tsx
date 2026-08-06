@@ -183,7 +183,18 @@ export const ActivityOverview = () => {
                 <div className="h-8 w-px bg-border/50" />
                 <div className="text-right">
                   <p className="text-xs text-muted-foreground uppercase tracking-wide">Comparison</p>
-                  <p className="text-sm font-medium text-muted-foreground">vs. previous 30 days</p>
+                  <Select value={comparison} onValueChange={(v) => setComparison(v as ComparisonValue)}>
+                    <SelectTrigger className="h-8 w-[210px] mt-0.5 text-sm font-semibold">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {COMPARISON_OPTIONS.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
