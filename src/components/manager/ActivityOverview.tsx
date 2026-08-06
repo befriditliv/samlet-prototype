@@ -21,6 +21,30 @@ import {
 } from "lucide-react";
 
 type SegmentValue = "all" | "A" | "B" | "C" | "D";
+type ComparisonValue = "prev30" | "prevQuarter" | "lastYear";
+
+const COMPARISON_OPTIONS: { value: ComparisonValue; label: string }[] = [
+  { value: "prev30", label: "vs. previous 30 days" },
+  { value: "prevQuarter", label: "vs. previous quarter" },
+  { value: "lastYear", label: "vs. same period last year" },
+];
+
+// Previous-period values per comparison basis
+const previousPeriods: Record<ComparisonValue, {
+  label: string;
+  meetings: number;
+  events: number;
+  phoneCalls: number;
+  digital: number;
+  totalInteractions: number;
+}> = {
+  prev30: { label: "Previous 30 days", meetings: 114, events: 19, phoneCalls: 123, digital: 158, totalInteractions: 388 },
+  prevQuarter: { label: "Previous quarter", meetings: 131, events: 24, phoneCalls: 104, digital: 172, totalInteractions: 431 },
+  lastYear: { label: "Same period last year", meetings: 96, events: 11, phoneCalls: 141, digital: 97, totalInteractions: 345 },
+};
+
+const pctChange = (current: number, previous: number) =>
+  previous === 0 ? 0 : Math.round(((current - previous) / previous) * 1000) / 10;
 
 const SEGMENT_OPTIONS: { value: SegmentValue; label: string }[] = [
   { value: "all", label: "All segments" },
