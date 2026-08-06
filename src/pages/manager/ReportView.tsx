@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -270,6 +271,7 @@ const topicTrendData = [
 
 const ReportView = () => {
   const navigate = useNavigate();
+  const handleBack = useBackNavigation("/manager");
   const location = useLocation();
   const reportData = location.state as ReportData | null;
   const [selectedCategory, setSelectedCategory] = useState<ObjectionCategory | null>(null);
@@ -449,7 +451,7 @@ const ReportView = () => {
       <main className="container mx-auto px-6 py-8 max-w-6xl">
         {/* Navigation */}
         <button 
-          onClick={() => navigate(-1)}
+          onClick={handleBack}
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
         >
           <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />

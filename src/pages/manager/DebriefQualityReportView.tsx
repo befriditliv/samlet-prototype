@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -206,6 +207,7 @@ const debriefExcerpts: DebriefExcerpt[] = [
 
 const DebriefQualityReportView = () => {
   const navigate = useNavigate();
+  const handleBack = useBackNavigation("/manager");
   const [openDimensions, setOpenDimensions] = useState<string[]>([]);
   const [showExcerpts, setShowExcerpts] = useState(false);
   const [excerptFilter, setExcerptFilter] = useState<'all' | 'good' | 'poor'>('all');
@@ -261,7 +263,7 @@ const DebriefQualityReportView = () => {
         <div className="flex items-center justify-between mb-8">
           <Button 
             variant="ghost" 
-            onClick={() => navigate(-1)}
+            onClick={handleBack}
             className="gap-2 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
