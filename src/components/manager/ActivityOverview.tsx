@@ -110,6 +110,15 @@ export const ActivityOverview = () => {
     rootMargin: "0px 0px -10% 0px",
   });
   const [segment, setSegment] = useState<SegmentValue>("all");
+  const [comparison, setComparison] = useState<ComparisonValue>("prev30");
+  const prev = previousPeriods[comparison];
+  const trends = {
+    meetings: pctChange(activityStats.meetings.total, prev.meetings),
+    events: pctChange(activityStats.events.total, prev.events),
+    phoneCalls: pctChange(activityStats.phoneCalls.total, prev.phoneCalls),
+    digital: pctChange(activityStats.digital.total, prev.digital),
+    totalInteractions: pctChange(activityStats.totalInteractions.total, prev.totalInteractions),
+  };
 
   return (
     <div ref={meetingRef} className={cn(meetingInView && "animate-fade-in")}>
