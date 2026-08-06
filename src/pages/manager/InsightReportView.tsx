@@ -393,7 +393,7 @@ const InsightReportView = () => {
             {isOffLabelReport ? (
               <>
                 <p>
-                  This report identifies debriefs where HCPs have unsolicited shared information about off-label prescription of Dose 1 for the treatment of severe obesity. A total of {totalStatements} observations have been recorded in the period where HCPs have mentioned off-label practices without this being initiated by the employee.
+                  This report identifies debriefs where HCPs have unsolicited shared information about off-label use of Dose 1 for the treatment of appendicitis. A total of {totalStatements} observations have been recorded in the period where HCPs have mentioned off-label practices without this being initiated by the employee.
                 </p>
                 <p>
                   <strong>Important:</strong> In accordance with guidelines, employees have not facilitated or promoted dialogue about off-label prescription. It is clearly stated in all records that it was the physician who unsolicited mentioned off-label practices, and that the employee steered the conversation back to the meeting's original purpose.
