@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -262,6 +263,7 @@ const dose1StatementsByCategory: Record<string, Statement[]> = {
 
 const InsightReportView = () => {
   const navigate = useNavigate();
+  const handleBack = useBackNavigation("/manager");
   const location = useLocation();
   const reportData = location.state as InsightReportData | null;
   const [openCategories, setOpenCategories] = useState<string[]>([]);
@@ -361,7 +363,7 @@ const InsightReportView = () => {
         <div className="flex items-center justify-between mb-8">
           <Button 
             variant="ghost" 
-            onClick={() => navigate(-1)}
+            onClick={handleBack}
             className="gap-2 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />

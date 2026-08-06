@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -253,6 +254,7 @@ const renderStars = (score: number) => (
 
 const EmployeeDetail = () => {
   const navigate = useNavigate();
+  const handleBack = useBackNavigation("/manager");
   const { slug } = useParams();
   const [openScenario, setOpenScenario] = useState<TrainingItem | null>(null);
   const [timeframe, setTimeframe] = useState<string>("30d");
@@ -333,7 +335,7 @@ const EmployeeDetail = () => {
       <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto px-6 py-5">
           <div className="flex items-center gap-6">
-            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="shrink-0">
+            <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0">
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <img src={jarvisLogo} alt="Jarvis Logo" className="h-10 w-10" />

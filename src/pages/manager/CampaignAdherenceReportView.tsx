@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -189,6 +190,7 @@ const debriefExamples: DebriefExample[] = [
 
 const CampaignAdherenceReportView = () => {
   const navigate = useNavigate();
+  const handleBack = useBackNavigation("/manager");
   const [openCampaigns, setOpenCampaigns] = useState<string[]>([]);
   const [showExamples, setShowExamples] = useState(false);
   const [exampleFilter, setExampleFilter] = useState<'all' | 'aligned' | 'not-aligned'>('all');
@@ -249,13 +251,7 @@ const CampaignAdherenceReportView = () => {
         <div className="flex items-center justify-between mb-8">
           <Button 
             variant="ghost" 
-            onClick={() => {
-              if (window.history.length > 1) {
-                navigate(-1);
-              } else {
-                navigate("/manager");
-              }
-            }}
+            onClick={handleBack}
             className="gap-2 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
