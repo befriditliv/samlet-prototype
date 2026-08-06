@@ -103,25 +103,25 @@ interface EmployeeAdherence {
 
 const employeeAdherence: EmployeeAdherence[] = [
   {
-    name: 'Anna Petersen',
+    name: 'Sarah Miller',
     overallAdherence: 83,
     meetingCount: 6,
     campaignBreakdown: { 'dose1-initiation': 100, 'cv-outcomes': 80, 'patient-adherence': 50, 'appendicitis': 0 }
   },
   {
-    name: 'Maria Lund',
+    name: 'James Carter',
     overallAdherence: 70,
     meetingCount: 10,
     campaignBreakdown: { 'dose1-initiation': 80, 'cv-outcomes': 60, 'patient-adherence': 40, 'appendicitis': 20 }
   },
   {
-    name: 'Thomas Berg',
+    name: 'Emily Clark',
     overallAdherence: 62,
     meetingCount: 8,
     campaignBreakdown: { 'dose1-initiation': 75, 'cv-outcomes': 50, 'patient-adherence': 50, 'appendicitis': 25 }
   },
   {
-    name: 'Sofia Vester',
+    name: 'David Walker',
     overallAdherence: 56,
     meetingCount: 5,
     campaignBreakdown: { 'dose1-initiation': 60, 'cv-outcomes': 40, 'patient-adherence': 40, 'appendicitis': 20 }
@@ -142,7 +142,7 @@ interface DebriefExample {
 const debriefExamples: DebriefExample[] = [
   {
     id: '1',
-    employee: 'Anna Petersen',
+    employee: 'Sarah Miller',
     date: 'Dec 20, 2025',
     aligned: true,
     campaign: 'Dose 1 Initiation',
@@ -151,7 +151,7 @@ const debriefExamples: DebriefExample[] = [
   },
   {
     id: '2',
-    employee: 'Thomas Berg',
+    employee: 'Emily Clark',
     date: 'Dec 18, 2025',
     aligned: true,
     campaign: 'Cardiovascular Outcomes',
@@ -160,7 +160,7 @@ const debriefExamples: DebriefExample[] = [
   },
   {
     id: '3',
-    employee: 'Maria Lund',
+    employee: 'James Carter',
     date: 'Dec 15, 2025',
     aligned: false,
     campaign: 'Patient Compliance',
@@ -169,7 +169,7 @@ const debriefExamples: DebriefExample[] = [
   },
   {
     id: '4',
-    employee: 'Sofia Vester',
+    employee: 'David Walker',
     date: 'Dec 12, 2025',
     aligned: false,
     campaign: 'Appendicitis Management',
@@ -178,7 +178,7 @@ const debriefExamples: DebriefExample[] = [
   },
   {
     id: '5',
-    employee: 'Anna Petersen',
+    employee: 'Sarah Miller',
     date: 'Dec 10, 2025',
     aligned: true,
     campaign: 'Patient Compliance',
