@@ -192,16 +192,16 @@ export const AIInsightsSection = ({ entityType, entityName }: AIInsightsSectionP
               </div>
             </div>
 
-            {/* Diabetes Stats */}
+            {/* Regional Stats */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 rounded-md bg-primary/10">
                   <TrendingUp className="h-4 w-4 text-primary" />
                 </div>
-                <h4 className="font-medium text-card-foreground">Regional Diabetes Statistics</h4>
+                <h4 className="font-medium text-card-foreground">Regional Appendicitis Statistics</h4>
               </div>
               <p className="text-sm text-muted-foreground pl-8 leading-relaxed">
-                {(insights as ReturnType<typeof generateHcoInsights>).diabetesStats}
+                {(insights as ReturnType<typeof generateHcoInsights>).regionalStats}
               </p>
             </div>
           </>
