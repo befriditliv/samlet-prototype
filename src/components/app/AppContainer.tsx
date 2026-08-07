@@ -48,7 +48,7 @@ export const AppContainer = () => {
         [selectedMeetingId]: "done"
       }));
     }
-    console.log("Debrief approved and sent to IOengage");
+    console.log("Debrief approved and sent to CRM");
     handleBackToOverview();
   };
 
