@@ -350,12 +350,12 @@ const ClientOverview = () => {
                   <SlidersHorizontal className="h-4 w-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent className="w-[400px]">
-                <SheetHeader>
+              <SheetContent className="w-[400px] flex flex-col p-0">
+                <SheetHeader className="p-6 pb-0 shrink-0">
                   <SheetTitle>Filter {entityType === 'hcp' ? 'HCP' : 'HCO'}</SheetTitle>
                 </SheetHeader>
                 
-                <div className="mt-6 space-y-4">
+                <div className="flex-1 min-h-0 overflow-y-auto px-6 pb-6 mt-6 space-y-4">
                   <Accordion type="multiple" defaultValue={["quick-filters"]} className="space-y-2">
                     {/* Quick Filters from Activity Hub */}
                     <AccordionItem value="quick-filters" className="border rounded-lg px-4 border-primary">
