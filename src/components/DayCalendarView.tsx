@@ -143,7 +143,7 @@ export const DayCalendarView = ({ onDebriefReview, completedMeetings = [] }: Day
   
   // Get effective status for a meeting (considering local overrides and completed meetings from parent)
   const getMeetingStatus = (meeting: Meeting): MeetingStatus => {
-    // Check if meeting was completed via parent (IOengage submission)
+    // Check if meeting was completed via parent (CRM submission)
     if (completedMeetings.includes(meeting.id)) {
       return "done";
     }

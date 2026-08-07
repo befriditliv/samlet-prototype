@@ -77,7 +77,7 @@ export const useDebriefQueue = () => {
 
         toast({
           title: "Debrief submitted",
-          description: `Meeting debrief synced to IOengage`,
+          description: `Meeting debrief synced to CRM`,
         });
 
         // Remove submitted items after a delay

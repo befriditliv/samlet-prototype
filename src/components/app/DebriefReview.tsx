@@ -107,7 +107,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
 
     toast({
       title: "Debrief sent",
-      description: "Your debrief has been sent to IOengage",
+      description: "Your debrief has been sent to CRM",
     });
 
     setIsSubmitting(false);
@@ -293,7 +293,7 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
             ) : (
               <>
                 <Send className="h-5 w-5 mr-2" />
-                Submit to IOengage
+                Submit to CRM
               </>
             )}
           </Button>
