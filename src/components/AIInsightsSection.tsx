@@ -1,6 +1,6 @@
 import { Sparkles, MessageSquare, Globe, Users, Calendar, TrendingUp, Compass, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { getCompassMovement, getCompassGuidance, trendLabel } from "@/data/customerCompass";
+import { getCompassMovement, getCompassGuidance, getCompassPrediction, trendLabel } from "@/data/customerCompass";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
 interface AIInsightsSectionProps {
@@ -65,6 +65,7 @@ export const AIInsightsSection = ({ entityType, entityName }: AIInsightsSectionP
 
   const compass = entityType === 'hcp' ? getCompassMovement(entityName) : null;
   const compassGuidance = compass ? getCompassGuidance(compass) : null;
+  const compassPrediction = compass ? getCompassPrediction(entityName, compass.to) : null;
   const compassTone =
     compass?.trend === "positive"
       ? "border-success/20 bg-success/5"
