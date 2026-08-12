@@ -52,7 +52,7 @@ const mockDebriefData = {
       "Some wording in this debrief looks very similar to earlier submissions. If this meeting had unique takeaways, adding a bit more context will make the notes more useful.",
   },
   detailScore: 42,
-  purpose: "The purpose of the meeting was a constructive discussion about several medical topics, including cardiovascular disease, off-label use, and specific brands such as Dose 1, Dose 1, Dose 1 and Dose 1. Additionally, initiation and municipal subsidy plans were discussed.",
+  purpose: "The purpose of the meeting was a constructive discussion about several clinical topics, including the acute appendicitis pathway, off-label use, and the Dose 1 portfolio (Dose 1, Dose 1 Oral and Dose 1 Pen). Additionally, initiation and municipal subsidy plans were discussed.",
   brands: [
     {
       brand: "Dose 1",
@@ -62,23 +62,23 @@ const mockDebriefData = {
       reactions: []
     },
     {
-      brand: "Dose 1",
+      brand: "Dose 1 Oral",
       activities: [
-        "Review of Dose 1 for recovery management and patient profiles suitable for the treatment."
+        "Review of Dose 1 Oral for step-down treatment and patient profiles suitable for the pathway."
       ],
       reactions: [
         "HCP expressed concern about availability and wait time for the product."
       ]
     },
     {
-      brand: "Dose 1",
+      brand: "Dose 1 Pen",
       activities: [],
       reactions: []
     },
     {
-      brand: "Dose 1",
+      brand: "OdaCare",
       activities: [
-        "Discussion of Dose 1 and its significance in treating cardiovascular disease."
+        "Discussion of the OdaCare support program and its role in post-treatment follow-up."
       ],
       reactions: []
     }
