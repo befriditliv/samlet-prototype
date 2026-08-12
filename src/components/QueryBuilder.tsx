@@ -65,9 +65,9 @@ const hcpExamples: ExampleCategory[] = [
     label: 'Segments & Specialties',
     icon: <Tag className="h-4 w-4" />,
     examples: [
-      { query: "Endocrinologists interested in GLP-1", description: "Specialty + interest" },
-      { query: "Tier A HCPs in the Obesity segment", description: "High-value segment" },
-      { query: "Cardiologists with diabetes patients", description: "Cross-specialty opportunities" },
+      { query: "Emergency physicians interested in Dose 1", description: "Specialty + interest" },
+      { query: "Tier A HCPs in the Acute Abdomen segment", description: "High-value segment" },
+      { query: "Cardiologists with appendicitis patients", description: "Cross-specialty opportunities" },
     ]
   },
   {
@@ -118,7 +118,7 @@ const hcoExamples: ExampleCategory[] = [
     label: 'Geography',
     icon: <MapPin className="h-4 w-4" />,
     examples: [
-      { query: "HCOs in Copenhagen region", description: "Territory focus" },
+      { query: "HCOs in Riverton region", description: "Territory focus" },
       { query: "Hospitals within 50km of my location", description: "Nearby opportunities" },
       { query: "HCOs in my route for tomorrow", description: "Trip optimization" },
     ]

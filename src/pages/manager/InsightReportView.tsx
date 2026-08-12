@@ -56,7 +56,7 @@ const dose1Categories: InsightCategory[] = [
     title: 'Interest in follow-up and additional information', 
     count: 39,
     impact: 'positive',
-    description: 'There is general interest among HCPs for follow-up and additional information about Dose 1. Some HCPs have expressed interest in follow-up appointments about treatment plans, and there is also interest in materials about hypoglycemia and organ protection.'
+    description: 'There is general interest among HCPs for follow-up and additional information about Dose 1. Some HCPs have expressed interest in follow-up appointments about treatment plans, and there is also interest in materials about post-treatment complications and organ protection.'
   },
   { 
     id: '3', 
@@ -240,7 +240,7 @@ const dose1StatementsByCategory: Record<string, Statement[]> = {
     'HCP expressed confidence in Dose 1 as a treatment choice.',
   ]),
   '2': generateStatements('2', 39, [
-    'There is interest in more knowledge about Score2 diabetes and hypoglycemia.',
+    'There is interest in more knowledge about recurrence risk and post-treatment complications.',
     'Want materials on organ protection with Dose 1.',
     'Interest in follow-up appointment about treatment plans.',
     'Would like more data on long-term effects.',
@@ -248,14 +248,14 @@ const dose1StatementsByCategory: Record<string, Statement[]> = {
   ]),
   '3': generateStatements('3', 35, [
     'Patients express concern about dosing algorithms, including the use of 8 doses and 2 mg.',
-    'Questions about requirements for trying antidiabetics before Dose 1.',
+    'Questions about requirements for trying standard antibiotics before Dose 1.',
     'Uncertainty about dose escalation in elderly patients.',
-    'Questions about the algorithm for switching from insulin.',
+    'Questions about the algorithm for switching from standard antibiotics.',
     'Need for clarification on combination with other preparations.',
   ]),
   '4': generateStatements('4', 20, [
     'Objections were raised about the region\'s clause interpretation in connection with initiation.',
-    'Concern about switching well-treated insulin patients to Dose 1.',
+    'Concern about switching well-managed surgical-pathway patients to Dose 1.',
     'Regional requirements for DPP-4 trial first create frustration.',
     'Concern about GI side effects in vulnerable patients.',
   ]),
@@ -416,7 +416,7 @@ const InsightReportView = () => {
                   In the period from late August to December 2025, there have been a number of debates and observations regarding the initiation of Dose 1 patients among HCPs, primarily in general practice. Generally, there is an overweight of reports indicating that no objections were encountered regarding the initiation of Dose 1 patients. This has been mentioned repeatedly by both nurses and physicians, suggesting a general acceptance of the product.
                 </p>
                 <p>
-                  However, concerns and objections have also been raised in certain cases. Some HCPs have expressed concern about switching well-treated insulin patients to Dose 1, especially when their HbA1c levels are satisfactory. Pressure from regions and fear of complicating treatments have also been mentioned, as well as frustration with the subsidy clause.
+                  However, concerns and objections have also been raised in certain cases. Some HCPs have expressed concern about switching well-managed surgical-pathway patients to Dose 1, especially when their current pathway outcomes are satisfactory. Pressure from regions and fear of complicating treatments have also been mentioned, as well as frustration with the subsidy clause.
                 </p>
               </>
             )}

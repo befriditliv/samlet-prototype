@@ -11,10 +11,10 @@ interface HistoryItem {
 
 const mockHistory: HistoryItem[] = [
   { id: "1", name: "Overcoming Cost Concerns", score: 4 },
-  { id: "2", name: "GLP-1 Efficacy Discussion", score: 4 },
+  { id: "2", name: "Dose 1 Efficacy Discussion", score: 4 },
   { id: "3", name: "Managing Side Effect Concerns", score: 5 },
-  { id: "4", name: "Injection Adherence Challenge", score: 3 },
-  { id: "5", name: "Basal Insulin Optimization", score: 4 },
+  { id: "4", name: "Treatment Adherence Challenge", score: 3 },
+  { id: "5", name: "Antibiotic Pathway Optimization", score: 4 },
 ];
 
 const renderStars = (rating: number) => {

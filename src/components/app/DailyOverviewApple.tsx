@@ -73,15 +73,15 @@ const mockMeetings: Meeting[] = [
     time: "14:00",
     duration: "60 min",
     hcpName: "Dr. Emily Rodriguez",
-    specialty: "Endocrinology",
+    specialty: "Emergency Medicine",
     location: "University Health System",
     status: "upcoming",
     participants: [
-      { name: "Dr. Emily Rodriguez", specialty: "Endocrinology" },
-      { name: "Dr. Thomas Baker", specialty: "Diabetology" },
-      { name: "Nurse Patricia Hall", specialty: "Diabetes Care" }
+      { name: "Dr. Emily Rodriguez", specialty: "Emergency Medicine" },
+      { name: "Dr. Thomas Baker", specialty: "Acute Abdominal Care" },
+      { name: "Nurse Patricia Hall", specialty: "Acute Care" }
     ],
-    notes: "Multidisciplinary session. Bring updated Wegovy dosing guidelines and patient case studies for diabetes integration discussion."
+    notes: "Multidisciplinary session. Bring updated Dose 1 dosing guidelines and patient case studies for appendicitis integration discussion."
   },
   {
     id: "4",
@@ -132,7 +132,7 @@ const mockHCPData: Record<string, HCPData> = {
     daysSinceLastInteraction: 34,
     importantPoints: [
       {
-        title: "Review Wegovy administration",
+        title: "Review Dose 1 administration",
         description: "Discuss any updates to dosing or workflow relevant to cardiology practice since last meeting."
       },
       {
@@ -141,7 +141,7 @@ const mockHCPData: Record<string, HCPData> = {
       },
       {
         title: "Clarify patient support needs",
-        description: "Explore what resources could help improve patient adherence and outcomes with Wegovy."
+        description: "Explore what resources could help improve patient adherence and outcomes with Dose 1."
       }
     ]
   },
@@ -154,7 +154,7 @@ const mockHCPData: Record<string, HCPData> = {
     daysSinceLastInteraction: 14,
     importantPoints: [
       { title: "Multidisciplinary approach", description: "Discuss benefits of cross-functional collaboration for better patient outcomes." },
-      { title: "Diabetes protocols", description: "Review the latest guidelines for diabetes treatment and Wegovy integration." }
+      { title: "Appendicitis protocols", description: "Review the latest guidelines for appendicitis treatment and Dose 1 integration." }
     ]
   },
   "Dr. Michael Chen": {
@@ -166,7 +166,7 @@ const mockHCPData: Record<string, HCPData> = {
     daysSinceLastInteraction: 21,
     importantPoints: [
       { title: "Oncology collaboration", description: "Explore opportunities for collaboration on patients with cancer and metabolic conditions." },
-      { title: "Clinical data", description: "Share the latest clinical results and evidence for Wegovy in oncology context." }
+      { title: "Clinical data", description: "Share the latest clinical results and evidence for Dose 1 in oncology context." }
     ]
   },
   "Dr. James Wilson": {
@@ -177,8 +177,8 @@ const mockHCPData: Record<string, HCPData> = {
     segmentationStatus: "At risk",
     daysSinceLastInteraction: 62,
     importantPoints: [
-      { title: "First contact", description: "Introduce Novo Nordisk's product portfolio and explore interest in future collaboration." },
-      { title: "Neurological angle", description: "Discuss potential benefits of Wegovy for neurological patients with obesity." }
+      { title: "First contact", description: "Introduce OdaPharm's product portfolio and explore interest in future collaboration." },
+      { title: "Neurological angle", description: "Discuss potential benefits of Dose 1 for patients presenting with acute abdominal pain." }
     ]
   },
   "Dr. Amanda Peters": {
@@ -189,7 +189,7 @@ const mockHCPData: Record<string, HCPData> = {
     segmentationStatus: "Stable",
     daysSinceLastInteraction: 7,
     importantPoints: [
-      { title: "Rheumatology follow-up", description: "Follow up on previous conversation about Wegovy and joint issues." }
+      { title: "Rheumatology follow-up", description: "Follow up on previous conversation about Dose 1 and joint issues." }
     ]
   }
 };

@@ -23,11 +23,11 @@ const mockCanvasTargets: CanvasTarget[] = [
   {
     id: "ct1",
     name: "Dr. Henrik Larsen",
-    specialty: "Endocrinology",
-    organization: "Copenhagen Diabetes Center",
+    specialty: "Emergency Medicine",
+    organization: "Central Acute Care Center",
     distance: "0.4 km",
     distanceValue: 0.4,
-    address: "Nørrebrogade 44, 2200 København",
+    address: "44 Northgate Road, District 2",
     lastVisit: "3 weeks ago",
     priority: "high"
   },
@@ -38,7 +38,7 @@ const mockCanvasTargets: CanvasTarget[] = [
     organization: "Heart & Vascular Clinic",
     distance: "0.8 km",
     distanceValue: 0.8,
-    address: "Østerbrogade 102, 2100 København",
+    address: "102 Eastgate Avenue, District 1",
     lastVisit: null,
     priority: "high"
   },
@@ -49,7 +49,7 @@ const mockCanvasTargets: CanvasTarget[] = [
     organization: "City Medical Practice",
     distance: "1.2 km",
     distanceValue: 1.2,
-    address: "Vesterbrogade 56, 1620 København",
+    address: "56 Westgate Street, District 6",
     lastVisit: "2 months ago",
     priority: "medium"
   },
@@ -60,7 +60,7 @@ const mockCanvasTargets: CanvasTarget[] = [
     organization: "Kidney Care Center",
     distance: "1.5 km",
     distanceValue: 1.5,
-    address: "Amagerbrogade 12, 2300 København",
+    address: "12 Southgate Lane, District 3",
     lastVisit: "6 weeks ago",
     priority: "medium"
   },
@@ -71,18 +71,18 @@ const mockCanvasTargets: CanvasTarget[] = [
     organization: "National Cancer Institute",
     distance: "1.8 km",
     distanceValue: 1.8,
-    address: "Blegdamsvej 9, 2100 København",
+    address: "9 Parkview Road, District 1",
     lastVisit: null,
     priority: "low"
   },
   {
     id: "ct6",
     name: "Dr. Sofie Hansen",
-    specialty: "Diabetology",
-    organization: "Diabetes & Metabolism Clinic",
+    specialty: "Acute Abdominal Care",
+    organization: "Appendicitis & Metabolism Clinic",
     distance: "2.1 km",
     distanceValue: 2.1,
-    address: "Frederiksborggade 18, 1360 København",
+    address: "18 Kingsway, District 4",
     lastVisit: "1 month ago",
     priority: "high"
   },
@@ -93,7 +93,7 @@ const mockCanvasTargets: CanvasTarget[] = [
     organization: "GI Health Center",
     distance: "2.4 km",
     distanceValue: 2.4,
-    address: "Gammel Kongevej 90, 1850 København",
+    address: "90 Old Mill Road, District 8",
     lastVisit: "5 weeks ago",
     priority: "medium"
   },
@@ -104,7 +104,7 @@ const mockCanvasTargets: CanvasTarget[] = [
     organization: "Joint & Bone Specialists",
     distance: "2.7 km",
     distanceValue: 2.7,
-    address: "Strandvejen 34, 2900 Hellerup",
+    address: "34 Shoreline Drive, District 9",
     lastVisit: null,
     priority: "low"
   },
@@ -115,18 +115,18 @@ const mockCanvasTargets: CanvasTarget[] = [
     organization: "Respiratory Care Clinic",
     distance: "3.0 km",
     distanceValue: 3.0,
-    address: "Lyngbyvej 60, 2100 København",
+    address: "60 Birchwood Avenue, District 1",
     lastVisit: "3 months ago",
     priority: "medium"
   },
   {
     id: "ct10",
     name: "Dr. Julie Rasmussen",
-    specialty: "Endocrinology",
-    organization: "Hormone Health Center",
+    specialty: "Emergency Medicine",
+    organization: "Abdominal Health Center",
     distance: "3.3 km",
     distanceValue: 3.3,
-    address: "Hvidovrevej 22, 2650 Hvidovre",
+    address: "22 Whitfield Road, District 5",
     lastVisit: "2 weeks ago",
     priority: "high"
   }

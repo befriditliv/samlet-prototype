@@ -77,7 +77,7 @@ const mockMeetings: Meeting[] = [
   {
     id: "3",
     doctorName: "Dr. Emily Rodriguez",
-    specialty: "Endocrinology",
+    specialty: "Emergency Medicine",
     location: "University Health System",
     startTime: "2:00 PM",
     duration: "60 min",

@@ -72,21 +72,21 @@ const salesReps = ["SQIE", "HRWT", "AGSN", "WNLM", "BKET", "JMOR", "KLSE", "PNRD
 
 // HCOs and their HCPs
 const hcoData = [
-  { name: "Rigshospitalet Endokrinologisk Afdeling", hcps: ["Dr. Lars Andersen", "Dr. Maria Hansen", "Dr. Peter Christensen"] },
-  { name: "Herlev Hospital Diabetes Center", hcps: ["Dr. Sofie Nielsen", "Dr. Thomas Madsen"] },
-  { name: "Odense Universitetshospital", hcps: ["Dr. Mette Larsen", "Dr. Jonas Pedersen", "Dr. Anne Søndergaard"] },
-  { name: "Aarhus Universitetshospital", hcps: ["Dr. Henrik Rasmussen", "Dr. Lise Mortensen"] },
-  { name: "Aalborg Sygehus", hcps: ["Dr. Camilla Olsen", "Dr. Michael Krogh"] },
-  { name: "Bispebjerg Hospital", hcps: ["Dr. Eva Thomsen", "Dr. Christian Bak"] },
-  { name: "Gentofte Hospital", hcps: ["Dr. Julie Poulsen", "Dr. Rasmus Gram"] },
-  { name: "Lægepraksis Vesterbro", hcps: ["Dr. Mogens Nørgaard", "Louise Gildsig"] },
-  { name: "Frederiksberg Lægecenter", hcps: ["Dr. Kirsten Holm", "Dr. Anders Berg"] },
-  { name: "Diabetes Klinik København", hcps: ["Dr. Birgitte Falk", "Dr. Erik Damgaard"] },
-  { name: "Sønderborg Sygehus", hcps: ["Dr. Nanna Vestergaard", "Dr. Ole Bruun"] },
-  { name: "Næstved Sygehus", hcps: ["Dr. Pia Kjeldsen", "Dr. Martin Lund"] },
-  { name: "Holbæk Sygehus", hcps: ["Dr. Trine Mogensen", "Dr. Jacob Riis"] },
-  { name: "Roskilde Lægecenter", hcps: ["Dr. Susanne Friis", "Dr. Nikolaj Skov"] },
-  { name: "Hillerød Hospital", hcps: ["Dr. Karen Winther", "Dr. Bo Lindberg"] },
+  { name: "Northgate University Hospital – Surgery", hcps: ["Dr. Lars Andersen", "Dr. Maria Hansen", "Dr. Peter Christensen"] },
+  { name: "Brookfield Acute Care Center", hcps: ["Dr. Sofie Nielsen", "Dr. Thomas Madsen"] },
+  { name: "Eastvale University Hospital", hcps: ["Dr. Mette Larsen", "Dr. Jonas Pedersen", "Dr. Anne Søndergaard"] },
+  { name: "Westbridge University Hospital", hcps: ["Dr. Henrik Rasmussen", "Dr. Lise Mortensen"] },
+  { name: "Fairview General Hospital", hcps: ["Dr. Camilla Olsen", "Dr. Michael Krogh"] },
+  { name: "Stonebridge Hospital", hcps: ["Dr. Eva Thomsen", "Dr. Christian Bak"] },
+  { name: "Ashford Hospital", hcps: ["Dr. Julie Poulsen", "Dr. Rasmus Gram"] },
+  { name: "Southgate Family Practice", hcps: ["Dr. Mogens Nørgaard", "Louise Gildsig"] },
+  { name: "Parkview Medical Centre", hcps: ["Dr. Kirsten Holm", "Dr. Anders Berg"] },
+  { name: "Meadowbrook Acute Care Clinic", hcps: ["Dr. Birgitte Falk", "Dr. Erik Damgaard"] },
+  { name: "Redwood General Hospital", hcps: ["Dr. Nanna Vestergaard", "Dr. Ole Bruun"] },
+  { name: "Clearwater Hospital", hcps: ["Dr. Pia Kjeldsen", "Dr. Martin Lund"] },
+  { name: "Greenfield Hospital", hcps: ["Dr. Trine Mogensen", "Dr. Jacob Riis"] },
+  { name: "Havenwood Medical Centre", hcps: ["Dr. Susanne Friis", "Dr. Nikolaj Skov"] },
+  { name: "Silverlake Hospital", hcps: ["Dr. Karen Winther", "Dr. Bo Lindberg"] },
 ];
 
 // Generate 70 debriefs with realistic content showing evolution
@@ -95,29 +95,29 @@ const generateDebriefs = (): DebriefItem[] => {
   
   // Phase 1: August-September - Primarily subsidy/reimbursement concerns (early period)
   const phase1Topics = [
-    { purpose: "Review of reimbursement rules for GLP-1 treatment", objection: "Unclear regional reimbursement rules make it difficult to assess which patients can start Ozempic", nextSteps: "Send updated reimbursement overview" },
-    { purpose: "Discussion of Ozempic initiation in type 2 diabetes patients", objection: "Concern that reimbursement clauses limit the opportunity for early intervention with Ozempic", nextSteps: "Schedule follow-up meeting with reimbursement specialist" },
-    { purpose: "Introduction to Ozempic treatment pathway", objection: "Region requires documentation of metformin failure before Ozempic can be prescribed with reimbursement", nextSteps: "Share clinical cases showing documentation requirements" },
-    { purpose: "Meeting on treatment algorithm for type 2 diabetes", objection: "Uncertainty about whether individual reimbursement can be applied for with metformin contraindication", nextSteps: "Contact reimbursement office for clarification" },
-    { purpose: "Update on GLP-1 market", objection: "Frustration that reimbursement rules vary between regions", nextSteps: "Prepare regional comparison of reimbursement rules" },
+    { purpose: "Review of reimbursement rules for Dose 1 treatment", objection: "Unclear regional reimbursement rules make it difficult to assess which patients can start Dose 1", nextSteps: "Send updated reimbursement overview" },
+    { purpose: "Discussion of Dose 1 initiation in uncomplicated appendicitis patients", objection: "Concern that reimbursement clauses limit the opportunity for early intervention with Dose 1", nextSteps: "Schedule follow-up meeting with reimbursement specialist" },
+    { purpose: "Introduction to Dose 1 treatment pathway", objection: "Region requires documentation of first-line antibiotics failure before Dose 1 can be prescribed with reimbursement", nextSteps: "Share clinical cases showing documentation requirements" },
+    { purpose: "Meeting on treatment algorithm for uncomplicated appendicitis", objection: "Uncertainty about whether individual reimbursement can be applied for with first-line antibiotics contraindication", nextSteps: "Contact reimbursement office for clarification" },
+    { purpose: "Update on the acute appendicitis market", objection: "Frustration that reimbursement rules vary between regions", nextSteps: "Prepare regional comparison of reimbursement rules" },
   ];
   
   // Phase 2: October-November - Shift towards combination therapy concerns
   const phase2Topics = [
-    { purpose: "Ozempic in combination with SGLT2 inhibitors", objection: "Uncertainty about optimal dosing when Ozempic is combined with other antidiabetics", nextSteps: "Send dosing guide for combination therapy" },
-    { purpose: "Combination therapy and patient monitoring", objection: "Concern about increased risk of hypoglycemia when combined with sulfonylurea", nextSteps: "Arrange webinar on safe combination therapy" },
-    { purpose: "Multi-drug regimen with GLP-1", objection: "Lack of experience combining Ozempic with insulin – when should insulin dose be adjusted?", nextSteps: "Share protocol for insulin adjustment with GLP-1 addition" },
-    { purpose: "Treatment intensification in type 2 patients", objection: "Request more data on long-term effect of Ozempic + SGLT2i combination", nextSteps: "Send relevant studies on cardiovascular outcomes" },
-    { purpose: "GLP-1 as add-on to existing treatment", objection: "Patients on multiple medications express 'pill fatigue' – how to motivate them for injection?", nextSteps: "Develop patient-friendly material on weekly injection" },
+    { purpose: "Dose 1 in combination with IV antibiotics", objection: "Uncertainty about optimal dosing when Dose 1 is combined with other standard antibiotics", nextSteps: "Send dosing guide for combination therapy" },
+    { purpose: "Combination therapy and patient monitoring", objection: "Concern about increased risk of post-treatment complications when combined with opioid analgesia", nextSteps: "Arrange webinar on safe combination therapy" },
+    { purpose: "Multi-drug regimen with Dose 1", objection: "Lack of experience combining Dose 1 with standard antibiotics – when should standard antibiotics dose be adjusted?", nextSteps: "Share protocol for standard antibiotics adjustment with Dose 1 addition" },
+    { purpose: "Treatment escalation in uncomplicated cases", objection: "Request more data on long-term effect of Dose 1 + IV antibiotics combination pathway", nextSteps: "Send relevant studies on 12-month recurrence outcomes" },
+    { purpose: "Dose 1 as add-on to existing treatment", objection: "Patients arriving expecting surgery are hard to reassure – how to build confidence in a non-surgical option?", nextSteps: "Develop patient-friendly material on the non-surgical pathway" },
   ];
   
   // Phase 3: Late November-December - Focus on patient selection and practical initiation
   const phase3Topics = [
-    { purpose: "Patient selection for Ozempic treatment", objection: "Which patients should be prioritized when there is a waitlist for the diabetes outpatient clinic?", nextSteps: "Develop prioritization criteria with the clinic" },
-    { purpose: "Practical handling of Ozempic initiation", objection: "GI side effects at initiation cause some patients to stop treatment too early", nextSteps: "Share tips for managing initiation side effects" },
-    { purpose: "Ozempic for patients with renal insufficiency", objection: "Uncertainty about safety and efficacy in patients with moderately reduced kidney function", nextSteps: "Review data for eGFR 30-60 population" },
-    { purpose: "Elderly patients and GLP-1 treatment", objection: "Concern about weight loss in elderly, frail patients – is Ozempic appropriate?", nextSteps: "Discuss individual assessment and monitoring" },
-    { purpose: "Follow-up on Ozempic patients", objection: "Lack of capacity for close follow-up during the first 3 months as recommended", nextSteps: "Suggest digital follow-up solution" },
+    { purpose: "Patient selection for Dose 1 treatment", objection: "Which patients should be prioritized when there is a waitlist for the appendicitis outpatient clinic?", nextSteps: "Develop prioritization criteria with the clinic" },
+    { purpose: "Practical handling of Dose 1 initiation", objection: "GI side effects at initiation cause some patients to stop treatment too early", nextSteps: "Share tips for managing initiation side effects" },
+    { purpose: "Dose 1 for patients with renal insufficiency", objection: "Uncertainty about safety and efficacy in patients with moderately reduced kidney function", nextSteps: "Review data for eGFR 30-60 population" },
+    { purpose: "Elderly patients and Dose 1 treatment", objection: "Concern about slower recovery in elderly, frail patients – is Dose 1 appropriate?", nextSteps: "Discuss individual assessment and monitoring" },
+    { purpose: "Follow-up on Dose 1 patients", objection: "Lack of capacity for close follow-up during the first 3 months as recommended", nextSteps: "Suggest digital follow-up solution" },
   ];
   
   // Generate debriefs for each phase
@@ -198,7 +198,7 @@ const objectionCategories: ObjectionCategory[] = [
     id: 'subsidy-reimbursement',
     title: 'Reimbursement rules and regional differences',
     fullTitle: 'Concerns about reimbursement rules, clauses and regional differences',
-    description: 'HCPs express frustration over unclear or varying reimbursement rules between regions. This affects the decision to initiate Ozempic, as documentation requirements and approval processes are perceived as time-consuming.',
+    description: 'HCPs express frustration over unclear or varying reimbursement rules between regions. This affects the decision to initiate Dose 1, as documentation requirements and approval processes are perceived as time-consuming.',
     color: '#16a34a',
     count: 24,
     trend: 'down',
@@ -212,15 +212,15 @@ const objectionCategories: ObjectionCategory[] = [
   {
     id: 'combination-therapy',
     title: 'Combination therapy with other medications',
-    fullTitle: 'Uncertainty about combination therapy with other antidiabetics',
-    description: 'Increasing focus on how Ozempic is best combined with SGLT2 inhibitors, insulin and other antidiabetics. HCPs request concrete guidance on dosing, monitoring and handling of interactions.',
+    fullTitle: 'Uncertainty about combination therapy with other standard antibiotics',
+    description: 'Increasing focus on how Dose 1 is best combined with IV antibiotics and standard analgesia. HCPs request concrete guidance on dosing, monitoring and handling of interactions.',
     color: '#ea580c',
     count: 26,
     trend: 'up',
     trendPercent: 62,
     debriefs: allDebriefs.filter(d => 
       d.objections.toLowerCase().includes('combination') || 
-      d.objections.toLowerCase().includes('insulin') ||
+      d.objections.toLowerCase().includes('standard antibiotics') ||
       d.objections.toLowerCase().includes('sglt2') ||
       d.objections.toLowerCase().includes('sulfonyl') ||
       d.objections.toLowerCase().includes('multiple')
@@ -230,7 +230,7 @@ const objectionCategories: ObjectionCategory[] = [
     id: 'patient-selection',
     title: 'Patient selection and practical initiation',
     fullTitle: 'Challenges with patient selection and practical handling of initiation',
-    description: 'HCPs seek guidance on which patients should be prioritized for Ozempic, as well as practical handling of initiation including side effect management, monitoring and special patient groups.',
+    description: 'HCPs seek guidance on which patients should be prioritized for Dose 1, as well as practical handling of initiation including side effect management, monitoring and special patient groups.',
     color: '#1d4ed8',
     count: 15,
     trend: 'up',
@@ -282,7 +282,7 @@ const ReportView = () => {
     reportType: "Debrief Report",
     dateRange: { from: new Date(2025, 7, 15), to: new Date(2025, 11, 18) },
     compareDateRange: { from: new Date(2025, 4, 1), to: new Date(2025, 7, 14) },
-    product: "Ozempic",
+    product: "Dose 1",
     employee: "all",
     compareEnabled: true
   };
@@ -537,14 +537,14 @@ const ReportView = () => {
             {/* Hovedanalyse */}
             <Card>
               <CardHeader>
-                <CardTitle>Concern Pattern Development for Ozempic Initiation</CardTitle>
+                <CardTitle>Concern Pattern Development for Dose 1 Initiation</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Topic description */}
                 <div>
                   <h4 className="text-sm font-semibold text-foreground mb-2">Topic Description</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Over the past 5 months, we have observed a significant change in the concerns HCPs express regarding Ozempic initiation. 
+                    Over the past 5 months, we have observed a significant change in the concerns HCPs express regarding Dose 1 initiation. 
                     While reimbursement and regulatory questions previously dominated, these have now been replaced by more clinically oriented considerations 
                     around combination therapy and individualized patient selection.
                   </p>
@@ -566,7 +566,7 @@ const ReportView = () => {
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                      <span><span className="font-medium text-foreground">Combination therapy up 62%</span> – HCPs are now actively seeking guidance on Ozempic together with SGLT2i, insulin and other antidiabetics.</span>
+                      <span><span className="font-medium text-foreground">Combination therapy up 62%</span> – HCPs are now actively seeking guidance on Dose 1 together with IV antibiotics and standard analgesia.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
@@ -584,7 +584,7 @@ const ReportView = () => {
                     Insights
                   </h4>
                   <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
-                    The shift in concern patterns reflects a maturation in the market's understanding of Ozempic and indicates progress in the adoption journey.
+                    The shift in concern patterns reflects a maturation in the market's understanding of Dose 1 and indicates progress in the adoption journey.
                   </p>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -593,7 +593,7 @@ const ReportView = () => {
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>
-                      <span>The growing interest in combination therapy suggests that Ozempic is increasingly seen as a natural part of the treatment arsenal.</span>
+                      <span>The growing interest in combination therapy suggests that Dose 1 is increasingly seen as a natural part of the treatment arsenal.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>
@@ -614,7 +614,7 @@ const ReportView = () => {
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>
-                      <span><span className="font-medium text-foreground">Prioritize combination therapy:</span> Develop and distribute concrete dosing guides and protocols for Ozempic + SGLT2i/insulin.</span>
+                      <span><span className="font-medium text-foreground">Prioritize combination therapy:</span> Develop and distribute concrete dosing guides and protocols for Dose 1 + IV antibiotics/analgesia.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>

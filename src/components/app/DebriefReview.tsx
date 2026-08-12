@@ -37,10 +37,10 @@ interface BrandNote {
 const mockDebriefData = {
   meeting: {
     hcpName: "Marianne Lindberg Pedersen + 1",
-    specialty: "Endocrinology",
+    specialty: "Emergency Medicine",
     date: "January 12, 2026",
     time: "13:00",
-    location: "Rigshospitalet"
+    location: "Northgate University Hospital"
   },
   complianceIssues: [
     "Possible off-label discussion detected - verify that the conversation stayed within approved indication",
@@ -52,40 +52,40 @@ const mockDebriefData = {
       "Some wording in this debrief looks very similar to earlier submissions. If this meeting had unique takeaways, adding a bit more context will make the notes more useful.",
   },
   detailScore: 42,
-  purpose: "The purpose of the meeting was a constructive discussion about several medical topics, including cardiovascular disease, off-label use, and specific brands such as Ozempic, Wegovy, Rebelsus and GLP-1. Additionally, initiation and municipal subsidy plans were discussed.",
+  purpose: "The purpose of the meeting was a constructive discussion about several clinical topics, including the acute appendicitis pathway, off-label use, and the Dose 1 portfolio (Dose 1, Dose 1 Oral and Dose 1 Pen). Additionally, initiation and municipal subsidy plans were discussed.",
   brands: [
     {
-      brand: "Ozempic",
+      brand: "Dose 1",
       activities: [
-        "Discussion about Ozempic and its use, including off-label use and related municipal subsidy plans."
+        "Discussion about Dose 1 and its use, including off-label use and related municipal subsidy plans."
       ],
       reactions: []
     },
     {
-      brand: "Wegovy",
+      brand: "Dose 1 Oral",
       activities: [
-        "Review of Wegovy for weight management and patient profiles suitable for the treatment."
+        "Review of Dose 1 Oral for step-down treatment and patient profiles suitable for the pathway."
       ],
       reactions: [
         "HCP expressed concern about availability and wait time for the product."
       ]
     },
     {
-      brand: "Rebelsus",
+      brand: "Dose 1 Pen",
       activities: [],
       reactions: []
     },
     {
-      brand: "GLP-1",
+      brand: "OdaCare",
       activities: [
-        "Discussion of GLP-1 and its significance in treating cardiovascular disease."
+        "Discussion of the OdaCare support program and its role in post-treatment follow-up."
       ],
       reactions: []
     }
   ] as BrandNote[],
   objections: [
     "Questions about reimbursement pathways for new treatments",
-    "Concern about patient's ability to manage injection treatment"
+    "Concern about patient confidence in a non-surgical pathway"
   ],
   nextAction: "Follow-up on municipal subsidy plans and further discussions about the SWIP presentation."
 };
