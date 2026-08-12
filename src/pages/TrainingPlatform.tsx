@@ -50,7 +50,7 @@ interface HcpOption {
 }
 
 // Mock data
-const products = ["Dose 1", "Dose 1", "Dose 1", "OdaPen 6", "Dose 1", "Dose 1", "ATLAS", "Dose 1"];
+const products = ["Dose 1", "Dose 1 Oral", "Dose 1 Pen", "OdaPen 6", "OdaCare", "OdaFlex", "ATLAS", "OdaPharm Portfolio"];
 const adoptionStages = [{
   id: "unaware",
   label: "Unaware",

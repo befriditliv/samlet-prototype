@@ -170,11 +170,11 @@ export const DebriefReportEngine = () => {
                   <SelectValue placeholder="Brands" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="alhemo">Alhemo</SelectItem>
-                  <SelectItem value="dpp4">DPP4</SelectItem>
-                  <SelectItem value="esperoct">Esperoct</SelectItem>
+                  <SelectItem value="odacare">OdaCare</SelectItem>
+                  <SelectItem value="dose-1-pen">Dose 1 Pen</SelectItem>
+                  <SelectItem value="odaflex">OdaFlex</SelectItem>
                   <SelectItem value="dose-1">Dose 1</SelectItem>
-                  <SelectItem value="dose1">Dose 1</SelectItem>
+                  <SelectItem value="dose-1-oral">Dose 1 Oral</SelectItem>
                   <SelectItem value="odapen">OdaPen</SelectItem>
                   <SelectItem value="odapen-6">OdaPen 6</SelectItem>
                   <SelectItem value="odapen-echo">OdaPen Echo</SelectItem>

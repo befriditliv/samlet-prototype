@@ -13,10 +13,10 @@ interface Scenario {
 
 const mockScenarios: Scenario[] = [
   { id: "1", name: "Overcoming Cost Concerns", product: "Dose 1" },
-  { id: "2", name: "Dose 1 Efficacy Discussion", product: "Dose 1" },
+  { id: "2", name: "Dose 1 Efficacy Discussion", product: "Dose 1 Oral" },
   { id: "3", name: "Managing Side Effect Concerns", product: "Dose 1" },
-  { id: "4", name: "Injection Adherence Challenge", product: "Dose 1" },
-  { id: "5", name: "Standard Antibiotic Optimization", product: "Dose 1" },
+  { id: "4", name: "Treatment Adherence Challenge", product: "Dose 1 Pen" },
+  { id: "5", name: "Antibiotic Pathway Optimization", product: "Dose 1" },
 ];
 
 interface ScenariosSectionProps {
