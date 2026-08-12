@@ -201,7 +201,7 @@ export const HCPAssistant = ({ isOpen, onClose, hcpName, showBriefing = false }:
       return `Best approach for ${hcpName}: Schedule 30-45 minute meetings focusing on clinical data and patient outcomes. They respond well to case studies and real-world evidence. Follow up within 2 weeks with relevant research papers. Avoid heavy promotional content.`;
     }
     if (query.toLowerCase().includes("clinical interests") || query.toLowerCase().includes("interests")) {
-      return `${hcpName} recently attended the ACC conference and showed interest in heart failure prevention strategies. They've downloaded 3 whitepapers on IV antibiotics and requested information on our CARDIAC-ADVANCE trial. Consider discussing our upcoming Phase 3 results.`;
+      return `${hcpName} recently attended the acute care symposium and showed interest in non-surgical appendicitis pathways. They've downloaded 3 whitepapers on Dose 1 and requested information on our ATLAS-6 trial. Consider discussing our upcoming Phase 3 results.`;
     }
     return `Based on ${hcpName}'s profile and recent activity, I recommend focusing on value-based outcomes and patient quality of life improvements. Their practice shows strong alignment with evidence-based medicine approaches.`;
   };

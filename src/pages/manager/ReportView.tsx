@@ -99,7 +99,7 @@ const generateDebriefs = (): DebriefItem[] => {
     { purpose: "Discussion of Dose 1 initiation in uncomplicated appendicitis patients", objection: "Concern that reimbursement clauses limit the opportunity for early intervention with Dose 1", nextSteps: "Schedule follow-up meeting with reimbursement specialist" },
     { purpose: "Introduction to Dose 1 treatment pathway", objection: "Region requires documentation of first-line antibiotics failure before Dose 1 can be prescribed with reimbursement", nextSteps: "Share clinical cases showing documentation requirements" },
     { purpose: "Meeting on treatment algorithm for uncomplicated appendicitis", objection: "Uncertainty about whether individual reimbursement can be applied for with first-line antibiotics contraindication", nextSteps: "Contact reimbursement office for clarification" },
-    { purpose: "Update on Dose 1 market", objection: "Frustration that reimbursement rules vary between regions", nextSteps: "Prepare regional comparison of reimbursement rules" },
+    { purpose: "Update on the acute appendicitis market", objection: "Frustration that reimbursement rules vary between regions", nextSteps: "Prepare regional comparison of reimbursement rules" },
   ];
   
   // Phase 2: October-November - Shift towards combination therapy concerns
@@ -107,8 +107,8 @@ const generateDebriefs = (): DebriefItem[] => {
     { purpose: "Dose 1 in combination with IV antibiotics", objection: "Uncertainty about optimal dosing when Dose 1 is combined with other standard antibiotics", nextSteps: "Send dosing guide for combination therapy" },
     { purpose: "Combination therapy and patient monitoring", objection: "Concern about increased risk of post-treatment complications when combined with opioid analgesia", nextSteps: "Arrange webinar on safe combination therapy" },
     { purpose: "Multi-drug regimen with Dose 1", objection: "Lack of experience combining Dose 1 with standard antibiotics – when should standard antibiotics dose be adjusted?", nextSteps: "Share protocol for standard antibiotics adjustment with Dose 1 addition" },
-    { purpose: "Treatment intensification in type 2 patients", objection: "Request more data on long-term effect of Dose 1 + IV antibiotics combination", nextSteps: "Send relevant studies on cardiovascular outcomes" },
-    { purpose: "Dose 1 as add-on to existing treatment", objection: "Patients on multiple medications express 'pill fatigue' – how to motivate them for injection?", nextSteps: "Develop patient-friendly material on weekly injection" },
+    { purpose: "Treatment escalation in uncomplicated cases", objection: "Request more data on long-term effect of Dose 1 + IV antibiotics combination pathway", nextSteps: "Send relevant studies on 12-month recurrence outcomes" },
+    { purpose: "Dose 1 as add-on to existing treatment", objection: "Patients arriving expecting surgery are hard to reassure – how to build confidence in a non-surgical option?", nextSteps: "Develop patient-friendly material on the non-surgical pathway" },
   ];
   
   // Phase 3: Late November-December - Focus on patient selection and practical initiation
@@ -116,7 +116,7 @@ const generateDebriefs = (): DebriefItem[] => {
     { purpose: "Patient selection for Dose 1 treatment", objection: "Which patients should be prioritized when there is a waitlist for the appendicitis outpatient clinic?", nextSteps: "Develop prioritization criteria with the clinic" },
     { purpose: "Practical handling of Dose 1 initiation", objection: "GI side effects at initiation cause some patients to stop treatment too early", nextSteps: "Share tips for managing initiation side effects" },
     { purpose: "Dose 1 for patients with renal insufficiency", objection: "Uncertainty about safety and efficacy in patients with moderately reduced kidney function", nextSteps: "Review data for eGFR 30-60 population" },
-    { purpose: "Elderly patients and Dose 1 treatment", objection: "Concern about slow recovery in elderly, frail patients – is Dose 1 appropriate?", nextSteps: "Discuss individual assessment and monitoring" },
+    { purpose: "Elderly patients and Dose 1 treatment", objection: "Concern about slower recovery in elderly, frail patients – is Dose 1 appropriate?", nextSteps: "Discuss individual assessment and monitoring" },
     { purpose: "Follow-up on Dose 1 patients", objection: "Lack of capacity for close follow-up during the first 3 months as recommended", nextSteps: "Suggest digital follow-up solution" },
   ];
   
@@ -213,7 +213,7 @@ const objectionCategories: ObjectionCategory[] = [
     id: 'combination-therapy',
     title: 'Combination therapy with other medications',
     fullTitle: 'Uncertainty about combination therapy with other standard antibiotics',
-    description: 'Increasing focus on how Dose 1 is best combined with IV antibiotics, standard antibiotics and other standard antibiotics. HCPs request concrete guidance on dosing, monitoring and handling of interactions.',
+    description: 'Increasing focus on how Dose 1 is best combined with IV antibiotics and standard analgesia. HCPs request concrete guidance on dosing, monitoring and handling of interactions.',
     color: '#ea580c',
     count: 26,
     trend: 'up',
@@ -566,7 +566,7 @@ const ReportView = () => {
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                      <span><span className="font-medium text-foreground">Combination therapy up 62%</span> – HCPs are now actively seeking guidance on Dose 1 together with IV antibiotics, standard antibiotics and other standard antibiotics.</span>
+                      <span><span className="font-medium text-foreground">Combination therapy up 62%</span> – HCPs are now actively seeking guidance on Dose 1 together with IV antibiotics and standard analgesia.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
@@ -614,7 +614,7 @@ const ReportView = () => {
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>
-                      <span><span className="font-medium text-foreground">Prioritize combination therapy:</span> Develop and distribute concrete dosing guides and protocols for Dose 1 + IV antibiotics/standard antibiotics.</span>
+                      <span><span className="font-medium text-foreground">Prioritize combination therapy:</span> Develop and distribute concrete dosing guides and protocols for Dose 1 + IV antibiotics/analgesia.</span>
                     </li>
                     <li className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="text-primary mt-0.5">•</span>

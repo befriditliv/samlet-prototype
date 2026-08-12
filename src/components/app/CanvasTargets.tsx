@@ -123,7 +123,7 @@ const mockCanvasTargets: CanvasTarget[] = [
     id: "ct10",
     name: "Dr. Julie Rasmussen",
     specialty: "Emergency Medicine",
-    organization: "Hormone Health Center",
+    organization: "Abdominal Health Center",
     distance: "3.3 km",
     distanceValue: 3.3,
     address: "22 Whitfield Road, District 5",

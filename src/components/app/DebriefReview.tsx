@@ -85,7 +85,7 @@ const mockDebriefData = {
   ] as BrandNote[],
   objections: [
     "Questions about reimbursement pathways for new treatments",
-    "Concern about patient's ability to manage injection treatment"
+    "Concern about patient confidence in a non-surgical pathway"
   ],
   nextAction: "Follow-up on municipal subsidy plans and further discussions about the SWIP presentation."
 };

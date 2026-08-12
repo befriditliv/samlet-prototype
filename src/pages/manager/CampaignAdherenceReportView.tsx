@@ -156,7 +156,7 @@ const debriefExamples: DebriefExample[] = [
     date: 'Dec 18, 2025',
     aligned: true,
     campaign: 'Cardiovascular Outcomes',
-    excerpt: 'Presented ATLAS-6 data to the cardiology team. Strong interest in CV risk reduction. They will consider Dose 1 for uncomplicated appendicitis patients with established heart disease.',
+    excerpt: 'Presented ATLAS-6 data to the surgical team. Strong interest in avoided-surgery rates. They will consider Dose 1 for uncomplicated appendicitis patients with high operative risk.',
     analysis: 'Aligned: Specific reference to ATLAS-6 and cardiovascular risk reduction matches the campaign focus.'
   },
   {

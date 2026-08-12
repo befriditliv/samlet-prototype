@@ -178,7 +178,7 @@ const mockHCPData: Record<string, HCPData> = {
     daysSinceLastInteraction: 62,
     importantPoints: [
       { title: "First contact", description: "Introduce OdaPharm's product portfolio and explore interest in future collaboration." },
-      { title: "Neurological angle", description: "Discuss potential benefits of Dose 1 for neurological patients with acute abdominal pain." }
+      { title: "Neurological angle", description: "Discuss potential benefits of Dose 1 for patients presenting with acute abdominal pain." }
     ]
   },
   "Dr. Amanda Peters": {
