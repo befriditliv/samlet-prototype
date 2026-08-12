@@ -106,6 +106,16 @@ export interface CompassMovement {
   changedAt: string;
 }
 
+/** Predicted next category drop for an HCP (from the Jarvis Customer Compass tables). */
+export interface CompassPrediction {
+  /** Category the HCP is predicted to drop into. */
+  category: CompassCategory;
+  /** Human-readable expected date of the drop, e.g. "Oct 2026". */
+  expectedDate: string;
+  /** Model confidence 0-100. */
+  confidence: number;
+}
+
 const byName = (name: string): CompassCategory => {
   const found = COMPASS_CATEGORIES.find(
     (c) => c.name.toLowerCase() === name.toLowerCase(),
@@ -152,6 +162,35 @@ export const getCompassMovement = (name: string): CompassMovement => {
 
 export const trendLabel = (trend: CompassTrend): string =>
   trend === "positive" ? "Positive move" : trend === "negative" ? "Negative move" : "No change";
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+const hashOf = (name: string) => {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+  return hash;
+};
+
+/**
+ * Predicted category drop + expected date. Returns null when the HCP is already
+ * in the lowest category (nothing left to drop into).
+ */
+export const getCompassPrediction = (
+  name: string,
+  current: CompassCategory,
+): CompassPrediction | null => {
+  const next = COMPASS_CATEGORIES.find((c) => c.rank === current.rank + 1);
+  if (!next) return null;
+  const hash = hashOf(name);
+  const now = new Date();
+  const monthsAhead = 1 + (hash % 5);
+  const target = new Date(now.getFullYear(), now.getMonth() + monthsAhead, 1);
+  return {
+    category: next,
+    expectedDate: `${MONTHS[target.getMonth()]} ${target.getFullYear()}`,
+    confidence: 55 + (hash % 35),
+  };
+};
 
 /** Action guidance for a from → to movement. */
 export const getCompassGuidance = (m: CompassMovement): { whatHappened: string; whatToDo: string } => {

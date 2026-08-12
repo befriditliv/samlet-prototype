@@ -1,6 +1,6 @@
 import { Sparkles, MessageSquare, Globe, Users, Calendar, TrendingUp, Compass, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { getCompassMovement, getCompassGuidance, trendLabel } from "@/data/customerCompass";
+import { getCompassMovement, getCompassGuidance, getCompassPrediction, trendLabel } from "@/data/customerCompass";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
 interface AIInsightsSectionProps {
@@ -65,6 +65,7 @@ export const AIInsightsSection = ({ entityType, entityName }: AIInsightsSectionP
 
   const compass = entityType === 'hcp' ? getCompassMovement(entityName) : null;
   const compassGuidance = compass ? getCompassGuidance(compass) : null;
+  const compassPrediction = compass ? getCompassPrediction(entityName, compass.to) : null;
   const compassTone =
     compass?.trend === "positive"
       ? "border-success/20 bg-success/5"
@@ -141,6 +142,22 @@ export const AIInsightsSection = ({ entityType, entityName }: AIInsightsSectionP
                   <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground/70">Suggested action</p>
                   <p className="text-sm text-muted-foreground leading-relaxed">{compassGuidance.whatToDo}</p>
                 </div>
+                {compassPrediction && (
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground/70">Predicted category drop</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Predicted to drop to{" "}
+                      <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
+                        <span
+                          className="h-2.5 w-2.5 rounded-full"
+                          style={{ backgroundColor: compassPrediction.category.color }}
+                        />
+                        {compassPrediction.category.name}
+                      </span>{" "}
+                      around {compassPrediction.expectedDate} ({compassPrediction.confidence}% confidence).
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
