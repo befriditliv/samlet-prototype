@@ -72,21 +72,21 @@ const salesReps = ["SQIE", "HRWT", "AGSN", "WNLM", "BKET", "JMOR", "KLSE", "PNRD
 
 // HCOs and their HCPs
 const hcoData = [
-  { name: "Rigshospitalet Endokrinologisk Afdeling", hcps: ["Dr. Lars Andersen", "Dr. Maria Hansen", "Dr. Peter Christensen"] },
-  { name: "Herlev Hospital Acute Care Center", hcps: ["Dr. Sofie Nielsen", "Dr. Thomas Madsen"] },
-  { name: "Odense Universitetshospital", hcps: ["Dr. Mette Larsen", "Dr. Jonas Pedersen", "Dr. Anne Søndergaard"] },
-  { name: "Aarhus Universitetshospital", hcps: ["Dr. Henrik Rasmussen", "Dr. Lise Mortensen"] },
-  { name: "Aalborg Sygehus", hcps: ["Dr. Camilla Olsen", "Dr. Michael Krogh"] },
-  { name: "Bispebjerg Hospital", hcps: ["Dr. Eva Thomsen", "Dr. Christian Bak"] },
-  { name: "Gentofte Hospital", hcps: ["Dr. Julie Poulsen", "Dr. Rasmus Gram"] },
-  { name: "Lægepraksis Vesterbro", hcps: ["Dr. Mogens Nørgaard", "Louise Gildsig"] },
-  { name: "Frederiksberg Lægecenter", hcps: ["Dr. Kirsten Holm", "Dr. Anders Berg"] },
+  { name: "Northgate University Hospital – Surgery", hcps: ["Dr. Lars Andersen", "Dr. Maria Hansen", "Dr. Peter Christensen"] },
+  { name: "Brookfield Acute Care Center", hcps: ["Dr. Sofie Nielsen", "Dr. Thomas Madsen"] },
+  { name: "Eastvale University Hospital", hcps: ["Dr. Mette Larsen", "Dr. Jonas Pedersen", "Dr. Anne Søndergaard"] },
+  { name: "Westbridge University Hospital", hcps: ["Dr. Henrik Rasmussen", "Dr. Lise Mortensen"] },
+  { name: "Fairview General Hospital", hcps: ["Dr. Camilla Olsen", "Dr. Michael Krogh"] },
+  { name: "Stonebridge Hospital", hcps: ["Dr. Eva Thomsen", "Dr. Christian Bak"] },
+  { name: "Ashford Hospital", hcps: ["Dr. Julie Poulsen", "Dr. Rasmus Gram"] },
+  { name: "Southgate Family Practice", hcps: ["Dr. Mogens Nørgaard", "Louise Gildsig"] },
+  { name: "Parkview Medical Centre", hcps: ["Dr. Kirsten Holm", "Dr. Anders Berg"] },
   { name: "Meadowbrook Acute Care Clinic", hcps: ["Dr. Birgitte Falk", "Dr. Erik Damgaard"] },
-  { name: "Sønderborg Sygehus", hcps: ["Dr. Nanna Vestergaard", "Dr. Ole Bruun"] },
-  { name: "Næstved Sygehus", hcps: ["Dr. Pia Kjeldsen", "Dr. Martin Lund"] },
-  { name: "Holbæk Sygehus", hcps: ["Dr. Trine Mogensen", "Dr. Jacob Riis"] },
-  { name: "Roskilde Lægecenter", hcps: ["Dr. Susanne Friis", "Dr. Nikolaj Skov"] },
-  { name: "Hillerød Hospital", hcps: ["Dr. Karen Winther", "Dr. Bo Lindberg"] },
+  { name: "Redwood General Hospital", hcps: ["Dr. Nanna Vestergaard", "Dr. Ole Bruun"] },
+  { name: "Clearwater Hospital", hcps: ["Dr. Pia Kjeldsen", "Dr. Martin Lund"] },
+  { name: "Greenfield Hospital", hcps: ["Dr. Trine Mogensen", "Dr. Jacob Riis"] },
+  { name: "Havenwood Medical Centre", hcps: ["Dr. Susanne Friis", "Dr. Nikolaj Skov"] },
+  { name: "Silverlake Hospital", hcps: ["Dr. Karen Winther", "Dr. Bo Lindberg"] },
 ];
 
 // Generate 70 debriefs with realistic content showing evolution

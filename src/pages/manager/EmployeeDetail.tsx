@@ -16,14 +16,14 @@ import jarvisLogo from "@/assets/jarvis-logo.svg";
 import { cn } from "@/lib/utils";
 
 const employees = [
-  { name: "Sarah Mitchell", role: "Senior KAM", region: "Greater Copenhagen", planned: 74, canvas: 21, completed: 88, notSent: 0, outstanding: 7, adherence: 93, cancelled: 4, deleted: 2, plannedThisWeek: 10, plannedNextWeek: 3 },
+  { name: "Sarah Mitchell", role: "Senior KAM", region: "Greater Riverton", planned: 74, canvas: 21, completed: 88, notSent: 0, outstanding: 7, adherence: 93, cancelled: 4, deleted: 2, plannedThisWeek: 10, plannedNextWeek: 3 },
   { name: "James Harrison", role: "KAM", region: "Zealand North", planned: 74, canvas: 27, completed: 101, notSent: 0, outstanding: 0, adherence: 100, cancelled: 2, deleted: 1, plannedThisWeek: 20, plannedNextWeek: 0 },
   { name: "Emily Thompson", role: "KAM", region: "Funen", planned: 38, canvas: 31, completed: 62, notSent: 0, outstanding: 7, adherence: 90, cancelled: 5, deleted: 3, plannedThisWeek: 9, plannedNextWeek: 7 },
   { name: "Michael Chen", role: "Junior KAM", region: "Jutland South", planned: 4, canvas: 0, completed: 3, notSent: 0, outstanding: 1, adherence: 75, cancelled: 1, deleted: 0, plannedThisWeek: 0, plannedNextWeek: 0 },
   { name: "Catherine Williams", role: "KAM", region: "Jutland North", planned: 0, canvas: 0, completed: 0, notSent: 0, outstanding: 0, adherence: 0, cancelled: 0, deleted: 0, plannedThisWeek: 0, plannedNextWeek: 0 },
-  { name: "David Roberts", role: "Senior KAM", region: "Aarhus", planned: 52, canvas: 18, completed: 64, notSent: 1, outstanding: 5, adherence: 89, cancelled: 3, deleted: 2, plannedThisWeek: 8, plannedNextWeek: 5 },
-  { name: "Jennifer Adams", role: "KAM", region: "Odense", planned: 41, canvas: 22, completed: 55, notSent: 0, outstanding: 6, adherence: 87, cancelled: 4, deleted: 1, plannedThisWeek: 6, plannedNextWeek: 4 },
-  { name: "Robert Taylor", role: "KAM", region: "Aalborg", planned: 33, canvas: 12, completed: 38, notSent: 2, outstanding: 5, adherence: 80, cancelled: 2, deleted: 4, plannedThisWeek: 5, plannedNextWeek: 3 },
+  { name: "David Roberts", role: "Senior KAM", region: "West Region", planned: 52, canvas: 18, completed: 64, notSent: 1, outstanding: 5, adherence: 89, cancelled: 3, deleted: 2, plannedThisWeek: 8, plannedNextWeek: 5 },
+  { name: "Jennifer Adams", role: "KAM", region: "East Region", planned: 41, canvas: 22, completed: 55, notSent: 0, outstanding: 6, adherence: 87, cancelled: 4, deleted: 1, plannedThisWeek: 6, plannedNextWeek: 4 },
+  { name: "Robert Taylor", role: "KAM", region: "North Region", planned: 33, canvas: 12, completed: 38, notSent: 2, outstanding: 5, adherence: 80, cancelled: 2, deleted: 4, plannedThisWeek: 5, plannedNextWeek: 3 },
   { name: "Amanda Clarke", role: "Junior KAM", region: "Esbjerg", planned: 28, canvas: 9, completed: 30, notSent: 1, outstanding: 6, adherence: 78, cancelled: 6, deleted: 5, plannedThisWeek: 4, plannedNextWeek: 2 },
 ];
 

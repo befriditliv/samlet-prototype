@@ -108,7 +108,7 @@ const suggestions: Suggestion[] = [
     tone: "warning",
     title: "3 bricks with low coverage this cycle",
     description:
-      "Brick 21 (Aarhus N), Brick 14 (Odense C) and Brick 33 (Aalborg) are below 40% coverage. Consider planning a Canvas day to lift reach.",
+      "Brick 21 (West District), Brick 14 (East District) and Brick 33 (North District) are below 40% coverage. Consider planning a Canvas day to lift reach.",
     meta: "Coverage < 40% · This cycle",
     cta: "See bricks to prioritize",
     prompt: "Show me bricks with low coverage I should plan Canvas activity in",

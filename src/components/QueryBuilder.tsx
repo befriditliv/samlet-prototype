@@ -118,7 +118,7 @@ const hcoExamples: ExampleCategory[] = [
     label: 'Geography',
     icon: <MapPin className="h-4 w-4" />,
     examples: [
-      { query: "HCOs in Copenhagen region", description: "Territory focus" },
+      { query: "HCOs in Riverton region", description: "Territory focus" },
       { query: "Hospitals within 50km of my location", description: "Nearby opportunities" },
       { query: "HCOs in my route for tomorrow", description: "Trip optimization" },
     ]

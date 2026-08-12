@@ -40,7 +40,7 @@ const mockDebriefData = {
     specialty: "Emergency Medicine",
     date: "January 12, 2026",
     time: "13:00",
-    location: "Rigshospitalet"
+    location: "Northgate University Hospital"
   },
   complianceIssues: [
     "Possible off-label discussion detected - verify that the conversation stayed within approved indication",
