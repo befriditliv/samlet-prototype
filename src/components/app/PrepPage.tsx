@@ -48,7 +48,7 @@ const prepSections: PrepSection[] = [
       {
         id: "3",
         title: "Q4 Cardiology Review",
-        subtitle: "Discussed SGLT2 inhibitor adoption and patient monitoring protocols.",
+        subtitle: "Discussed IV antibiotic inhibitor adoption and patient monitoring protocols.",
       },
       {
         id: "4",
@@ -64,7 +64,7 @@ const prepSections: PrepSection[] = [
     items: [
       {
         id: "5",
-        title: "Present SGLT2 Clinical Benefits",
+        title: "Present IV antibiotic Clinical Benefits",
         subtitle: "Focus on cardiovascular outcomes and reduced hospitalizations.",
       },
       {

@@ -20,7 +20,7 @@ const AppSettings = () => {
             </div>
             <div className="min-w-0">
               <h2 className="text-base font-semibold text-foreground truncate">John Doe</h2>
-              <p className="text-sm text-muted-foreground truncate">jdoe@novonordisk.com</p>
+              <p className="text-sm text-muted-foreground truncate">jdoe@odapharm.com</p>
             </div>
           </div>
         </div>

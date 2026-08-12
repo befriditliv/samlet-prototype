@@ -156,7 +156,7 @@ const debriefExamples: DebriefExample[] = [
     date: 'Dec 18, 2025',
     aligned: true,
     campaign: 'Cardiovascular Outcomes',
-    excerpt: 'Presented ATLAS-6 data to the cardiology team. Strong interest in CV risk reduction. They will consider Dose 1 for type 2 diabetes patients with established heart disease.',
+    excerpt: 'Presented ATLAS-6 data to the cardiology team. Strong interest in CV risk reduction. They will consider Dose 1 for uncomplicated appendicitis patients with established heart disease.',
     analysis: 'Aligned: Specific reference to ATLAS-6 and cardiovascular risk reduction matches the campaign focus.'
   },
   {
@@ -165,7 +165,7 @@ const debriefExamples: DebriefExample[] = [
     date: 'Dec 15, 2025',
     aligned: false,
     campaign: 'Patient Compliance',
-    excerpt: 'Good meeting with GP. Discussed diabetes treatment and patient groups in general. Positively received.',
+    excerpt: 'Good meeting with GP. Discussed appendicitis treatment and patient groups in general. Positively received.',
     analysis: 'Not aligned: No specific reference to adherence, retention, or drop-out strategies as defined in the campaign.'
   },
   {
@@ -183,7 +183,7 @@ const debriefExamples: DebriefExample[] = [
     date: 'Dec 10, 2025',
     aligned: true,
     campaign: 'Patient Compliance',
-    excerpt: 'Discussed retention strategies with diabetes nurse. Reviewed tips for managing side effects and motivating patients. She will implement monthly follow-up calls.',
+    excerpt: 'Discussed retention strategies with appendicitis nurse. Reviewed tips for managing side effects and motivating patients. She will implement monthly follow-up calls.',
     analysis: 'Aligned: Focus on retention, motivation, and concrete strategies matches the campaign goals.'
   }
 ];

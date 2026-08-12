@@ -144,8 +144,8 @@ export const DebriefReportEngine = () => {
                   <SelectItem value="cardiology">Cardiology</SelectItem>
                   <SelectItem value="cardiothoracic-surgery">Cardiothoracic Surgery</SelectItem>
                   <SelectItem value="care-of-the-elderly">Care of the Elderly</SelectItem>
-                  <SelectItem value="diabetes-endocrinology">Diabetes & Endocrinology</SelectItem>
-                  <SelectItem value="diabetologist">Diabetologist</SelectItem>
+                  <SelectItem value="appendicitis-emergency medicine">Acute Abdominal & Emergency Care</SelectItem>
+                  <SelectItem value="acute care surgeon">Acute care surgeon</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -173,11 +173,11 @@ export const DebriefReportEngine = () => {
                   <SelectItem value="alhemo">Alhemo</SelectItem>
                   <SelectItem value="dpp4">DPP4</SelectItem>
                   <SelectItem value="esperoct">Esperoct</SelectItem>
-                  <SelectItem value="glp-1">GLP-1</SelectItem>
-                  <SelectItem value="glp1">GLP1</SelectItem>
-                  <SelectItem value="novopen">NovoPen</SelectItem>
-                  <SelectItem value="novopen-6">NovoPen 6</SelectItem>
-                  <SelectItem value="novopen-echo">NovoPen Echo</SelectItem>
+                  <SelectItem value="dose-1">Dose 1</SelectItem>
+                  <SelectItem value="dose1">Dose 1</SelectItem>
+                  <SelectItem value="odapen">OdaPen</SelectItem>
+                  <SelectItem value="odapen-6">OdaPen 6</SelectItem>
+                  <SelectItem value="odapen-echo">OdaPen Echo</SelectItem>
                 </SelectContent>
               </Select>
             </div>

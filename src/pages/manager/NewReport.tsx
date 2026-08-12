@@ -452,9 +452,9 @@ const NewReport = () => {
                     <SelectContent>
                       <SelectItem value="all">All products</SelectItem>
                       <SelectItem value="dose-1">Dose 1</SelectItem>
-                      <SelectItem value="wegovy">Wegovy</SelectItem>
-                      <SelectItem value="victoza">Victoza</SelectItem>
-                      <SelectItem value="rybelsus">Rybelsus</SelectItem>
+                      <SelectItem value="wegovy">Dose 1</SelectItem>
+                      <SelectItem value="victoza">Dose 1</SelectItem>
+                      <SelectItem value="rybelsus">Dose 1</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -603,9 +603,9 @@ const NewReport = () => {
                     <SelectContent>
                       <SelectItem value="all">All products</SelectItem>
                       <SelectItem value="dose-1">Dose 1</SelectItem>
-                      <SelectItem value="wegovy">Wegovy</SelectItem>
-                      <SelectItem value="victoza">Victoza</SelectItem>
-                      <SelectItem value="rybelsus">Rybelsus</SelectItem>
+                      <SelectItem value="wegovy">Dose 1</SelectItem>
+                      <SelectItem value="victoza">Dose 1</SelectItem>
+                      <SelectItem value="rybelsus">Dose 1</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

@@ -58,7 +58,7 @@ const AppJarvis = () => {
 
   const getAIResponse = (query: string): string => {
     if (query.toLowerCase().includes("canvas targets")) {
-      return "Found 12 high-potential canvas targets within 25 miles. Top prospects: Dr. Amanda Foster (Endocrinology) - 0.8 miles, high access, no recent contact.";
+      return "Found 12 high-potential canvas targets within 25 miles. Top prospects: Dr. Amanda Foster (Emergency Medicine) - 0.8 miles, high access, no recent contact.";
     }
     if (query.toLowerCase().includes("adoption trends")) {
       return "Oncology adoption at City Medical Center shows 23% increase in Q4. Key drivers: improved formulary access and positive physician feedback.";

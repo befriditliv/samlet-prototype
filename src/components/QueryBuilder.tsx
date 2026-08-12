@@ -65,9 +65,9 @@ const hcpExamples: ExampleCategory[] = [
     label: 'Segments & Specialties',
     icon: <Tag className="h-4 w-4" />,
     examples: [
-      { query: "Endocrinologists interested in GLP-1", description: "Specialty + interest" },
-      { query: "Tier A HCPs in the Obesity segment", description: "High-value segment" },
-      { query: "Cardiologists with diabetes patients", description: "Cross-specialty opportunities" },
+      { query: "Emergency physicians interested in Dose 1", description: "Specialty + interest" },
+      { query: "Tier A HCPs in the Acute Abdomen segment", description: "High-value segment" },
+      { query: "Cardiologists with appendicitis patients", description: "Cross-specialty opportunities" },
     ]
   },
   {

@@ -12,11 +12,11 @@ interface Scenario {
 }
 
 const mockScenarios: Scenario[] = [
-  { id: "1", name: "Overcoming Cost Concerns", product: "Ozempic" },
-  { id: "2", name: "GLP-1 Efficacy Discussion", product: "Rybelsus" },
-  { id: "3", name: "Managing Side Effect Concerns", product: "Victoza" },
-  { id: "4", name: "Injection Adherence Challenge", product: "Ozempic" },
-  { id: "5", name: "Basal Insulin Optimization", product: "Tresiba" },
+  { id: "1", name: "Overcoming Cost Concerns", product: "Dose 1" },
+  { id: "2", name: "Dose 1 Efficacy Discussion", product: "Dose 1" },
+  { id: "3", name: "Managing Side Effect Concerns", product: "Dose 1" },
+  { id: "4", name: "Injection Adherence Challenge", product: "Dose 1" },
+  { id: "5", name: "Standard Antibiotic Optimization", product: "Dose 1" },
 ];
 
 interface ScenariosSectionProps {

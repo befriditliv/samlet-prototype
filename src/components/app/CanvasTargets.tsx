@@ -23,8 +23,8 @@ const mockCanvasTargets: CanvasTarget[] = [
   {
     id: "ct1",
     name: "Dr. Henrik Larsen",
-    specialty: "Endocrinology",
-    organization: "Copenhagen Diabetes Center",
+    specialty: "Emergency Medicine",
+    organization: "Copenhagen Acute Care Center",
     distance: "0.4 km",
     distanceValue: 0.4,
     address: "Nørrebrogade 44, 2200 København",
@@ -78,8 +78,8 @@ const mockCanvasTargets: CanvasTarget[] = [
   {
     id: "ct6",
     name: "Dr. Sofie Hansen",
-    specialty: "Diabetology",
-    organization: "Diabetes & Metabolism Clinic",
+    specialty: "Acute Abdominal Care",
+    organization: "Appendicitis & Metabolism Clinic",
     distance: "2.1 km",
     distanceValue: 2.1,
     address: "Frederiksborggade 18, 1360 København",
@@ -122,7 +122,7 @@ const mockCanvasTargets: CanvasTarget[] = [
   {
     id: "ct10",
     name: "Dr. Julie Rasmussen",
-    specialty: "Endocrinology",
+    specialty: "Emergency Medicine",
     organization: "Hormone Health Center",
     distance: "3.3 km",
     distanceValue: 3.3,

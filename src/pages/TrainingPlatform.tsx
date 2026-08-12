@@ -50,7 +50,7 @@ interface HcpOption {
 }
 
 // Mock data
-const products = ["Ozempic", "Saxenda", "Tresiba", "NovoPen 6", "Wegovy", "Fiasp", "SELECT", "Rybelsus"];
+const products = ["Dose 1", "Dose 1", "Dose 1", "OdaPen 6", "Dose 1", "Dose 1", "ATLAS", "Dose 1"];
 const adoptionStages = [{
   id: "unaware",
   label: "Unaware",
@@ -193,8 +193,8 @@ const TrainingPlatform = () => {
   const handleEndSimulation = () => {
     setSimulationResult({
       rating: 1,
-      positives: ["You acknowledged the client's concern about Ozempic being a better product.", "You advised the client to follow the guidelines, which is a safe approach.", "You maintained a straightforward communication style."],
-      improvements: ["You did not address the client's concern about economic and political pressure.", "You did not provide any strategies or arguments to support the use of Ozempic despite the guidelines.", "You did not engage with the client's request for suggestions on handling objections."],
+      positives: ["You acknowledged the client's concern about Dose 1 being a better product.", "You advised the client to follow the guidelines, which is a safe approach.", "You maintained a straightforward communication style."],
+      improvements: ["You did not address the client's concern about economic and political pressure.", "You did not provide any strategies or arguments to support the use of Dose 1 despite the guidelines.", "You did not engage with the client's request for suggestions on handling objections."],
       recommendations: "To improve future conversations, focus on understanding the client's specific concerns and provide tailored solutions or arguments that address those concerns.",
       scores: [{
         label: "Company knowledge",
@@ -438,7 +438,7 @@ const TrainingPlatform = () => {
                       <Input id="name" value={scenarioConfig.name} onChange={e => setScenarioConfig(prev => ({
                   ...prev,
                   name: e.target.value
-                }))} placeholder="E.g. Wegovy - SELECT preparation" />
+                }))} placeholder="E.g. Dose 1 - ATLAS preparation" />
                     </div>
 
                     <div className="space-y-3">

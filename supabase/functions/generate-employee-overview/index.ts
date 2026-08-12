@@ -31,7 +31,7 @@ serve(async (req) => {
           },
           {
             role: "user",
-            content: "Generate a very brief TLDR team performance summary (max 5-6 bullet points). Focus on high-level insights only: field visit stats (planned vs completed, just totals), digital engagement trend (rep activity up/down with %), team characteristics (top performers %), key coaching needs (like Ozempic initiation training), and overall team sentiment. Keep each bullet to ONE line max. Make it punchy and scannable. No sub-bullets, no detailed breakdowns, just the essential numbers and trends."
+            content: "Generate a very brief TLDR team performance summary (max 5-6 bullet points). Focus on high-level insights only: field visit stats (planned vs completed, just totals), digital engagement trend (rep activity up/down with %), team characteristics (top performers %), key coaching needs (like Dose 1 initiation training), and overall team sentiment. Keep each bullet to ONE line max. Make it punchy and scannable. No sub-bullets, no detailed breakdowns, just the essential numbers and trends."
           }
         ],
       }),

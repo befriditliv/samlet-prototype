@@ -58,10 +58,10 @@ const mockTasks: Task[] = [
     type: "opportunity",
     priority: "medium",
     title: "New Study Opportunity",
-    description: "Recent diabetes study relevant to Dr. Kumar's patient population",
+    description: "Recent appendicitis study relevant to Dr. Kumar's patient population",
     hcpName: "Dr. Raj Kumar",
     actionLabel: "Share Study",
-    context: "Endocrinology - Diabetes focus"
+    context: "Emergency Medicine - Appendicitis focus"
   },
   {
     id: "5",
