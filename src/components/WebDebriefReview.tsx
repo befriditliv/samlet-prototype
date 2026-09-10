@@ -138,7 +138,6 @@ export const WebDebriefReview = ({ meetingId, onBack, onApprove }: WebDebriefRev
     onBack();
   };
 
-  const hasComplianceIssues = (notes.complianceIssues?.length ?? 0) > 0;
 
   return (
     <div className="min-h-screen bg-background">
