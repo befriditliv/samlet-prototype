@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Edit3, Send, Loader2, MoreVertical, Trash2, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Edit3, Send, Loader2, MoreVertical, Trash2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import {
   DropdownMenu,
@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { DebriefCoachingPrompt, DuplicateTextNotice } from "@/components/debrief/DebriefQualitySignals";
+import { ComplianceWarning } from "@/components/debrief/ComplianceWarning";
 
 interface DebriefReviewProps {
   meetingId: string;
@@ -43,8 +44,28 @@ const mockDebriefData = {
     location: "Northgate University Hospital"
   },
   complianceIssues: [
-    "Possible off-label discussion detected - verify that the conversation stayed within approved indication",
-    "Reference to competitor product without comparative data"
+    {
+      category: "Possible adverse event",
+      source: "Activity note · Dose 1 Oral",
+      trigger: "two of her patients had nausea and felt very tired after starting Dose 1 Oral",
+      why: "A named product together with a described side effect counts as a possible adverse event, even when it is mentioned casually and second-hand.",
+      action: "Report it to Patient Safety today with the wording used in the meeting. Do not give medical advice or promise a follow-up answer yourself.",
+      deadline: "Report within 24 hours",
+    },
+    {
+      category: "Off-label discussion",
+      source: "Purpose of visit",
+      trigger: "off-label use in uncomplicated diverticulitis and municipal subsidy plans",
+      why: "Dose 1 is only approved for uncomplicated appendicitis. Discussing another indication on your initiative is not allowed, even if the HCP raised the funding angle.",
+      action: "Note who raised the topic. If it came from the HCP, state that you referred them to Medical Information; if not, flag it to your manager before submitting.",
+    },
+    {
+      category: "Product complaint",
+      source: "HCP reaction · Dose 1 Pen",
+      trigger: "one pen was blocked and could not be activated",
+      why: "A device that does not work as intended is a product complaint and has to be logged separately from the debrief.",
+      action: "Create a product complaint with batch number and, if possible, ask the department to keep the pen.",
+    },
   ],
   duplicateTextSignal: {
     title: "Repeated wording detected",
@@ -52,7 +73,7 @@ const mockDebriefData = {
       "Some wording in this debrief looks very similar to earlier submissions. If this meeting had unique takeaways, adding a bit more context will make the notes more useful.",
   },
   detailScore: 42,
-  purpose: "The purpose of the meeting was a constructive discussion about several clinical topics, including the acute appendicitis pathway, off-label use, and the Dose 1 portfolio (Dose 1, Dose 1 Oral and Dose 1 Pen). Additionally, initiation and municipal subsidy plans were discussed.",
+  purpose: "The purpose of the meeting was a constructive discussion about several clinical topics, including the acute appendicitis pathway, off-label use in uncomplicated diverticulitis, and the Dose 1 portfolio (Dose 1, Dose 1 Oral and Dose 1 Pen). Additionally, initiation and municipal subsidy plans were discussed.",
   brands: [
     {
       brand: "Dose 1",
@@ -122,7 +143,6 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
     onBack();
   };
 
-  const hasComplianceIssues = (notes.complianceIssues?.length ?? 0) > 0;
 
   return (
     <div className="app-shell min-h-screen bg-background flex flex-col animate-fade-in sm:border-x-2 sm:border-border/50">
@@ -192,26 +212,8 @@ export const DebriefReview = ({ meetingId, onBack, onApprove }: DebriefReviewPro
       {/* Content */}
       <div className="flex-1 px-4 sm:px-6 py-4 space-y-4 overflow-y-auto pb-48">
 
-        {/* Compliance Warning - Yellow box at top if issues detected */}
-        {hasComplianceIssues && (
-          <Card className="p-4 border border-amber-500/20 bg-amber-500/10 rounded-2xl">
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-amber-500/15 rounded-xl">
-                <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-foreground mb-1">Compliance warning</h3>
-                <ul className="space-y-1">
-                  {notes.complianceIssues.map((issue, index) => (
-                    <li key={index} className="text-sm text-muted-foreground">
-                      • {issue}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </Card>
-        )}
+        {/* Compliance Warning - shown at top if rules were triggered */}
+        <ComplianceWarning issues={notes.complianceIssues} compact />
 
         <DuplicateTextNotice duplicateTextSignal={notes.duplicateTextSignal} />
 
