@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Edit3, Send, Loader2, MoreVertical, Trash2, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Edit3, Send, Loader2, MoreVertical, Trash2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import {
   DropdownMenu,
@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { DebriefCoachingPrompt, DuplicateTextNotice } from "@/components/debrief/DebriefQualitySignals";
+import { ComplianceWarning } from "@/components/debrief/ComplianceWarning";
 
 interface WebDebriefReviewProps {
   meetingId: string;
