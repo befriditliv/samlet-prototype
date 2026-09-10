@@ -43,8 +43,28 @@ const mockDebriefData = {
     location: "Northgate University Hospital"
   },
   complianceIssues: [
-    "Possible off-label discussion detected - verify that the conversation stayed within approved indication",
-    "Reference to competitor product without comparative data"
+    {
+      category: "Possible adverse event",
+      source: "Activity note · Dose 1 Oral",
+      trigger: "two of her patients had nausea and felt very tired after starting Dose 1 Oral",
+      why: "A named product together with a described side effect counts as a possible adverse event, even when it is mentioned casually and second-hand.",
+      action: "Report it to Patient Safety today with the wording used in the meeting. Do not give medical advice or promise a follow-up answer yourself.",
+      deadline: "Report within 24 hours",
+    },
+    {
+      category: "Off-label discussion",
+      source: "Purpose of visit",
+      trigger: "off-label use in uncomplicated diverticulitis and municipal subsidy plans",
+      why: "Dose 1 is only approved for uncomplicated appendicitis. Discussing another indication on your initiative is not allowed, even if the HCP raised the funding angle.",
+      action: "Note who raised the topic. If it came from the HCP, state that you referred them to Medical Information; if not, flag it to your manager before submitting.",
+    },
+    {
+      category: "Product complaint",
+      source: "HCP reaction · Dose 1 Pen",
+      trigger: "one pen was blocked and could not be activated",
+      why: "A device that does not work as intended is a product complaint and has to be logged separately from the debrief.",
+      action: "Create a product complaint with batch number and, if possible, ask the department to keep the pen.",
+    },
   ],
   duplicateTextSignal: {
     title: "Repeated wording detected",
