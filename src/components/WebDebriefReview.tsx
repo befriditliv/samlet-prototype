@@ -206,26 +206,8 @@ export const WebDebriefReview = ({ meetingId, onBack, onApprove }: WebDebriefRev
 
       {/* Content */}
       <div className="container mx-auto px-6 py-8 max-w-4xl space-y-6">
-        {/* Compliance Warning - Yellow box at top if issues detected */}
-        {hasComplianceIssues && (
-          <Card className="p-5 border-0 bg-amber-50 dark:bg-amber-900/20 rounded-2xl">
-            <div className="flex items-start gap-4">
-              <div className="p-2.5 bg-amber-100 dark:bg-amber-800/30 rounded-xl">
-                <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-amber-700 dark:text-amber-300 mb-2">Compliance warning</h3>
-                <ul className="space-y-1.5">
-                  {notes.complianceIssues.map((issue, index) => (
-                    <li key={index} className="text-sm text-amber-600 dark:text-amber-400">
-                      • {issue}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </Card>
-        )}
+        {/* Compliance Warning - shown at top if rules were triggered */}
+        <ComplianceWarning issues={notes.complianceIssues} />
 
         <DuplicateTextNotice duplicateTextSignal={notes.duplicateTextSignal} />
 
