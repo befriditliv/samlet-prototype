@@ -15,6 +15,7 @@ import { useManagerPeriod } from "@/hooks/use-manager-period";
 import { toast } from "@/hooks/use-toast";
 import { oneToOnePoints, signals, teamMembers, themes, type DemoScenario } from "@/data/managerDemo";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
+import { EmployeeActivityPanels } from "@/components/manager/EmployeeActivityPanels";
 
 const scenarioOptions: { value: DemoScenario; label: string }[] = [
   { value: "normal", label: "Normal" }, { value: "no-activity", label: "No activity" }, { value: "no-analysis", label: "No analyzed debriefs" },
@@ -73,6 +74,8 @@ const EmployeeDetail = () => {
             [MessageSquareText, "Debrief quality", noData ? "No relevant data" : "7.7 / 10", noData ? "No assessed debriefs" : "Period average · n = 64 of 78", "quality"],
           ].map(([Icon, label, value, note, key]) => <button key={String(label)} onClick={() => setPanel(key as PanelKey)} className="text-left"><Card className="h-full border-0 bg-gradient-to-br from-card to-card/80 shadow-sm transition-shadow hover:shadow-md"><CardContent className="p-5"><div className="mb-3 flex items-start justify-between"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10"><Icon className="h-4 w-4 text-primary" /></div><ChevronRight className="h-4 w-4 text-muted-foreground" /></div><p className="text-sm text-muted-foreground">{String(label)}</p><p className="mt-1 text-2xl font-bold">{String(value)}</p><p className="mt-1 text-xs leading-5 text-muted-foreground">{String(note)}</p></CardContent></Card></button>)}
         </section>
+
+        <EmployeeActivityPanels slug={employee.slug} noData={noData || employee.slug === "jonas"} />
 
         <section id="signals" className="scroll-mt-32 space-y-4"><div><div className="flex items-center gap-2"><h3 className="text-xl font-bold">Current signals</h3><Badge variant="secondary">Current · own rule horizon</Badge></div><p className="mt-1 text-sm text-muted-foreground">Rules have their own time horizons. This is a current list, not a trend for the selected period.</p></div><Card className="border-0 shadow-sm"><div className="divide-y">{signals.map((signal) => <button key={signal.id} onClick={() => setSelectedSignal(signal)} className="grid w-full gap-3 p-4 text-left hover:bg-muted/30 md:grid-cols-[1fr_1.6fr_0.8fr_1fr_auto] md:items-center"><div><div className="flex items-center gap-2"><span className="font-semibold">{signal.name}</span><Badge variant="outline">HCO</Badge></div><p className="mt-1 text-xs text-muted-foreground">Segment {scenario === "missing-segment" && signal.id === "SIG-005" ? "not provided" : signal.segment}</p></div><p className="text-sm">{signal.reason}<span className="mt-1 block text-xs text-muted-foreground">Rule horizon: {signal.horizon}</span></p><p className="text-sm"><span className="block text-xs text-muted-foreground">Last contact</span>{signal.last}</p><p className="text-sm"><span className="block text-xs text-muted-foreground">Next registered meeting</span>{signal.next ? `${signal.next} · ${signal.owner}` : "None registered"}</p><ChevronRight className="h-4 w-4 text-muted-foreground" /></button>)}</div><div className="border-t p-3 text-center"><Button variant="ghost" size="sm" onClick={() => setPanel("signals")}>All signals</Button></div></Card></section>
 
