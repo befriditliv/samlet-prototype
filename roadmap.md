@@ -1,7 +1,7 @@
 # Roadmap
 
-- [x] Review manager-view handoff and current UI
-- [x] Build shared manager demo fixtures and period control
-- [x] Build employee overview UX and interactions
-- [x] Build team overview UX and navigation
-- [x] Validate laptop/mobile layouts and interactions
+- [x] Review refreshed manager-view handoff and current UI
+- [ ] Update shared manager fixtures, filters, and required states
+- [ ] Rebuild employee view while preserving 1:1 preparation
+- [ ] Rebuild team overview and linked priorities
+- [ ] Validate desktop/mobile layouts, wording, and interactions
