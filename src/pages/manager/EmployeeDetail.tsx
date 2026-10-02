@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AlertCircle, ArrowLeft, BookOpen, Building2, CalendarClock, Check, ChevronRight, Clipboard, FileCheck2, MessageSquareText, Printer, RefreshCw, Sparkles, Users } from "lucide-react";
+import { AlertCircle, ArrowLeft, Building2, CalendarClock, Check, ChevronRight, Clipboard, FileCheck2, MessageSquareText, Printer, RefreshCw, Sparkles, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
