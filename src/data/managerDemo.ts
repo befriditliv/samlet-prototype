@@ -16,11 +16,19 @@ export const teamMembers = [
 ];
 
 export const signals = [
-  { id: "SIG-004", name: "Demo HCO 04", segment: "B", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Jan 3, 2026", next: "Oct 9, 2026", owner: "Christian" },
-  { id: "SIG-002", name: "Demo HCO 02", segment: "B", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Feb 20, 2026", next: null, owner: null },
-  { id: "SIG-003", name: "Demo HCO 03", segment: "A", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Mar 6, 2026", next: "Oct 5, 2026", owner: "Sofie" },
-  { id: "SIG-001", name: "Demo HCO 01", segment: "A", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Mar 15, 2026", next: "Oct 14, 2026", owner: "Christian" },
-  { id: "SIG-005", name: "Demo HCO 05", segment: "A", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Mar 30, 2026", next: null, owner: null },
+  { id: "SIG-002", name: "Rønnevang Sundhedshus", segment: "B", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Feb 20, 2026", channel: "Physical", contact: "HCP · demo", next: null, owner: null },
+  { id: "SIG-005", name: "Lægehuset Nordbro", segment: "A", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Mar 30, 2026", channel: "Virtual", contact: "HCP · demo", next: null, owner: null },
+  { id: "SIG-003", name: "Demo HCO 03", segment: "A", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Mar 6, 2026", channel: "Physical", contact: "HCP · demo", next: "Oct 5, 2026", owner: "Sofie" },
+  { id: "SIG-004", name: "Demo HCO 04", segment: "B", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Jan 3, 2026", channel: "Physical", contact: "HCP · demo", next: "Oct 9, 2026", owner: "Christian" },
+  { id: "SIG-001", name: "Demo HCO 01", segment: "A", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Mar 15, 2026", channel: "Virtual", contact: "HCP · demo", next: "Oct 14, 2026", owner: "Christian" },
+];
+
+export const employeeCoverage = [
+  { name: "Rønnevang Sundhedshus", segment: "B", district: "Copenhagen East", last: "Feb 20", next: null, status: "No upcoming meeting" },
+  { name: "Lægehuset Nordbro", segment: "A", district: "Copenhagen East", last: "Mar 30", next: null, status: "No upcoming meeting" },
+  { name: "Demo HCO 03", segment: "A", district: "Copenhagen East", last: "Mar 6", next: "Oct 5 · Sofie", status: "Other employee booked" },
+  { name: "Demo HCO 04", segment: "B", district: "Copenhagen East", last: "Jan 3", next: "Oct 9 · Christian", status: "Own meeting booked" },
+  { name: "Demo HCO 01", segment: "A", district: "Copenhagen East", last: "Mar 15", next: "Oct 14 · Christian", status: "Own meeting booked" },
 ];
 
 export const themes = [
