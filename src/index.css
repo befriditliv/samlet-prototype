@@ -159,27 +159,3 @@ All colors MUST be HSL.
     max-width: 30rem;
   }
 }
-
-@media print {
-  body > *:not([data-radix-portal]) {
-    display: none !important;
-  }
-
-  [data-radix-portal] [data-state="open"]:not(.manager-prep-print) {
-    display: none !important;
-  }
-
-  .manager-prep-print {
-    position: static !important;
-    width: 100% !important;
-    max-width: none !important;
-    height: auto !important;
-    overflow: visible !important;
-    border: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .manager-prep-print button {
-    display: none !important;
-  }
-}

@@ -1,47 +1,64 @@
-import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { AlertCircle, ArrowRight, Building2, FileCheck2, MessageSquareText, Users } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { districts, teamMembers } from "@/data/managerDemo";
-
-type SortKey = "name" | "district" | "contacts";
+import { teamMembers } from "@/data/managerDemo";
 
 export const EmployeeOverview = () => {
   const navigate = useNavigate();
-  const [sort, setSort] = useState<SortKey>("name");
-  const [ascending, setAscending] = useState(true);
-  const [source, setSource] = useState<string | null>(null);
-  const members = useMemo(() => [...teamMembers].sort((a, b) => {
-    const left = sort === "name" ? a.name : sort === "district" ? a.district : a.contacts;
-    const right = sort === "name" ? b.name : sort === "district" ? b.district : b.contacts;
-    return (typeof left === "number" ? left - Number(right) : String(left).localeCompare(String(right), "da")) * (ascending ? 1 : -1);
-  }), [sort, ascending]);
-  const changeSort = (key: SortKey) => { if (sort === key) setAscending((value) => !value); else { setSort(key); setAscending(true); } };
-  const SortIcon = ascending ? ChevronUp : ChevronDown;
+  return (
+    <div className="space-y-8">
+      <section className="space-y-4">
+        <div>
+          <h2 className="text-xl font-bold text-foreground">Regional brief</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Selected period · Demo data</p>
+        </div>
+        <Card className="border-0 bg-gradient-to-br from-card to-card/80 shadow-sm">
+          <CardContent className="p-6">
+            <p className="max-w-4xl text-sm leading-6 text-foreground">The region has 144 registered employee contacts across 70 of 245 assigned HCOs. Documentation is available for 124 contacts, and the weighted documentation quality is 7.8 based on 103 assessed debriefs. Current customer signals without an upcoming registered meeting, recurring questions about practical initiation, and 20 unfinished debriefs provide three concrete areas for the next manager conversations.</p>
+            <div className="mt-4 flex flex-wrap gap-2"><Badge variant="outline">Source: TEAM-2026-10</Badge><Badge variant="outline">Demo data</Badge></div>
+          </CardContent>
+        </Card>
+      </section>
 
-  return <div className="space-y-10">
-    <section className="space-y-3"><div><h2 className="text-xl font-bold">Regionsbrief</h2><p className="text-sm text-muted-foreground">Observationer i perioden</p></div><Card className="shadow-sm"><CardContent className="p-6"><p className="max-w-5xl text-sm leading-7">Teamet har <button className="underline decoration-border underline-offset-4" onClick={() => setSource("241 registrerede kontakter")}>241 registrerede kontakter</button> på tværs af 148 af 392 tildelte HCO'er. <button className="underline decoration-border underline-offset-4" onClick={() => setSource("Dokumentation foreligger")}>Dokumentation foreligger for 198 kontakter</button>, mens debriefkvaliteten er 6,4 baseret på 162 vurderede debriefs. Tre forhold kan være relevante i kommende samtaler: spørgsmål om opstart af Dose 1, A-kunder uden registreret kontakt og færdige debriefs, der endnu ikke er sendt.</p><p className="mt-3 text-xs text-muted-foreground">Baseret på 241 registrerede kontakter og 198 dokumenterede debriefs</p></CardContent></Card></section>
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {[
+          [Users, "Registered contacts", "144", "Employee contacts only"],
+          [Building2, "Contacted HCOs", "70 / 245", "Unique HCOs"],
+          [FileCheck2, "Documentation available", "124 / 144", "20 unfinished"],
+          [MessageSquareText, "Debrief quality", "7.8 / 10", "Weighted · n = 103"],
+        ].map(([Icon, label, value, note]) => (
+          <Card key={String(label)} className="border-0 bg-gradient-to-br from-card to-card/80 shadow-sm"><CardContent className="p-5"><div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10"><Icon className="h-4 w-4 text-primary" /></div><p className="text-sm text-muted-foreground">{String(label)}</p><p className="mt-1 text-2xl font-bold text-foreground">{String(value)}</p><p className="mt-1 text-xs text-muted-foreground">{String(note)}</p></CardContent></Card>
+        ))}
+      </section>
 
-    <section className="space-y-3"><h2 className="text-xl font-bold">Prioriteter i regionen</h2><div className="divide-y rounded-md border bg-card">{[
-      ["Opstart af Dose 1 nævnes hos 26 kunder i to distrikter", "4 medarbejdere berørt", "/manager/employee/jonas-birk#themes"],
-      ["17 A-kunder uden registreret kontakt og uden kommende møde", "5 medarbejdere berørt", "/manager/employee/jonas-birk#signals"],
-      ["12 færdige debriefs er klar, men ikke sendt", "3 medarbejdere berørt", "/manager/employee/jonas-birk#documentation"],
-    ].map(([title, note, href]) => <div key={title} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center"><div className="flex-1"><p className="font-medium">{title}</p><p className="mt-1 text-sm text-muted-foreground">{note}</p></div><Button variant="ghost" onClick={() => navigate(href)}>Åbn berørte<ArrowRight className="ml-2 h-4 w-4" /></Button></div>)}</div></section>
+      <section className="space-y-4">
+        <div><h2 className="text-xl font-bold text-foreground">Regional priorities</h2><p className="mt-1 text-sm text-muted-foreground">Each priority opens the underlying demo cases</p></div>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {[
+            ["Current", "Customer signals", "Two current signals have no upcoming registered meeting.", "View Christian", "/manager/employee/christian#signals"],
+            ["Selected period", "Practical initiation", "The question appears in 12 of 60 analyzed debriefs.", "View theme", "/manager/employee/christian#themes"],
+            ["Selected period", "Unfinished debriefs", "11 for Christian and 9 for Sofie.", "View documentation", "/manager/employee/christian#documentation"],
+          ].map(([scope, title, text, action, href]) => <Card key={title} className="border-0 shadow-sm"><CardContent className="p-5"><Badge variant="secondary">{scope}</Badge><h3 className="mt-3 font-semibold text-foreground">{title}</h3><p className="mt-2 min-h-10 text-sm leading-5 text-muted-foreground">{text}</p><Button variant="ghost" className="mt-3 h-8 px-0 text-primary" onClick={() => navigate(href)}>{action}<ArrowRight className="ml-1 h-4 w-4" /></Button></CardContent></Card>)}
+        </div>
+      </section>
 
-    <section className="space-y-3"><h2 className="text-xl font-bold">Teamets nøgletal</h2><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{[
-      ["Registrerede kontakter", "241", "Teamtotal · hver kontakt én gang"], ["Kundebredde", "148 / 392", "Tildelte HCO'er med kontakt"], ["Dokumentation foreligger", "198 / 241", "Registrerede kontakter"], ["Debriefkvalitet", "6,4", "n = 162 vurderede"],
-    ].map(([label, value, note]) => <button key={label} className="text-left" onClick={() => setSource(label)}><Card className="h-full shadow-sm transition-colors hover:bg-muted/20"><CardContent className="p-5"><p className="text-sm text-muted-foreground">{label}</p><p className="mt-2 text-3xl font-bold">{value}</p><p className="mt-2 text-xs text-muted-foreground">{note}</p></CardContent></Card></button>)}</div><p className="text-xs text-muted-foreground">Teamtotal tæller hver kontakt én gang. Summen af medarbejderrækkerne er højere, fordi flere medarbejdere kan deltage i samme møde.</p></section>
+      <section className="space-y-4">
+        <div><h2 className="text-xl font-bold text-foreground">Employees</h2><p className="mt-1 text-sm text-muted-foreground">Select an employee to prepare the next 1:1</p></div>
+        <Card className="border-0 shadow-sm overflow-hidden">
+          <Table>
+            <TableHeader><TableRow className="bg-muted/30"><TableHead>Employee</TableHead><TableHead>District</TableHead><TableHead>Contacts</TableHead><TableHead>Contacted HCOs</TableHead><TableHead>Documentation</TableHead><TableHead>Quality</TableHead><TableHead className="min-w-60">Attention point</TableHead></TableRow></TableHeader>
+            <TableBody>{teamMembers.map((member) => <TableRow key={member.slug} className="cursor-pointer" onClick={() => navigate(`/manager/employee/${member.slug}`)}><TableCell><button className="text-left font-semibold text-primary hover:underline">{member.name}</button><p className="text-xs text-muted-foreground">{member.role} · Demo</p></TableCell><TableCell>{member.district}</TableCell><TableCell className="font-semibold">{member.contacts}</TableCell><TableCell>{member.hcos}</TableCell><TableCell>{member.documentation}</TableCell><TableCell>{member.qualityN ? <>{member.quality}<span className="block text-xs text-muted-foreground">n = {member.qualityN}</span></> : member.quality}</TableCell><TableCell><div className="flex gap-2 text-sm text-muted-foreground"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />{member.attention}</div></TableCell></TableRow>)}</TableBody>
+          </Table>
+        </Card>
+      </section>
 
-    <section className="space-y-3"><div><h2 className="text-xl font-bold">Medarbejdere</h2><p className="text-sm text-muted-foreground">Vælg en medarbejder for at forberede næste 1:1</p></div><Card className="hidden overflow-hidden shadow-sm md:block"><Table><TableHeader><TableRow><TableHead><Button variant="ghost" size="sm" onClick={() => changeSort("name")}>Medarbejder{sort === "name" && <SortIcon className="ml-1 h-3 w-3" />}</Button></TableHead><TableHead><Button variant="ghost" size="sm" onClick={() => changeSort("district")}>Distrikt{sort === "district" && <SortIcon className="ml-1 h-3 w-3" />}</Button></TableHead><TableHead>Kundebredde</TableHead><TableHead><Button variant="ghost" size="sm" onClick={() => changeSort("contacts")}>Kontakter{sort === "contacts" && <SortIcon className="ml-1 h-3 w-3" />}</Button></TableHead><TableHead>Dokumentation</TableHead><TableHead>Kvalitet</TableHead><TableHead>Opmærksomhedspunkt</TableHead></TableRow></TableHeader><TableBody>{members.map((member) => <TableRow key={member.slug} className="cursor-pointer" onClick={() => navigate(`/manager/employee/${member.slug}`)}><TableCell><span className="font-semibold text-primary">{member.name}</span><span className="block text-xs text-muted-foreground">{member.role}</span></TableCell><TableCell>{member.district}</TableCell><TableCell>{member.hcos}</TableCell><TableCell className="font-semibold">{member.contacts}</TableCell><TableCell>{member.documentation}</TableCell><TableCell>{member.quality}<span className="block text-xs text-muted-foreground">{member.qualityN ? `n = ${member.qualityN}` : ""}</span></TableCell><TableCell><button className="max-w-56 text-left text-sm underline decoration-border underline-offset-4" onClick={(event) => { event.stopPropagation(); setSource(member.attention); }}>{member.attention}</button></TableCell></TableRow>)}</TableBody></Table></Card><div className="grid gap-3 md:hidden">{members.map((member) => <Card key={member.slug} className="shadow-sm"><CardContent className="p-5"><div className="flex items-start justify-between"><div><p className="font-bold">{member.name}</p><p className="text-sm text-muted-foreground">{member.role} · {member.district}</p></div><Button size="sm" variant="ghost" onClick={() => navigate(`/manager/employee/${member.slug}`)}>Åbn</Button></div><div className="mt-4 grid grid-cols-2 gap-3 text-sm"><p><span className="block text-xs text-muted-foreground">Kontakter</span>{member.contacts}</p><p><span className="block text-xs text-muted-foreground">Kundebredde</span>{member.hcos}</p><p><span className="block text-xs text-muted-foreground">Dokumentation</span>{member.documentation}</p><p><span className="block text-xs text-muted-foreground">Kvalitet</span>{member.quality}{member.qualityN ? ` · n=${member.qualityN}` : ""}</p></div><p className="mt-4 border-t pt-3 text-sm">{member.attention}</p></CardContent></Card>)}</div></section>
-
-    <section className="space-y-3"><h2 className="text-xl font-bold">Distriktsoversigt</h2><Card className="overflow-hidden shadow-sm"><Table><TableHeader><TableRow><TableHead>Distrikt</TableHead><TableHead>Dækning</TableHead><TableHead>Kunder uden kommende møde</TableHead></TableRow></TableHeader><TableBody>{districts.map((row) => <TableRow key={row.name}><TableCell className="font-medium">{row.name}</TableCell><TableCell>{row.coverage}</TableCell><TableCell>{row.missing}</TableCell></TableRow>)}</TableBody></Table></Card></section>
-
-    <Accordion type="multiple" className="rounded-md border bg-card px-5"><AccordionItem value="digital"><AccordionTrigger>Digital aktivitet i porteføljen</AccordionTrigger><AccordionContent><p className="text-3xl font-bold">2.725</p><p className="mt-2 text-sm text-muted-foreground">Digitale berøringer i teamets kundeportefølje. Porteføljekontekst. Indgår ikke i teamets 241 registrerede kontakter.</p></AccordionContent></AccordionItem><AccordionItem value="signals"><AccordionTrigger>Øvrige signaler</AccordionTrigger><AccordionContent className="text-sm text-muted-foreground">Yderligere signaler åbnes i den relevante medarbejdervisning.</AccordionContent></AccordionItem><AccordionItem value="archive"><AccordionTrigger>Rapportarkiv</AccordionTrigger><AccordionContent><div className="space-y-2 text-sm"><button className="block text-primary underline" onClick={() => navigate("/manager/reports")}>Aktivitetsrapport · september 2026</button><button className="block text-primary underline" onClick={() => navigate("/manager/reports")}>Dokumentationsrapport · september 2026</button></div></AccordionContent></AccordionItem></Accordion>
-
-    <Sheet open={source !== null} onOpenChange={(open) => !open && setSource(null)}><SheetContent className="w-full overflow-y-auto sm:max-w-xl"><SheetHeader><SheetTitle>{source}</SheetTitle><SheetDescription>3. sep – 2. okt 2026 · Lokale demokilder</SheetDescription></SheetHeader><div className="mt-6 space-y-5"><div><p className="text-xs font-medium text-muted-foreground">Definition</p><p className="mt-1 text-sm">Registrerede poster, der opfylder definitionen for det valgte nøgletal.</p></div><div className="flex flex-wrap gap-2"><span className="rounded border px-2 py-1 text-xs">Distrikt Øst</span><span className="rounded border px-2 py-1 text-xs">Appendicitis</span><span className="rounded border px-2 py-1 text-xs">Alle medarbejdere</span></div>{["30. sep · Lægehuset Nordbro · fysisk · Jonas Birk", "28. sep · Klinik Vestbro · virtuelt · Sara Lund", "26. sep · Søholm Klinikhus · telefon · Ida Mørk"].map((row) => <div key={row} className="rounded border p-4 text-sm">{row}<span className="mt-1 block text-xs text-muted-foreground">Dokumentation foreligger</span></div>)}</div></SheetContent></Sheet>
-  </div>;
+      <section className="grid gap-4 lg:grid-cols-[2fr_1fr]">
+        <Card className="border-0 shadow-sm"><CardContent className="p-6"><h2 className="text-lg font-bold">District coverage</h2><div className="mt-5 grid gap-4 sm:grid-cols-3">{[["Copenhagen East","40 / 90"],["Copenhagen West","30 / 80"],["Copenhagen North","0 / 75"]].map(([district,value]) => <div key={district} className="border-l-2 border-primary/30 pl-4"><p className="text-sm text-muted-foreground">{district}</p><p className="mt-1 text-xl font-bold">{value}</p><p className="text-xs text-muted-foreground">contacted HCOs</p></div>)}</div></CardContent></Card>
+        <Card className="border-0 shadow-sm"><CardContent className="p-6"><p className="text-sm text-muted-foreground">Digital portfolio activity</p><p className="mt-2 text-3xl font-bold">410</p><p className="mt-2 text-xs leading-5 text-muted-foreground">Separate portfolio interactions. Not included in 144 employee contacts.</p></CardContent></Card>
+      </section>
+    </div>
+  );
 };
