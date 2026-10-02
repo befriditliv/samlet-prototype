@@ -51,7 +51,7 @@ const EmployeeDetail = () => {
   const partial = scenario === "partial";
   const notAssessed = scenario === "not-assessed";
 
-  return <div className="min-h-screen bg-background">
+  return <div className="min-h-screen overflow-x-hidden bg-background">
     <header className="border-b bg-card shadow-sm"><div className="container mx-auto px-4 py-4 sm:px-6"><div className="flex min-w-0 items-center gap-2 sm:gap-3"><Button variant="ghost" size="icon" onClick={back} aria-label="Tilbage til team"><ArrowLeft className="h-5 w-5" /></Button><img src={jarvisLogo} alt="Jarvis" className="h-10 w-10 shrink-0" /><div className="min-w-0 flex-1"><h1 className="truncate font-bold">Medarbejderoverblik</h1><p className="truncate text-sm text-muted-foreground">Forberedelse til 1:1</p></div><NavigationMenu /></div><div className="mt-2 flex flex-wrap justify-end gap-x-4 gap-y-1 text-xs text-muted-foreground"><span>Data synkroniseret 2. okt 10:45</span><span>Beregnet 2. okt 10:48</span></div></div></header>
     <main className="container mx-auto space-y-8 px-4 py-7 sm:px-6">
       <ManagerFilters period={period} onPeriodChange={setPeriod} range={option.range} employee={employee.slug} onEmployeeChange={(value) => value === "all" ? navigate("/manager") : navigate(`/manager/employee/${value}`)} incomplete={scenario === "incomplete"} />
