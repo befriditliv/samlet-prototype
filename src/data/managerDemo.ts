@@ -36,3 +36,13 @@ export const oneToOnePoints = [
   { title: "Customer questions", observation: "Practical initiation appears in 12 of 60 analyzed debriefs.", question: "Which questions require shared support or materials?", sources: "THEME-01 and DEBRIEF-014, DEBRIEF-027, DEBRIEF-051" },
   { title: "Documentation", observation: "Six drafts and five contacts are missing documentation.", question: "Is there anything in the workflow that would make these easier to complete?", sources: "DOC-001–DOC-011" },
 ];
+
+export const employeeActivity: Record<string, {
+  plan: { done: number; planned: number; customers: number; period: string; excluded: number };
+  meetings: { total: number; held: number; heldTrend: number; planned: number; canvas: number; virtual: number; debriefed: number; deleted: number; futureDeleted: number; cancelled: number; rebooked: number };
+  qualityTrend: { current: number; previous: number; n: number };
+}> = {
+  christian: { plan: { done: 38, planned: 56, customers: 23, period: "Jul 1 – Dec 31, 2026", excluded: 4 }, meetings: { total: 112, held: 89, heldTrend: -8.2, planned: 52, canvas: 31, virtual: 6, debriefed: 78, deleted: 14, futureDeleted: 3, cancelled: 6, rebooked: 3 }, qualityTrend: { current: 7.7, previous: 7.3, n: 64 } },
+  sofie: { plan: { done: 29, planned: 40, customers: 18, period: "Jul 1 – Dec 31, 2026", excluded: 2 }, meetings: { total: 68, held: 55, heldTrend: 4.1, planned: 38, canvas: 12, virtual: 5, debriefed: 46, deleted: 7, futureDeleted: 1, cancelled: 4, rebooked: 2 }, qualityTrend: { current: 7.9, previous: 8.2, n: 39 } },
+  jonas: { plan: { done: 0, planned: 30, customers: 14, period: "Jul 1 – Dec 31, 2026", excluded: 0 }, meetings: { total: 1, held: 0, heldTrend: 0, planned: 0, canvas: 0, virtual: 0, debriefed: 0, deleted: 1, futureDeleted: 0, cancelled: 0, rebooked: 0 }, qualityTrend: { current: 0, previous: 0, n: 0 } },
+};
