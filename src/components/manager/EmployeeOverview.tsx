@@ -17,8 +17,8 @@ export const EmployeeOverview = () => {
         </div>
         <Card className="border-0 bg-gradient-to-br from-card to-card/80 shadow-sm">
           <CardContent className="p-6">
-            <p className="max-w-4xl text-sm leading-6 text-foreground">The region has 144 registered employee contacts across 70 of 245 assigned HCOs. Documentation is available for 124 contacts, and the weighted documentation quality is 7.8 based on 103 assessed debriefs. Current customer signals without an upcoming registered meeting, recurring questions about practical initiation, and 20 unfinished debriefs provide three concrete areas for the next manager conversations.</p>
-            <div className="mt-4 flex flex-wrap gap-2"><Badge variant="outline">Source: TEAM-2026-10</Badge><Badge variant="outline">Demo data</Badge></div>
+            <p className="max-w-4xl text-sm leading-6 text-foreground">Two current customer signals have no upcoming registered meeting <Badge variant="outline">SIG-002 · SIG-005</Badge>. Practical initiation comes up in 12 of Christian’s 60 analyzed debriefs <Badge variant="outline">THEME-01 · Christian only</Badge>; region-wide theme coverage is not prepared. Twenty contacts remain unfinished across Christian and Sofie <Badge variant="outline">DOC-001–DOC-020</Badge>. Discuss the customer cases and documentation in the next 1:1. The region has 144 registered contacts <Badge variant="outline">TEAM-2026-10</Badge>.</p>
+            <div className="mt-4 flex flex-wrap gap-2"><Badge variant="outline">Demo data</Badge></div>
           </CardContent>
         </Card>
       </section>
@@ -39,7 +39,7 @@ export const EmployeeOverview = () => {
         <div className="grid gap-4 lg:grid-cols-3">
           {[
             ["Current", "Customer signals", "Two current signals have no upcoming registered meeting.", "View Christian", "/manager/employee/christian#signals"],
-            ["Selected period", "Practical initiation", "The question appears in 12 of 60 analyzed debriefs.", "View theme", "/manager/employee/christian#themes"],
+            ["Selected period", "Practical initiation", "Christian: 12 of 60 analyzed debriefs; region coverage not prepared · THEME-01.", "View theme", "/manager/employee/christian#themes"],
             ["Selected period", "Unfinished debriefs", "11 for Christian and 9 for Sofie.", "View documentation", "/manager/employee/christian#documentation"],
           ].map(([scope, title, text, action, href]) => <Card key={title} className="border-0 shadow-sm"><CardContent className="p-5"><Badge variant="secondary">{scope}</Badge><h3 className="mt-3 font-semibold text-foreground">{title}</h3><p className="mt-2 min-h-10 text-sm leading-5 text-muted-foreground">{text}</p><Button variant="ghost" className="mt-3 h-8 px-0 text-primary" onClick={() => navigate(href)}>{action}<ArrowRight className="ml-1 h-4 w-4" /></Button></CardContent></Card>)}
         </div>
