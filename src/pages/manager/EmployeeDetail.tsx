@@ -69,7 +69,7 @@ const EmployeeDetail = () => {
 
         <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {[
-            [Users, "Registered contacts", noData ? "No relevant data" : "89", noData ? "Selected demo scenario" : "63 physical · 26 virtual · 10 telephone separately", "contacts"],
+            [Users, "Registered contacts", noData ? "No relevant data" : "89", noData ? "Selected demo scenario" : "Physical + virtual · 10 telephone separately", "contacts"],
             [Building2, "Contacted HCOs", noData ? "No relevant data" : "40 / 90", noData ? "HCO coverage unavailable" : "44% of assigned HCOs", "coverage"],
             [FileCheck2, "Documentation available", noData ? "No relevant data" : "78 / 89", noData ? "No expected debriefs" : "88% · 6 drafts · 5 missing", "documentation"],
             [MessageSquareText, "Debrief quality", noData ? "No relevant data" : "7.7 / 10", noData ? "No assessed debriefs" : "Period average · n = 64 of 78", "quality"],
