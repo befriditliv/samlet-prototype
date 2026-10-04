@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 const quickSuggestions = [
   {
     icon: HelpCircle,
-    text: "What can you help me with?",
+    text: "Hvad kan du hjælpe mig med?",
     color: "text-blue-500",
     bg: "bg-blue-50 dark:bg-blue-950/30",
     isLink: false,
@@ -16,7 +16,7 @@ const quickSuggestions = [
   },
   {
     icon: User,
-    text: "Give me insights about an HCP",
+    text: "Giv mig indsigt om en HCP",
     color: "text-violet-500",
     bg: "bg-violet-50 dark:bg-violet-950/30",
     isLink: false,
@@ -24,7 +24,7 @@ const quickSuggestions = [
   },
   {
     icon: BarChart3,
-    text: "Show my team's activity overview",
+    text: "Vis mit teams aktivitetsoverblik",
     color: "text-emerald-500",
     bg: "bg-emerald-50 dark:bg-emerald-950/30",
     isLink: true,
@@ -32,7 +32,7 @@ const quickSuggestions = [
   },
   {
     icon: FileText,
-    text: "Create a new report",
+    text: "Opret en ny rapport",
     color: "text-amber-500",
     bg: "bg-amber-50 dark:bg-amber-950/30",
     isLink: true,
@@ -69,13 +69,13 @@ export const AskJarvisManager = () => {
         className="gap-2 bg-primary hover:bg-primary/90"
       >
         <MessageCircle className="h-4 w-4" />
-        Ask Jarvis
+        Spørg Jarvis
       </Button>
 
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent side="right" className="w-full sm:max-w-xl p-0 flex flex-col">
           <SheetHeader className="p-6 pb-4 border-b">
-            <SheetTitle className="text-2xl font-bold">Ask Jarvis</SheetTitle>
+            <SheetTitle className="text-2xl font-bold">Spørg Jarvis</SheetTitle>
             <SheetDescription className="text-base mt-1">
               Ask anything about your data
             </SheetDescription>
@@ -83,9 +83,9 @@ export const AskJarvisManager = () => {
 
           <div className="flex-1 overflow-y-auto p-6">
             <div className="text-center space-y-3 mb-8">
-              <h3 className="text-xl font-semibold text-foreground">Start a conversation</h3>
+              <h3 className="text-xl font-semibold text-foreground">Start en samtale</h3>
               <p className="text-muted-foreground">
-                Ask me anything about your data and insights
+                Spørg mig om dine data og indsigter
               </p>
             </div>
 
@@ -114,7 +114,7 @@ export const AskJarvisManager = () => {
           <div className="p-6 pt-4 border-t bg-card">
             <div className="flex gap-2">
               <Input
-                placeholder="Type your message here..."
+                placeholder="Skriv din besked her ..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSend()}

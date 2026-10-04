@@ -1,56 +1,115 @@
+// Manager demo fixtures (rev 2). All figures are fictional and shared by team and employee views.
 export type PeriodKey = "30d" | "90d" | "ytd" | "custom";
-export type DemoScenario = "normal" | "no-activity" | "no-analysis" | "partial" | "api-error" | "historical-training" | "no-plan" | "with-plan" | "no-meeting" | "missing-segment" | "imported-docs";
+export type DemoScenario = "normal" | "no-activity" | "load-error" | "partial" | "no-plan" | "imported-docs" | "unfinished";
 
-export const defaultPeriod = { key: "30d" as PeriodKey, label: "Last 30 days", range: "Sep 3 – Oct 2, 2026" };
+export const scenarioOptions: { value: DemoScenario; label: string }[] = [
+  { value: "normal", label: "Normal" },
+  { value: "no-activity", label: "Ingen aktivitet" },
+  { value: "load-error", label: "Indlæsningsfejl" },
+  { value: "partial", label: "Delvis analyse" },
+  { value: "no-plan", label: "Ingen kontaktplan" },
+  { value: "imported-docs", label: "Kun importeret dokumentation" },
+  { value: "unfinished", label: "Uafsluttet periode" },
+];
+
 export const periodOptions = [
-  { key: "30d" as PeriodKey, label: "30 days", range: "Sep 3 – Oct 2, 2026" },
-  { key: "90d" as PeriodKey, label: "90 days", range: "Jul 5 – Oct 2, 2026" },
-  { key: "ytd" as PeriodKey, label: "YTD", range: "Jan 1 – Oct 2, 2026" },
-  { key: "custom" as PeriodKey, label: "Custom", range: "Select start and end date" },
+  { key: "30d" as PeriodKey, label: "30 dage", range: "3. sep – 2. okt 2026" },
+  { key: "90d" as PeriodKey, label: "90 dage", range: "5. jul – 2. okt 2026" },
+  { key: "ytd" as PeriodKey, label: "År til dato", range: "1. jan – 2. okt 2026" },
+  { key: "custom" as PeriodKey, label: "Brugerdefineret", range: "Vælg start- og slutdato" },
 ];
 
-export const teamMembers = [
-  { name: "Christian", slug: "christian", role: "KAM", district: "Copenhagen East", contacts: 89, hcos: "40 / 90", documentation: "78 / 89", quality: "7.7", qualityN: 64, attention: "2 current customer signals have no upcoming registered meeting" },
-  { name: "Sofie", slug: "sofie", role: "KAM", district: "Copenhagen West", contacts: 55, hcos: "30 / 80", documentation: "46 / 55", quality: "7.9", qualityN: 39, attention: "5 drafts and 4 contacts without documentation" },
-  { name: "Jonas", slug: "jonas", role: "KAM", district: "Copenhagen North", contacts: 0, hcos: "0 / 75", documentation: "No relevant contacts", quality: "No assessed debriefs", qualityN: 0, attention: "No registered contacts in the selected period" },
+export const syncLine = "Data synkroniseret 2. okt 2026 kl. 10:45 · Brief beregnet kl. 10:48";
+
+export type EmployeeState = "full" | "normal" | "no-plan" | "quality-error" | "imported" | "no-activity";
+
+export type TeamMember = {
+  name: string; first: string; slug: string; role: string; district: string; state: EmployeeState;
+  contacts: number; phone: number; hcosContacted: number; hcosAssigned: number;
+  documented: number; drafts: number; missing: number;
+  quality: number | null; qualityN: number; completed: number; attention: string;
+  plan: { done: number; planned: number; customers: number; excluded: number } | null;
+  calendar: { deleted: number; cancelled: number; rebooked: number };
+};
+
+export const teamMembers: TeamMember[] = [
+  { name: "Christian Dahl", first: "Christian", slug: "christian", role: "KAM", district: "København Øst", state: "full", contacts: 89, phone: 10, hcosContacted: 40, hcosAssigned: 90, documented: 78, drafts: 6, missing: 5, quality: 7.7, qualityN: 64, completed: 78, attention: "2 aktuelle kundesignaler uden kommende møde", plan: { done: 38, planned: 56, customers: 23, excluded: 4 }, calendar: { deleted: 14, cancelled: 6, rebooked: 3 } },
+  { name: "Sofie Brandt", first: "Sofie", slug: "sofie", role: "KAM", district: "København Vest", state: "normal", contacts: 55, phone: 6, hcosContacted: 30, hcosAssigned: 80, documented: 46, drafts: 5, missing: 4, quality: 7.9, qualityN: 39, completed: 46, attention: "5 kladder og 4 kontakter uden dokumentation", plan: { done: 29, planned: 40, customers: 18, excluded: 2 }, calendar: { deleted: 7, cancelled: 4, rebooked: 2 } },
+  { name: "Mikkel Hauge", first: "Mikkel", slug: "mikkel", role: "KAM", district: "København Syd", state: "no-plan", contacts: 34, phone: 4, hcosContacted: 18, hcosAssigned: 52, documented: 30, drafts: 2, missing: 2, quality: 6.9, qualityN: 22, completed: 30, attention: "Ingen kontaktplan tilgængelig", plan: null, calendar: { deleted: 5, cancelled: 2, rebooked: 1 } },
+  { name: "Nanna Riis", first: "Nanna", slug: "nanna", role: "KAM", district: "København Øst", state: "quality-error", contacts: 41, phone: 3, hcosContacted: 22, hcosAssigned: 61, documented: 36, drafts: 3, missing: 2, quality: null, qualityN: 0, completed: 36, attention: "Kvalitetsdata kunne ikke hentes", plan: { done: 17, planned: 28, customers: 12, excluded: 1 }, calendar: { deleted: 4, cancelled: 3, rebooked: 2 } },
+  { name: "Ida Mørk", first: "Ida", slug: "ida", role: "KAM", district: "København Vest", state: "imported", contacts: 27, phone: 2, hcosContacted: 15, hcosAssigned: 44, documented: 27, drafts: 0, missing: 0, quality: null, qualityN: 0, completed: 27, attention: "Al dokumentation er importeret fra CRM", plan: { done: 12, planned: 20, customers: 9, excluded: 0 }, calendar: { deleted: 2, cancelled: 1, rebooked: 0 } },
+  { name: "Jonas Krag", first: "Jonas", slug: "jonas", role: "KAM", district: "København Nord", state: "no-activity", contacts: 0, phone: 0, hcosContacted: 0, hcosAssigned: 75, documented: 0, drafts: 0, missing: 0, quality: null, qualityN: 0, completed: 0, attention: "Ingen registrerede kontakter i den valgte periode", plan: { done: 0, planned: 30, customers: 14, excluded: 0 }, calendar: { deleted: 0, cancelled: 0, rebooked: 0 } },
 ];
 
-export const signals = [
-  { id: "SIG-002", name: "Rønnevang Sundhedshus", segment: "B", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Feb 20, 2026", channel: "Physical", contact: "HCP · demo", next: null, owner: null },
-  { id: "SIG-005", name: "Lægehuset Nordbro", segment: "A", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Mar 30, 2026", channel: "Virtual", contact: "HCP · demo", next: null, owner: null },
-  { id: "SIG-003", name: "Demo HCO 03", segment: "A", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Mar 6, 2026", channel: "Physical", contact: "HCP · demo", next: "Oct 5, 2026", owner: "Sofie" },
-  { id: "SIG-004", name: "Demo HCO 04", segment: "B", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Jan 3, 2026", channel: "Physical", contact: "HCP · demo", next: "Oct 9, 2026", owner: "Christian" },
-  { id: "SIG-001", name: "Demo HCO 01", segment: "A", reason: "A/B HCO without a registered meeting in six months", horizon: "6 months", last: "Mar 15, 2026", channel: "Virtual", contact: "HCP · demo", next: "Oct 14, 2026", owner: "Christian" },
+// Team totals are deduplicated: 4 meetings had two employees present; 6 HCOs sit in two portfolios (5 contacted).
+export const teamTotals = { contacts: 242, rowSum: 246, hcosContacted: 120, hcosAssigned: 396, hcoRowSum: "125 / 402", documented: 213, quality: 7.6, qualityN: 125, digital: 410 };
+export const districtCoverage = [
+  { district: "København Øst", value: "57 / 145" },
+  { district: "København Vest", value: "45 / 124" },
+  { district: "København Syd", value: "18 / 52" },
+  { district: "København Nord", value: "0 / 75" },
 ];
 
-export const employeeCoverage = [
-  { name: "Rønnevang Sundhedshus", segment: "B", district: "Copenhagen East", last: "Feb 20", next: null, status: "No upcoming meeting" },
-  { name: "Lægehuset Nordbro", segment: "A", district: "Copenhagen East", last: "Mar 30", next: null, status: "No upcoming meeting" },
-  { name: "Demo HCO 03", segment: "A", district: "Copenhagen East", last: "Mar 6", next: "Oct 5 · Sofie", status: "Other employee booked" },
-  { name: "Demo HCO 04", segment: "B", district: "Copenhagen East", last: "Jan 3", next: "Oct 9 · Christian", status: "Own meeting booked" },
-  { name: "Demo HCO 01", segment: "A", district: "Copenhagen East", last: "Mar 15", next: "Oct 14 · Christian", status: "Own meeting booked" },
+export type MeetingState = { kind: "own"; date: string } | { kind: "colleague"; date: string; who: string } | { kind: "none" } | { kind: "unavailable" } | { kind: "outside"; date: string };
+
+export const signals: { id: string; name: string; type: "HCO" | "HCP"; segment: string | null; rules: { text: string; horizon: string }[]; last: string | null; channel: string | null; contact: string | null; next: MeetingState }[] = [
+  { id: "SIG-001", name: "Rønnevang Sundhedshus", type: "HCO", segment: "B", rules: [{ text: "A/B-HCO uden registreret møde i seks måneder", horizon: "6 måneder" }, { text: "Kun digital kontakt i 90 dage", horizon: "90 dage" }], last: "20. feb 2026", channel: "Fysisk", contact: "HCP", next: { kind: "none" } },
+  { id: "SIG-002", name: "Lægehuset Nordbro", type: "HCO", segment: "A", rules: [{ text: "A/B-HCO uden registreret møde i seks måneder", horizon: "6 måneder" }], last: "30. mar 2026", channel: "Virtuelt", contact: "HCP", next: { kind: "own", date: "9. okt" } },
+  { id: "SIG-003", name: "Klinik Vestbro", type: "HCO", segment: null, rules: [{ text: "A/B-HCO uden registreret møde i seks måneder", horizon: "6 måneder" }], last: "3. maj 2026", channel: "Fysisk", contact: "HCP", next: { kind: "outside", date: "3. dec" } },
+  { id: "SIG-004", name: "Dr. Agnes Thorup", type: "HCP", segment: "B", rules: [{ text: "Webinardeltagelse uden opfølgning", horizon: "30 dage" }], last: null, channel: null, contact: null, next: { kind: "colleague", date: "5. okt", who: "Sofie" } },
+  { id: "SIG-005", name: "Søholm Lægecenter", type: "HCO", segment: "A", rules: [{ text: "A/B-HCO uden registreret møde i seks måneder", horizon: "6 måneder" }], last: "15. mar 2026", channel: "Fysisk", contact: "HCP", next: { kind: "unavailable" } },
 ];
 
+// Christian's full portfolio: 90 assigned HCOs. 40 contacted, 50 not. 22 booked, 31 A/B without upcoming meeting.
+const prefixes = ["Lægehuset", "Klinik", "Sundhedshuset", "Lægecenter", "Lægerne i", "Praksis"];
+const places = ["Amagerbro", "Islands Brygge", "Sundby", "Holmbladsgade", "Kastrup", "Tårnby", "Christianshavn", "Ørestad", "Sundholm", "Strandlodsvej", "Kløvermarken", "Dragør", "Englandsvej", "Øresund", "Femøren"];
+const months = ["jul", "aug", "sep"];
+export type CoverageRow = { name: string; segment: string; last: string | null; contacts: number; channel: string | null; next: string | null; contacted: boolean; booked: boolean; abNoMeeting: boolean; inSignals: boolean };
+export const coverageRows: CoverageRow[] = (() => {
+  const fixed: CoverageRow[] = [
+    { name: "Lægehuset Amagerbro", segment: "A", last: "29. sep 2026", contacts: 4, channel: "Fysisk", next: "7. okt · Christian", contacted: true, booked: true, abNoMeeting: false, inSignals: false },
+    { name: "Rønnevang Sundhedshus", segment: "B", last: "20. feb 2026", contacts: 0, channel: "Fysisk", next: null, contacted: false, booked: false, abNoMeeting: true, inSignals: true },
+    { name: "Klinik Islands Brygge", segment: "B", last: "18. sep 2026", contacts: 2, channel: "Virtuelt", next: null, contacted: true, booked: false, abNoMeeting: true, inSignals: false },
+    { name: "Lægehuset Nordbro", segment: "A", last: "30. mar 2026", contacts: 0, channel: "Virtuelt", next: "9. okt · Christian", contacted: false, booked: true, abNoMeeting: false, inSignals: true },
+    { name: "Sundhedshuset Kastrup", segment: "C", last: "11. jun 2026", contacts: 0, channel: "Fysisk", next: null, contacted: false, booked: false, abNoMeeting: false, inSignals: false },
+    { name: "Lægecenter Ørestad", segment: "A", last: "24. sep 2026", contacts: 3, channel: "Fysisk", next: "14. okt · Christian", contacted: true, booked: true, abNoMeeting: false, inSignals: false },
+    { name: "Søholm Lægecenter", segment: "A", last: "15. mar 2026", contacts: 0, channel: "Fysisk", next: null, contacted: false, booked: false, abNoMeeting: true, inSignals: true },
+    { name: "Praksis Christianshavn", segment: "B", last: null, contacts: 0, channel: null, next: null, contacted: false, booked: false, abNoMeeting: true, inSignals: false },
+  ];
+  // counts so far: contacted 3, booked 3, abNoMeeting 4
+  const rows = [...fixed];
+  let contacted = 3, booked = 3, ab = 4;
+  for (let i = 0; rows.length < 90; i++) {
+    const name = `${prefixes[i % prefixes.length]} ${places[(i * 7) % places.length]} ${Math.floor(i / places.length) + 2}`;
+    const isContacted = contacted < 40;
+    const isBooked = !isContacted ? booked < 22 && i % 3 === 0 : booked < 22 && i % 2 === 0;
+    const segment = ["A", "B", "C"][i % 3];
+    const isAb = !isBooked && segment !== "C" && ab < 31;
+    if (isContacted) contacted++;
+    if (isBooked) booked++;
+    if (isAb) ab++;
+    rows.push({ name, segment, last: isContacted ? `${(i % 27) + 2}. ${months[2]} 2026` : `${(i % 27) + 1}. ${months[i % 2]} 2026`, contacts: isContacted ? (i % 3) + 1 : 0, channel: i % 4 === 0 ? "Virtuelt" : "Fysisk", next: isBooked ? `${(i % 26) + 3}. okt · Christian` : null, contacted: isContacted, booked: isBooked, abNoMeeting: isAb, inSignals: false });
+  }
+  return rows;
+})();
+export const coverageCounts = { all: 90, noContact: 50, noMeeting: 31, booked: 22 };
+export const upcoming28 = { meetings: 17, customers: 14, weeks: [["Uge 41", 6], ["Uge 42", 5], ["Uge 43", 4], ["Uge 44", 2]] as [string, number][] };
+
+export const themeCoverage = { analyzed: 60, completed: 78, pending: 14, failed: 4, previous: "Forrige periode: 54 af 71 analyseret." };
 export const themes = [
-  { id: "THEME-01", label: "Practical initiation", type: "QUESTION", count: 12, hcps: 9, hcos: 7, examples: ["How is Dose 1 initiated in the acute pathway?", "Which patients can start treatment without surgery?", "What should the first follow-up include?"] },
-  { id: "THEME-02", label: "Material needs", type: "QUESTION", count: 9, hcps: 7, hcos: 6, examples: ["Is there a short guide for the care team?", "Can the patient pathway be shared as a one-pager?"] },
-  { id: "THEME-03", label: "Time for patient dialogue", type: "CONCERN", count: 7, hcps: 5, hcos: 4, examples: ["The non-surgical option takes longer to explain.", "How can we make shared decision-making practical?"] },
-  { id: "THEME-04", label: "Local organization", type: "CONCERN", count: 5, hcps: 4, hcos: 4, examples: ["Who owns follow-up across departments?", "Our local pathway is not aligned yet."] },
-  { id: "THEME-05", label: "Existing workflow", type: "OBJECTION", count: 4, hcps: 3, hcos: 2, examples: ["Surgery remains our established default.", "The current pathway is familiar to the team."] },
+  { id: "THEME-01", label: "Praktisk opstart", type: "SPØRGSMÅL", count: 12, hcps: 9, hcos: 7, change: "+6 pp", examples: ["Hvordan opstartes Dose 1 i det akutte forløb?", "Hvilke patienter kan starte behandling uden operation?", "Hvad skal første opfølgning indeholde?"] },
+  { id: "THEME-02", label: "Materialebehov", type: "SPØRGSMÅL", count: 9, hcps: 7, hcos: 6, change: "−2 pp", examples: ["Findes der en kort vejledning til plejepersonalet?", "Kan patientforløbet deles som én side?"] },
+  { id: "THEME-03", label: "Tid til patientdialog", type: "BEKYMRING", count: 7, hcps: 5, hcos: 4, change: null, examples: ["Den ikke-kirurgiske mulighed tager længere tid at forklare.", "Hvordan gør vi fælles beslutningstagning praktisk?"] },
+  { id: "THEME-04", label: "Lokal organisering", type: "BEKYMRING", count: 5, hcps: 4, hcos: 4, change: null, examples: ["Hvem ejer opfølgningen på tværs af afdelinger?", "Vores lokale forløb er ikke afstemt endnu."] },
+  { id: "THEME-05", label: "Eksisterende arbejdsgang", type: "INDVENDING", count: 4, hcps: 3, hcos: 2, change: "+1 pp", examples: ["Operation er fortsat vores etablerede standard.", "Det nuværende forløb er velkendt for teamet."] },
 ];
+export const themeChangeSuppressed = "Ikke sammenlignelig med forrige periode";
 
 export const oneToOnePoints = [
-  { title: "Customer prioritization", observation: "Demo HCO 02 and 05 have current signals and no upcoming registered meeting.", question: "Which contact opportunities would be useful to discuss together?", sources: "SIG-002, SIG-005 and contact history" },
-  { title: "Customer questions", observation: "Practical initiation appears in 12 of 60 analyzed debriefs.", question: "Which questions require shared support or materials?", sources: "THEME-01 and DEBRIEF-014, DEBRIEF-027, DEBRIEF-051" },
-  { title: "Documentation", observation: "Six drafts and five contacts are missing documentation.", question: "Is there anything in the workflow that would make these easier to complete?", sources: "DOC-001–DOC-011" },
+  { title: "Kundeprioritering", observation: "Rønnevang Sundhedshus har to aktuelle signaler og intet kommende registreret møde. Mødedata for Søholm Lægecenter er utilgængelig.", question: "Hvilke kontaktmuligheder giver mening at drøfte sammen?", sources: "K6 · SIG-001, SIG-005" },
+  { title: "Kundernes spørgsmål", observation: "Praktisk opstart optræder i 12 af 60 analyserede debriefs.", question: "Hvilke spørgsmål kræver fælles støtte eller materialer?", sources: "K5 · THEME-01, DEBRIEF-014, DEBRIEF-027, DEBRIEF-051" },
+  { title: "Dokumentation", observation: "6 kladder og 5 kontakter mangler dokumentation.", question: "Er der noget i arbejdsgangen, der kan gøre dem lettere at afslutte?", sources: "K2 · DOC-001–DOC-011" },
 ];
 
-export const employeeActivity: Record<string, {
-  plan: { done: number; planned: number; customers: number; period: string; excluded: number };
-  meetings: { total: number; held: number; heldTrend: number; planned: number; canvas: number; virtual: number; debriefed: number; deleted: number; futureDeleted: number; cancelled: number; rebooked: number };
-  qualityTrend: { current: number; previous: number; n: number };
-}> = {
-  christian: { plan: { done: 38, planned: 56, customers: 23, period: "Jul 1 – Dec 31, 2026", excluded: 4 }, meetings: { total: 112, held: 89, heldTrend: -8.2, planned: 52, canvas: 31, virtual: 6, debriefed: 78, deleted: 14, futureDeleted: 3, cancelled: 6, rebooked: 3 }, qualityTrend: { current: 7.7, previous: 7.3, n: 64 } },
-  sofie: { plan: { done: 29, planned: 40, customers: 18, period: "Jul 1 – Dec 31, 2026", excluded: 2 }, meetings: { total: 68, held: 55, heldTrend: 4.1, planned: 38, canvas: 12, virtual: 5, debriefed: 46, deleted: 7, futureDeleted: 1, cancelled: 4, rebooked: 2 }, qualityTrend: { current: 7.9, previous: 8.2, n: 39 } },
-  jonas: { plan: { done: 0, planned: 30, customers: 14, period: "Jul 1 – Dec 31, 2026", excluded: 0 }, meetings: { total: 1, held: 0, heldTrend: 0, planned: 0, canvas: 0, virtual: 0, debriefed: 0, deleted: 1, futureDeleted: 0, cancelled: 0, rebooked: 0 }, qualityTrend: { current: 0, previous: 0, n: 0 } },
-};
+export const fmt = (n: number) => n.toLocaleString("da-DK", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+export const pct = (a: number, b: number) => (b ? `${Math.round((a / b) * 100)} %` : "–");

@@ -43,25 +43,25 @@ const kamMenuItems = [
 const managerMenuItems = [
   {
     icon: BookOpen,
-    label: "Dashboard",
+    label: "Teamoverblik",
     href: "/manager",
     isRoute: true
   },
   {
     icon: Plus,
-    label: "Create Report",
+    label: "Opret rapport",
     href: "/manager/new-report",
     isRoute: true
   },
   {
     icon: Users,
-    label: "Client Overview",
+    label: "Kundeoversigt",
     href: "/client-overview",
     isRoute: true
   },
   {
     icon: BarChart3,
-    label: "Signals",
+    label: "Signaler",
     href: "/manager#signals",
     isRoute: false
   }
@@ -138,7 +138,7 @@ export const NavigationMenu = () => {
             <div className="px-4 py-3 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Sun className="h-5 w-5 text-foreground" />
-                <span className="font-medium text-foreground">Appearance</span>
+                <span className="font-medium text-foreground">{role === "manager" ? "Udseende" : "Appearance"}</span>
               </div>
               <Switch 
                 checked={isDark} 
@@ -157,7 +157,7 @@ export const NavigationMenu = () => {
                 }}
               >
                 <Settings className="h-5 w-5" />
-                <span className="font-medium">Settings</span>
+                <span className="font-medium">{role === "manager" ? "Indstillinger" : "Settings"}</span>
               </button>
             </div>
           </div>
@@ -171,7 +171,7 @@ export const NavigationMenu = () => {
                 <div className="font-semibold text-sm">
                   {role === "key_account_manager" ? "Key Account Manager" : "Manager"}
                 </div>
-                <div className="text-xs text-muted-foreground truncate">User</div>
+                <div className="text-xs text-muted-foreground truncate">{role === "manager" ? "Bruger" : "User"}</div>
               </div>
               <Button 
                 variant="ghost" 
