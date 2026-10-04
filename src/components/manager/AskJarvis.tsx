@@ -69,13 +69,13 @@ export const AskJarvisManager = () => {
         className="gap-2 bg-primary hover:bg-primary/90"
       >
         <MessageCircle className="h-4 w-4" />
-        Ask Jarvis
+        Spørg Jarvis
       </Button>
 
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent side="right" className="w-full sm:max-w-xl p-0 flex flex-col">
           <SheetHeader className="p-6 pb-4 border-b">
-            <SheetTitle className="text-2xl font-bold">Ask Jarvis</SheetTitle>
+            <SheetTitle className="text-2xl font-bold">Spørg Jarvis</SheetTitle>
             <SheetDescription className="text-base mt-1">
               Ask anything about your data
             </SheetDescription>
@@ -114,7 +114,7 @@ export const AskJarvisManager = () => {
           <div className="p-6 pt-4 border-t bg-card">
             <div className="flex gap-2">
               <Input
-                placeholder="Type your message here..."
+                placeholder="Skriv din besked her ..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSend()}

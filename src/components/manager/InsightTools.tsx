@@ -282,7 +282,7 @@ export const InsightTools = () => {
         {/* Pagination */}
         <div className="flex items-center justify-between pt-2">
           <p className="text-sm text-muted-foreground">
-            Page {currentPage} of {totalPages || 1}
+            Side {currentPage} af {totalPages || 1}
           </p>
           <div className="flex items-center gap-1">
             <Button
