@@ -13,6 +13,6 @@ export const ManagerPeriodControl = ({ value, onChange, range }: Props) => (
         <SelectContent>{periodOptions.map((item) => <SelectItem key={item.key} value={item.key}>{item.label}</SelectItem>)}</SelectContent>
       </Select>
     </div>
-    <p className="text-xs text-muted-foreground">{range} · Europe/Copenhagen</p>
+    <p className="text-xs text-muted-foreground">{range} · Europa/København</p>
   </div>
 );
