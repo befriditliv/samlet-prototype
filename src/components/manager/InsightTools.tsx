@@ -51,7 +51,7 @@ interface SavedReport {
 const mockReports: SavedReport[] = [
   {
     id: "0",
-    title: "Dose 1 Initiation Insights",
+    title: "Indsigt i opstart af Dose 1",
     createdAt: new Date("2025-12-20T10:15:00"),
     dateRange: { from: new Date("2025-07-01"), to: new Date("2025-12-31") },
     employee: "all",
@@ -61,23 +61,23 @@ const mockReports: SavedReport[] = [
   },
   {
     id: "1",
-    title: "Dose 1 Initiation Barriers",
+    title: "Barrierer for opstart af Dose 1",
     createdAt: new Date("2025-12-18T13:08:28"),
     dateRange: { from: subDays(new Date(), 30), to: new Date() },
     employee: "all",
     product: "Dose 1",
     type: "initiation-barriers",
-    summary: "A decline in Dose 1 initiation has been observed, indicating hesitancy among GPs regarding dosing protocols.",
+    summary: "Et fald i opstart af Dose 1 er observeret, hvilket tyder på tøven blandt praktiserende læger om doseringsforløbet.",
   },
   {
     id: "2",
-    title: "Weekly Team Activity Summary",
+    title: "Ugentligt overblik over teamaktivitet",
     createdAt: new Date("2025-12-15T09:32:00"),
     dateRange: { from: subDays(new Date(), 7), to: new Date() },
     employee: "all",
     product: "all",
     type: "general",
-    summary: "Team completed 142 HCP touchpoints this week, with strong focus on cardiology specialists.",
+    summary: "Teamet gennemførte 142 HCP-kontakter i denne uge med fokus på akutte forløb.",
   },
 ];
 
@@ -95,7 +95,7 @@ export const InsightTools = () => {
 
   const deleteReport = (id: string) => {
     setReports(prev => prev.filter(r => r.id !== id));
-    toast.success('Report deleted');
+    toast.success('Rapport slettet');
   };
 
   const viewReport = (report: SavedReport) => {
@@ -131,13 +131,13 @@ export const InsightTools = () => {
 
   const getReportTypeLabel = (type: ReportType) => {
     switch (type) {
-      case 'general': return 'General Analysis';
-      case 'market-concerns': return 'Market Concerns';
-      case 'general-themes': return 'General Themes';
-      case 'initiation-barriers': return 'Initiation Barriers';
-      case 'competitor-insights': return 'Competitor Insights';
-      case 'insight': return 'Insight Report';
-      case 'custom': return 'Custom';
+      case 'general': return 'Generel analyse';
+      case 'market-concerns': return 'Markedsbekymringer';
+      case 'general-themes': return 'Generelle temaer';
+      case 'initiation-barriers': return 'Opstartsbarrierer';
+      case 'competitor-insights': return 'Konkurrentindsigt';
+      case 'insight': return 'Indsigtsrapport';
+      case 'custom': return 'Tilpasset';
     }
   };
 
@@ -150,7 +150,7 @@ export const InsightTools = () => {
       )}
     >
       <CardContent className="pt-6 space-y-4">
-        {/* Header with New Report button */}
+        {/* Header with Ny rapport button */}
         <div className="flex items-center justify-end">
           <Button 
             asChild
@@ -158,7 +158,7 @@ export const InsightTools = () => {
           >
             <Link to="/manager/new-report">
               <Plus className="h-4 w-4" />
-              New Report
+              Ny rapport
             </Link>
           </Button>
         </div>
@@ -169,20 +169,20 @@ export const InsightTools = () => {
             <TableHeader>
               <TableRow className="bg-muted/30 hover:bg-muted/30 border-b border-border/50">
                 <TableHead className="py-4 px-5 w-[200px]">
-                  <div className="text-sm font-semibold text-foreground">Created</div>
-                  <div className="text-xs font-normal text-muted-foreground">Date & time</div>
+                  <div className="text-sm font-semibold text-foreground">Oprettet</div>
+                  <div className="text-xs font-normal text-muted-foreground">Dato og tid</div>
                 </TableHead>
                 <TableHead className="py-4 px-5 w-[140px]">
-                  <div className="text-sm font-semibold text-foreground">Filters</div>
-                  <div className="text-xs font-normal text-muted-foreground">Applied</div>
+                  <div className="text-sm font-semibold text-foreground">Filtre</div>
+                  <div className="text-xs font-normal text-muted-foreground">Anvendt</div>
                 </TableHead>
                 <TableHead className="py-4 px-5">
-                  <div className="text-sm font-semibold text-foreground">Report</div>
-                  <div className="text-xs font-normal text-muted-foreground">Title & summary</div>
+                  <div className="text-sm font-semibold text-foreground">Rapport</div>
+                  <div className="text-xs font-normal text-muted-foreground">Titel og resumé</div>
                 </TableHead>
                 <TableHead className="py-4 px-5 text-right w-[140px]">
-                  <div className="text-sm font-semibold text-foreground">Actions</div>
-                  <div className="text-xs font-normal text-muted-foreground">View / Delete</div>
+                  <div className="text-sm font-semibold text-foreground">Handlinger</div>
+                  <div className="text-xs font-normal text-muted-foreground">Vis / Slet</div>
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -192,7 +192,7 @@ export const InsightTools = () => {
                   <TableCell colSpan={4} className="text-center py-12 text-muted-foreground">
                     <div className="flex flex-col items-center gap-2">
                       <MessageSquare className="h-8 w-8 text-muted-foreground/50" />
-                      <p>No reports yet. Click "New Report" to create one.</p>
+                      <p>Ingen rapporter endnu. Klik på "Ny rapport" for at oprette en.</p>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -230,7 +230,7 @@ export const InsightTools = () => {
                               </div>
                             </TooltipTrigger>
                             <TooltipContent className="animate-scale-in">
-                              <p>{report.employee === 'all' ? 'All users' : report.employee}</p>
+                              <p>{report.employee === 'all' ? 'Alle brugere' : report.employee}</p>
                             </TooltipContent>
                           </Tooltip>
                           <Tooltip>
