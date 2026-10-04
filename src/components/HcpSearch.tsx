@@ -12,7 +12,7 @@ interface SearchResult {
   subtitle?: string;
 }
 
-export const HcpSearch = () => {
+export const HcpSearch = ({ placeholder = "Search for HCPs or HCOs..." }: { placeholder?: string } = {}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -109,7 +109,7 @@ export const HcpSearch = () => {
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 z-10" />
       <Input
         type="text"
-        placeholder="Search for HCPs or HCOs..."
+        placeholder={placeholder}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyDown={handleKeyDown}
