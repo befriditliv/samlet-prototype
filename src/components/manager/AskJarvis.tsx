@@ -85,7 +85,7 @@ export const AskJarvisManager = () => {
             <div className="text-center space-y-3 mb-8">
               <h3 className="text-xl font-semibold text-foreground">Start en samtale</h3>
               <p className="text-muted-foreground">
-                Ask me anything about your data and insights
+                Spørg mig om dine data og indsigter
               </p>
             </div>
 

@@ -43,25 +43,25 @@ const kamMenuItems = [
 const managerMenuItems = [
   {
     icon: BookOpen,
-    label: "Dashboard",
+    label: "Teamoverblik",
     href: "/manager",
     isRoute: true
   },
   {
     icon: Plus,
-    label: "Create Report",
+    label: "Opret rapport",
     href: "/manager/new-report",
     isRoute: true
   },
   {
     icon: Users,
-    label: "Client Overview",
+    label: "Kundeoversigt",
     href: "/client-overview",
     isRoute: true
   },
   {
     icon: BarChart3,
-    label: "Signals",
+    label: "Signaler",
     href: "/manager#signals",
     isRoute: false
   }
