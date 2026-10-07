@@ -1,5 +1,9 @@
 # Roadmap
 
+- [ ] Remove employee brief, simplify quality prose, rename signals and open field themes in dialogs
+- [ ] Replace planning with a conditional pace forecast, relocate calendar changes and restore brick-based meeting coverage
+- [ ] Verify calculations and employee-page interactions
+
 - [x] Optimize employee performance, quality explanation, expandable field themes, unified contact planning, coverage and compact training
 - [x] Verify redesigned employee page and its interactions
 
