@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AlertTriangle, ArrowLeft, Building2, CalendarCheck, CalendarX, ChevronLeft, ChevronRight, Clipboard, FileCheck2, MessageSquareText, Printer, RefreshCw, Sparkles, UserRound, Users } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Building2, CalendarCheck, CalendarX, ChevronRight, Clipboard, FileCheck2, MessageSquareText, Printer, RefreshCw, Sparkles, UserRound, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,21 +11,20 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 import { ManagerPeriodControl } from "@/components/manager/ManagerPeriodControl";
 import { EmployeeQuality } from "@/components/manager/EmployeeQuality";
 import { EmployeeFieldThemes } from "@/components/manager/EmployeeFieldThemes";
-import { Progress } from "@/components/ui/progress";
+import { EmployeeBrickCoverage } from "@/components/manager/EmployeeBrickCoverage";
+import { EmployeeCalendarChanges } from "@/components/manager/EmployeeCalendarChanges";
 import { EmployeeActivityPanels } from "@/components/manager/EmployeeActivityPanels";
 import { ErrorBlock } from "@/components/manager/StateBlocks";
 import { NavigationMenu } from "@/components/NavigationMenu";
 import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { useManagerPeriod } from "@/hooks/use-manager-period";
 import { toast } from "@/hooks/use-toast";
-import { coverageCounts, coverageRows, fmt, oneToOnePoints, pct, scenarioOptions, signals, syncLine, teamMembers, themeChangeSuppressed, themeCoverage, themes, upcoming28, type DemoScenario, type MeetingState } from "@/data/managerDemo";
+import { fmt, oneToOnePoints, pct, scenarioOptions, signals, syncLine, teamMembers, themes, type DemoScenario, type MeetingState } from "@/data/managerDemo";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
-type PanelKey = "contacts" | "coverage" | "documentation" | "drafts" | "quality" | "signals" | "themes" | "brief" | "one-to-one" | null;
+type PanelKey = "contacts" | "coverage" | "documentation" | "drafts" | "quality" | "signals" | "themes" | "one-to-one" | null;
 type Signal = (typeof signals)[number];
 type Theme = (typeof themes)[number];
-
-const SourceButton = ({ label, onClick }: { label: string; onClick: () => void }) => <Button variant="outline" size="sm" onClick={onClick} className="mx-1 h-5 px-1.5 text-[11px] text-primary">{label}</Button>;
 
 const MeetingPill = ({ m }: { m: MeetingState }) => {
   if (m.kind === "own") return <span className="inline-flex items-center gap-1 rounded-md border border-primary/40 bg-primary/10 px-2 py-1 text-xs font-medium text-primary"><CalendarCheck className="h-3.5 w-3.5" />Eget møde {m.date}</span>;
@@ -34,8 +33,6 @@ const MeetingPill = ({ m }: { m: MeetingState }) => {
   if (m.kind === "unavailable") return <span className="inline-flex items-center gap-1 rounded-md border-2 border-destructive/50 bg-destructive/10 px-2 py-1 text-xs font-medium text-destructive"><AlertTriangle className="h-3.5 w-3.5" />Mødedata utilgængelig</span>;
   return <span className="inline-flex items-center gap-1 rounded-md border border-dashed border-muted-foreground/40 px-2 py-1 text-xs text-muted-foreground"><CalendarX className="h-3.5 w-3.5" />Intet kommende registreret</span>;
 };
-
-const PAGE = 8;
 
 const EmployeeDetail = () => {
   const navigate = useNavigate();
@@ -46,8 +43,6 @@ const EmployeeDetail = () => {
   const [panel, setPanel] = useState<PanelKey>(null);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedSignal, setSelectedSignal] = useState<Signal | null>(null);
-  const [coverageFilter, setCoverageFilter] = useState<"all" | "noContact" | "noMeeting" | "booked">("all");
-  const [page, setPage] = useState(0);
   const m = useMemo(() => teamMembers.find((item) => item.slug === slug) ?? teamMembers[0], [slug]);
   const full = m.slug === "christian";
 
@@ -65,7 +60,6 @@ const EmployeeDetail = () => {
     if (h === "signals" || h === "themes") setTimeout(() => document.getElementById(h)?.scrollIntoView(), 50);
     if (h === "documentation") setPanel("documentation");
   }, []);
-  useEffect(() => setPage(0), [coverageFilter]);
 
   const contacts = noActivity ? 0 : m.contacts;
   const hcos = noActivity ? 0 : m.hcosContacted;
@@ -77,11 +71,7 @@ const EmployeeDetail = () => {
     toast({ title: "Kopieret", description: "De tre samtalepunkter og kilder er kopieret." });
   };
 
-  const filtered = coverageRows.filter((r) => coverageFilter === "all" || (coverageFilter === "noContact" ? !r.contacted : coverageFilter === "noMeeting" ? r.abNoMeeting : r.booked));
-  const pages = Math.max(1, Math.ceil(filtered.length / PAGE));
-  const visible = filtered.slice(page * PAGE, page * PAGE + PAGE);
-
-  const titles: Record<string, string> = { contacts: "Registrerede kontakter", coverage: "Kontaktede HCO'er", documentation: "Dokumentationsdækning", drafts: "Kladder og manglende dokumentation", quality: "Debriefkvalitet", signals: "Alle aktuelle kundesignaler", themes: "Temakilder", brief: "Kilder til brief", "one-to-one": "Forbered 1:1" };
+  const titles: Record<string, string> = { contacts: "Registrerede kontakter", coverage: "Kontaktede HCO'er", documentation: "Dokumentationsdækning", drafts: "Kladder og manglende dokumentation", quality: "Debriefkvalitet", signals: "Vigtigste kunde signaler", themes: "Temakilder", "one-to-one": "Forbered 1:1" };
 
   const qualityValue = qualityError ? null : imported || noActivity || m.quality === null ? "Ingen vurderede debriefs" : `${fmt(m.quality)} / 10`;
   const kpis = [
@@ -92,7 +82,7 @@ const EmployeeDetail = () => {
   ];
 
   return <div className="min-h-screen bg-background">
-    <header className="sticky top-0 z-10 border-b bg-card/90 shadow-sm backdrop-blur-sm"><div className="container mx-auto px-4 py-4 sm:px-6"><div className="flex flex-wrap items-center gap-3"><Button variant="ghost" size="icon" onClick={back} aria-label="Tilbage til teamoverblik"><ArrowLeft className="h-5 w-5" /></Button><img src={jarvisLogo} alt="Jarvis-logo" className="h-10 w-10" /><div className="min-w-48 flex-1"><div className="flex items-center gap-2"><h1 className="text-lg font-bold">Medarbejderoversigt</h1><Badge variant="secondary">Demo</Badge></div><p className="text-sm text-muted-foreground">Forberedelse til 1:1</p></div><ManagerPeriodControl value={period} onChange={setPeriod} range={option.range} /><NavigationMenu /></div><div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground"><RefreshCw className="h-3.5 w-3.5" />{syncLine}</div></div></header>
+    <header className="sticky top-0 z-10 border-b bg-card/90 shadow-sm backdrop-blur-sm"><div className="container mx-auto px-4 py-4 sm:px-6"><div className="flex flex-wrap items-center gap-3"><Button variant="ghost" size="icon" onClick={back} aria-label="Tilbage til teamoverblik"><ArrowLeft className="h-5 w-5" /></Button><img src={jarvisLogo} alt="Jarvis-logo" className="h-10 w-10" /><div className="min-w-48 flex-1"><div className="flex items-center gap-2"><h1 className="text-lg font-bold">Medarbejderoversigt</h1><Badge variant="secondary">Demo</Badge></div><p className="text-sm text-muted-foreground">Forberedelse til 1:1</p></div><ManagerPeriodControl value={period} onChange={setPeriod} range={option.range} /><NavigationMenu /></div><div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground"><RefreshCw className="h-3.5 w-3.5" />{syncLine.split(" · Brief")[0]}</div></div></header>
 
     <main className="mx-auto max-w-6xl space-y-6 px-4 py-7 sm:px-6">
       <section className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"><div><div className="flex flex-wrap items-center gap-2"><h2 className="text-3xl font-bold">User</h2><Badge variant="outline">Demo-identitet</Badge></div><p className="mt-1 text-muted-foreground">{m.role} · {m.district}</p></div><div className="flex flex-wrap items-end gap-3"><div><p className="mb-1 text-xs text-muted-foreground">Medarbejder</p><Select value={m.slug} onValueChange={(v) => navigate(`/manager/employee/${v}`)}><SelectTrigger className="h-9 w-44 bg-background"><SelectValue /></SelectTrigger><SelectContent>{[...teamMembers].sort((a, b) => a.name.localeCompare(b.name, "da")).map((i) => <SelectItem key={i.slug} value={i.slug}>User · {i.district}</SelectItem>)}</SelectContent></Select></div><div><p className="mb-1 text-xs text-muted-foreground">Demo-scenarie · kun til gennemsyn</p><Select value={scenario} onValueChange={(v) => setScenario(v as DemoScenario)}><SelectTrigger className="h-9 w-56 bg-background"><SelectValue /></SelectTrigger><SelectContent>{scenarioOptions.map((i) => <SelectItem key={i.value} value={i.value}>{i.label}</SelectItem>)}</SelectContent></Select></div><Button onClick={() => setPanel("one-to-one")}><Sparkles className="mr-2 h-4 w-4" />Forbered 1:1</Button></div></section>
@@ -100,16 +90,12 @@ const EmployeeDetail = () => {
       {!hasFixture ? <Card className="rounded-lg border shadow-sm"><CardContent className="p-10 text-center"><h3 className="font-semibold">Ingen forberedte demo-data for denne periode</h3><p className="mt-2 text-sm text-muted-foreground">Vælg 30 dage for at se sporbare medarbejderdata.</p></CardContent></Card> : <>
         {unfinished && <div className="rounded-md border bg-muted/40 px-4 py-2 text-sm text-muted-foreground">Uafsluttet periode · periodetal vises, alle trendtal er undertrykt.</div>}
 
-        <section><Card className="rounded-lg border shadow-sm"><CardContent className="p-5"><div className="mb-3 flex items-center justify-between gap-3"><div><h3 className="font-bold">Medarbejderbrief</h3><p className="text-xs text-muted-foreground">{option.range} · Demo-analyse</p></div><Button size="sm" variant="ghost" onClick={() => setPanel("brief")}>Se alle kilder</Button></div>
-          {loadError ? <ErrorBlock label="Medarbejderbrief" onRetry={retry} /> : noActivity ? <p className="text-sm text-muted-foreground">User har ingen registrerede kontakter i den valgte periode. Opslaget er gennemført; dokumentation, kvalitet og temaer har derfor ingen relevante data.</p> : full ? <p className="text-sm leading-7 text-foreground">Rønnevang Sundhedshus har to signaler uden et kommende møde <SourceButton label="K6" onClick={() => setPanel("signals")} />. Kunderne efterspørger afklaring af praktisk opstart af Dose 1 <SourceButton label="K5" onClick={() => document.getElementById("themes")?.scrollIntoView()} />. {m.drafts} kladder og {m.missing} manglende noter bør følges op <SourceButton label="K2" onClick={() => setPanel("drafts")} />.</p> : <p className="text-sm leading-7 text-foreground">User har {m.contacts} registrerede fysiske og virtuelle kontakter og har kontaktet {m.hcosContacted} af {m.hcosAssigned} tildelte HCO'er <SourceButton label="K1" onClick={() => setPanel("contacts")} />. {imported ? "Al dokumentation er importeret fra CRM og vurderes ikke" : `Dokumentation foreligger for ${m.documented} af ${m.contacts} kontakter`} <SourceButton label="K3" onClick={() => setPanel("documentation")} />. {m.attention}.</p>}
-        </CardContent></Card></section>
-
         <section className="space-y-3"><div className="flex items-baseline justify-between gap-3"><h3 className="text-lg font-bold">Generel præstation</h3><span className="text-xs text-muted-foreground">{option.range}</span></div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{kpis.map(k => <div key={k.key} className={`rounded-lg border bg-card p-4 ${k.error ? "border-destructive/50" : ""}`}><Button variant="ghost" className="h-auto w-full justify-start whitespace-normal p-0 text-left hover:bg-transparent" onClick={() => setPanel(k.key as PanelKey)}><div className="w-full"><div className="mb-2 flex items-center justify-between"><k.icon className="h-4 w-4 text-primary" /><ChevronRight className="h-3.5 w-3.5 text-muted-foreground" /></div><p className="text-xs font-medium text-muted-foreground">{k.label}</p><p className="mt-1 text-2xl font-bold">{k.error ? "Utilgængelig" : k.value}</p><p className="mt-2 text-xs font-normal leading-5 text-muted-foreground">{k.note}</p></div></Button>{k.error && <Button size="sm" variant="outline" className="mt-2" onClick={retry}>Prøv igen</Button>}</div>)}</div>
         </section>
         <EmployeeQuality member={m} unavailable={imported || noActivity} error={qualityError} unfinished={unfinished} onRetry={retry} />
 
-        <section id="signals" className="scroll-mt-32 space-y-4"><div><div className="flex items-center gap-2"><h3 className="text-lg font-bold">Aktuelle kundesignaler</h3><Badge variant="secondary">Aktuel · reglens egen horisont</Badge></div><p className="mt-1 text-sm text-muted-foreground">Reglerne har hver deres tidshorisont. Dette er en aktuel liste, ikke en trend for den valgte periode.</p></div>
+        <section id="signals" className="scroll-mt-32 space-y-4"><div><div className="flex items-center gap-2"><h3 className="text-lg font-bold">Vigtigste kunde signaler</h3><Badge variant="secondary">Aktuel · reglens egen horisont</Badge></div><p className="mt-1 text-sm text-muted-foreground">Reglerne har hver deres tidshorisont. Dette er en aktuel liste, ikke en trend for den valgte periode.</p></div>
           {loadError ? <ErrorBlock label="Kundesignaler" onRetry={retry} /> : !full ? <Card className="border border-dashed bg-muted/20 shadow-none"><CardContent className="p-6 text-sm text-muted-foreground">Ingen aktuelle kundesignaler for medarbejderen.</CardContent></Card> :
           <Card className="rounded-lg border shadow-sm"><div className="divide-y">{signals.map((s) => <button key={s.id} onClick={() => setSelectedSignal(s)} className="grid w-full gap-3 p-4 text-left hover:bg-muted/30 md:grid-cols-[1.1fr_1.6fr_0.9fr_1.1fr_auto] md:items-center">
             <div><div className="flex flex-wrap items-center gap-2"><span className="font-semibold">{s.name}</span><Badge variant="outline">{s.type}</Badge>{s.rules.length > 1 && <Badge>{s.rules.length} signaler</Badge>}</div><p className="mt-1 text-xs text-muted-foreground">{s.segment ? `Segment ${s.segment}` : "Uden segmentklasse"}</p></div>
@@ -124,14 +110,8 @@ const EmployeeDetail = () => {
         </section>
         <EmployeeActivityPanels member={m} noActivity={noActivity} noPlan={noPlan} loadError={loadError} onRetry={retry} />
 
-        <section className="space-y-4"><div><h3 className="text-lg font-bold">Mødedækning</h3><p className="text-sm text-muted-foreground">{hcos} af {m.hcosAssigned} tildelte HCO'er kontaktet i perioden</p></div>
-          {loadError ? <ErrorBlock label="Kundedækning" onRetry={retry} /> : !full || noActivity ? <Card className="border border-dashed bg-muted/20 shadow-none"><CardContent className="p-6 text-sm text-muted-foreground">{noActivity ? `Ingen af de ${m.hcosAssigned} tildelte HCO'er er kontaktet i perioden.` : "Porteføljelisten er kun forberedt for Christian i demoen."}</CardContent></Card> : <>
-           <div className="flex flex-wrap items-center gap-3"><span className="text-2xl font-bold">{pct(hcos, m.hcosAssigned)}</span><span className="text-sm text-muted-foreground">{hcos} kontaktet · {m.hcosAssigned - hcos} uden kontakt</span></div><Progress value={hcos / m.hcosAssigned * 100} className="h-2 max-w-md" />
-           <div className="flex flex-wrap gap-2">{([["all", `Alle (${coverageCounts.all})`], ["noContact", `Uden registreret kontakt (${coverageCounts.noContact})`], ["noMeeting", `A/B uden kommende møde (${coverageCounts.noMeeting})`], ["booked", `Booket (${coverageCounts.booked})`]] as const).map(([v, l]) => <Button key={v} size="sm" variant={coverageFilter === v ? "default" : "outline"} onClick={() => setCoverageFilter(v)}>{l}</Button>)}</div>
-          <Card className="overflow-x-auto rounded-lg border shadow-sm"><div className="min-w-[720px] divide-y"><div className="grid grid-cols-[2fr_.7fr_1fr_.9fr_.8fr_1.3fr] gap-3 px-4 py-2 text-xs text-muted-foreground"><span>Kunde</span><span>Segment</span><span>Sidste kontakt</span><span>Kontakter i perioden</span><span>Kanal</span><span>Næste møde · ansvarlig</span></div>{visible.map((r) => <div key={r.name} className="grid grid-cols-[2fr_.7fr_1fr_.9fr_.8fr_1.3fr] gap-3 p-4 text-sm"><span className="font-medium">{r.name}{r.inSignals && <Badge variant="secondary" className="ml-2 text-[10px]">Signal</Badge>}</span><span>{r.segment}</span><span>{r.last ?? "Ukendt"}</span><span>{r.contacts}</span><span>{r.channel ?? "–"}</span><span className={r.next ? "" : "text-muted-foreground"}>{r.next ?? "Intet møde registreret"}</span></div>)}</div>
-            <div className="flex items-center justify-between border-t px-4 py-2 text-xs text-muted-foreground"><span>Viser {visible.length} af {filtered.length}</span><div className="flex items-center gap-1"><Button size="icon" variant="ghost" className="h-7 w-7" disabled={page === 0} onClick={() => setPage(page - 1)} aria-label="Forrige side"><ChevronLeft className="h-4 w-4" /></Button><span>Side {page + 1} af {pages}</span><Button size="icon" variant="ghost" className="h-7 w-7" disabled={page >= pages - 1} onClick={() => setPage(page + 1)} aria-label="Næste side"><ChevronRight className="h-4 w-4" /></Button></div></div></Card>
-                     <p className="text-xs text-muted-foreground">Kontaktede kunder i den valgte periode · bookede kunder har et registreret fremtidigt møde. De 31 uden kommende møde er kun kategori A/B, ikke alle kunder uden møder.</p></>}
-        </section>
+        <EmployeeBrickCoverage member={m} range={option.range} noActivity={noActivity} loadError={loadError} onRetry={retry} />
+        <EmployeeCalendarChanges member={m} noActivity={noActivity} loadError={loadError} onRetry={retry} />
 
         <section><Accordion type="single" collapsible><AccordionItem value="training" className="rounded-lg border bg-card px-5"><AccordionTrigger className="py-4 text-left hover:no-underline"><div className="flex flex-wrap items-baseline gap-x-4 gap-y-1"><span className="text-sm font-semibold">Resultater fra træningsplatform</span><span className="text-xs font-normal text-muted-foreground">Ingen træning i perioden</span></div></AccordionTrigger><AccordionContent><p className="text-xs text-muted-foreground">Historisk demo-træning · 9. sep 2025</p><p className="mt-2 text-sm font-medium">Samtale om Dose 1-forløbet</p><div className="mt-3 grid gap-4 sm:grid-cols-3"><p className="text-sm leading-6"><strong>Gik godt</strong><br />Klar forklaring af det akutte appendicitisforløb.</p><p className="text-sm leading-6"><strong>Kan forbedres</strong><br />Afdæk præference for kirurgi, før materialer præsenteres.</p><p className="text-sm leading-6"><strong>Næste fokus</strong><br />Ét åbent spørgsmål om kundens nuværende forløb.</p></div></AccordionContent></AccordionItem></Accordion></section>
       </>}
@@ -145,8 +125,7 @@ const EmployeeDetail = () => {
       : panel === "documentation" ? <><div className="grid grid-cols-3 gap-3">{[["Færdige", documented], ["Kladder", imported ? 0 : m.drafts], ["Mangler", imported ? 0 : m.missing]].map(([l, v]) => <Card key={l}><CardContent className="p-4 text-center"><p className="text-2xl font-bold">{v}</p><p className="text-xs text-muted-foreground">{l}</p></CardContent></Card>)}</div><p className="text-sm text-muted-foreground">{imported ? `Alle ${documented} er mærket "Importeret fra CRM". Afsendelsesstatus er ikke relevant.` : `Af ${documented} færdige Jarvis-debriefs er ${Math.max(0, documented - m.drafts)} sendt og ${m.drafts} klar, ikke sendt.`}</p><Badge variant="outline">Kilde K3 · DOC-001–DOC-089</Badge></>
        : panel === "quality" ? <EmployeeQuality member={m} unavailable={imported || noActivity} error={qualityError} unfinished={unfinished} onRetry={retry} />
       : panel === "signals" ? signals.map((s) => <div key={s.id} className="rounded-lg border p-4"><div className="flex justify-between"><strong>{s.name}</strong><Badge variant="outline">{s.id}</Badge></div>{s.rules.map((r) => <p key={r.text} className="mt-2 text-sm text-muted-foreground">{r.text} · {r.horizon}</p>)}</div>)
-      : panel === "themes" ? <><p className="text-sm text-muted-foreground">60 analyseret · 14 afventer · 4 fejlede</p>{themes.map((t) => <button key={t.id} onClick={() => setSelectedTheme(t)} className="flex w-full justify-between rounded-lg border p-4 text-left"><span className="font-medium">{t.label}</span><span className="text-sm text-muted-foreground">{t.count} / 60</span></button>)}</>
-      : panel === "brief" ? ["K1 · Kontakt- og dækningsgrundlag", "K2 · Kladder og manglende dokumentation", "K3 · Dokumentationsdækning", "K4 · Kvalitetskriterier og vurderede debriefs", "K5 · Temaeksempler", "K6 · Aktuel signalliste"].map((i) => <div key={i} className="rounded-lg border p-4 text-sm">{i}</div>) : null}
+      : panel === "themes" ? <><p className="text-sm text-muted-foreground">60 analyseret · 14 afventer · 4 fejlede</p>{themes.map((t) => <button key={t.id} onClick={() => setSelectedTheme(t)} className="flex w-full justify-between rounded-lg border p-4 text-left"><span className="font-medium">{t.label}</span><span className="text-sm text-muted-foreground">{t.count} / 60</span></button>)}</> : null}
     </div></SheetContent></Sheet>
 
     <Dialog open={selectedTheme !== null} onOpenChange={(o) => !o && setSelectedTheme(null)}><DialogContent><DialogHeader><DialogTitle>{selectedTheme?.label}</DialogTitle><DialogDescription>Fiktive demo-uddrag · {selectedTheme?.id}</DialogDescription></DialogHeader><div className="space-y-3">{selectedTheme?.examples.map((ex, i) => <div key={ex} className="rounded-lg bg-muted/40 p-4"><p className="text-sm">“{ex}”</p><p className="mt-2 text-xs text-muted-foreground">DEBRIEF-{String((i + 1) * 14).padStart(3, "0")} · {12 + i * 6}. sep 2026 · HCP · {["Lægehuset Amagerbro", "Klinik Islands Brygge", "Lægecenter Ørestad"][i]}</p></div>)}</div></DialogContent></Dialog>
