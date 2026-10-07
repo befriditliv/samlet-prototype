@@ -155,6 +155,13 @@ export const employeeQualityReview = {
 // Outstanding physical-visit goals for Christian; no future visit is counted as completed.
 export const employeePlanGoals = Array.from({ length: 18 }, (_, index) => ({ customer: `Demo-kunde ${String(index + 1).padStart(3, "0")}`, remaining: 1, bookedPhysical: index < 12 ? 1 : 0 }));
 export const employeeCalendarBreakdown = { matchingGoals: 12, physicalWithoutRemainingGoal: 8, virtual: 7 };
+export const employeePlanSnapshot = { date: "2026-10-07", deadline: "2026-12-31", windowDays: 28, remainingDays: 85, done: 38, target: 56 };
+// Physical visits only, each assigned HCO belongs to exactly one fictional brick.
+export const employeeBrickCoverage = ["Demo-brick Nord", "Demo-brick Syd", "Demo-brick Øst", "Demo-brick Vest", "Demo-brick Centrum", "Demo-brick Kyst", "Uden brick"].map((name, index) => {
+  const rows = coverageRows.filter((_, rowIndex) => Math.min(6, Math.floor(rowIndex / 13)) === index);
+  return { name, assigned: rows.length, visited: rows.filter(row => row.contacted && row.channel === "Fysisk").length, unsegmented: rows.filter(row => !["A", "B", "C", "D"].includes(row.segment)).length };
+});
+export const employeeQualityNarrative = "De 64 vurderede debriefs har et gennemsnit på 7,7 ud af 10. Noterne beskriver typisk formålet med kontakten og det aftalte næste skridt, men enkelte nøjes med at skrive, at kunden er skeptisk, uden at beskrive kundens begrundelse. I nogle noter er det heller ikke tydeligt, hvem der følger op, eller hvornår. Det gør det sværere at genoptage dialogen ved næste besøg. Vurderingen handler om noternes indhold, ikke om kvaliteten af samtalen.";
 
 export const oneToOnePoints = [
   { title: "Kundeprioritering", observation: "Rønnevang Sundhedshus har to aktuelle signaler og intet kommende registreret møde. Mødedata for Søholm Lægecenter er utilgængelig.", question: "Hvilke kontaktmuligheder giver mening at drøfte sammen?", sources: "K6 · SIG-001, SIG-005" },
