@@ -8,3 +8,5 @@
 - [x] Incorporate two manager-view feedback notes: remove duplicate meeting KPIs, prioritize customer cases, reconcile contact channels, and improve evidence
 - [x] Add employee customer coverage examples and neutral calendar history; verify key interactions and layouts
 - [x] Restore manager homepage activity overview and classic employee list; remove regional summary, priorities and district coverage
+- [x] Add homepage aggregate signals, regional themes and compact debrief quality while preserving the existing visual design
+- [x] Verify homepage filters, details and layout

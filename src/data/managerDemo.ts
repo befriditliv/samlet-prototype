@@ -133,3 +133,35 @@ export const oneToOnePoints = [
 
 export const fmt = (n: number) => n.toLocaleString("da-DK", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 export const pct = (a: number, b: number) => (b ? `${Math.round((a / b) * 100)} %` : "–");
+
+// Homepage aggregates are fictional rule snapshots, not the five example cases above.
+// HCO counts are deduplicated within each rule; different rules can overlap.
+export const homepageSignals = [
+  { id: "HOME-S01", label: "A/B-HCO'er uden møder", horizon: "Seneste 6 måneder", explanation: "HCO'er i kategori A eller B uden et registreret fysisk eller virtuelt møde i de seneste seks måneder.", icon: "building", unit: "HCO'er", counts: [34, 28, 18, 21, 14, 27] },
+  { id: "HOME-S02", label: "A/B-HCO'er med nylige møder", horizon: "Seneste 30 dage", explanation: "Unikke HCO'er i kategori A eller B med mindst ét registreret møde i de seneste 30 dage.", icon: "building", unit: "HCO'er", counts: [26, 20, 12, 14, 10, 0] },
+  { id: "HOME-S03", label: "A/B-HCO'er med kommende møder", horizon: "Næste 30 dage", explanation: "Unikke HCO'er i kategori A eller B med et kommende registreret møde i de næste 30 dage.", icon: "calendar", unit: "HCO'er", counts: [16, 13, 8, 10, 7, 6] },
+  { id: "HOME-S04", label: "HCO'er med kun digital kontakt", horizon: "Seneste 90 dage · A/B/C/D", explanation: "HCO'er med digital kontakt, men uden fysiske eller virtuelle møder i de seneste 90 dage.", icon: "globe", unit: "HCO'er", counts: [20, 18, 12, 14, 9, 16] },
+  { id: "HOME-S05", label: "HCO'er uden samtykke", horizon: "Pr. 2. oktober · A/B/C/D", explanation: "HCO'er, hvor ingen tilknyttet HCP har et registreret samtykke til digital kommunikation.", icon: "shield", unit: "HCO'er", counts: [24, 20, 14, 16, 10, 22] },
+  { id: "HOME-S06", label: "HCO'er uden uddannelsesdeltagelse", horizon: "År til dato · A/B", explanation: "HCO'er i kategori A eller B, hvor ingen tilknyttet HCP har registreret deltagelse i uddannelse i 2026.", icon: "education", unit: "HCO'er", counts: [28, 23, 16, 18, 12, 25] },
+  { id: "HOME-S07", label: "HCO'er med uddannelsesdeltagelse", horizon: "År til dato · A/B", explanation: "HCO'er i kategori A eller B med mindst én tilknyttet HCP, der har deltaget i uddannelse i 2026.", icon: "education", unit: "HCO'er", counts: [22, 18, 12, 14, 9, 0] },
+  { id: "HOME-S08", label: "HCP'er tilmeldt uddannelse", horizon: "Kommende arrangementer", explanation: "Unikke HCP'er med en aktiv tilmelding til et fremtidigt uddannelsesarrangement.", icon: "education", unit: "HCP'er", counts: [18, 14, 9, 11, 7, 4] },
+  { id: "HOME-S09", label: "HCP'er med webinardeltagelse", horizon: "År til dato", explanation: "Unikke HCP'er med registreret webinardeltagelse i 2026. Deltagelse er ikke det samme som tilmelding.", icon: "globe", unit: "HCP'er", counts: [32, 26, 17, 20, 14, 8] },
+  { id: "HOME-S10", label: "KAM'er med mindst 60 % A/B-møder", horizon: "Seneste 30 dage", explanation: "Medarbejdere, hvor mindst 60 % af de registrerede møder vedrører HCO'er i kategori A eller B. Medarbejdere uden møder tælles ikke med.", icon: "calendar", unit: "KAM'er", counts: [1, 1, 0, 1, 0, 0] },
+];
+export const homepageSignalCount = (signal: typeof homepageSignals[number], employee = "all") => employee === "all" ? signal.counts.reduce((sum, n) => sum + n, 0) : signal.counts[teamMembers.findIndex(m => m.slug === employee)] ?? 0;
+
+export const regionalThemeCoverage = { analyzed: 170, completed: teamTotals.documented, previousAnalyzed: 150 };
+export const regionalThemes = [
+  { id: "REG-T01", label: "Pris og økonomiske barrierer", description: "Spørgsmål om udgiften til Dose 1 og ressourcerne i et ikke-kirurgisk appendicitisforløb.", count: 32, previous: 14, examples: ["Hvordan sammenlignes udgifter til Dose 1 og operation i vores lokale forløb?", "Hvem betaler for den ekstra opfølgning efter medicinsk behandling?"] },
+  { id: "REG-T02", label: "Samarbejde med industrien", description: "Ønske om gennemsigtige rammer for materialer og uddannelse fra OdaPharm.", count: 8, previous: 3, examples: ["Vi ønsker en tydelig adskillelse mellem uddannelse og produktpræsentation.", "Kan vi få dokumentationen uden at deltage i et sponsoreret arrangement?"] },
+  { id: "REG-T03", label: "Behandlingseffekt og valg af forløb", description: "Nogle læger foretrækker operation og efterspørger mere dokumentation for Dose 1.", count: 17, previous: 5, examples: ["Operation er vores etablerede standard ved appendicitis.", "Hvilke kriterier afgør, om vi vælger Dose 1 eller kirurgisk behandling?"] },
+  { id: "REG-T04", label: "Praktisk opstart og opfølgning", description: "Spørgsmål om arbejdsgange, patientdialog og ansvar for opfølgning.", count: 16, previous: 9, examples: ["Hvem har ansvaret, hvis symptomerne ikke aftager?", "Vi mangler en fælles vejledning til opstart af Dose 1."] },
+];
+export const homepageQuality = {
+  assessed: teamTotals.qualityN,
+  weeks: [{ week: 37, score: 7.1 }, { week: 38, score: 7.3 }, { week: 39, score: 7.7 }, { week: 40, score: 7.6 }],
+  reviews: [
+    { week: 39, score: 7.7, highlight: "Formål og næste skridt er tydeligt beskrevet i de vurderede noter.", improvement: "Angiv, hvem der følger op, og hvornår opfølgningen forventes." },
+    { week: 40, score: 7.6, highlight: "Noterne beskriver konkrete spørgsmål om Dose 1 og valg mellem medicinsk behandling og operation.", improvement: "Gør forskellen mellem kundens indvending og det aftalte næste skridt tydeligere." },
+  ],
+};
