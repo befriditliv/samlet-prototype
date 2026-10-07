@@ -1,16 +1,8 @@
-import { useState } from "react";
 import { activityStats, previousPeriods, pctChange } from "@/data/managerDemo";
 import { cn } from "@/lib/utils";
 import { useInViewOnce } from "@/hooks/use-in-view";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Users,
   TrendingDown,
@@ -21,13 +13,6 @@ import {
   Globe,
 } from "lucide-react";
 
-type ComparisonValue = "prev30" | "prevQuarter" | "lastYear";
-
-const COMPARISON_OPTIONS: { value: ComparisonValue; label: string }[] = [
-  { value: "prev30", label: "vs. forrige 30 dage" },
-  { value: "prevQuarter", label: "vs. forrige kvartal" },
-  { value: "lastYear", label: "vs. samme periode sidste år" },
-];
 
 // Animated number component
 const AnimatedNumber = ({
@@ -45,8 +30,7 @@ export const ActivityOverview = () => {
     threshold: 0.2,
     rootMargin: "0px 0px -10% 0px",
   });
-  const [comparison, setComparison] = useState<ComparisonValue>("prev30");
-  const prev = previousPeriods[comparison];
+  const prev = previousPeriods.prev30;
   const trends = {
     meetings: pctChange(activityStats.meetings.total, prev.meetings),
     events: pctChange(activityStats.events.total, prev.events),
@@ -97,28 +81,8 @@ export const ActivityOverview = () => {
               </div>
             </div>
             <div className="text-right">
-              <div className="flex flex-wrap items-center gap-3 justify-end">
-                <div className="text-right">
-                  <p className="text-xs text-muted-foreground uppercase tracking-normal">Periode</p>
-                  <p className="text-sm font-semibold text-foreground">Sidste 30 dage</p>
-                </div>
-                <div className="h-8 w-px bg-border/50" />
-                <div className="text-right">
-                  <p className="text-xs text-muted-foreground uppercase tracking-normal">Sammenligning</p>
-                  <Select value={comparison} onValueChange={(v) => setComparison(v as ComparisonValue)}>
-                    <SelectTrigger className="h-8 w-[210px] mt-0.5 text-sm font-semibold">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {COMPARISON_OPTIONS.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+              <p className="text-xs text-muted-foreground uppercase tracking-normal">Periode</p>
+              <p className="text-sm font-semibold text-foreground">Sidste 30 dage</p>
             </div>
           </div>
         </div>
