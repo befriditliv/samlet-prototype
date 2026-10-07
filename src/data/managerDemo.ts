@@ -113,7 +113,7 @@ export const coverageRows: CoverageRow[] = (() => {
   return rows;
 })();
 export const coverageCounts = { all: 90, noContact: 50, noMeeting: 31, booked: 22 };
-export const upcoming28 = { meetings: 17, customers: 14, weeks: [["Uge 41", 6], ["Uge 42", 5], ["Uge 43", 4], ["Uge 44", 2]] as [string, number][] };
+export const upcoming28 = { meetings: 27, customers: 27, range: "7. okt – 4. nov 2026", weeks: [["Uge 41", 3], ["Uge 42", 5], ["Uge 43", 7], ["Uge 44", 9], ["Uge 45", 3]] as [string, number][] };
 
 export const themeCoverage = { analyzed: 60, completed: 78, pending: 14, failed: 4, previous: "Forrige periode: 54 af 71 analyseret." };
 export const themes = [
@@ -124,6 +124,37 @@ export const themes = [
   { id: "THEME-05", label: "Eksisterende arbejdsgang", type: "INDVENDING", count: 4, hcps: 3, hcos: 2, change: "+1 pp", examples: ["Operation er fortsat vores etablerede standard.", "Det nuværende forløb er velkendt for teamet."] },
 ];
 export const themeChangeSuppressed = "Ikke sammenlignelig med forrige periode";
+
+// Selected examples are not the complete set behind the aggregate theme counts.
+export const employeeThemeDetails = [
+  { themeId: "THEME-01", kind: "Afklaringsbehov", summary: "Kunderne efterspørger en tydelig arbejdsgang for et muligt Dose 1-forløb ved appendicitis.", implication: "Afklar spørgsmål om patientudvælgelse og opfølgning, før et nyt forløb drøftes." },
+  { themeId: "THEME-02", kind: "Ny mulighed", summary: "Der er interesse for fælles, korte materialer til personale og patientdialog.", implication: "Et fælles materiale kan understøtte den videre dialog; interessen er ikke en aftale om behandling." },
+  { themeId: "THEME-03", kind: "Udfordring", summary: "Dialog om et ikke-kirurgisk appendicitisforløb opleves som tidskrævende.", implication: "Undersøg, hvad der konkret tager tid, og hvilke spørgsmål kunderne mangler svar på." },
+  { themeId: "THEME-04", kind: "Udfordring", summary: "Ansvar for opfølgning på tværs af afdelinger er ikke altid afklaret.", implication: "Følg op på organisering og ansvar uden at antage, at et Dose 1-forløb allerede er indført." },
+  { themeId: "THEME-05", kind: "Indvending", summary: "Nogle læger foretrækker kirurgi som den etablerede behandling ved appendicitis.", implication: "Afdæk dokumentationsbehovet og respekter kundens nuværende behandlingspraksis." },
+];
+export const employeeThemeSources = themes.flatMap((theme, themeIndex) => theme.examples.map((quote, index) => ({
+  id: `EMP-D${String(themeIndex * 3 + index + 1).padStart(3, "0")}`,
+  themeId: theme.id, speaker: `HCP ${String(themeIndex * 3 + index + 1).padStart(3, "0")}`,
+  organization: `Demo-klinik ${String(themeIndex * 3 + index + 1).padStart(3, "0")}`,
+  employeeSlug: "christian", date: `2026-09-${String(28 - themeIndex * 2 - index).padStart(2, "0")}`, time: index % 2 ? "14:00" : "10:30", quote,
+  note: `Kunden sagde: “${quote}” Dialogen handlede om det fiktive Dose 1-forløb ved appendicitis. Der blev ikke aftalt ændringer i behandling.`,
+  next: "User samler kundens spørgsmål til en opfølgende dialog. Dato er ikke registreret.",
+})));
+export const employeeQualityReview = {
+  employeeSlug: "christian", previous: { score: 7.2, assessed: 58, range: "4. aug – 2. sep 2026" },
+  current: { score: 7.7, assessed: 64, range: "3. sep – 2. okt 2026" },
+  strength: "Formålet med kontakten og det aftalte næste skridt fremgår tydeligt af de vurderede noter.",
+  improvement: "Kundens konkrete indvending, ansvarlig for opfølgningen og opfølgningsdato mangler i nogle noter.",
+  explanation: "Scoren opsummerer dokumentationens tydelighed og fuldstændighed. Formål og næste skridt trækker vurderingen op; manglende detaljer begrænser den. Der er ikke angivet en præcis pointvægt for hvert kriterium.",
+  examples: [
+    { id: "QUALITY-D001", date: "29. sep 2026", customer: "HCP 021 · Demo-klinik 021", note: "Formål: afklare kundens spørgsmål om Dose 1. Kunden ønsker en oversigt over opfølgningsansvar. User sender det aftalte demomateriale den 2. oktober.", assessment: "Formål, kundens behov, ansvarlig og dato er beskrevet." },
+    { id: "QUALITY-D002", date: "24. sep 2026", customer: "HCP 022 · Demo-klinik 022", note: "Talte om Dose 1. Kunden var skeptisk. Vi følger op.", assessment: "Indvendingens begrundelse, ansvarlig og tidspunkt for opfølgning mangler." },
+  ],
+};
+// Outstanding physical-visit goals for Christian; no future visit is counted as completed.
+export const employeePlanGoals = Array.from({ length: 18 }, (_, index) => ({ customer: `Demo-kunde ${String(index + 1).padStart(3, "0")}`, remaining: 1, bookedPhysical: index < 12 ? 1 : 0 }));
+export const employeeCalendarBreakdown = { matchingGoals: 12, physicalWithoutRemainingGoal: 8, virtual: 7 };
 
 export const oneToOnePoints = [
   { title: "Kundeprioritering", observation: "Rønnevang Sundhedshus har to aktuelle signaler og intet kommende registreret møde. Mødedata for Søholm Lægecenter er utilgængelig.", question: "Hvilke kontaktmuligheder giver mening at drøfte sammen?", sources: "K6 · SIG-001, SIG-005" },
