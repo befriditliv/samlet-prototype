@@ -1,79 +1,40 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AlertCircle, ArrowDown, ArrowRight, ArrowUp, ArrowUpDown, Building2, FileCheck2, MessageSquareText, Users } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowUpDown, CalendarCheck, CalendarX, CheckCircle2, CircleAlert, Send, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { districtCoverage, fmt, teamMembers, teamTotals, type TeamMember } from "@/data/managerDemo";
+import { employeeListFixtures, fmt } from "@/data/managerDemo";
 
-type SortKey = "name" | "district" | "contacts" | "hcos" | "documentation" | "quality";
-const value = (m: TeamMember, k: SortKey): string | number => k === "name" ? m.name : k === "district" ? m.district : k === "contacts" ? m.contacts : k === "hcos" ? m.hcosContacted : k === "documentation" ? m.documented : m.quality ?? -1;
+type SortKey = "name" | "contacts" | "documented" | "rate" | "quality" | "upcoming";
+type Row = typeof employeeListFixtures[number];
+const rate = (m: Row) => m.contacts ? Math.round(m.documented / m.contacts * 100) : 0;
+const sortValue = (m: Row, key: SortKey) => key === "rate" ? rate(m) : key === "upcoming" ? m.upcoming[0] + m.upcoming[1] : key === "quality" ? m.quality ?? -1 : m[key];
 
-const Kpi = ({ icon: Icon, label, value, note, extra }: { icon: typeof Users; label: string; value: string; note: string; extra?: string }) => (
-  <Card className="border-0 bg-gradient-to-br from-card to-card/80 shadow-sm"><CardContent className="p-5"><div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10"><Icon className="h-4 w-4 text-primary" /></div><p className="text-sm text-muted-foreground">{label}</p><p className="mt-1 text-2xl font-bold text-foreground">{value}</p><p className="mt-1 text-xs text-muted-foreground">{note}</p>{extra && <p className="mt-2 text-xs leading-5 text-muted-foreground">{extra}</p>}</CardContent></Card>
-);
+const MeetingLine = ({ label, count, total, tone }: { label: string; count: number; total: number; tone: string }) => <div className="flex items-center gap-2 text-xs"><Progress value={total ? count / total * 100 : 0} className={`h-1.5 w-20 shrink-0 ${tone}`} /><span className="w-7 text-right font-semibold text-foreground">{count}</span><span className="text-muted-foreground">{label}</span></div>;
 
 export const EmployeeOverview = () => {
   const navigate = useNavigate();
+  const [employee, setEmployee] = useState("all");
+  const [signal, setSignal] = useState("all");
   const [sort, setSort] = useState<{ key: SortKey; dir: 1 | -1 }>({ key: "name", dir: 1 });
-  const rows = useMemo(() => [...teamMembers].sort((a, b) => { const x = value(a, sort.key), y = value(b, sort.key); return (typeof x === "string" ? x.localeCompare(y as string, "da") : x - (y as number)) * sort.dir; }), [sort]);
-  const head = (key: SortKey, label: string) => <TableHead><button className="inline-flex items-center gap-1 hover:text-foreground" onClick={() => setSort((s) => ({ key, dir: s.key === key ? (s.dir === 1 ? -1 : 1) : 1 }))}>{label}{sort.key === key ? (sort.dir === 1 ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />) : <ArrowUpDown className="h-3 w-3 opacity-40" />}</button></TableHead>;
-
-  return (
-    <div className="space-y-8">
-      <section className="space-y-4">
-        <div><h2 className="text-xl font-bold text-foreground">Regionsbrief</h2><p className="mt-1 text-sm text-muted-foreground">Valgt periode · Demo-data</p></div>
-        <Card className="border-0 bg-gradient-to-br from-card to-card/80 shadow-sm"><CardContent className="p-6">
-          <p className="max-w-4xl text-sm leading-7 text-foreground">Rønnevang Sundhedshus har to aktuelle signaler og intet kommende registreret møde hos Christian <Badge variant="outline">SIG-001</Badge>. Praktisk opstart optræder i 12 af Christians 60 analyserede debriefs; regional temadækning er ikke forberedt <Badge variant="outline">THEME-01</Badge>. 29 kontakter mangler dokumentation på tværs af teamet <Badge variant="outline">DOC-TEAM</Badge>. Nannas kvalitetsdata kunne ikke hentes, og Jonas har ingen registrerede kontakter i perioden. Regionen har 242 registrerede kontakter <Badge variant="outline">TEAM-2026-10</Badge>.</p>
-        </CardContent></Card>
-      </section>
-
-      <section className="space-y-3">
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <Kpi icon={Users} label="Registrerede kontakter" value={String(teamTotals.contacts)} note="Kun medarbejderkontakter" />
-          <Kpi icon={Building2} label="Kontaktede HCO'er" value={`${teamTotals.hcosContacted} / ${teamTotals.hcosAssigned}`} note="Unikke HCO'er" />
-          <Kpi icon={FileCheck2} label="Dokumentation foreligger" value={`${teamTotals.documented} / ${teamTotals.contacts}`} note={`${teamTotals.contacts - teamTotals.documented} uafsluttede`} />
-          <Kpi icon={MessageSquareText} label="Debriefkvalitet" value={`${fmt(teamTotals.quality)} / 10`} note={`Vægtet · n = ${teamTotals.qualityN}`} extra="Nannas kvalitetsdata kunne ikke hentes. Idas dokumentation er importeret og ikke vurderet." />
-        </div>
-        <p className="text-sm text-muted-foreground">Teamtotalen tæller hver kontakt én gang. Summen af medarbejderrækkerne er højere, fordi flere medarbejdere kan deltage i samme møde.</p>
-      </section>
-
-      <section className="space-y-4">
-        <div><h2 className="text-xl font-bold text-foreground">Regionale prioriteter</h2><p className="mt-1 text-sm text-muted-foreground">Hver prioritet åbner de bagvedliggende demo-sager</p></div>
-        <div className="grid gap-4 lg:grid-cols-3">
-          {[
-            ["Aktuel", "Kundesignaler", "Rønnevang Sundhedshus har to signaler og intet kommende registreret møde.", "Se Christian", "/manager/employee/christian#signals"],
-            ["Valgt periode", "Praktisk opstart", "Christian: 12 af 60 analyserede debriefs; regional dækning ikke forberedt · THEME-01.", "Se tema", "/manager/employee/christian#themes"],
-            ["Valgt periode", "Uafsluttede debriefs", "Christian 11 · Sofie 9 · Nanna 5 · Mikkel 4.", "Se dokumentation", "/manager/employee/christian#documentation"],
-          ].map(([scope, title, text, action, href]) => <Card key={title} className="border-0 shadow-sm"><CardContent className="p-5"><Badge variant="secondary">{scope}</Badge><h3 className="mt-3 font-semibold text-foreground">{title}</h3><p className="mt-2 min-h-10 text-sm leading-5 text-muted-foreground">{text}</p><Button variant="ghost" className="mt-3 h-8 px-0 text-primary" onClick={() => navigate(href)}>{action}<ArrowRight className="ml-1 h-4 w-4" /></Button></CardContent></Card>)}
-        </div>
-      </section>
-
-      <section className="space-y-4">
-        <div><h2 className="text-xl font-bold text-foreground">Medarbejdere</h2><p className="mt-1 text-sm text-muted-foreground">Vælg en medarbejder for at forberede næste 1:1</p></div>
-        <Card className="overflow-x-auto border-0 shadow-sm">
-          <Table>
-            <TableHeader><TableRow className="bg-muted/30">{head("name", "Medarbejder")}{head("district", "Distrikt")}{head("contacts", "Kontakter")}{head("hcos", "Kontaktede HCO'er")}{head("documentation", "Dokumentation")}{head("quality", "Kvalitet")}<TableHead className="min-w-60">Opmærksomhedspunkt</TableHead></TableRow></TableHeader>
-            <TableBody>{rows.map((m) => <TableRow key={m.slug} className="cursor-pointer" onClick={() => navigate(`/manager/employee/${m.slug}`)}>
-              <TableCell><button className="text-left font-semibold text-primary hover:underline">{m.name}</button><p className="text-xs text-muted-foreground">{m.role} · Demo</p></TableCell>
-              <TableCell>{m.district}</TableCell>
-              <TableCell className="font-semibold">{m.contacts}</TableCell>
-              <TableCell>{m.hcosContacted} / {m.hcosAssigned}</TableCell>
-              <TableCell>{m.contacts ? `${m.documented} / ${m.contacts}` : <span className="text-muted-foreground">Ingen relevante kontakter</span>}</TableCell>
-              <TableCell>{m.state === "quality-error" ? <span className="inline-flex items-center gap-1 rounded border border-destructive/40 bg-destructive/10 px-1.5 py-0.5 text-xs font-medium text-destructive"><AlertCircle className="h-3 w-3" />Kunne ikke hentes</span> : m.quality !== null ? <>{fmt(m.quality)}<span className="block text-xs text-muted-foreground">n = {m.qualityN}</span></> : <span className="text-muted-foreground">Ingen vurderede debriefs</span>}</TableCell>
-              <TableCell><div className="flex gap-2 text-sm text-muted-foreground"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />{m.attention}</div></TableCell>
-            </TableRow>)}
-            <TableRow className="bg-muted/20 hover:bg-muted/20"><TableCell className="text-xs text-muted-foreground" colSpan={2}>Sum af rækker (ikke deduplikeret)</TableCell><TableCell className="text-xs text-muted-foreground">{teamTotals.rowSum}</TableCell><TableCell className="text-xs text-muted-foreground">{teamTotals.hcoRowSum}</TableCell><TableCell colSpan={3} /></TableRow>
-            </TableBody>
-          </Table>
-        </Card>
-      </section>
-
-      <section className="grid gap-4 lg:grid-cols-[2fr_1fr]">
-        <Card className="border-0 shadow-sm"><CardContent className="p-6"><h2 className="text-lg font-bold">Distriktsdækning</h2><div className="mt-5 grid gap-4 sm:grid-cols-4">{districtCoverage.map(({ district, value }) => <div key={district} className="border-l-2 border-primary/30 pl-4"><p className="text-sm text-muted-foreground">{district}</p><p className="mt-1 text-xl font-bold">{value}</p><p className="text-xs text-muted-foreground">kontaktede HCO'er</p></div>)}</div></CardContent></Card>
-        <Card className="border-0 shadow-sm"><CardContent className="p-6"><p className="text-sm text-muted-foreground">Digital aktivitet i porteføljen</p><p className="mt-2 text-3xl font-bold">{teamTotals.digital}</p><p className="mt-2 text-xs leading-5 text-muted-foreground">Særskilte porteføljeberøringer. Indgår ikke i de 242 registrerede medarbejderkontakter.</p></CardContent></Card>
-      </section>
+  const rows = useMemo(() => employeeListFixtures.filter(m => (employee === "all" || m.slug === employee) && (signal === "all" || (signal === "missing" && m.missing + m.drafts > 0) || (signal === "quality" && m.quality !== null && m.quality < 7) || (signal === "calendar" && m.calendar.deleted + m.calendar.cancelled > 0) || (signal === "error" && m.state === "quality-error"))).sort((a, b) => { const x = sortValue(a, sort.key), y = sortValue(b, sort.key); return (typeof x === "string" ? x.localeCompare(String(y), "da") : Number(x) - Number(y)) * sort.dir; }), [employee, signal, sort]);
+  const head = (key: SortKey, label: string, subtitle: string) => <TableHead className="py-4"><Button variant="ghost" className="h-auto justify-start gap-1 p-0 text-foreground hover:bg-transparent" onClick={() => setSort(s => ({ key, dir: s.key === key && s.dir === 1 ? -1 : 1 }))}>{label}<ArrowUpDown className="h-3 w-3 text-muted-foreground" /></Button><p className="mt-1 text-xs font-normal">{subtitle}</p></TableHead>;
+  return <section className="space-y-5">
+    <div className="flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><div className="rounded-lg bg-primary/10 p-3"><Users className="h-6 w-6 text-primary" /></div><div><h2 className="text-2xl font-bold">Medarbejderoversigt</h2><p className="text-sm text-muted-foreground">Indsigter om dit salgsteams præstation · Demo-data</p></div></div>
+      <div className="flex flex-wrap gap-3"><Select value={signal} onValueChange={setSignal}><SelectTrigger className="w-52 bg-card" aria-label="Filtrer efter signal"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">Filtrer efter signal</SelectItem><SelectItem value="missing">Uafsluttede debriefs</SelectItem><SelectItem value="quality">Kvalitet under 7</SelectItem><SelectItem value="calendar">Kalenderændringer</SelectItem><SelectItem value="error">Kvalitetsdata mangler</SelectItem></SelectContent></Select><Select value={employee} onValueChange={setEmployee}><SelectTrigger className="w-52 bg-card" aria-label="Filtrer efter bruger"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">Filtrer efter bruger</SelectItem>{employeeListFixtures.map(m => <SelectItem key={m.slug} value={m.slug}>{m.name}</SelectItem>)}</SelectContent></Select></div>
     </div>
-  );
+    <Card className="overflow-hidden border-0 shadow-sm"><Table className="min-w-[1100px]"><TableHeader><TableRow className="bg-muted/30">{head("name", "Medarbejder", "Navn")}{head("contacts", "Møder", "Sidste 30 dage")}{head("documented", "Debriefs", "Sidste 30 dage")}{head("rate", "Debrief Overholdelse", "Sidste 30 dage")}{head("quality", "Debrief Kvalitet", "Sidste 30 dage")}{head("upcoming", "Planlagte møder", "Uge 41 / Uge 42")}</TableRow></TableHeader><TableBody>
+      {rows.map(m => <TableRow key={m.slug} className="cursor-pointer" onClick={() => navigate(`/manager/employee/${m.slug}`)}><TableCell className="min-w-44 py-7"><Button variant="link" className="h-auto justify-start p-0 font-semibold text-foreground">{m.name}</Button></TableCell>
+        <TableCell className="min-w-56 py-7"><div className="space-y-1.5"><MeetingLine label="Planlagte" count={m.plannedMeetings} total={m.contacts} tone="" /><MeetingLine label="Kanvas" count={m.canvasMeetings} total={m.contacts} tone="[&>div]:bg-muted-foreground" /><MeetingLine label="Slettede" count={m.calendar.deleted} total={m.contacts + m.calendar.deleted} tone="[&>div]:bg-destructive" /><MeetingLine label="Aflyste" count={m.calendar.cancelled} total={m.contacts + m.calendar.cancelled} tone="[&>div]:bg-warning" /><MeetingLine label="Ombookede" count={m.calendar.rebooked} total={m.contacts + m.calendar.rebooked} tone="[&>div]:bg-muted-foreground" /></div></TableCell>
+        <TableCell className="min-w-44"><div className="space-y-2 text-sm"><p className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /><span className="text-muted-foreground">Gennemført:</span><strong>{m.documented}</strong></p><p className="flex items-center gap-2"><Send className="h-4 w-4 text-warning" /><span className="text-muted-foreground">Ikke sendt:</span><strong>{m.drafts}</strong></p><p className="flex items-center gap-2"><CircleAlert className="h-4 w-4 text-destructive" /><span className="text-muted-foreground">Udestående:</span><strong>{m.missing}</strong></p></div></TableCell>
+        <TableCell className="min-w-44">{m.contacts ? <div className="flex items-center gap-3"><Progress value={rate(m)} className="h-1.5 w-28" /><strong className="text-xs">{rate(m)}%</strong></div> : <span className="text-xs text-muted-foreground">Ingen møder</span>}</TableCell>
+        <TableCell className="min-w-44">{m.quality !== null ? <div className="flex items-center gap-3"><Progress value={m.quality * 10} className={`h-1.5 w-28 ${m.quality < 7 ? "[&>div]:bg-warning" : ""}`} /><strong className="text-xs">{fmt(m.quality)}</strong></div> : <span className={`text-xs ${m.state === "quality-error" ? "text-destructive" : "text-muted-foreground"}`}>{m.state === "quality-error" ? "Kunne ikke hentes" : "Ingen vurderede debriefs"}</span>}</TableCell>
+        <TableCell><div className="flex items-center gap-2">{m.upcoming.map((count, i) => <span key={i} className="flex items-center gap-2">{i === 1 && <span className="text-muted-foreground">/</span>}<span className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold ${count ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"}`} title={`Uge ${41 + i}`}>{count}</span></span>)}</div></TableCell>
+      </TableRow>)}
+      {!rows.length && <TableRow><TableCell colSpan={6} className="py-10 text-center text-muted-foreground">Ingen medarbejdere matcher filtrene.</TableCell></TableRow>}
+    </TableBody></Table></Card>
+  </section>;
 };

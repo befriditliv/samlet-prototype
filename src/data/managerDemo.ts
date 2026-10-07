@@ -43,6 +43,26 @@ export const teamMembers: TeamMember[] = [
 
 // Team totals are deduplicated: 4 meetings had two employees present; 6 HCOs sit in two portfolios (5 contacted).
 export const teamTotals = { contacts: 242, rowSum: 246, hcosContacted: 120, hcosAssigned: 396, hcoRowSum: "125 / 402", documented: 213, quality: 7.6, qualityN: 125, digital: 410 };
+// Classic homepage uses the same employee records as the detail views.
+export const employeeListFixtures = teamMembers.map((member, index) => ({
+  ...member,
+  plannedMeetings: member.plan?.done ?? 0,
+  canvasMeetings: member.contacts - (member.plan?.done ?? 0),
+  upcoming: member.slug === "christian" ? [6, 5] : member.contacts ? [4 + index, 3] : [0, 0],
+}));
+export const activityStats = {
+  meetings: { total: teamTotals.contacts, physical: employeeListFixtures.reduce((sum, m) => sum + m.plannedMeetings, 0), canvas: teamTotals.contacts - employeeListFixtures.reduce((sum, m) => sum + m.plannedMeetings, 0), virtual: 0, debriefed: teamTotals.documented, rate: Math.round(teamTotals.documented / teamTotals.contacts * 1000) / 10 },
+  events: { total: 27, breakdown: { education: 15, event: 12 } },
+  phoneCalls: { total: teamMembers.reduce((sum, m) => sum + m.phone, 0) },
+  digital: { total: teamTotals.digital, breakdown: { email: 121, newsletter: 180, webPortal: 53, webinar: 56 } },
+  totalInteractions: { total: teamTotals.contacts + 27 + teamMembers.reduce((sum, m) => sum + m.phone, 0) + teamTotals.digital },
+};
+export const previousPeriods = {
+  prev30: { label: "Forrige 30 dage", meetings: 210, events: 19, phoneCalls: 29, digital: 327, totalInteractions: 585 },
+  prevQuarter: { label: "Forrige kvartal", meetings: 630, events: 57, phoneCalls: 87, digital: 981, totalInteractions: 1755 },
+  lastYear: { label: "Samme periode sidste år", meetings: 196, events: 11, phoneCalls: 31, digital: 298, totalInteractions: 536 },
+};
+export const pctChange = (current: number, previous: number) => previous ? Math.round((current - previous) / previous * 1000) / 10 : 0;
 export const districtCoverage = [
   { district: "København Øst", value: "57 / 145" },
   { district: "København Vest", value: "45 / 124" },
