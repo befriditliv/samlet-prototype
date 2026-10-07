@@ -1,7 +1,7 @@
 # Roadmap
 
-- [ ] Optimize employee performance, quality explanation, expandable field themes, unified contact planning, coverage and compact training
-- [ ] Verify redesigned employee page and its interactions
+- [x] Optimize employee performance, quality explanation, expandable field themes, unified contact planning, coverage and compact training
+- [x] Verify redesigned employee page and its interactions
 
 - [x] Review manager-view handoff and current UI
 - [x] Build shared manager demo fixtures and period control

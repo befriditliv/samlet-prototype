@@ -11,7 +11,7 @@ export const EmployeeActivityPanels = ({ member, noActivity, noPlan, loadError, 
   const done = noActivity ? 0 : plan?.done ?? 0;
   const progress = plan?.planned ? Math.round((done / plan.planned) * 100) : 0;
   const cal = noActivity ? { deleted: 0, cancelled: 0, rebooked: 0 } : member.calendar;
-  const outlook = member.slug === "christian" ? summarizePlan(employeePlanGoals) : null;
+  const outlook = member.slug === "christian" && !noActivity ? summarizePlan(employeePlanGoals) : null;
   return <>
     <section className="space-y-3">
       <h3 className="text-lg font-bold">Kontaktplan og kommende møder</h3>
