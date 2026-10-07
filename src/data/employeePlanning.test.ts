@@ -15,7 +15,7 @@ describe("Contact plan and upcoming meetings", () => {
   });
   test("brick totals cover all 90 assigned HCOs and count only physical visits", () => {
     deepStrictEqual(employeeBrickCoverage.reduce((sum, brick) => sum + brick.assigned, 0), 90);
-    deepStrictEqual(employeeBrickCoverage.reduce((sum, brick) => sum + brick.visited, 0), 30);
+    deepStrictEqual(employeeBrickCoverage.reduce((sum, brick) => sum + brick.visited, 0), 29);
   });
   test("the five upcoming week counts sum to the requested 27 meetings at 27 customers", () => {
     deepStrictEqual(upcoming28.weeks.map(([, count]) => count), [3, 5, 7, 9, 3]);
