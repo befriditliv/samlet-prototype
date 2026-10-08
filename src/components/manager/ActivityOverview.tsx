@@ -1,222 +1,32 @@
 import { activityStats, previousPeriods, pctChange } from "@/data/managerDemo";
 import { cn } from "@/lib/utils";
-import { useInViewOnce } from "@/hooks/use-in-view";
-import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import {
-  Users,
-  TrendingDown,
-  TrendingUp,
-  Calendar,
-  Phone,
-  Layers,
-  Globe,
-} from "lucide-react";
+import { Users, TrendingDown, TrendingUp, Calendar, Phone, Globe } from "lucide-react";
 
-
-// Animated number component
-const AnimatedNumber = ({
-  value,
-  suffix = "",
-  animate,
-}: {
-  value: number | string;
-  suffix?: string;
-  animate?: boolean;
-}) => <span className={cn("inline-block", animate && "animate-count-up")}>{value}{suffix}</span>;
+function ActivityTrend({ value }: { value: number }) {
+  const Icon = value < 0 ? TrendingDown : TrendingUp;
+  return <span className={cn("inline-flex items-center gap-1 text-xs font-medium tabular-nums", value < 0 ? "text-destructive" : "text-success")}><Icon className="h-3.5 w-3.5" />{value > 0 ? "+" : ""}{value}%</span>;
+}
 
 export const ActivityOverview = () => {
-  const { ref: meetingRef, inView: meetingInView } = useInViewOnce<HTMLDivElement>({
-    threshold: 0.2,
-    rootMargin: "0px 0px -10% 0px",
-  });
   const prev = previousPeriods.prev30;
-  const trends = {
-    meetings: pctChange(activityStats.meetings.total, prev.meetings),
-    events: pctChange(activityStats.events.total, prev.events),
-    phoneCalls: pctChange(activityStats.phoneCalls.total, prev.phoneCalls),
-    digital: pctChange(activityStats.digital.total, prev.digital),
-    totalInteractions: pctChange(activityStats.totalInteractions.total, prev.totalInteractions),
-  };
-
-  return (
-    <div ref={meetingRef} className={cn(meetingInView && "animate-fade-in")}>
-      {/* Integrated Activity Card */}
-      <Card
-        className={cn(
-          "manager-band rounded-none overflow-hidden",
-          meetingInView && "animate-fade-in-up"
-        )}
-      >
-        {/* Header with Total */}
-        <div className="bg-secondary/40 px-4 py-3 border-b border-border/50">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <Layers className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl font-bold tracking-normal">
-                    <AnimatedNumber value={activityStats.totalInteractions.total} animate={meetingInView} />
-                  </span>
-                  <div className={cn(
-                    "flex items-center gap-1 text-sm font-medium px-2.5 py-1 rounded-full",
-                    trends.totalInteractions < 0 
-                      ? "bg-destructive/10 text-destructive" 
-                      : "bg-success/10 text-success"
-                  )}>
-                    {trends.totalInteractions < 0 ? (
-                      <TrendingDown className="h-4 w-4" />
-                    ) : (
-                      <TrendingUp className="h-4 w-4" />
-                    )}
-                    <span>{trends.totalInteractions > 0 ? "+" : ""}{trends.totalInteractions}%</span>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground mt-1">Samlede interaktioner</p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {prev.label}: <span className="font-medium text-foreground">{prev.totalInteractions}</span>
-                </p>
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="text-xs text-muted-foreground uppercase tracking-normal">Periode</p>
-              <p className="text-sm font-semibold text-foreground">Sidste 30 dage</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Activity Breakdown Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border/30">
-          {/* Meetings */}
-          <div className="p-4 group hover:bg-muted/30 transition-colors">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-primary/10 group-hover:scale-110 transition-transform">
-                  <Users className="h-4 w-4 text-primary" />
-                </div>
-                <span className="font-medium text-foreground">Møder</span>
-              </div>
-              <div className={cn(
-                "flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full",
-                trends.meetings < 0 
-                  ? "bg-destructive/10 text-destructive" 
-                  : "bg-success/10 text-success"
-              )}>
-                {trends.meetings < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
-                <span>{trends.meetings > 0 ? "+" : ""}{trends.meetings}%</span>
-              </div>
-            </div>
-            <div className="text-2xl font-bold tracking-normal mb-2">
-              <AnimatedNumber value={activityStats.meetings.total} animate={meetingInView} />
-            </div>
-            <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.meetings}</span></p>
-            <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
-              <span>{activityStats.meetings.physical} planlagte</span>
-              <span>{activityStats.meetings.canvas} kanvas</span>
-              <span>{activityStats.meetings.virtual} virtuelle</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Progress value={meetingInView ? activityStats.meetings.rate : 0} className="h-1.5 flex-1" />
-              <span className="text-xs font-semibold text-primary">{activityStats.meetings.rate}%</span>
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">{activityStats.meetings.debriefed} debriefet</p>
-          </div>
-
-          {/* Events */}
-          <div className="p-4 group hover:bg-muted/30 transition-colors">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-primary/10 group-hover:scale-110 transition-transform">
-                  <Calendar className="h-4 w-4 text-primary" />
-                </div>
-                <span className="font-medium text-foreground">Begivenheder</span>
-              </div>
-              <div className={cn(
-                "flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full",
-                trends.events < 0 
-                  ? "bg-destructive/10 text-destructive" 
-                  : "bg-success/10 text-success"
-              )}>
-                {trends.events < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
-                <span>{trends.events > 0 ? "+" : ""}{trends.events}%</span>
-              </div>
-            </div>
-            <div className="text-2xl font-bold tracking-normal mb-2">
-              <AnimatedNumber value={activityStats.events.total} animate={meetingInView} />
-            </div>
-            <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.events}</span></p>
-            <div className="flex flex-wrap gap-x-2 gap-y-1 text-xs text-muted-foreground">
-              <span>{activityStats.events.breakdown.education} uddannelse</span>
-              <span>·</span>
-              <span>{activityStats.events.breakdown.event} begivenheder</span>
-            </div>
-          </div>
-
-          {/* Phone Calls */}
-          <div className="p-4 group hover:bg-muted/30 transition-colors">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-primary/10 group-hover:scale-110 transition-transform">
-                  <Phone className="h-4 w-4 text-primary" />
-                </div>
-                <span className="font-medium text-foreground">Telefonopkald</span>
-              </div>
-              <div className={cn(
-                "flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full",
-                trends.phoneCalls < 0 
-                  ? "bg-destructive/10 text-destructive" 
-                  : "bg-success/10 text-success"
-              )}>
-                {trends.phoneCalls < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
-                <span>{trends.phoneCalls > 0 ? "+" : ""}{trends.phoneCalls}%</span>
-              </div>
-            </div>
-            <div className="text-2xl font-bold tracking-normal mb-2">
-              <AnimatedNumber value={activityStats.phoneCalls.total} animate={meetingInView} />
-            </div>
-            <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.phoneCalls}</span></p>
-            <p className="text-xs text-muted-foreground">
-              Udgående HCP-opkald
-            </p>
-          </div>
-
-          {/* Digital */}
-          <div className="p-4 group hover:bg-muted/30 transition-colors">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-primary/10 group-hover:scale-110 transition-transform">
-                  <Globe className="h-4 w-4 text-primary" />
-                </div>
-                <span className="font-medium text-foreground">Digital kontakt</span>
-              </div>
-              <div className={cn(
-                "flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full",
-                trends.digital < 0 
-                  ? "bg-destructive/10 text-destructive" 
-                  : "bg-success/10 text-success"
-              )}>
-                {trends.digital < 0 ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
-                <span>{trends.digital > 0 ? "+" : ""}{trends.digital}%</span>
-              </div>
-            </div>
-            <div className="text-2xl font-bold tracking-normal mb-2">
-              <AnimatedNumber value={activityStats.digital.total} animate={meetingInView} />
-            </div>
-            <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.digital}</span></p>
-            <div className="flex flex-wrap gap-x-2 gap-y-1 text-xs text-muted-foreground">
-              <span>{activityStats.digital.breakdown.email} email</span>
-              <span>·</span>
-              <span>{activityStats.digital.breakdown.newsletter} nyhedsbrev</span>
-              <span>·</span>
-              <span>{activityStats.digital.breakdown.webPortal} web</span>
-              <span>·</span>
-              <span>{activityStats.digital.breakdown.webinar} webinar</span>
-            </div>
-          </div>
-        </div>
-      </Card>
+  const metrics = [
+    { label: "Møder", icon: Users, value: activityStats.meetings.total, previous: prev.meetings, detail: `${activityStats.meetings.physical} planlagte · ${activityStats.meetings.canvas} kanvas · ${activityStats.meetings.virtual} virtuelle` },
+    { label: "Begivenheder", icon: Calendar, value: activityStats.events.total, previous: prev.events, detail: `${activityStats.events.breakdown.education} uddannelse · ${activityStats.events.breakdown.event} begivenheder` },
+    { label: "Telefonopkald", icon: Phone, value: activityStats.phoneCalls.total, previous: prev.phoneCalls, detail: "Udgående HCP-opkald" },
+    { label: "Digital kontakt", icon: Globe, value: activityStats.digital.total, previous: prev.digital, detail: `${activityStats.digital.breakdown.email} email · ${activityStats.digital.breakdown.newsletter} nyhedsbrev · ${activityStats.digital.breakdown.webPortal} web · ${activityStats.digital.breakdown.webinar} webinar` },
+  ];
+  return <div className="manager-band">
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3 sm:px-5">
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><strong className="text-3xl tabular-nums">{activityStats.totalInteractions.total}</strong><span className="text-sm text-muted-foreground">Samlede interaktioner</span><ActivityTrend value={pctChange(activityStats.totalInteractions.total, prev.totalInteractions)} /></div>
+      <p className="text-xs text-muted-foreground">Sidste 30 dage <span className="mx-1">·</span> {prev.label}: <strong className="font-medium text-foreground">{prev.totalInteractions}</strong></p>
     </div>
-  );
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">{metrics.map(({ label, icon: Icon, value, previous, detail }) => <div key={label} className="min-w-0 border-b px-4 py-4 last:border-b-0 sm:px-5 sm:odd:border-r xl:border-b-0 xl:border-r xl:last:border-r-0">
+      <p className="flex items-center gap-2 text-sm font-medium"><Icon className="h-4 w-4 text-primary" />{label}</p>
+      <div className="mt-2 flex items-center justify-between gap-2"><strong className="text-2xl tabular-nums">{value}</strong><ActivityTrend value={pctChange(value, previous)} /></div>
+      <p className="mt-1 text-xs text-muted-foreground">{prev.label}: <span className="font-medium text-foreground">{previous}</span></p>
+      <p className="mt-3 text-xs leading-5 text-muted-foreground">{detail}</p>
+    </div>)}</div>
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t bg-muted/20 px-4 py-2.5 sm:px-5"><span className="text-xs text-muted-foreground"><strong className="font-medium text-foreground">{activityStats.meetings.debriefed} af {activityStats.meetings.total}</strong> møder debriefet</span><div className="flex items-center gap-2"><Progress value={activityStats.meetings.rate} className="h-1 w-24" /><strong className="text-xs text-primary">{activityStats.meetings.rate}%</strong></div></div>
+  </div>;
 };
