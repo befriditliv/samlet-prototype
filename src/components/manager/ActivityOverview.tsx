@@ -21,7 +21,7 @@ export const ActivityOverview = () => {
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><strong className="text-3xl tabular-nums">{activityStats.totalInteractions.total}</strong><span className="text-sm text-muted-foreground">Samlede interaktioner</span><ActivityTrend value={pctChange(activityStats.totalInteractions.total, prev.totalInteractions)} /></div>
       <p className="text-xs text-muted-foreground">Sidste 30 dage <span className="mx-1">·</span> {prev.label}: <strong className="font-medium text-foreground">{prev.totalInteractions}</strong></p>
     </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">{metrics.map(({ label, icon: Icon, value, previous, detail }) => <div key={label} className="min-w-0 border-b px-4 py-4 last:border-b-0 sm:px-5 sm:odd:border-r xl:border-b-0 xl:border-r xl:last:border-r-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">{metrics.map(({ label, icon: Icon, value, previous, detail }) => <div key={label} className="min-w-0 border-b px-4 py-4 last:border-b-0 sm:px-5 sm:odd:border-r lg:border-b-0 lg:border-r lg:last:border-r-0">
       <p className="flex items-center gap-2 text-sm font-medium"><Icon className="h-4 w-4 text-primary" />{label}</p>
       <div className="mt-2 flex items-center justify-between gap-2"><strong className="text-2xl tabular-nums">{value}</strong><ActivityTrend value={pctChange(value, previous)} /></div>
       <p className="mt-1 text-xs text-muted-foreground">{prev.label}: <span className="font-medium text-foreground">{previous}</span></p>
