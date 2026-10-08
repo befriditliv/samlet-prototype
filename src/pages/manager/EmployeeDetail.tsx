@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AlertTriangle, ArrowLeft, CalendarCheck, CalendarX, Clipboard, Gauge, GraduationCap, MessageSquare, Radar, Printer, RefreshCw, Sparkles, UserRound } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CalendarCheck, CalendarX, ChevronRight, Clipboard, Gauge, GraduationCap, MessageSquare, Radar, Printer, RefreshCw, Sparkles, UserRound } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -95,11 +95,14 @@ const EmployeeDetailContent = () => {
         </ManagerSection>
         <ManagerSection id="signals" title="Vigtigste kunde signaler" header={<div><div className="flex items-center gap-3"><Radar className="h-5 w-5 shrink-0 text-primary" /><h3 className="text-lg font-bold">Vigtigste kunde signaler</h3></div><p className="mt-1 text-sm text-muted-foreground">Aktuelle kundesignaler · hver regel har sin egen tidshorisont</p></div>}>
           {loadError ? <ErrorBlock label="Kundesignaler" onRetry={retry} /> : !full ? <Card className="border border-dashed bg-muted/20 shadow-none"><CardContent className="p-6 text-sm text-muted-foreground">Ingen aktuelle kundesignaler for medarbejderen.</CardContent></Card> :
-          <div className="grid gap-3 md:grid-cols-2">{signals.map((s) => <ManagerCard key={s.id} chevron onClick={() => setSelectedSignal(s)}>
-            <p className={managerCardTitle}>{s.name}</p><p className="mt-1 text-xs text-muted-foreground">{s.type} · {s.segment ? `Segment ${s.segment}` : "Uden segmentklasse"}</p>
-            <div className="mt-3 space-y-1">{s.rules.map(rule => <p key={rule.text} className="text-xs leading-5">{rule.text} <span className="text-muted-foreground">· {rule.horizon}</span></p>)}</div>
-            <div className={managerCardFooter}><p className="text-xs text-muted-foreground">Sidst: {s.last ?? "Ukendt"}{s.channel ? ` · ${s.channel}` : ""}</p><MeetingPill m={s.next} /></div>
-          </ManagerCard>)}<div className="md:col-span-2"><Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => setPanel("signals")}>Alle signaler</Button></div></div>}
+          <div className="space-y-3"><div className="divide-y overflow-hidden rounded-lg border bg-card">{signals.map((s) => <Button variant="ghost" key={s.id} onClick={() => setSelectedSignal(s)} className="h-auto w-full justify-start whitespace-normal rounded-none px-4 py-3 text-left font-normal hover:bg-primary/5">
+            <div className="grid min-w-0 flex-1 gap-3 sm:grid-cols-[minmax(0,1fr)_220px]">
+              <div className="min-w-0"><div className="flex flex-wrap items-center gap-2"><p className="font-semibold">{s.name}</p><Badge variant="outline">{s.type}</Badge><span className="text-xs text-muted-foreground">{s.segment ? `Segment ${s.segment}` : "Uden segmentklasse"}</span></div>
+                <div className="mt-1 space-y-1">{s.rules.map(rule => <p key={rule.text} className="text-sm leading-5 text-muted-foreground"><span className="text-foreground">{rule.text}</span> · {rule.horizon}</p>)}</div>
+              </div>
+              <div className="flex min-w-0 flex-col items-start gap-2 sm:justify-center"><MeetingPill m={s.next} /><p className="text-xs leading-5 text-muted-foreground">Sidst: {s.last ?? "Ukendt"}{s.channel ? ` · ${s.channel}` : ""}</p></div>
+            </div><ChevronRight className="ml-3 h-4 w-4 shrink-0 text-muted-foreground" />
+          </Button>)}</div><Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => setPanel("signals")}>Alle signaler</Button></div>}
         </ManagerSection>
 
         <ManagerSection id="themes" title="Temaer i marken de sidste 30 dage" header={<div className="flex items-center gap-3"><MessageSquare className="h-5 w-5 text-primary" /><h3 className="text-lg font-bold">Temaer i marken de sidste 30 dage</h3></div>}>
