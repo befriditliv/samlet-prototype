@@ -50,6 +50,7 @@ export const HomepageThemes = () => {
 
 export const HomepageDebriefQuality = () => {
   const [week, setWeek] = useState("40");
+  const [assessmentOpen, setAssessmentOpen] = useState(false);
   const review = homepageQuality.reviews.find(r => String(r.week) === week) ?? homepageQuality.reviews[1];
   const first = homepageQuality.weeks[0];
   const last = homepageQuality.weeks[homepageQuality.weeks.length - 1];
@@ -60,6 +61,8 @@ export const HomepageDebriefQuality = () => {
     <div className="manager-band grid overflow-hidden lg:grid-cols-[0.9fr_1.1fr]"><div className="p-4"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-sm font-medium">Seneste ugentlige score</p><p className="mt-1 text-2xl font-bold text-primary">{fmt(last.score)}<span className="text-base text-muted-foreground"> / 10</span></p></div><div className="flex items-center gap-2 text-sm text-success"><TrendingUp className="h-4 w-4" /><span>+{fmt(difference)} over 4 uger</span></div></div><div className="mt-5 grid grid-cols-4 gap-3">{homepageQuality.weeks.map(point => <div key={point.week} className="space-y-2"><div className="flex h-14 items-end rounded-sm bg-muted/30"><div className="w-full rounded-sm bg-primary/70" style={{ height: `${point.score * 10}%` }} /></div><div className="flex flex-wrap justify-between gap-1 text-xs"><span className="text-muted-foreground">Uge {point.week}</span><strong>{fmt(point.score)}</strong></div></div>)}</div><p className="mt-3 text-xs text-muted-foreground">2026 · skala 0–10 · intet tilgængeligt landsgennemsnit</p></div>
       <div className="border-t border-border/50 p-4 lg:border-l lg:border-t-0"><div className="mb-4 flex items-center justify-between gap-3"><h3 className="text-sm font-semibold">Ugens vurdering</h3><Select value={week} onValueChange={setWeek}><SelectTrigger aria-label="Vælg kvalitetsuge" className="h-8 w-32"><SelectValue /></SelectTrigger><SelectContent>{homepageQuality.reviews.map(r => <SelectItem key={r.week} value={String(r.week)}>Uge {r.week}</SelectItem>)}</SelectContent></Select></div><div className="space-y-3 text-sm leading-5"><div><p className="font-medium">Det fungerer godt</p><p className="mt-1 text-muted-foreground">{review.highlight}</p></div><div><p className="font-medium">Kan forbedres</p><p className="mt-1 text-muted-foreground">{review.improvement}</p></div></div></div>
     </div>
+    <Button variant="link" size="sm" className="h-auto p-0" onClick={() => setAssessmentOpen(true)}>Læs hele vurderingen</Button>
+    <Dialog open={assessmentOpen} onOpenChange={setAssessmentOpen}><DialogContent><DialogHeader><DialogTitle>Ugens vurdering · uge {review.week}</DialogTitle><DialogDescription>Fiktiv vurdering af dokumentationen · {fmt(review.score)} / 10</DialogDescription></DialogHeader><p className="text-sm leading-6">{review.highlight} {review.improvement}</p><p className="text-xs leading-5 text-muted-foreground">Vurderingen vedrører de vurderede noter, ikke medarbejdernes samtaler. Ugevurderingen og referenceeksemplets kildegrupper har forskellige datagrundlag.</p></DialogContent></Dialog>
     <SourceQuality scope="homepage" />
   </ManagerSection>;
 };

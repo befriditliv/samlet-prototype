@@ -16,6 +16,13 @@ export function ManagerSectionControls() {
   return <div className="flex justify-end gap-1"><Button variant="ghost" size="sm" onClick={() => context.setAll(false)}><ChevronsUpDown />Fold alle ud</Button><Button variant="ghost" size="sm" onClick={() => context.setAll(true)}><ChevronsDownUp />Fold alle ind</Button></div>;
 }
 
+export function useManagerSectionState(id: string, defaultOpen = false) {
+  const context = useContext(SectionContext);
+  const [localOpen, setLocalOpen] = useState(defaultOpen);
+  const open = context ? !context.closed.includes(id) : localOpen;
+  return { open, setOpen: (value: boolean) => { if (context) { if (value !== open) context.toggle(id); } else setLocalOpen(value); } };
+}
+
 export function ManagerSection({ id, title, header, children, className = "" }: { id: string; title: string; header: ReactNode; children: ReactNode; className?: string }) {
   const context = useContext(SectionContext);
   const [localOpen, setLocalOpen] = useState(true);

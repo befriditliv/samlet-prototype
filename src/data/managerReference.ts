@@ -3,7 +3,7 @@
 export const referenceSourceQuality = {
   homepage: [
     { source: "Jarvis", score: null, assessed: 0 },
-    { source: "IO Engage", score: 5.1, assessed: 137 },
+    { source: "IO Engage", score: 5.1, assessed: 507 },
     { source: "Ukendt kilde", score: null, assessed: 0 },
   ],
   employee: [
