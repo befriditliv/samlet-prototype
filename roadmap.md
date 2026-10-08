@@ -1,8 +1,8 @@
 # Roadmap
 
-- [ ] Apply homepage presentation principles to employee performance, quality and customer signals
-- [ ] Unify contact-plan status with upcoming meetings, use white calendar cards and improve compact training
-- [ ] Verify employee interactions and unchanged planning calculations
+- [x] Apply homepage presentation principles to employee performance, quality and customer signals
+- [x] Unify contact-plan status with upcoming meetings, use white calendar cards and improve compact training
+- [x] Verify employee interactions and unchanged planning calculations
 
 - [x] Remove the source-quality explanatory paragraph and align icons with manager headings and blocks
 - [x] Verify both manager pages retain their controls and display the updated icons
