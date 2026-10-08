@@ -3,11 +3,19 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
-const SectionContext = createContext<{ closed: string[]; toggle: (id: string) => void } | null>(null);
+const SectionContext = createContext<{ closed: string[]; toggle: (id: string) => void; employeeLabel?: string } | null>(null);
 
-export function ManagerSections({ ids, children, defaultClosed = [] }: { ids: string[]; children: ReactNode; defaultClosed?: string[] }) {
+export function ManagerSections({ ids, children, defaultClosed = [], employeeLabel }: { ids: string[]; children: ReactNode; defaultClosed?: string[]; employeeLabel?: string }) {
   const [closed, setClosed] = useState<string[]>(defaultClosed);
-  return <SectionContext.Provider value={{ closed, toggle: id => setClosed(previous => previous.includes(id) ? previous.filter(item => item !== id) : [...previous, id]) }}>{children}</SectionContext.Provider>;
+  return <SectionContext.Provider value={{ closed, employeeLabel, toggle: id => setClosed(previous => previous.includes(id) ? previous.filter(item => item !== id) : [...previous, id]) }}>{children}</SectionContext.Provider>;
+}
+
+export function ManagerSectionTitle({ children }: { children: ReactNode }) {
+  const context = useContext(SectionContext);
+  return <h3 className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-lg font-bold">
+    {children}
+    {context?.employeeLabel && <span className="inline-flex shrink-0 items-center rounded-md border border-border bg-muted/50 px-2 py-0.5 text-xs font-medium leading-5 text-muted-foreground"><span className="sr-only">Medarbejder: </span>{context.employeeLabel}</span>}
+  </h3>;
 }
 
 export function useManagerSectionState(id: string, defaultOpen = false) {

@@ -21,7 +21,7 @@ import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { useManagerPeriod } from "@/hooks/use-manager-period";
 import { toast } from "@/hooks/use-toast";
 import { fmt, oneToOnePoints, pct, signals, syncLine, teamMembers, themes, type MeetingState } from "@/data/managerDemo";
-import { ManagerSection, ManagerSections } from "@/components/manager/ManagerSection";
+import { ManagerSection, ManagerSections, ManagerSectionTitle } from "@/components/manager/ManagerSection";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
 type PanelKey = "contacts" | "coverage" | "documentation" | "drafts" | "quality" | "signals" | "themes" | "one-to-one" | null;
@@ -36,7 +36,7 @@ const MeetingPill = ({ m }: { m: MeetingState }) => {
   return <span className="inline-flex items-center gap-1 rounded-md border border-dashed border-muted-foreground/40 px-2 py-1 text-xs text-muted-foreground"><CalendarX className="h-3.5 w-3.5" />Intet kommende registreret</span>;
 };
 
-const EmployeeDetail = () => <ManagerSections ids={["performance", "signals", "themes", "contact-plan", "employee-coverage", "calendar", "training"]} defaultClosed={["calendar", "training"]}><EmployeeDetailContent /></ManagerSections>;
+const EmployeeDetail = () => <ManagerSections employeeLabel="User" ids={["performance", "signals", "themes", "contact-plan", "employee-coverage", "calendar", "training"]} defaultClosed={["calendar", "training"]}><EmployeeDetailContent /></ManagerSections>;
 
 const EmployeeDetailContent = () => {
   const back = useBackNavigation("/manager");
@@ -90,10 +90,10 @@ const EmployeeDetailContent = () => {
 
       {!hasFixture ? <Card className="rounded-lg border shadow-sm"><CardContent className="p-10 text-center"><h3 className="font-semibold">Ingen forberedte demo-data for denne periode</h3><p className="mt-2 text-sm text-muted-foreground">Vælg 30 dage for at se sporbare medarbejderdata.</p></CardContent></Card> : <>
 
-        <ManagerSection id="performance" title="Generel præstation" header={<div className="flex items-baseline justify-between gap-3"><div className="flex items-center gap-3"><Gauge className="h-5 w-5 text-primary" /><h3 className="text-lg font-bold">Generel præstation</h3></div><span className="text-sm text-muted-foreground">{option.range}</span></div>}>
+        <ManagerSection id="performance" title="Generel præstation" header={<div className="flex items-baseline justify-between gap-3"><div className="flex items-center gap-3"><Gauge className="h-5 w-5 text-primary" /><ManagerSectionTitle>Generel præstation</ManagerSectionTitle></div><span className="text-sm text-muted-foreground">{option.range}</span></div>}>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{kpis.map(k => <div key={k.key} className="flex flex-col gap-2"><ManagerCard onClick={() => setPanel(k.key as PanelKey)} className={`flex-1 ${k.error ? "border-destructive/50" : ""}`}><p className={managerCardTitle}>{k.label}</p><p className="mt-2 text-xl font-bold tabular-nums">{k.error ? "Utilgængelig" : k.value}</p><div className={managerCardFooter}><p className={`${managerCardNote} min-h-10`}>{k.note}</p></div></ManagerCard>{k.error && <Button size="sm" variant="outline" onClick={retry}>Prøv igen</Button>}</div>)}</div>
         </ManagerSection>
-        <ManagerSection id="signals" title="Vigtigste kunde signaler" header={<div><div className="flex items-center gap-3"><Radar className="h-5 w-5 shrink-0 text-primary" /><h3 className="text-lg font-bold">Vigtigste kunde signaler</h3></div><p className="mt-1 text-sm text-muted-foreground">Aktuelle kundesignaler · hver regel har sin egen tidshorisont</p></div>}>
+        <ManagerSection id="signals" title="Vigtigste kunde signaler" header={<div><div className="flex items-center gap-3"><Radar className="h-5 w-5 shrink-0 text-primary" /><ManagerSectionTitle>Vigtigste kunde signaler</ManagerSectionTitle></div><p className="mt-1 text-sm text-muted-foreground">Aktuelle kundesignaler · hver regel har sin egen tidshorisont</p></div>}>
           {loadError ? <ErrorBlock label="Kundesignaler" onRetry={retry} /> : !full ? <Card className="border border-dashed bg-muted/20 shadow-none"><CardContent className="p-6 text-sm text-muted-foreground">Ingen aktuelle kundesignaler for medarbejderen.</CardContent></Card> :
           <div className="space-y-3"><div className="divide-y overflow-hidden rounded-lg border bg-card">{signals.map((s) => <Button variant="ghost" key={s.id} onClick={() => setSelectedSignal(s)} className="h-auto w-full justify-start whitespace-normal rounded-none px-4 py-3 text-left font-normal hover:bg-primary/5">
             <div className="grid min-w-0 flex-1 gap-3 sm:grid-cols-[minmax(0,1fr)_220px]">
@@ -105,7 +105,7 @@ const EmployeeDetailContent = () => {
           </Button>)}</div><Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => setPanel("signals")}>Alle signaler</Button></div>}
         </ManagerSection>
 
-        <ManagerSection id="themes" title="Temaer i marken de sidste 30 dage" header={<div className="flex items-center gap-3"><MessageSquare className="h-5 w-5 text-primary" /><h3 className="text-lg font-bold">Temaer i marken de sidste 30 dage</h3></div>}>
+        <ManagerSection id="themes" title="Temaer i marken de sidste 30 dage" header={<div className="flex items-center gap-3"><MessageSquare className="h-5 w-5 text-primary" /><ManagerSectionTitle>Temaer i marken de sidste 30 dage</ManagerSectionTitle></div>}>
           {loadError ? <ErrorBlock label="Temaer" onRetry={retry} /> : noActivity || imported || !full ? <p className="text-sm text-muted-foreground">{imported ? "Importeret CRM-dokumentation analyseres ikke for temaer." : "Ingen analyserede debriefs i perioden."}</p> : <EmployeeFieldThemes partial={false} unfinished={false} />}
         </ManagerSection>
         <EmployeeActivityPanels member={m} noActivity={noActivity} noPlan={noPlan} loadError={loadError} onRetry={retry} />
@@ -113,7 +113,7 @@ const EmployeeDetailContent = () => {
         <EmployeeBrickCoverage member={m} range={option.range} noActivity={noActivity} loadError={loadError} onRetry={retry} />
         <EmployeeCalendarChanges member={m} noActivity={noActivity} loadError={loadError} onRetry={retry} />
 
-        <ManagerSection id="training" title="Resultater fra træningsplatform" header={<div><h3 className="flex items-center gap-3 text-lg font-bold"><GraduationCap className="h-5 w-5 shrink-0 text-primary" />Resultater fra træningsplatform</h3><p className="mt-1 text-sm text-muted-foreground">Ingen træning i perioden · seneste historiske resultat nedenfor</p></div>}><div className="manager-band"><div className="flex flex-wrap items-baseline justify-between gap-2 border-b px-4 py-3"><p className="text-xs font-semibold">Samtale om Dose 1-forløbet</p><p className="text-xs text-muted-foreground">9. sep 2025 · historisk demo-træning</p></div><div className="grid divide-y sm:grid-cols-3 sm:divide-x sm:divide-y-0">{[["Gik godt", "Klar forklaring af det akutte appendicitisforløb."], ["Kan forbedres", "Afdæk præference for kirurgi, før materialer præsenteres."], ["Næste fokus", "Ét åbent spørgsmål om kundens nuværende forløb."]].map(([label, text]) => <div key={label} className="p-4"><p className="text-xs font-semibold">{label}</p><p className="mt-2 text-xs leading-5 text-muted-foreground">{text}</p></div>)}</div></div></ManagerSection>
+        <ManagerSection id="training" title="Resultater fra træningsplatform" header={<div><div className="flex items-start gap-3"><GraduationCap className="mt-0.5 h-5 w-5 shrink-0 text-primary" /><ManagerSectionTitle>Resultater fra træningsplatform</ManagerSectionTitle></div><p className="mt-1 text-sm text-muted-foreground">Ingen træning i perioden · seneste historiske resultat nedenfor</p></div>}><div className="manager-band"><div className="flex flex-wrap items-baseline justify-between gap-2 border-b px-4 py-3"><p className="text-xs font-semibold">Samtale om Dose 1-forløbet</p><p className="text-xs text-muted-foreground">9. sep 2025 · historisk demo-træning</p></div><div className="grid divide-y sm:grid-cols-3 sm:divide-x sm:divide-y-0">{[["Gik godt", "Klar forklaring af det akutte appendicitisforløb."], ["Kan forbedres", "Afdæk præference for kirurgi, før materialer præsenteres."], ["Næste fokus", "Ét åbent spørgsmål om kundens nuværende forløb."]].map(([label, text]) => <div key={label} className="p-4"><p className="text-xs font-semibold">{label}</p><p className="mt-2 text-xs leading-5 text-muted-foreground">{text}</p></div>)}</div></div></ManagerSection>
       </>}
     </main>
 
