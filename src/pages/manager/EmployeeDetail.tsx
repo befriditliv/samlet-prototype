@@ -20,7 +20,7 @@ import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { useManagerPeriod } from "@/hooks/use-manager-period";
 import { toast } from "@/hooks/use-toast";
-import { fmt, oneToOnePoints, pct, signals, syncLine, teamMembers, themes, type MeetingState } from "@/data/managerDemo";
+import { fmt, oneToOnePoints, pct, signals, syncLine, teamMembers, themes, themeCoverage, type MeetingState } from "@/data/managerDemo";
 import { ManagerSection, ManagerSections, ManagerSectionTitle } from "@/components/manager/ManagerSection";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
@@ -98,20 +98,20 @@ const EmployeeDetailContent = () => {
           <div className="space-y-3"><div className="divide-y overflow-hidden rounded-lg border bg-card">{signals.map((s) => <Button variant="ghost" key={s.id} onClick={() => setSelectedSignal(s)} className="h-auto w-full justify-start whitespace-normal rounded-none px-4 py-3 text-left font-normal hover:bg-primary/5">
             <div className="grid min-w-0 flex-1 gap-3 sm:grid-cols-[minmax(0,1fr)_220px]">
               <div className="min-w-0"><div className="flex flex-wrap items-center gap-2"><p className="font-semibold">{s.name}</p><Badge variant="outline">{s.type}</Badge><span className="text-xs text-muted-foreground">{s.segment ? `Segment ${s.segment}` : "Uden segmentklasse"}</span></div>
-                <div className="mt-1 space-y-1">{s.rules.map(rule => <p key={rule.text} className="text-sm leading-5 text-muted-foreground"><span className="text-foreground">{rule.text}</span> · {rule.horizon}</p>)}</div>
+                <div className="mt-1 space-y-1">{s.rules.map(rule => <p key={rule.text} className="text-xs leading-5 text-muted-foreground"><span className="font-medium text-foreground">{rule.text}</span> · {rule.horizon}</p>)}</div>
               </div>
               <div className="flex min-w-0 flex-col items-start gap-2 sm:justify-center"><MeetingPill m={s.next} /><p className="text-xs leading-5 text-muted-foreground">Sidst: {s.last ?? "Ukendt"}{s.channel ? ` · ${s.channel}` : ""}</p></div>
             </div><ChevronRight className="ml-3 h-4 w-4 shrink-0 text-muted-foreground" />
           </Button>)}</div><Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => setPanel("signals")}>Alle signaler</Button></div>}
         </ManagerSection>
 
-        <ManagerSection id="themes" title="Temaer i marken de sidste 30 dage" header={<div className="flex items-center gap-3"><MessageSquare className="h-5 w-5 text-primary" /><ManagerSectionTitle>Temaer i marken de sidste 30 dage</ManagerSectionTitle></div>}>
+        <ManagerSection id="themes" title="Temaer i marken de sidste 30 dage" header={<div><div className="flex items-center gap-3"><MessageSquare className="h-5 w-5 text-primary" /><ManagerSectionTitle>Temaer i marken de sidste 30 dage</ManagerSectionTitle></div><p className="mt-1 text-sm text-muted-foreground">{themeCoverage.analyzed} af {themeCoverage.completed} debriefs analyseret · {themeCoverage.pending} afventer · {themeCoverage.failed} kunne ikke analyseres</p></div>}>
           {loadError ? <ErrorBlock label="Temaer" onRetry={retry} /> : noActivity || imported || !full ? <p className="text-sm text-muted-foreground">{imported ? "Importeret CRM-dokumentation analyseres ikke for temaer." : "Ingen analyserede debriefs i perioden."}</p> : <EmployeeFieldThemes partial={false} unfinished={false} />}
         </ManagerSection>
         <EmployeeActivityPanels member={m} noActivity={noActivity} noPlan={noPlan} loadError={loadError} onRetry={retry} />
 
         <EmployeeBrickCoverage member={m} range={option.range} noActivity={noActivity} loadError={loadError} onRetry={retry} />
-        <EmployeeCalendarChanges member={m} noActivity={noActivity} loadError={loadError} onRetry={retry} />
+        <EmployeeCalendarChanges member={m} range={option.range} noActivity={noActivity} loadError={loadError} onRetry={retry} />
 
         <ManagerSection id="training" title="Resultater fra træningsplatform" header={<div><div className="flex items-start gap-3"><GraduationCap className="mt-0.5 h-5 w-5 shrink-0 text-primary" /><ManagerSectionTitle>Resultater fra træningsplatform</ManagerSectionTitle></div><p className="mt-1 text-sm text-muted-foreground">Ingen træning i perioden · seneste historiske resultat nedenfor</p></div>}><div className="manager-band"><div className="flex flex-wrap items-baseline justify-between gap-2 border-b px-4 py-3"><p className="text-xs font-semibold">Samtale om Dose 1-forløbet</p><p className="text-xs text-muted-foreground">9. sep 2025 · historisk demo-træning</p></div><div className="grid divide-y sm:grid-cols-3 sm:divide-x sm:divide-y-0">{[["Gik godt", "Klar forklaring af det akutte appendicitisforløb."], ["Kan forbedres", "Afdæk præference for kirurgi, før materialer præsenteres."], ["Næste fokus", "Ét åbent spørgsmål om kundens nuværende forløb."]].map(([label, text]) => <div key={label} className="p-4"><p className="text-xs font-semibold">{label}</p><p className="mt-2 text-xs leading-5 text-muted-foreground">{text}</p></div>)}</div></div></ManagerSection>
       </>}
