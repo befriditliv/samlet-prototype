@@ -1,5 +1,9 @@
 # Roadmap
 
+- [x] Restore homepage IOPengage / Jarvis quality comparison from the reference
+- [x] Restore section expand/collapse on both manager pages and verify reference interactions
+- [x] Verify both pages and clearly distinguish illustrative source-quality data
+
 - [x] Compact manager homepage sections and preserve existing controls
 - [x] Compact employee quality, evidence, signals, visit planning and coverage controls
 - [x] Verify both manager views, filters, source dialogs and calendar expansion
