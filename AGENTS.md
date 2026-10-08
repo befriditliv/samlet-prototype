@@ -8,3 +8,4 @@
 - Derive employee brick coverage from disjoint assigned-HCO fixtures and physical visits, keeping it separate from contact KPIs; isolate calendar history and use dialogs for employee theme sources so scopes and drill-downs remain explicit.
 - Keep manager presentation fixtures shared across source-quality, portfolio coverage and drill-down controls; label illustrative portfolio data separately from confirmed activity so presentation cannot imply new measured results.
 - Use a shared manager section controller for individual expansion, preserving mounted content so filters survive collapse; keep transcribed reference source-quality snapshots separate from activity fixtures to avoid implying measured source attribution.
+- Present employee calendar and training sections through the shared manager section wrapper so their expansion behavior matches the primary sections.
