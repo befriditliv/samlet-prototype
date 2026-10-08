@@ -151,7 +151,7 @@ export const InsightTools = () => {
     >
       <CardContent className="p-4 space-y-3">
         {/* Header with Ny rapport button */}
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end px-4">
           <Button 
             asChild
             className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm hover:shadow-md transition-all duration-300"
@@ -169,19 +169,19 @@ export const InsightTools = () => {
             <TableHeader>
               <TableRow className="bg-muted/30 hover:bg-muted/30 border-b border-border/50">
                 <TableHead className="py-3 px-4 w-[200px]">
-                  <div className="text-sm font-semibold text-foreground">Oprettet</div>
+                  <div className="text-xs font-semibold text-foreground">Oprettet</div>
                   <div className="text-xs font-normal text-muted-foreground">Dato og tid</div>
                 </TableHead>
                 <TableHead className="py-3 px-4 w-[140px]">
-                  <div className="text-sm font-semibold text-foreground">Filtre</div>
+                  <div className="text-xs font-semibold text-foreground">Filtre</div>
                   <div className="text-xs font-normal text-muted-foreground">Anvendt</div>
                 </TableHead>
                 <TableHead className="py-3 px-4">
-                  <div className="text-sm font-semibold text-foreground">Rapport</div>
+                  <div className="text-xs font-semibold text-foreground">Rapport</div>
                   <div className="text-xs font-normal text-muted-foreground">Titel og resumé</div>
                 </TableHead>
                 <TableHead className="py-3 px-4 text-right w-[140px]">
-                  <div className="text-sm font-semibold text-foreground">Handlinger</div>
+                  <div className="text-xs font-semibold text-foreground">Handlinger</div>
                   <div className="text-xs font-normal text-muted-foreground">Vis / Slet</div>
                 </TableHead>
               </TableRow>
