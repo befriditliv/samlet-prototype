@@ -44,20 +44,20 @@ export const ActivityOverview = () => {
       {/* Integrated Activity Card */}
       <Card
         className={cn(
-          "border-0 bg-gradient-to-br from-card via-card to-card/95 shadow-sm overflow-hidden",
+          "manager-band rounded-none overflow-hidden",
           meetingInView && "animate-fade-in-up"
         )}
       >
         {/* Header with Total */}
-        <div className="bg-gradient-to-r from-primary/8 via-primary/5 to-transparent px-6 py-5 border-b border-border/30">
+        <div className="bg-secondary/40 px-4 py-3 border-b border-border/50">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-primary/10">
+              <div className="p-2 rounded-lg bg-primary/10">
                 <Layers className="h-6 w-6 text-primary" />
               </div>
               <div>
                 <div className="flex items-center gap-3">
-                  <span className="text-4xl font-bold tracking-normal">
+                  <span className="text-3xl font-bold tracking-normal">
                     <AnimatedNumber value={activityStats.totalInteractions.total} animate={meetingInView} />
                   </span>
                   <div className={cn(
@@ -90,7 +90,7 @@ export const ActivityOverview = () => {
         {/* Activity Breakdown Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-border/30">
           {/* Meetings */}
-          <div className="p-5 group hover:bg-muted/30 transition-colors">
+          <div className="p-4 group hover:bg-muted/30 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 rounded-lg bg-primary/10 group-hover:scale-110 transition-transform">
@@ -108,7 +108,7 @@ export const ActivityOverview = () => {
                 <span>{trends.meetings > 0 ? "+" : ""}{trends.meetings}%</span>
               </div>
             </div>
-            <div className="text-3xl font-bold tracking-normal mb-2">
+            <div className="text-2xl font-bold tracking-normal mb-2">
               <AnimatedNumber value={activityStats.meetings.total} animate={meetingInView} />
             </div>
             <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.meetings}</span></p>
@@ -125,7 +125,7 @@ export const ActivityOverview = () => {
           </div>
 
           {/* Events */}
-          <div className="p-5 group hover:bg-muted/30 transition-colors">
+          <div className="p-4 group hover:bg-muted/30 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 rounded-lg bg-primary/10 group-hover:scale-110 transition-transform">
@@ -143,7 +143,7 @@ export const ActivityOverview = () => {
                 <span>{trends.events > 0 ? "+" : ""}{trends.events}%</span>
               </div>
             </div>
-            <div className="text-3xl font-bold tracking-normal mb-2">
+            <div className="text-2xl font-bold tracking-normal mb-2">
               <AnimatedNumber value={activityStats.events.total} animate={meetingInView} />
             </div>
             <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.events}</span></p>
@@ -155,7 +155,7 @@ export const ActivityOverview = () => {
           </div>
 
           {/* Phone Calls */}
-          <div className="p-5 group hover:bg-muted/30 transition-colors">
+          <div className="p-4 group hover:bg-muted/30 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 rounded-lg bg-primary/10 group-hover:scale-110 transition-transform">
@@ -173,7 +173,7 @@ export const ActivityOverview = () => {
                 <span>{trends.phoneCalls > 0 ? "+" : ""}{trends.phoneCalls}%</span>
               </div>
             </div>
-            <div className="text-3xl font-bold tracking-normal mb-2">
+            <div className="text-2xl font-bold tracking-normal mb-2">
               <AnimatedNumber value={activityStats.phoneCalls.total} animate={meetingInView} />
             </div>
             <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.phoneCalls}</span></p>
@@ -183,7 +183,7 @@ export const ActivityOverview = () => {
           </div>
 
           {/* Digital */}
-          <div className="p-5 group hover:bg-muted/30 transition-colors">
+          <div className="p-4 group hover:bg-muted/30 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 rounded-lg bg-primary/10 group-hover:scale-110 transition-transform">
@@ -201,7 +201,7 @@ export const ActivityOverview = () => {
                 <span>{trends.digital > 0 ? "+" : ""}{trends.digital}%</span>
               </div>
             </div>
-            <div className="text-3xl font-bold tracking-normal mb-2">
+            <div className="text-2xl font-bold tracking-normal mb-2">
               <AnimatedNumber value={activityStats.digital.total} animate={meetingInView} />
             </div>
             <p className="text-xs text-muted-foreground mb-2">{prev.label}: <span className="font-medium text-foreground">{prev.digital}</span></p>

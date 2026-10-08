@@ -136,6 +136,18 @@ All colors MUST be HSL.
 }
 
 @layer components {
+  .manager-view section > div h2 {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+  }
+  .manager-view section {
+    scroll-margin-top: 8rem;
+  }
+  .manager-view .manager-band {
+    border-top: 1px solid hsl(var(--border));
+    border-bottom: 1px solid hsl(var(--border));
+    background: hsl(var(--card));
+  }
   /* Resting elevated surface */
   .app-card {
     @apply rounded-3xl bg-card border border-border/60;
