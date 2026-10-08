@@ -9,3 +9,4 @@
 - Keep manager presentation fixtures shared across source-quality, portfolio coverage and drill-down controls; label illustrative portfolio data separately from confirmed activity so presentation cannot imply new measured results.
 - Use a shared manager section controller for individual expansion, preserving mounted content so filters survive collapse; keep transcribed reference source-quality snapshots separate from activity fixtures to avoid implying measured source attribution.
 - Present employee calendar and training sections through the shared manager section wrapper so their expansion behavior matches the primary sections.
+- Provide employee heading context through the shared manager section controller and title component so every employee section uses consistent, accessible context without affecting team headings.
