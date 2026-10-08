@@ -1,5 +1,9 @@
 # Roadmap
 
+- [ ] Simplify homepage activity hierarchy and unify weekly/source quality presentation
+- [ ] Compact signals and polish employee table while preserving controls
+- [ ] Verify homepage layout and interactions
+
 - [x] Restore homepage IOPengage / Jarvis quality comparison from the reference
 - [x] Restore section expand/collapse on both manager pages and verify reference interactions
 - [x] Verify both pages and clearly distinguish illustrative source-quality data
