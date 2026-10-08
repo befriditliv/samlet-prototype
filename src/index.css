@@ -148,6 +148,14 @@ All colors MUST be HSL.
     border-bottom: 1px solid hsl(var(--border));
     background: hsl(var(--card));
   }
+  .manager-view main :is(.bg-card, .manager-band) :is(.text-sm, h3, h4) {
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+  }
+  .manager-view main :is(.bg-card, .manager-band) :is(.text-xl, .text-2xl, .text-3xl, .text-4xl) {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
   /* Resting elevated surface */
   .app-card {
     @apply rounded-3xl bg-card border border-border/60;

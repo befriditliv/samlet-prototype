@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Remove global fold controls and unknown source, unify card typography, and align the header period selector without the date line
+- [x] Verify the requested manager presentation changes
+
 - [x] Simplify homepage activity hierarchy and unify weekly/source quality presentation
 - [x] Compact signals and polish employee table while preserving controls
 - [x] Verify homepage layout and interactions
