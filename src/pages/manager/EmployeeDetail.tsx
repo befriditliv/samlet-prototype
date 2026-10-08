@@ -19,7 +19,7 @@ import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { useManagerPeriod } from "@/hooks/use-manager-period";
 import { toast } from "@/hooks/use-toast";
-import { fmt, oneToOnePoints, pct, scenarioOptions, signals, syncLine, teamMembers, themes, type DemoScenario, type MeetingState } from "@/data/managerDemo";
+import { fmt, oneToOnePoints, pct, signals, syncLine, teamMembers, themes, type MeetingState } from "@/data/managerDemo";
 import { ManagerSection, ManagerSections } from "@/components/manager/ManagerSection";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
@@ -38,25 +38,21 @@ const MeetingPill = ({ m }: { m: MeetingState }) => {
 const EmployeeDetail = () => <ManagerSections ids={["performance", "employee-quality", "signals", "themes", "contact-plan", "employee-coverage", "calendar", "training"]} defaultClosed={["calendar", "training"]}><EmployeeDetailContent /></ManagerSections>;
 
 const EmployeeDetailContent = () => {
-  const navigate = useNavigate();
   const back = useBackNavigation("/manager");
   const { slug } = useParams();
   const { period, setPeriod, option, hasFixture } = useManagerPeriod();
-  const [scenario, setScenario] = useState<DemoScenario>("normal");
   const [panel, setPanel] = useState<PanelKey>(null);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedSignal, setSelectedSignal] = useState<Signal | null>(null);
   const m = useMemo(() => teamMembers.find((item) => item.slug === slug) ?? teamMembers[0], [slug]);
   const full = m.slug === "christian";
 
-  const noActivity = scenario === "no-activity" || m.state === "no-activity";
-  const loadError = scenario === "load-error";
-  const qualityError = loadError || m.state === "quality-error";
-  const imported = scenario === "imported-docs" || m.state === "imported";
-  const partial = scenario === "partial";
-  const unfinished = scenario === "unfinished";
-  const noPlan = scenario === "no-plan" || m.plan === null;
-  const retry = () => { setScenario("normal"); toast({ title: "Henter igen", description: "Demo: data er hentet." }); };
+  const noActivity = m.state === "no-activity";
+  const loadError = false;
+  const qualityError = m.state === "quality-error";
+  const imported = m.state === "imported";
+  const noPlan = m.plan === null;
+  const retry = () => { toast({ title: "Henter igen", description: "Demo: data er hentet." }); };
 
   useEffect(() => {
     const h = window.location.hash.slice(1);
