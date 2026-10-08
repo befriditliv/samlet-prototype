@@ -26,7 +26,7 @@ export const HomepageSignals = () => {
   const [employee, setEmployee] = useState("all");
   const [selected, setSelected] = useState<typeof homepageSignals[number] | null>(null);
   return <ManagerSection id="homepage-signals" title="Signaler" header={
-    <div className="flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><div className="rounded-lg bg-primary/10 p-2"><Radar className="h-5 w-5 text-primary" /></div><div><h2 id="homepage-signals-title" className="text-2xl font-bold">Signaler</h2><p className="text-sm text-muted-foreground">Kunder, kontakt og deltagelse · faste tidsperioder</p></div></div>
+    <div className="flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><Radar className="h-5 w-5 text-primary" /><div><h2 id="homepage-signals-title" className="text-2xl font-bold">Signaler</h2><p className="text-sm text-muted-foreground">Kunder, kontakt og deltagelse · faste tidsperioder</p></div></div>
       <Select value={employee} onValueChange={setEmployee}><SelectTrigger className="h-8 w-52 bg-card" aria-label="Signaler: filtrer efter bruger"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">Alle medarbejdere</SelectItem>{teamMembers.map(m => <SelectItem key={m.slug} value={m.slug}>User · {m.district}</SelectItem>)}</SelectContent></Select>
     </div>}>
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">{homepageSignals.map(signal => {
@@ -48,7 +48,7 @@ export const HomepageThemes = () => {
   const [source, setSource] = useState<typeof regionalThemeSources[number] | null>(null);
   const formatDate = (date: string) => new Intl.DateTimeFormat("da-DK", { day: "numeric", month: "short", year: "numeric" }).format(new Date(`${date}T12:00:00`));
   return <ManagerSection id="regional-themes" title="Hvad regionen hører" header={
-    <div className="flex items-center gap-3"><div className="rounded-lg bg-primary/10 p-2"><MessageSquare className="h-5 w-5 text-primary" /></div><div><h2 id="regional-themes-title" className="text-2xl font-bold">Hvad regionen hører</h2><p className="text-sm text-muted-foreground">Fra {regionalThemeCoverage.analyzed} af {regionalThemeCoverage.completed} gennemførte debriefs · seneste 30 dage</p></div></div>}>
+    <div className="flex items-center gap-3"><MessageSquare className="h-5 w-5 text-primary" /><div><h2 id="regional-themes-title" className="text-2xl font-bold">Hvad regionen hører</h2><p className="text-sm text-muted-foreground">Fra {regionalThemeCoverage.analyzed} af {regionalThemeCoverage.completed} gennemførte debriefs · seneste 30 dage</p></div></div>}>
     <div className="grid items-start gap-3 md:grid-cols-2">{regionalThemes.map(theme => {
       const open = expanded.includes(theme.id);
       const sources = regionalThemeSources.filter(s => s.themeId === theme.id).sort((a, b) => b.date.localeCompare(a.date) || b.time.localeCompare(a.time));
@@ -69,7 +69,7 @@ export const HomepageDebriefQuality = () => {
   if (!review || !first || !last) return null;
   const difference = last.score - first.score;
   return <ManagerSection id="homepage-quality" title="Debriefkvalitet" header={
-    <div className="flex items-center gap-3"><div className="rounded-lg bg-primary/10 p-2"><ClipboardCheck className="h-5 w-5 text-primary" /></div><div><h2 id="homepage-quality-title" className="text-2xl font-bold">Debriefkvalitet</h2><p className="text-sm text-muted-foreground">Dokumentationens kvalitet · {homepageQuality.assessed} vurderede debriefs</p></div></div>}>
+    <div className="flex items-center gap-3"><ClipboardCheck className="h-5 w-5 text-primary" /><div><h2 id="homepage-quality-title" className="text-2xl font-bold">Debriefkvalitet</h2><p className="text-sm text-muted-foreground">Dokumentationens kvalitet · {homepageQuality.assessed} vurderede debriefs</p></div></div>}>
     <div className="manager-band">
       <div className="grid lg:grid-cols-2">
         <div className="p-4 sm:p-5"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs font-semibold text-muted-foreground">Seneste ugentlige score</p><p className="mt-1 text-xl font-bold text-primary">{fmt(last.score)}<span className="text-xs font-normal text-muted-foreground"> / 10</span></p></div><span className="flex items-center gap-1 text-xs text-success"><TrendingUp className="h-3.5 w-3.5" />+{fmt(difference)} over 4 uger</span></div>
