@@ -1,19 +1,13 @@
 import { createContext, useContext, useId, useState, type ReactNode } from "react";
-import { ChevronDown, ChevronsDownUp, ChevronsUpDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
-const SectionContext = createContext<{ closed: string[]; toggle: (id: string) => void; setAll: (closed: boolean) => void } | null>(null);
+const SectionContext = createContext<{ closed: string[]; toggle: (id: string) => void } | null>(null);
 
 export function ManagerSections({ ids, children, defaultClosed = [] }: { ids: string[]; children: ReactNode; defaultClosed?: string[] }) {
   const [closed, setClosed] = useState<string[]>(defaultClosed);
-  return <SectionContext.Provider value={{ closed, toggle: id => setClosed(previous => previous.includes(id) ? previous.filter(item => item !== id) : [...previous, id]), setAll: value => setClosed(value ? ids : []) }}>{children}</SectionContext.Provider>;
-}
-
-export function ManagerSectionControls() {
-  const context = useContext(SectionContext);
-  if (!context) return null;
-  return <div className="flex justify-end gap-1"><Button variant="ghost" size="sm" onClick={() => context.setAll(false)}><ChevronsUpDown />Fold alle ud</Button><Button variant="ghost" size="sm" onClick={() => context.setAll(true)}><ChevronsDownUp />Fold alle ind</Button></div>;
+  return <SectionContext.Provider value={{ closed, toggle: id => setClosed(previous => previous.includes(id) ? previous.filter(item => item !== id) : [...previous, id]) }}>{children}</SectionContext.Provider>;
 }
 
 export function useManagerSectionState(id: string, defaultOpen = false) {
