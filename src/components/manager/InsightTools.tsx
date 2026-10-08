@@ -145,11 +145,11 @@ export const InsightTools = () => {
     <Card
       ref={toolsRef}
       className={cn(
-        "border-0 bg-gradient-to-br from-card to-card/80 shadow-sm overflow-hidden",
+        "rounded-lg border bg-card shadow-none overflow-hidden",
         toolsInView && "animate-fade-in"
       )}
     >
-      <CardContent className="pt-6 space-y-4">
+      <CardContent className="p-4 space-y-3">
         {/* Header with Ny rapport button */}
         <div className="flex items-center justify-end">
           <Button 
@@ -164,23 +164,23 @@ export const InsightTools = () => {
         </div>
 
         {/* Reports Table */}
-        <div className="rounded-xl border-0 overflow-hidden bg-muted/20">
+        <div className="rounded-md border-0 overflow-hidden bg-muted/20">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/30 hover:bg-muted/30 border-b border-border/50">
-                <TableHead className="py-4 px-5 w-[200px]">
+                <TableHead className="py-3 px-4 w-[200px]">
                   <div className="text-sm font-semibold text-foreground">Oprettet</div>
                   <div className="text-xs font-normal text-muted-foreground">Dato og tid</div>
                 </TableHead>
-                <TableHead className="py-4 px-5 w-[140px]">
+                <TableHead className="py-3 px-4 w-[140px]">
                   <div className="text-sm font-semibold text-foreground">Filtre</div>
                   <div className="text-xs font-normal text-muted-foreground">Anvendt</div>
                 </TableHead>
-                <TableHead className="py-4 px-5">
+                <TableHead className="py-3 px-4">
                   <div className="text-sm font-semibold text-foreground">Rapport</div>
                   <div className="text-xs font-normal text-muted-foreground">Titel og resumé</div>
                 </TableHead>
-                <TableHead className="py-4 px-5 text-right w-[140px]">
+                <TableHead className="py-3 px-4 text-right w-[140px]">
                   <div className="text-sm font-semibold text-foreground">Handlinger</div>
                   <div className="text-xs font-normal text-muted-foreground">Vis / Slet</div>
                 </TableHead>
@@ -206,11 +206,11 @@ export const InsightTools = () => {
                     )}
                     style={toolsInView ? { animationDelay: `${idx * 50}ms` } : undefined}
                   >
-                    <TableCell className="py-4 px-5">
+                    <TableCell className="py-3 px-4">
                       <span className="font-medium text-foreground">{format(report.createdAt, "yyyy-MM-dd")}</span>
                       <span className="text-muted-foreground ml-2 text-sm">{format(report.createdAt, "HH:mm")}</span>
                     </TableCell>
-                    <TableCell className="py-4 px-5">
+                    <TableCell className="py-3 px-4">
                       <TooltipProvider>
                         <div className="flex items-center gap-1.5">
                           <Tooltip>
@@ -246,18 +246,18 @@ export const InsightTools = () => {
                         </div>
                       </TooltipProvider>
                     </TableCell>
-                    <TableCell className="max-w-md py-4 px-5">
+                    <TableCell className="max-w-md py-3 px-4">
                       <div className="space-y-1">
                         <p className="font-semibold text-foreground group-hover:text-primary transition-colors">{report.title}</p>
                         <p className="truncate text-sm text-muted-foreground">{report.summary}</p>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right py-4 px-5">
+                    <TableCell className="text-right py-3 px-4">
                       <div className="flex items-center justify-end gap-1.5">
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-9 w-9 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
+                          aria-label="Vis rapport" title="Vis rapport" className="h-8 w-8 rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-all duration-200"
                           onClick={() => viewReport(report)}
                         >
                           <Eye className="h-4 w-4" />
@@ -265,7 +265,7 @@ export const InsightTools = () => {
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-9 w-9 rounded-full bg-destructive/10 text-destructive hover:bg-destructive/20 transition-all duration-200"
+                          aria-label="Slet rapport" title="Slet rapport" className="h-8 w-8 rounded-md bg-destructive/10 text-destructive hover:bg-destructive/20 transition-all duration-200"
                           onClick={() => deleteReport(report.id)}
                         >
                           <Trash2 className="h-4 w-4" />
