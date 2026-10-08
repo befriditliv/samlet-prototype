@@ -4,7 +4,7 @@ import { employeePlanGoals, employeeCalendarBreakdown, employeePlanSnapshot as s
 import { projectPlanPace, summarizePlan } from "@/data/employeePlanning";
 import { ErrorBlock } from "@/components/manager/StateBlocks";
 
-import { ManagerSection } from "./ManagerSection";
+import { ManagerSection, ManagerSectionTitle } from "./ManagerSection";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 type Props = { member: TeamMember; noActivity: boolean; noPlan: boolean; loadError: boolean; onRetry: () => void };
@@ -17,7 +17,7 @@ export const EmployeeActivityPanels = ({ member, noActivity, noPlan, loadError, 
   const forecast = outlook && plan && !noPlan ? projectPlanPace(snapshot.done, snapshot.target, outlook.booked, snapshot.windowDays, snapshot.remainingDays) : null;
   const completionDate = forecast?.daysToTarget !== null && forecast?.daysToTarget !== undefined ? new Date(Date.parse(`${snapshot.date}T12:00:00Z`) + forecast.daysToTarget * 86400000).toLocaleDateString("da-DK", { day: "numeric", month: "long" }) : null;
   return <ManagerSection id="contact-plan" title="Kontaktplan og kommende møder" header={
-    <div className="flex flex-wrap items-baseline justify-between gap-2"><div className="flex items-center gap-3"><Target className="h-5 w-5 text-primary" /><h3 className="text-lg font-bold">Kontaktplan og kommende møder</h3></div><span className="text-sm text-muted-foreground">Plan: 1. jul – 31. dec 2026 · Status 7. okt</span></div>}>
+    <div className="flex flex-wrap items-baseline justify-between gap-2"><div className="flex items-center gap-3"><Target className="h-5 w-5 text-primary" /><ManagerSectionTitle>Kontaktplan og kommende møder</ManagerSectionTitle></div><span className="text-sm text-muted-foreground">Plan: 1. jul – 31. dec 2026 · Status 7. okt</span></div>}>
     {loadError ? <ErrorBlock label="Kontaktplaner og kommende møder" onRetry={onRetry} /> : <>
       <div className="manager-band">
         {forecast && outlook && <div className="flex flex-wrap items-start justify-between gap-3 border-b p-4 sm:p-5">
