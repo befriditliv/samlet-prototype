@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AlertTriangle, ArrowLeft, CalendarCheck, CalendarX, ChevronRight, Clipboard, Gauge, GraduationCap, MessageSquare, Radar, Printer, RefreshCw, Sparkles, UserRound } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CalendarCheck, CalendarX, Clipboard, Gauge, GraduationCap, MessageSquare, Radar, Printer, RefreshCw, Sparkles, UserRound } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { ManagerPeriodControl } from "@/components/manager/ManagerPeriodControl";
+import { ManagerCard, managerCardFooter, managerCardNote, managerCardTitle } from "@/components/manager/ManagerCard";
 import { EmployeeQuality } from "@/components/manager/EmployeeQuality";
 import { EmployeeFieldThemes } from "@/components/manager/EmployeeFieldThemes";
 import { EmployeeBrickCoverage } from "@/components/manager/EmployeeBrickCoverage";
@@ -31,7 +32,7 @@ const MeetingPill = ({ m }: { m: MeetingState }) => {
   if (m.kind === "own") return <span className="inline-flex items-center gap-1 rounded-md border border-primary/40 bg-primary/10 px-2 py-1 text-xs font-medium text-primary"><CalendarCheck className="h-3.5 w-3.5" />Eget møde {m.date}</span>;
   if (m.kind === "colleague") return <span className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground"><UserRound className="h-3.5 w-3.5" />{m.who} har møde {m.date}</span>;
   if (m.kind === "outside") return <span className="inline-flex items-center gap-1 rounded-md border border-border px-2 py-1 text-xs text-foreground">{m.date} <span className="text-muted-foreground">· uden for 28 dage</span></span>;
-  if (m.kind === "unavailable") return <span className="inline-flex items-center gap-1 rounded-md border-2 border-destructive/50 bg-destructive/10 px-2 py-1 text-xs font-medium text-destructive"><AlertTriangle className="h-3.5 w-3.5" />Mødedata utilgængelig</span>;
+  if (m.kind === "unavailable") return <span className="inline-flex items-center gap-1 rounded-md border border-destructive/40 bg-destructive/10 px-2 py-1 text-xs font-medium text-destructive"><AlertTriangle className="h-3.5 w-3.5" />Mødedata utilgængelig</span>;
   return <span className="inline-flex items-center gap-1 rounded-md border border-dashed border-muted-foreground/40 px-2 py-1 text-xs text-muted-foreground"><CalendarX className="h-3.5 w-3.5" />Intet kommende registreret</span>;
 };
 
