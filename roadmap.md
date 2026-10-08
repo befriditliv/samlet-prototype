@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Remove the source-quality explanatory paragraph and align icons with manager headings and blocks
+- [x] Verify both manager pages retain their controls and display the updated icons
+
 - [x] Remove global fold controls and unknown source, unify card typography, and align the header period selector without the date line
 - [x] Verify the requested manager presentation changes
 

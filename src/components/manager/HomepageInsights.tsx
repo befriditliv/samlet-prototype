@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Building2, CalendarCheck, ChevronDown, GraduationCap, Globe, Info, MessageSquare, ShieldCheck, TrendingUp } from "lucide-react";
+import { BookOpen, CalendarCheck, CalendarClock, CalendarOff, ChevronDown, ClipboardCheck, GraduationCap, Info, Mail, MessageSquare, MonitorPlay, Radar, ShieldX, Target, TrendingUp, UserCheck, UserX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -9,17 +9,28 @@ import { fmt, homepageQuality, homepageSignalCount, homepageSignals, regionalThe
 import { ManagerSection } from "./ManagerSection";
 import { SourceQuality } from "./SourceQuality";
 
-const signalIcons = { building: Building2, calendar: CalendarCheck, globe: Globe, shield: ShieldCheck, education: GraduationCap };
+const signalIcons = {
+  "HOME-S01": CalendarOff,
+  "HOME-S02": CalendarCheck,
+  "HOME-S03": CalendarClock,
+  "HOME-S04": Mail,
+  "HOME-S05": ShieldX,
+  "HOME-S06": UserX,
+  "HOME-S07": GraduationCap,
+  "HOME-S08": UserCheck,
+  "HOME-S09": MonitorPlay,
+  "HOME-S10": Target,
+};
 
 export const HomepageSignals = () => {
   const [employee, setEmployee] = useState("all");
   const [selected, setSelected] = useState<typeof homepageSignals[number] | null>(null);
   return <ManagerSection id="homepage-signals" title="Signaler" header={
-    <div className="flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><div className="rounded-lg bg-primary/10 p-2"><ShieldCheck className="h-5 w-5 text-primary" /></div><div><h2 id="homepage-signals-title" className="text-2xl font-bold">Signaler</h2><p className="text-sm text-muted-foreground">Kunder, kontakt og deltagelse · faste tidsperioder</p></div></div>
+    <div className="flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><div className="rounded-lg bg-primary/10 p-2"><Radar className="h-5 w-5 text-primary" /></div><div><h2 id="homepage-signals-title" className="text-2xl font-bold">Signaler</h2><p className="text-sm text-muted-foreground">Kunder, kontakt og deltagelse · faste tidsperioder</p></div></div>
       <Select value={employee} onValueChange={setEmployee}><SelectTrigger className="h-8 w-52 bg-card" aria-label="Signaler: filtrer efter bruger"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">Alle medarbejdere</SelectItem>{teamMembers.map(m => <SelectItem key={m.slug} value={m.slug}>User · {m.district}</SelectItem>)}</SelectContent></Select>
     </div>}>
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">{homepageSignals.map(signal => {
-      const Icon = signalIcons[signal.icon as keyof typeof signalIcons];
+      const Icon = signalIcons[signal.id as keyof typeof signalIcons];
       return <Button key={signal.id} variant="ghost" onClick={() => setSelected(signal)} className="h-auto min-h-20 items-center justify-start gap-3 whitespace-normal rounded-lg border bg-card px-3 py-3 text-left shadow-none hover:bg-primary/5">
         <Icon className="h-4 w-4 shrink-0 text-primary" />
         <div className="min-w-0 flex-1"><p className="text-xs font-semibold leading-5">{signal.label}</p><p className="text-xs font-normal text-muted-foreground">{signal.horizon}</p></div>
@@ -58,7 +69,7 @@ export const HomepageDebriefQuality = () => {
   if (!review || !first || !last) return null;
   const difference = last.score - first.score;
   return <ManagerSection id="homepage-quality" title="Debriefkvalitet" header={
-    <div className="flex items-center gap-3"><div className="rounded-lg bg-primary/10 p-2"><BookOpen className="h-5 w-5 text-primary" /></div><div><h2 id="homepage-quality-title" className="text-2xl font-bold">Debriefkvalitet</h2><p className="text-sm text-muted-foreground">Dokumentationens kvalitet · {homepageQuality.assessed} vurderede debriefs</p></div></div>}>
+    <div className="flex items-center gap-3"><div className="rounded-lg bg-primary/10 p-2"><ClipboardCheck className="h-5 w-5 text-primary" /></div><div><h2 id="homepage-quality-title" className="text-2xl font-bold">Debriefkvalitet</h2><p className="text-sm text-muted-foreground">Dokumentationens kvalitet · {homepageQuality.assessed} vurderede debriefs</p></div></div>}>
     <div className="manager-band">
       <div className="grid lg:grid-cols-2">
         <div className="p-4 sm:p-5"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs font-semibold text-muted-foreground">Seneste ugentlige score</p><p className="mt-1 text-xl font-bold text-primary">{fmt(last.score)}<span className="text-xs font-normal text-muted-foreground"> / 10</span></p></div><span className="flex items-center gap-1 text-xs text-success"><TrendingUp className="h-3.5 w-3.5" />+{fmt(difference)} over 4 uger</span></div>

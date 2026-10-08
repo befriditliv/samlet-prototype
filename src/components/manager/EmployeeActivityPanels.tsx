@@ -1,4 +1,4 @@
-import { CalendarDays, TrendingUp } from "lucide-react";
+import { CalendarDays, Target, TrendingUp } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { employeePlanGoals, employeeCalendarBreakdown, employeePlanSnapshot as snapshot, upcoming28, fmt, type TeamMember } from "@/data/managerDemo";
 import { projectPlanPace, summarizePlan } from "@/data/employeePlanning";
@@ -17,7 +17,7 @@ export const EmployeeActivityPanels = ({ member, noActivity, noPlan, loadError, 
   const forecast = outlook && plan && !noPlan ? projectPlanPace(snapshot.done, snapshot.target, outlook.booked, snapshot.windowDays, snapshot.remainingDays) : null;
   const completionDate = forecast?.daysToTarget !== null && forecast?.daysToTarget !== undefined ? new Date(Date.parse(`${snapshot.date}T12:00:00Z`) + forecast.daysToTarget * 86400000).toLocaleDateString("da-DK", { day: "numeric", month: "long" }) : null;
   return <ManagerSection id="contact-plan" title="Kontaktplan og kommende møder" header={
-    <div className="flex flex-wrap items-baseline justify-between gap-2"><h3 className="text-lg font-bold">Kontaktplan og kommende møder</h3><span className="text-xs text-muted-foreground">Plan: 1. jul – 31. dec 2026 · Status 7. okt</span></div>}>
+    <div className="flex flex-wrap items-baseline justify-between gap-2"><div className="flex items-center gap-3"><Target className="h-5 w-5 text-primary" /><h3 className="text-lg font-bold">Kontaktplan og kommende møder</h3></div><span className="text-xs text-muted-foreground">Plan: 1. jul – 31. dec 2026 · Status 7. okt</span></div>}>
     {loadError ? <ErrorBlock label="Kontaktplaner og kommende møder" onRetry={onRetry} /> : <>
       <div className="manager-band grid gap-5 px-4 py-4 md:grid-cols-[1fr_1.2fr]">
         <div><p className="text-sm font-medium text-muted-foreground">Gennemført mod planen</p>{noPlan || !plan ? <p className="mt-3 text-sm text-muted-foreground">Ingen kontaktplan tilgængelig.</p> : <><p className="mt-2 text-3xl font-bold">{done}<span className="text-lg font-normal text-muted-foreground"> / {plan.planned} besøg</span></p><Progress value={done / plan.planned * 100} className="mt-3 h-2" /><p className="mt-2 text-sm text-muted-foreground">{Math.round(done / plan.planned * 100)} % gennemført · {plan.planned - done} besøg tilbage</p><p className="mt-2 text-xs text-muted-foreground">{plan.customers} kunder med mål · kun fysiske besøg · {plan.excluded} ugyldige eller overlappende mål udeladt</p></>}</div>
