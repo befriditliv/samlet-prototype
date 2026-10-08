@@ -5,7 +5,7 @@ import { BookOpen, ClipboardCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-import { ManagerSection } from "./ManagerSection";
+import { ManagerSection, ManagerSectionTitle } from "./ManagerSection";
 import { SourceQuality } from "./SourceQuality";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
