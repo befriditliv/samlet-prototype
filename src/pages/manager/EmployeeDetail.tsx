@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AlertTriangle, ArrowLeft, CalendarCheck, CalendarX, ChevronRight, Clipboard, Gauge, GraduationCap, MessageSquare, Radar, Printer, RefreshCw, Sparkles, UserRound } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { ManagerPeriodControl } from "@/components/manager/ManagerPeriodControl";
 import { EmployeeQuality } from "@/components/manager/EmployeeQuality";
@@ -20,7 +19,7 @@ import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { useManagerPeriod } from "@/hooks/use-manager-period";
 import { toast } from "@/hooks/use-toast";
-import { fmt, oneToOnePoints, pct, scenarioOptions, signals, syncLine, teamMembers, themes, type DemoScenario, type MeetingState } from "@/data/managerDemo";
+import { fmt, oneToOnePoints, pct, signals, syncLine, teamMembers, themes, type MeetingState } from "@/data/managerDemo";
 import { ManagerSection, ManagerSections } from "@/components/manager/ManagerSection";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
@@ -36,28 +35,24 @@ const MeetingPill = ({ m }: { m: MeetingState }) => {
   return <span className="inline-flex items-center gap-1 rounded-md border border-dashed border-muted-foreground/40 px-2 py-1 text-xs text-muted-foreground"><CalendarX className="h-3.5 w-3.5" />Intet kommende registreret</span>;
 };
 
-const EmployeeDetail = () => <ManagerSections ids={["performance", "employee-quality", "signals", "themes", "contact-plan", "employee-coverage", "calendar", "training"]} defaultClosed={["calendar", "training"]}><EmployeeDetailContent /></ManagerSections>;
+const EmployeeDetail = () => <ManagerSections ids={["performance", "signals", "themes", "contact-plan", "employee-coverage", "calendar", "training"]} defaultClosed={["calendar", "training"]}><EmployeeDetailContent /></ManagerSections>;
 
 const EmployeeDetailContent = () => {
-  const navigate = useNavigate();
   const back = useBackNavigation("/manager");
   const { slug } = useParams();
   const { period, setPeriod, option, hasFixture } = useManagerPeriod();
-  const [scenario, setScenario] = useState<DemoScenario>("normal");
   const [panel, setPanel] = useState<PanelKey>(null);
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [selectedSignal, setSelectedSignal] = useState<Signal | null>(null);
   const m = useMemo(() => teamMembers.find((item) => item.slug === slug) ?? teamMembers[0], [slug]);
   const full = m.slug === "christian";
 
-  const noActivity = scenario === "no-activity" || m.state === "no-activity";
-  const loadError = scenario === "load-error";
-  const qualityError = loadError || m.state === "quality-error";
-  const imported = scenario === "imported-docs" || m.state === "imported";
-  const partial = scenario === "partial";
-  const unfinished = scenario === "unfinished";
-  const noPlan = scenario === "no-plan" || m.plan === null;
-  const retry = () => { setScenario("normal"); toast({ title: "Henter igen", description: "Demo: data er hentet." }); };
+  const noActivity = m.state === "no-activity";
+  const loadError = false;
+  const qualityError = m.state === "quality-error";
+  const imported = m.state === "imported";
+  const noPlan = m.plan === null;
+  const retry = () => { toast({ title: "Henter igen", description: "Demo: data er hentet." }); };
 
   useEffect(() => {
     const h = window.location.hash.slice(1);
@@ -90,16 +85,13 @@ const EmployeeDetailContent = () => {
 
     <main className="mx-auto max-w-7xl space-y-5 px-4 py-5 sm:px-6">
       
-      <section className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"><div><div className="flex flex-wrap items-center gap-2"><h2 className="text-2xl font-bold">User</h2><Badge variant="outline">Demo-identitet</Badge></div><p className="mt-1 text-muted-foreground">{m.role} · {m.district}</p></div><div className="flex flex-wrap items-end gap-3"><div><p className="mb-1 text-xs text-muted-foreground">Medarbejder</p><Select value={m.slug} onValueChange={(v) => navigate(`/manager/employee/${v}`)}><SelectTrigger className="h-9 w-44 bg-background"><SelectValue /></SelectTrigger><SelectContent>{[...teamMembers].sort((a, b) => a.name.localeCompare(b.name, "da")).map((i) => <SelectItem key={i.slug} value={i.slug}>User · {i.district}</SelectItem>)}</SelectContent></Select></div><div><p className="mb-1 text-xs text-muted-foreground">Demo-scenarie · kun til gennemsyn</p><Select value={scenario} onValueChange={(v) => setScenario(v as DemoScenario)}><SelectTrigger className="h-9 w-56 bg-background"><SelectValue /></SelectTrigger><SelectContent>{scenarioOptions.map((i) => <SelectItem key={i.value} value={i.value}>{i.label}</SelectItem>)}</SelectContent></Select></div><Button onClick={() => setPanel("one-to-one")}><Sparkles className="mr-2 h-4 w-4" />Forbered 1:1</Button></div></section>
+      <section className="flex items-end justify-between gap-4"><div><div className="flex flex-wrap items-center gap-2"><h2 className="text-2xl font-bold">User</h2><Badge variant="outline">Demo-identitet</Badge></div><p className="mt-1 text-muted-foreground">{m.role} · {m.district}</p></div><Button onClick={() => setPanel("one-to-one")} className="shrink-0"><Sparkles className="mr-2 h-4 w-4" />Forbered 1:1</Button></section>
 
       {!hasFixture ? <Card className="rounded-lg border shadow-sm"><CardContent className="p-10 text-center"><h3 className="font-semibold">Ingen forberedte demo-data for denne periode</h3><p className="mt-2 text-sm text-muted-foreground">Vælg 30 dage for at se sporbare medarbejderdata.</p></CardContent></Card> : <>
-        {unfinished && <div className="rounded-md border bg-muted/40 px-4 py-2 text-sm text-muted-foreground">Uafsluttet periode · periodetal vises, alle trendtal er undertrykt.</div>}
 
         <ManagerSection id="performance" title="Generel præstation" header={<div className="flex items-baseline justify-between gap-3"><div className="flex items-center gap-3"><Gauge className="h-5 w-5 text-primary" /><h3 className="text-lg font-bold">Generel præstation</h3></div><span className="text-xs text-muted-foreground">{option.range}</span></div>}>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{kpis.map(k => <div key={k.key} className={`rounded-lg border bg-card p-4 ${k.error ? "border-destructive/50" : ""}`}><Button variant="ghost" className="h-auto w-full justify-start whitespace-normal p-0 text-left hover:bg-transparent" onClick={() => setPanel(k.key as PanelKey)}><div className="w-full"><p className="text-xs font-medium text-muted-foreground">{k.label}</p><p className="mt-2 text-xl font-bold tabular-nums">{k.error ? "Utilgængelig" : k.value}</p><p className="mt-2 text-xs font-normal leading-5 text-muted-foreground">{k.note}</p></div></Button>{k.error && <Button size="sm" variant="outline" className="mt-2" onClick={retry}>Prøv igen</Button>}</div>)}</div>
         </ManagerSection>
-        <EmployeeQuality member={m} unavailable={imported || noActivity} error={qualityError} unfinished={unfinished} onRetry={retry} />
-
         <ManagerSection id="signals" title="Vigtigste kunde signaler" header={<div><div className="flex items-center gap-3"><Radar className="h-5 w-5 shrink-0 text-primary" /><h3 className="text-lg font-bold">Vigtigste kunde signaler</h3></div><p className="mt-1 text-xs text-muted-foreground">Aktuelle kundesignaler · hver regel har sin egen tidshorisont</p></div>}>
           {loadError ? <ErrorBlock label="Kundesignaler" onRetry={retry} /> : !full ? <Card className="border border-dashed bg-muted/20 shadow-none"><CardContent className="p-6 text-sm text-muted-foreground">Ingen aktuelle kundesignaler for medarbejderen.</CardContent></Card> :
           <div className="grid gap-3 md:grid-cols-2">{signals.map((s) => <Button variant="ghost" key={s.id} onClick={() => setSelectedSignal(s)} className="h-auto w-full items-start justify-start whitespace-normal rounded-lg border bg-card p-4 text-left font-normal hover:bg-primary/5">
@@ -110,7 +102,7 @@ const EmployeeDetailContent = () => {
         </ManagerSection>
 
         <ManagerSection id="themes" title="Temaer i marken de sidste 30 dage" header={<div className="flex items-center gap-3"><MessageSquare className="h-5 w-5 text-primary" /><h3 className="text-lg font-bold">Temaer i marken de sidste 30 dage</h3></div>}>
-          {loadError ? <ErrorBlock label="Temaer" onRetry={retry} /> : noActivity || imported || !full ? <p className="text-sm text-muted-foreground">{imported ? "Importeret CRM-dokumentation analyseres ikke for temaer." : "Ingen analyserede debriefs i perioden."}</p> : <EmployeeFieldThemes partial={partial} unfinished={unfinished} />}
+          {loadError ? <ErrorBlock label="Temaer" onRetry={retry} /> : noActivity || imported || !full ? <p className="text-sm text-muted-foreground">{imported ? "Importeret CRM-dokumentation analyseres ikke for temaer." : "Ingen analyserede debriefs i perioden."}</p> : <EmployeeFieldThemes partial={false} unfinished={false} />}
         </ManagerSection>
         <EmployeeActivityPanels member={m} noActivity={noActivity} noPlan={noPlan} loadError={loadError} onRetry={retry} />
 
@@ -127,7 +119,7 @@ const EmployeeDetailContent = () => {
       : panel === "coverage" ? <><p className="text-sm">{hcos} af {m.hcosAssigned} tildelte HCO'er har en registreret kontakt. HCP-rækkevidde er et særskilt mål.</p><Badge variant="outline">Kilde K1 · COVERAGE-2026-10</Badge></>
       : panel === "drafts" ? <><div className="grid grid-cols-2 gap-3">{[["Kladder", m.drafts], ["Mangler", m.missing]].map(([l, v]) => <Card key={l}><CardContent className="p-4 text-center"><p className="text-2xl font-bold">{v}</p><p className="text-xs text-muted-foreground">{l}</p></CardContent></Card>)}</div><Badge variant="outline">Kilde K2 · DOC-001–DOC-011</Badge></>
       : panel === "documentation" ? <><div className="grid grid-cols-3 gap-3">{[["Færdige", documented], ["Kladder", imported ? 0 : m.drafts], ["Mangler", imported ? 0 : m.missing]].map(([l, v]) => <Card key={l}><CardContent className="p-4 text-center"><p className="text-2xl font-bold">{v}</p><p className="text-xs text-muted-foreground">{l}</p></CardContent></Card>)}</div><p className="text-sm text-muted-foreground">{imported ? `Alle ${documented} er mærket "Importeret fra CRM". Afsendelsesstatus er ikke relevant.` : `Af ${documented} færdige Jarvis-debriefs er ${Math.max(0, documented - m.drafts)} sendt og ${m.drafts} klar, ikke sendt.`}</p><Badge variant="outline">Kilde K3 · DOC-001–DOC-089</Badge></>
-       : panel === "quality" ? <EmployeeQuality member={m} unavailable={imported || noActivity} error={qualityError} unfinished={unfinished} onRetry={retry} />
+       : panel === "quality" ? <EmployeeQuality member={m} unavailable={imported || noActivity} error={qualityError} unfinished={false} onRetry={retry} />
       : panel === "signals" ? signals.map((s) => <div key={s.id} className="rounded-lg border p-4"><div className="flex justify-between"><strong>{s.name}</strong><Badge variant="outline">{s.id}</Badge></div>{s.rules.map((r) => <p key={r.text} className="mt-2 text-sm text-muted-foreground">{r.text} · {r.horizon}</p>)}</div>)
       : panel === "themes" ? <><p className="text-sm text-muted-foreground">60 analyseret · 14 afventer · 4 fejlede</p>{themes.map((t) => <button key={t.id} onClick={() => setSelectedTheme(t)} className="flex w-full justify-between rounded-lg border p-4 text-left"><span className="font-medium">{t.label}</span><span className="text-sm text-muted-foreground">{t.count} / 60</span></button>)}</> : null}
     </div></SheetContent></Sheet>
