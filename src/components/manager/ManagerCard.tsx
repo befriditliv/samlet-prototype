@@ -9,6 +9,15 @@ export const managerCardShell = "h-auto w-full items-stretch whitespace-normal r
 /** Title line used by every manager card: same size and weight everywhere. */
 export const managerCardTitle = "text-xs font-semibold";
 
+/** Section subtitle directly under a section title: 14 px, secondary gray. */
+export const managerSubtitle = "text-sm text-muted-foreground";
+
+/** Card explanation, metadata and units: 12 px, 20 px line height, secondary gray. */
+export const managerMeta = "text-xs leading-5 text-muted-foreground";
+
+/** Primary key figure inside cards: 20 px bold, dark text. */
+export const managerKpi = "text-xl font-bold tabular-nums";
+
 /** Supporting line: muted, same measure in every card. */
 export const managerCardNote = "text-xs leading-5 text-muted-foreground";
 
