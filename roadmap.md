@@ -40,3 +40,6 @@
 - [x] Restore manager homepage activity overview and classic employee list; remove regional summary, priorities and district coverage
 - [x] Add homepage aggregate signals, regional themes and compact debrief quality while preserving the existing visual design
 - [x] Verify homepage filters, details and layout
+
+- [x] Restore Debriefkvalitet as two aligned columns at all widths, keep the curve instead of bars and balance the source rows
+- [x] Verify column alignment, curve readability, row fill and the employee page source block

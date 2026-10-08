@@ -69,16 +69,18 @@ export const HomepageDebriefQuality = () => {
   const last = homepageQuality.weeks[homepageQuality.weeks.length - 1];
   if (!review || !first || !last) return null;
   const difference = last.score - first.score;
+  const scores = homepageQuality.weeks.map(point => point.score);
+  const chartDomain = [Math.min(...scores) - 0.5, Math.max(...scores) + 0.5] as [number, number];
   return <ManagerSection id="homepage-quality" title="Debriefkvalitet" header={
     <div className="flex items-center gap-3"><ClipboardCheck className="h-5 w-5 text-primary" /><div><h2 id="homepage-quality-title" className="text-2xl font-bold">Debriefkvalitet</h2><p className="text-sm text-muted-foreground">Dokumentationens kvalitet · {homepageQuality.assessed} vurderede debriefs</p></div></div>}>
     <div className="manager-band">
-      <div className="grid lg:grid-cols-2">
+      <div className="grid md:grid-cols-2">
         <div className="p-4 sm:p-5"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs font-semibold text-muted-foreground">Seneste ugentlige score</p><p className="mt-1 text-xl font-bold text-primary">{fmt(last.score)}<span className="text-xs font-normal text-muted-foreground"> / 10</span></p></div><span className="flex items-center gap-1 text-xs text-success"><TrendingUp className="h-3.5 w-3.5" />+{fmt(difference)} over 4 uger</span></div>
           <div className="mt-4" role="img" aria-label={`Ugentlig debriefkvalitet: ${homepageQuality.weeks.map(point => `uge ${point.week}: ${fmt(point.score)} af 10`).join(", ")}`}>
             <div className="h-16 px-6 text-primary" aria-hidden="true">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={homepageQuality.weeks} margin={{ top: 6, right: 4, bottom: 6, left: 4 }}>
-                  <YAxis hide domain={[0, 10]} />
+                  <YAxis hide domain={chartDomain} />
                   <Line type="monotone" dataKey="score" stroke="currentColor" strokeWidth={2} dot={{ r: 3, fill: "hsl(var(--card))", stroke: "currentColor", strokeWidth: 2 }} activeDot={false} isAnimationActive={false} />
                 </LineChart>
               </ResponsiveContainer>
@@ -87,7 +89,7 @@ export const HomepageDebriefQuality = () => {
           </div>
           <p className="mt-3 text-xs text-muted-foreground">{homepageQuality.assessed} vurderede debriefs · 2026 · skala 0–10 · landsgennemsnit ikke tilgængeligt</p>
         </div>
-        <div className="border-t p-4 sm:p-5 lg:border-l lg:border-t-0"><SourceQuality scope="homepage" compact /></div>
+        <div className="flex flex-col border-t p-4 sm:p-5 md:border-l md:border-t-0"><SourceQuality scope="homepage" compact /></div>
       </div>
       <div className="grid gap-3 border-t bg-muted/20 p-4 sm:grid-cols-[auto_1fr_auto] sm:items-start sm:p-5"><div><p className="mb-2 text-xs font-semibold">Ugens vurdering</p><Select value={week} onValueChange={setWeek}><SelectTrigger aria-label="Vælg kvalitetsuge" className="h-8 w-28 bg-card"><SelectValue /></SelectTrigger><SelectContent>{homepageQuality.reviews.map(r => <SelectItem key={r.week} value={String(r.week)}>Uge {r.week}</SelectItem>)}</SelectContent></Select></div><p className="text-sm leading-6 text-muted-foreground">{review.highlight} {review.improvement}</p><Button variant="link" size="sm" className="h-8 justify-start px-0 text-xs" onClick={() => setAssessmentOpen(true)}>Læs hele vurderingen</Button></div>
     </div>
