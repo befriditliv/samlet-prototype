@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Line, LineChart, ResponsiveContainer, YAxis } from "recharts";
 import { BookOpen, CalendarCheck, CalendarClock, CalendarOff, ChevronDown, ClipboardCheck, GraduationCap, Info, Mail, MessageSquare, MonitorPlay, Radar, ShieldX, Target, TrendingUp, UserCheck, UserX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -73,7 +74,17 @@ export const HomepageDebriefQuality = () => {
     <div className="manager-band">
       <div className="grid lg:grid-cols-2">
         <div className="p-4 sm:p-5"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs font-semibold text-muted-foreground">Seneste ugentlige score</p><p className="mt-1 text-xl font-bold text-primary">{fmt(last.score)}<span className="text-xs font-normal text-muted-foreground"> / 10</span></p></div><span className="flex items-center gap-1 text-xs text-success"><TrendingUp className="h-3.5 w-3.5" />+{fmt(difference)} over 4 uger</span></div>
-          <div className="mt-4 grid grid-cols-4 gap-3">{homepageQuality.weeks.map(point => <div key={point.week}><div className="flex h-10 items-end bg-muted/30"><div className="w-full rounded-t-sm bg-primary/70" style={{ height: `${point.score * 10}%` }} /></div><div className="mt-1.5 flex flex-wrap justify-between gap-1 text-xs"><span className="text-muted-foreground">Uge {point.week}</span><strong>{fmt(point.score)}</strong></div></div>)}</div>
+          <div className="mt-4" role="img" aria-label={`Ugentlig debriefkvalitet: ${homepageQuality.weeks.map(point => `uge ${point.week}: ${fmt(point.score)} af 10`).join(", ")}`}>
+            <div className="h-16 px-6 text-primary" aria-hidden="true">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={homepageQuality.weeks} margin={{ top: 6, right: 4, bottom: 6, left: 4 }}>
+                  <YAxis hide domain={[0, 10]} />
+                  <Line type="monotone" dataKey="score" stroke="currentColor" strokeWidth={2} dot={{ r: 3, fill: "hsl(var(--card))", stroke: "currentColor", strokeWidth: 2 }} activeDot={false} isAnimationActive={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-4 gap-3 border-t border-border/60 pt-2">{homepageQuality.weeks.map(point => <div key={point.week} className="text-center text-xs"><span className="text-muted-foreground">Uge {point.week}</span><strong className="mt-1 block tabular-nums">{fmt(point.score)}</strong></div>)}</div>
+          </div>
           <p className="mt-3 text-xs text-muted-foreground">{homepageQuality.assessed} vurderede debriefs · 2026 · skala 0–10 · landsgennemsnit ikke tilgængeligt</p>
         </div>
         <div className="border-t p-4 sm:p-5 lg:border-l lg:border-t-0"><SourceQuality scope="homepage" compact /></div>
