@@ -1,8 +1,9 @@
 # Roadmap
 
-- [ ] Recreate October 8 manager homepage sections and controls in a compact presentation
-- [ ] Recreate employee source quality, evidence, signals, visit planning and coverage controls
-- [ ] Verify both manager views and their interactions
+- [x] Compact manager homepage sections and preserve existing controls
+- [x] Compact employee quality, evidence, signals, visit planning and coverage controls
+- [x] Verify both manager views, filters, source dialogs and calendar expansion
+- [ ] Complete regional physical brick coverage — blocked by missing physical visit and brick assignment fixtures for five employees; current regional panel explicitly shows existing physical/virtual contact data only
 
 - [x] Remove employee brief, simplify quality prose, rename signals and open field themes in dialogs
 - [x] Replace planning with a conditional pace forecast, relocate calendar changes and restore brick-based meeting coverage
