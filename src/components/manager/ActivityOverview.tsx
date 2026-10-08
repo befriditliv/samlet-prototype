@@ -1,7 +1,7 @@
 import { activityStats, previousPeriods, pctChange } from "@/data/managerDemo";
 import { cn } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
-import { Users, TrendingDown, TrendingUp, Calendar, Phone, Globe } from "lucide-react";
+import { Handshake, TrendingDown, TrendingUp, Calendar, Phone, Globe } from "lucide-react";
 
 function ActivityTrend({ value }: { value: number }) {
   const Icon = value < 0 ? TrendingDown : TrendingUp;
@@ -11,7 +11,7 @@ function ActivityTrend({ value }: { value: number }) {
 export const ActivityOverview = () => {
   const prev = previousPeriods.prev30;
   const metrics = [
-    { label: "Møder", icon: Users, value: activityStats.meetings.total, previous: prev.meetings, detail: `${activityStats.meetings.physical} planlagte · ${activityStats.meetings.canvas} kanvas · ${activityStats.meetings.virtual} virtuelle` },
+    { label: "Møder", icon: Handshake, value: activityStats.meetings.total, previous: prev.meetings, detail: `${activityStats.meetings.physical} planlagte · ${activityStats.meetings.canvas} kanvas · ${activityStats.meetings.virtual} virtuelle` },
     { label: "Begivenheder", icon: Calendar, value: activityStats.events.total, previous: prev.events, detail: `${activityStats.events.breakdown.education} uddannelse · ${activityStats.events.breakdown.event} begivenheder` },
     { label: "Telefonopkald", icon: Phone, value: activityStats.phoneCalls.total, previous: prev.phoneCalls, detail: "Udgående HCP-opkald" },
     { label: "Digital kontakt", icon: Globe, value: activityStats.digital.total, previous: prev.digital, detail: `${activityStats.digital.breakdown.email} email · ${activityStats.digital.breakdown.newsletter} nyhedsbrev · ${activityStats.digital.breakdown.webPortal} web · ${activityStats.digital.breakdown.webinar} webinar` },
