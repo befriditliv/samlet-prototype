@@ -5,8 +5,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 
 const SectionContext = createContext<{ closed: string[]; toggle: (id: string) => void; setAll: (closed: boolean) => void } | null>(null);
 
-export function ManagerSections({ ids, children }: { ids: string[]; children: ReactNode }) {
-  const [closed, setClosed] = useState<string[]>([]);
+export function ManagerSections({ ids, children, defaultClosed = [] }: { ids: string[]; children: ReactNode; defaultClosed?: string[] }) {
+  const [closed, setClosed] = useState<string[]>(defaultClosed);
   return <SectionContext.Provider value={{ closed, toggle: id => setClosed(previous => previous.includes(id) ? previous.filter(item => item !== id) : [...previous, id]), setAll: value => setClosed(value ? ids : []) }}>{children}</SectionContext.Provider>;
 }
 

@@ -16,6 +16,8 @@ import { EmployeeCalendarChanges } from "@/components/manager/EmployeeCalendarCh
 import { EmployeeActivityPanels } from "@/components/manager/EmployeeActivityPanels";
 import { ErrorBlock } from "@/components/manager/StateBlocks";
 import { NavigationMenu } from "@/components/NavigationMenu";
+import { HcpSearch } from "@/components/HcpSearch";
+import { AskJarvisManager } from "@/components/manager/AskJarvis";
 import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { useManagerPeriod } from "@/hooks/use-manager-period";
 import { toast } from "@/hooks/use-toast";
@@ -35,7 +37,7 @@ const MeetingPill = ({ m }: { m: MeetingState }) => {
   return <span className="inline-flex items-center gap-1 rounded-md border border-dashed border-muted-foreground/40 px-2 py-1 text-xs text-muted-foreground"><CalendarX className="h-3.5 w-3.5" />Intet kommende registreret</span>;
 };
 
-const EmployeeDetail = () => <ManagerSections ids={["performance", "employee-quality", "signals", "themes", "contact-plan", "employee-coverage", "calendar", "training"]}><EmployeeDetailContent /></ManagerSections>;
+const EmployeeDetail = () => <ManagerSections ids={["performance", "employee-quality", "signals", "themes", "contact-plan", "employee-coverage", "calendar", "training"]} defaultClosed={["calendar", "training"]}><EmployeeDetailContent /></ManagerSections>;
 
 const EmployeeDetailContent = () => {
   const training = useManagerSectionState("training");
