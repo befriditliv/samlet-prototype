@@ -1,5 +1,9 @@
 # Roadmap
 
+- [ ] Recreate October 8 manager homepage sections and controls in a compact presentation
+- [ ] Recreate employee source quality, evidence, signals, visit planning and coverage controls
+- [ ] Verify both manager views and their interactions
+
 - [x] Remove employee brief, simplify quality prose, rename signals and open field themes in dialogs
 - [x] Replace planning with a conditional pace forecast, relocate calendar changes and restore brick-based meeting coverage
 - [x] Verify calculations and employee-page interactions
