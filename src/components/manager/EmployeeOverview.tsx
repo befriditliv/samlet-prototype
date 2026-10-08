@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { employeeListFixtures, fmt } from "@/data/managerDemo";
 
+import { ManagerSection } from "./ManagerSection";
+
 type SortKey = "name" | "contacts" | "documented" | "rate" | "quality" | "upcoming";
 type Row = typeof employeeListFixtures[number];
 const rate = (m: Row) => m.contacts ? Math.round(m.documented / m.contacts * 100) : 0;
@@ -22,10 +24,10 @@ export const EmployeeOverview = () => {
   const [sort, setSort] = useState<{ key: SortKey; dir: 1 | -1 }>({ key: "name", dir: 1 });
   const rows = useMemo(() => employeeListFixtures.filter(m => (employee === "all" || m.slug === employee) && (signal === "all" || (signal === "missing" && m.missing + m.drafts > 0) || (signal === "quality" && m.quality !== null && m.quality < 7) || (signal === "calendar" && m.calendar.deleted + m.calendar.cancelled > 0) || (signal === "error" && m.state === "quality-error"))).sort((a, b) => { const x = sortValue(a, sort.key), y = sortValue(b, sort.key); return (typeof x === "string" ? x.localeCompare(String(y), "da") : Number(x) - Number(y)) * sort.dir; }), [employee, signal, sort]);
   const head = (key: SortKey, label: string, subtitle: string) => <TableHead className="py-3"><Button variant="ghost" className="h-auto justify-start gap-1 p-0 text-foreground hover:bg-transparent" onClick={() => setSort(s => ({ key, dir: s.key === key && s.dir === 1 ? -1 : 1 }))}>{label}<ArrowUpDown className="h-3 w-3 text-muted-foreground" /></Button><p className="mt-1 text-xs font-normal">{subtitle}</p></TableHead>;
-  return <section className="space-y-3">
+  return <ManagerSection id="employees" title="Medarbejderoversigt" header={
     <div className="flex flex-wrap items-center justify-between gap-4"><div className="flex items-center gap-3"><div className="rounded-lg bg-primary/10 p-2"><Users className="h-5 w-5 text-primary" /></div><div><h2 className="text-2xl font-bold">Medarbejderoversigt</h2><p className="text-sm text-muted-foreground">Indsigter om dit salgsteams præstation · Demo-data</p></div></div>
       <div className="flex flex-wrap gap-3"><Select value={signal} onValueChange={setSignal}><SelectTrigger className="h-8 w-52 bg-card" aria-label="Filtrer efter signal"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">Filtrer efter signal</SelectItem><SelectItem value="missing">Uafsluttede debriefs</SelectItem><SelectItem value="quality">Kvalitet under 7</SelectItem><SelectItem value="calendar">Kalenderændringer</SelectItem><SelectItem value="error">Kvalitetsdata mangler</SelectItem></SelectContent></Select><Select value={employee} onValueChange={setEmployee}><SelectTrigger className="h-8 w-52 bg-card" aria-label="Filtrer efter bruger"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">Filtrer efter bruger</SelectItem>{employeeListFixtures.map(m => <SelectItem key={m.slug} value={m.slug}>User · {m.district}</SelectItem>)}</SelectContent></Select></div>
-    </div>
+    </div>}>
     <Card className="overflow-hidden rounded-lg border shadow-none"><Table className="min-w-[1040px]"><TableHeader><TableRow className="bg-muted/30">{head("name", "Medarbejder", "Navn")}{head("contacts", "Møder", "Sidste 30 dage")}{head("documented", "Debriefs", "Sidste 30 dage")}{head("rate", "Debrief Overholdelse", "Sidste 30 dage")}{head("quality", "Debrief Kvalitet", "Sidste 30 dage")}{head("upcoming", "Planlagte møder", "Uge 41 / Uge 42")}</TableRow></TableHeader><TableBody>
       {rows.map(m => <TableRow key={m.slug} className="cursor-pointer" onClick={() => navigate(`/manager/employee/${m.slug}`)}><TableCell className="min-w-44 py-4"><Button variant="link" className="h-auto justify-start p-0 font-semibold text-foreground">User</Button><p className="mt-1 text-xs text-muted-foreground">{m.district}</p></TableCell>
         <TableCell className="min-w-56 py-4"><div className="space-y-1.5"><MeetingLine label="Planlagte" count={m.plannedMeetings} total={m.contacts} tone="" /><MeetingLine label="Kanvas" count={m.canvasMeetings} total={m.contacts} tone="[&>div]:bg-muted-foreground" /><MeetingLine label="Slettede" count={m.calendar.deleted} total={m.contacts + m.calendar.deleted} tone="[&>div]:bg-destructive" /><MeetingLine label="Aflyste" count={m.calendar.cancelled} total={m.contacts + m.calendar.cancelled} tone="[&>div]:bg-warning" /><MeetingLine label="Ombookede" count={m.calendar.rebooked} total={m.contacts + m.calendar.rebooked} tone="[&>div]:bg-muted-foreground" /></div></TableCell>
@@ -36,5 +38,5 @@ export const EmployeeOverview = () => {
       </TableRow>)}
       {!rows.length && <TableRow><TableCell colSpan={6} className="py-10 text-center text-muted-foreground">Ingen medarbejdere matcher filtrene.</TableCell></TableRow>}
     </TableBody></Table></Card>
-  </section>;
+  </ManagerSection>;
 };
