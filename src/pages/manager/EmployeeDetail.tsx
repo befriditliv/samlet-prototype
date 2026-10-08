@@ -20,7 +20,7 @@ import { useBackNavigation } from "@/hooks/use-back-navigation";
 import { useManagerPeriod } from "@/hooks/use-manager-period";
 import { toast } from "@/hooks/use-toast";
 import { fmt, oneToOnePoints, pct, scenarioOptions, signals, syncLine, teamMembers, themes, type DemoScenario, type MeetingState } from "@/data/managerDemo";
-import { ManagerSection, ManagerSections, ManagerSectionControls } from "@/components/manager/ManagerSection";
+import { ManagerSection, ManagerSections, ManagerSectionControls, useManagerSectionState } from "@/components/manager/ManagerSection";
 import jarvisLogo from "@/assets/jarvis-logo.svg";
 
 type PanelKey = "contacts" | "coverage" | "documentation" | "drafts" | "quality" | "signals" | "themes" | "one-to-one" | null;
@@ -35,7 +35,10 @@ const MeetingPill = ({ m }: { m: MeetingState }) => {
   return <span className="inline-flex items-center gap-1 rounded-md border border-dashed border-muted-foreground/40 px-2 py-1 text-xs text-muted-foreground"><CalendarX className="h-3.5 w-3.5" />Intet kommende registreret</span>;
 };
 
-const EmployeeDetail = () => {
+const EmployeeDetail = () => <ManagerSections ids={["performance", "employee-quality", "signals", "themes", "contact-plan", "employee-coverage", "calendar", "training"]}><EmployeeDetailContent /></ManagerSections>;
+
+const EmployeeDetailContent = () => {
+  const training = useManagerSectionState("training");
   const navigate = useNavigate();
   const back = useBackNavigation("/manager");
   const { slug } = useParams();
@@ -82,7 +85,7 @@ const EmployeeDetail = () => {
     { icon: MessageSquareText, label: "Debriefkvalitet", value: qualityValue, note: imported ? "Importeret dokumentation vurderes ikke" : noActivity || m.quality === null ? "Ingen vurderede debriefs" : `Periodegennemsnit · n = ${m.qualityN} af ${m.completed}`, key: "quality", error: qualityError },
   ];
 
-  return <ManagerSections ids={["performance", "employee-quality", "signals", "themes", "contact-plan", "employee-coverage"]}><div className="manager-view min-h-screen bg-background">
+  return <div className="manager-view min-h-screen bg-background">
     <header className="sticky top-0 z-10 border-b bg-card/90 shadow-sm backdrop-blur-sm"><div className="container mx-auto px-4 py-4 sm:px-6"><div className="flex flex-wrap items-center gap-3"><Button variant="ghost" size="icon" onClick={back} aria-label="Tilbage til teamoverblik"><ArrowLeft className="h-5 w-5" /></Button><img src={jarvisLogo} alt="Jarvis-logo" className="h-10 w-10" /><div className="min-w-48 flex-1"><div className="flex items-center gap-2"><h1 className="text-lg font-bold">Medarbejderoversigt</h1><Badge variant="secondary">Demo</Badge></div><p className="text-sm text-muted-foreground">Forberedelse til 1:1</p></div><ManagerPeriodControl value={period} onChange={setPeriod} range={option.range} /><NavigationMenu /></div><div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground"><RefreshCw className="h-3.5 w-3.5" />{syncLine.split(" · Brief")[0]}</div></div></header>
 
     <main className="mx-auto max-w-7xl space-y-5 px-4 py-5 sm:px-6">
@@ -115,7 +118,7 @@ const EmployeeDetail = () => {
         <EmployeeBrickCoverage member={m} range={option.range} noActivity={noActivity} loadError={loadError} onRetry={retry} />
         <EmployeeCalendarChanges member={m} noActivity={noActivity} loadError={loadError} onRetry={retry} />
 
-        <section><Accordion type="single" collapsible><AccordionItem value="training" className="rounded-lg border bg-card px-5"><AccordionTrigger className="py-4 text-left hover:no-underline"><div className="flex flex-wrap items-baseline gap-x-4 gap-y-1"><span className="text-sm font-semibold">Resultater fra træningsplatform</span><span className="text-xs font-normal text-muted-foreground">Ingen træning i perioden</span></div></AccordionTrigger><AccordionContent><p className="text-xs text-muted-foreground">Historisk demo-træning · 9. sep 2025</p><p className="mt-2 text-sm font-medium">Samtale om Dose 1-forløbet</p><div className="mt-3 grid gap-4 sm:grid-cols-3"><p className="text-sm leading-6"><strong>Gik godt</strong><br />Klar forklaring af det akutte appendicitisforløb.</p><p className="text-sm leading-6"><strong>Kan forbedres</strong><br />Afdæk præference for kirurgi, før materialer præsenteres.</p><p className="text-sm leading-6"><strong>Næste fokus</strong><br />Ét åbent spørgsmål om kundens nuværende forløb.</p></div></AccordionContent></AccordionItem></Accordion></section>
+        <section><Accordion type="single" collapsible value={training.open ? "training" : ""} onValueChange={value => training.setOpen(value === "training")}><AccordionItem value="training" className="rounded-lg border bg-card px-5"><AccordionTrigger className="py-4 text-left hover:no-underline"><div className="flex flex-wrap items-baseline gap-x-4 gap-y-1"><span className="text-sm font-semibold">Resultater fra træningsplatform</span><span className="text-xs font-normal text-muted-foreground">Ingen træning i perioden</span></div></AccordionTrigger><AccordionContent><p className="text-xs text-muted-foreground">Historisk demo-træning · 9. sep 2025</p><p className="mt-2 text-sm font-medium">Samtale om Dose 1-forløbet</p><div className="mt-3 grid gap-4 sm:grid-cols-3"><p className="text-sm leading-6"><strong>Gik godt</strong><br />Klar forklaring af det akutte appendicitisforløb.</p><p className="text-sm leading-6"><strong>Kan forbedres</strong><br />Afdæk præference for kirurgi, før materialer præsenteres.</p><p className="text-sm leading-6"><strong>Næste fokus</strong><br />Ét åbent spørgsmål om kundens nuværende forløb.</p></div></AccordionContent></AccordionItem></Accordion></section>
       </>}
     </main>
 
@@ -131,8 +134,8 @@ const EmployeeDetail = () => {
     </div></SheetContent></Sheet>
 
     <Dialog open={selectedTheme !== null} onOpenChange={(o) => !o && setSelectedTheme(null)}><DialogContent><DialogHeader><DialogTitle>{selectedTheme?.label}</DialogTitle><DialogDescription>Fiktive demo-uddrag · {selectedTheme?.id}</DialogDescription></DialogHeader><div className="space-y-3">{selectedTheme?.examples.map((ex, i) => <div key={ex} className="rounded-lg bg-muted/40 p-4"><p className="text-sm">“{ex}”</p><p className="mt-2 text-xs text-muted-foreground">DEBRIEF-{String((i + 1) * 14).padStart(3, "0")} · {12 + i * 6}. sep 2026 · HCP · {["Lægehuset Amagerbro", "Klinik Islands Brygge", "Lægecenter Ørestad"][i]}</p></div>)}</div></DialogContent></Dialog>
-    <Dialog open={selectedSignal !== null} onOpenChange={(o) => !o && setSelectedSignal(null)}><DialogContent><DialogHeader><DialogTitle>{selectedSignal?.name}</DialogTitle><DialogDescription>Kilde til aktuelt signal · {selectedSignal?.id}</DialogDescription></DialogHeader>{selectedSignal && <div className="space-y-4 text-sm">{selectedSignal.rules.map((r, i) => <div key={r.text} className="rounded-lg border p-3"><p><strong>Regel {selectedSignal.rules.length > 1 ? i + 1 : ""}:</strong> {r.text}</p><p className="mt-1 text-muted-foreground">Reglens horisont: {r.horizon}</p></div>)}<p><strong>Sidste registrerede kontakt:</strong> {selectedSignal.last ? `${selectedSignal.last} · ${selectedSignal.channel} · ${selectedSignal.contact}` : "Ukendt"}</p><div><strong className="mb-1 block">Næste registrerede møde:</strong><MeetingPill m={selectedSignal.next} /></div><Button variant="outline" onClick={() => { if (selectedSignal) { window.dispatchEvent(new CustomEvent("open-hcp-search", { detail: { query: selectedSignal.name } })); toast({ title: selectedSignal.name, description: "Fiktiv demo-kunde · ikke koblet til en kundejournal." }); } }}>Se kunde</Button></div>}</DialogContent></Dialog>
-  </div></ManagerSections>;
+    <Dialog open={selectedSignal !== null} onOpenChange={(o) => !o && setSelectedSignal(null)}><DialogContent><DialogHeader><DialogTitle>{selectedSignal?.name}</DialogTitle><DialogDescription>Kilde til aktuelt signal · {selectedSignal?.id}</DialogDescription></DialogHeader>{selectedSignal && <div className="space-y-4 text-sm">{selectedSignal.rules.map((r, i) => <div key={r.text} className="rounded-lg border p-3"><p><strong>Regel {selectedSignal.rules.length > 1 ? i + 1 : ""}:</strong> {r.text}</p><p className="mt-1 text-muted-foreground">Reglens horisont: {r.horizon}</p></div>)}<p><strong>Sidste registrerede kontakt:</strong> {selectedSignal.last ? `${selectedSignal.last} · ${selectedSignal.channel} · ${selectedSignal.contact}` : "Ukendt"}</p><div><strong className="mb-1 block">Næste registrerede møde:</strong><MeetingPill m={selectedSignal.next} /></div><Button variant="outline" onClick={() => { if (selectedSignal) { toast({ title: selectedSignal.name, description: "Fiktiv demo-kunde · ikke koblet til en kundejournal." }); } }}>Se kunde</Button></div>}</DialogContent></Dialog>
+  </div>;
 };
 
 export default EmployeeDetail;
