@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AlertTriangle, ArrowLeft, CalendarCheck, CalendarX, ChevronRight, Clipboard, Gauge, GraduationCap, MessageSquare, Radar, Printer, RefreshCw, Sparkles, UserRound } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CalendarCheck, CalendarX, Clipboard, Gauge, GraduationCap, MessageSquare, Radar, Printer, RefreshCw, Sparkles, UserRound } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { ManagerPeriodControl } from "@/components/manager/ManagerPeriodControl";
+import { ManagerCard, managerCardFooter, managerCardNote, managerCardTitle } from "@/components/manager/ManagerCard";
 import { EmployeeQuality } from "@/components/manager/EmployeeQuality";
 import { EmployeeFieldThemes } from "@/components/manager/EmployeeFieldThemes";
 import { EmployeeBrickCoverage } from "@/components/manager/EmployeeBrickCoverage";
@@ -29,9 +30,9 @@ type Theme = (typeof themes)[number];
 
 const MeetingPill = ({ m }: { m: MeetingState }) => {
   if (m.kind === "own") return <span className="inline-flex items-center gap-1 rounded-md border border-primary/40 bg-primary/10 px-2 py-1 text-xs font-medium text-primary"><CalendarCheck className="h-3.5 w-3.5" />Eget møde {m.date}</span>;
-  if (m.kind === "colleague") return <span className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground"><UserRound className="h-3.5 w-3.5" />{m.who} har møde {m.date}</span>;
+  if (m.kind === "colleague") return <span className="inline-flex items-center gap-1 rounded-md border border-transparent bg-muted px-2 py-1 text-xs text-muted-foreground"><UserRound className="h-3.5 w-3.5" />{m.who} har møde {m.date}</span>;
   if (m.kind === "outside") return <span className="inline-flex items-center gap-1 rounded-md border border-border px-2 py-1 text-xs text-foreground">{m.date} <span className="text-muted-foreground">· uden for 28 dage</span></span>;
-  if (m.kind === "unavailable") return <span className="inline-flex items-center gap-1 rounded-md border-2 border-destructive/50 bg-destructive/10 px-2 py-1 text-xs font-medium text-destructive"><AlertTriangle className="h-3.5 w-3.5" />Mødedata utilgængelig</span>;
+  if (m.kind === "unavailable") return <span className="inline-flex items-center gap-1 rounded-md border border-destructive/40 bg-destructive/10 px-2 py-1 text-xs font-medium text-destructive"><AlertTriangle className="h-3.5 w-3.5" />Mødedata utilgængelig</span>;
   return <span className="inline-flex items-center gap-1 rounded-md border border-dashed border-muted-foreground/40 px-2 py-1 text-xs text-muted-foreground"><CalendarX className="h-3.5 w-3.5" />Intet kommende registreret</span>;
 };
 
@@ -90,15 +91,15 @@ const EmployeeDetailContent = () => {
       {!hasFixture ? <Card className="rounded-lg border shadow-sm"><CardContent className="p-10 text-center"><h3 className="font-semibold">Ingen forberedte demo-data for denne periode</h3><p className="mt-2 text-sm text-muted-foreground">Vælg 30 dage for at se sporbare medarbejderdata.</p></CardContent></Card> : <>
 
         <ManagerSection id="performance" title="Generel præstation" header={<div className="flex items-baseline justify-between gap-3"><div className="flex items-center gap-3"><Gauge className="h-5 w-5 text-primary" /><h3 className="text-lg font-bold">Generel præstation</h3></div><span className="text-xs text-muted-foreground">{option.range}</span></div>}>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{kpis.map(k => <div key={k.key} className={`rounded-lg border bg-card p-4 ${k.error ? "border-destructive/50" : ""}`}><Button variant="ghost" className="h-auto w-full justify-start whitespace-normal p-0 text-left hover:bg-transparent" onClick={() => setPanel(k.key as PanelKey)}><div className="w-full"><p className="text-xs font-semibold text-muted-foreground">{k.label}</p><p className="mt-2 text-xl font-bold tabular-nums">{k.error ? "Utilgængelig" : k.value}</p><p className="mt-2 text-xs font-normal leading-5 text-muted-foreground">{k.note}</p></div></Button>{k.error && <Button size="sm" variant="outline" className="mt-2" onClick={retry}>Prøv igen</Button>}</div>)}</div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{kpis.map(k => <div key={k.key} className="flex flex-col gap-2"><ManagerCard onClick={() => setPanel(k.key as PanelKey)} className={`flex-1 ${k.error ? "border-destructive/50" : ""}`}><p className={managerCardTitle}>{k.label}</p><p className="mt-2 text-xl font-bold tabular-nums">{k.error ? "Utilgængelig" : k.value}</p><div className={managerCardFooter}><p className={`${managerCardNote} min-h-10`}>{k.note}</p></div></ManagerCard>{k.error && <Button size="sm" variant="outline" onClick={retry}>Prøv igen</Button>}</div>)}</div>
         </ManagerSection>
         <ManagerSection id="signals" title="Vigtigste kunde signaler" header={<div><div className="flex items-center gap-3"><Radar className="h-5 w-5 shrink-0 text-primary" /><h3 className="text-lg font-bold">Vigtigste kunde signaler</h3></div><p className="mt-1 text-xs text-muted-foreground">Aktuelle kundesignaler · hver regel har sin egen tidshorisont</p></div>}>
           {loadError ? <ErrorBlock label="Kundesignaler" onRetry={retry} /> : !full ? <Card className="border border-dashed bg-muted/20 shadow-none"><CardContent className="p-6 text-sm text-muted-foreground">Ingen aktuelle kundesignaler for medarbejderen.</CardContent></Card> :
-          <div className="grid gap-3 md:grid-cols-2">{signals.map((s) => <Button variant="ghost" key={s.id} onClick={() => setSelectedSignal(s)} className="h-auto w-full items-start justify-start whitespace-normal rounded-lg border bg-card p-4 text-left font-normal hover:bg-primary/5">
-            <div className="min-w-0 flex-1"><div className="flex items-start justify-between gap-2"><div><p className="text-xs font-semibold">{s.name}</p><p className="mt-1 text-xs text-muted-foreground">{s.type} · {s.segment ? `Segment ${s.segment}` : "Uden segmentklasse"}</p></div><ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" /></div>
-              <div className="mt-3 space-y-1">{s.rules.map(rule => <p key={rule.text} className="text-xs leading-5">{rule.text} <span className="text-muted-foreground">· {rule.horizon}</span></p>)}</div>
-              <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t pt-2"><p className="text-xs text-muted-foreground">Sidst: {s.last ?? "Ukendt"}{s.channel ? ` · ${s.channel}` : ""}</p><MeetingPill m={s.next} /></div>
-            </div></Button>)}<div className="md:col-span-2"><Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => setPanel("signals")}>Alle signaler</Button></div></div>}
+          <div className="grid gap-3 md:grid-cols-2">{signals.map((s) => <ManagerCard key={s.id} chevron onClick={() => setSelectedSignal(s)}>
+            <p className={managerCardTitle}>{s.name}</p><p className="mt-1 text-xs text-muted-foreground">{s.type} · {s.segment ? `Segment ${s.segment}` : "Uden segmentklasse"}</p>
+            <div className="mt-3 space-y-1">{s.rules.map(rule => <p key={rule.text} className="text-xs leading-5">{rule.text} <span className="text-muted-foreground">· {rule.horizon}</span></p>)}</div>
+            <div className={managerCardFooter}><p className="text-xs text-muted-foreground">Sidst: {s.last ?? "Ukendt"}{s.channel ? ` · ${s.channel}` : ""}</p><MeetingPill m={s.next} /></div>
+          </ManagerCard>)}<div className="md:col-span-2"><Button variant="link" size="sm" className="h-auto p-0 text-xs" onClick={() => setPanel("signals")}>Alle signaler</Button></div></div>}
         </ManagerSection>
 
         <ManagerSection id="themes" title="Temaer i marken de sidste 30 dage" header={<div className="flex items-center gap-3"><MessageSquare className="h-5 w-5 text-primary" /><h3 className="text-lg font-bold">Temaer i marken de sidste 30 dage</h3></div>}>
