@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { fmt, homepageQuality, homepageSignalCount, homepageSignals, regionalThemeCoverage, regionalThemes, regionalThemeSources, teamMembers } from "@/data/managerDemo";
 
-import { ManagerSection } from "./ManagerSection";
+import { ManagerSection, ManagerSectionTitle } from "./ManagerSection";
 import { SourceQuality } from "./SourceQuality";
 
 const signalIcons = {
