@@ -76,7 +76,7 @@ const EmployeeDetailContent = () => {
   const kpis = [
     { label: "Registrerede kontakter", value: String(contacts), note: noActivity ? "Vellykket opslag · ingen registrerede kontakter" : `Fysiske + virtuelle · ${m.phone} telefonkontakter særskilt`, key: "contacts", error: loadError },
     { label: "Kontaktede HCO'er", value: `${hcos} / ${m.hcosAssigned}`, note: `${pct(hcos, m.hcosAssigned)} af tildelte HCO'er`, key: "coverage", error: loadError },
-    { label: "Dokumentation foreligger", value: contacts ? `${documented} / ${contacts}` : "Ingen relevante kontakter", note: !contacts ? "Ingen forventede debriefs" : imported ? `${pct(documented, contacts)} · alle importeret fra CRM` : `${pct(documented, contacts)} · ${m.drafts} kladder · ${m.missing} mangler`, key: "documentation", error: loadError },
+    { label: "Debriefs", value: contacts ? `${documented} / ${contacts}` : "Ingen relevante kontakter", note: !contacts ? "Ingen forventede debriefs" : imported ? `${pct(documented, contacts)} · alle importeret fra CRM` : `${pct(documented, contacts)} · ${m.drafts} kladder · ${m.missing} mangler`, key: "documentation", error: loadError },
     { label: "Debriefkvalitet", value: qualityValue, note: imported ? "Importeret dokumentation vurderes ikke" : noActivity || m.quality === null ? "Ingen vurderede debriefs" : `Periodegennemsnit · n = ${m.qualityN} af ${m.completed}`, key: "quality", error: qualityError },
   ];
 
